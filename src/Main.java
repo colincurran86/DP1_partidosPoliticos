@@ -9,8 +9,6 @@ public class Main {
 	
 		System.out.println("Lofe Foreva  ");
 		
-		
-		
 		System.out.println(" Hunder percent ");
 
 	}
