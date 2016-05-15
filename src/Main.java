@@ -5,7 +5,7 @@ public class Main {
 		// TODO Auto-generated method stub
 		
 		//Jose es lo máximo! 
-		System.out.println("Larga Vida a Christian Dongo:):):):):):))");
+		System.out.println("Larga Vida a Christian Dongo");
 	
 		System.out.println("Lofe Foreva  ");
 		
