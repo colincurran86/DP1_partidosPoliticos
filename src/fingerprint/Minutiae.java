@@ -11,7 +11,7 @@ public class Minutiae {
 
 	static int closerPoints = 5;
 	static double angleRange = 1.5;
-
+	
 	public static void crossingNumber(final int[][] givenImage, List<Point> minutiaeFound)
 			throws FileNotFoundException, UnsupportedEncodingException {
 
@@ -22,19 +22,25 @@ public class Minutiae {
 		 * givenImage[y].length; x++) { writer.print(givenImage[y][x]); }
 		 * writer.println("\n"); } writer.close();
 		 */
-
+		int CN = 0 ;
 		int[][] newMatrix = new int[givenImage.length][givenImage[0].length];
 		for (int y = 0; y < givenImage.length; y++) {
 			for (int x = 0; x < givenImage[y].length; x++) {
 
 				if (givenImage[y][x] == 1) {
-					int CN = rutovitz(y, x, givenImage);
+					CN = rutovitz(y, x, givenImage);
+					if (CN == 1 || CN == 3)
 					newMatrix[y][x] = CN;
 				} else
 					newMatrix[y][x] = 0;
-				if (newMatrix[y][x] == 1 || newMatrix[y][x] == 3) {
-					Point p = new Point(x, y);
+				
+				if (newMatrix[y][x] != 0 && (CN == 1 || CN == 3) ) {
+						
+					Point p = new Point(x,y);
 					minutiaeFound.add(p);
+					//if (CN == 1) minutiaeT.add(p);
+					//if (CN == 3) minutiaeB.add(p);
+					
 				}
 			}
 		}
@@ -48,8 +54,61 @@ public class Minutiae {
 			writer.println("\n");
 		}
 		writer.close();
+		
 
 	}
+	
+
+	public static void removeFalseMinutiae(List<Point> minutiae){
+		
+		int average = 0;
+		float distance = 0;
+		Point p1,p2;
+		
+		for (int i = 0; i < minutiae.size(); i ++){
+			p1 = minutiae.get(i);
+			for (int j = i+1; j < minutiae.size(); j++ ){
+				p2 = minutiae.get(j);
+				// getting the distance between the points
+				distance = (float) Math.sqrt( (p1.getX() - p2.getX()) * (p1.getX() - p2.getX()) + (p1.getY() - p2.getY()) * (p1.getY() - p2.getY()));
+				if (distance < 18 ) {
+					minutiae.remove(i);
+					i=i-1;
+					break;
+				}				
+			}
+		}
+	} 
+	
+	public static void removeBorder(int [][] imageData, List<Point> minutiae){
+	
+
+	} 
+
+	
+	public static double AverageSameMinutiae(List<Point> minutiae){
+		
+		int average = 0 , cont = 0;
+		float distance = 0, a = 0;
+		Point p1,p2;
+		
+		for (int i = 0; i < minutiae.size(); i ++){
+			p1 = minutiae.get(i);
+			for (int j = i+1; j < minutiae.size(); j++ ){
+				p2 = minutiae.get(j);
+				// getting the distance between the points
+				distance = a + (float) Math.sqrt( (p1.getX() - p2.getX()) * (p1.getX() - p2.getX()) + (p1.getY() - p2.getY()) * (p1.getY() - p2.getY()));
+				cont ++;
+				System.out.println(a);
+				
+			}
+		}
+		
+		System.out.println("DISTANCE" + distance);
+		System.out.println("CONT" + cont);
+		return distance / cont;
+		
+	} 
 
 	public static int rutovitz(int y, int x, int[][] givenImage) {
 
@@ -156,11 +215,10 @@ public class Minutiae {
 
 	}
 
-	public static void gettingCandidates(List<MinutiaeTuples> mTuplesIM, List<MinutiaeTuples> mTuplesBM,
-			List<Integer> possibleCandidateIM, List<Integer> possibleCandidateBM, List<Integer> excludedMinutiaeIM,
-			List<Integer> excludedMinutiaeBM, int minutiaeFound) {
+	public static int matchingMinutiae(List<MinutiaeTuples> mTuplesIM, List<MinutiaeTuples> mTuplesBM) {
 
 		List<MinutiaeTuples> mTuplesBMAux = mTuplesBM;
+		int totalRelations = 0;
 
 		for (int i = 0; i < mTuplesIM.size(); i++) {
 			// int cantRepitencia=0;
@@ -173,11 +231,15 @@ public class Minutiae {
 
 				int val = analizePairListTuple(tIM, tBM);
 
-				if (val > maxPairs) {
+				if (val > 1) {
+					
+					totalRelations = totalRelations + 1;
+					//mTuplesBMAux.remove(j);
+					break;
 					// si ambos puntos tienen como mínimo 2 tuplas iguales, se
 					// añaden a la lista de posibles candidatos
-					maxPairs = val;
-					valJ = j;
+					//maxPairs = val;
+					//	valJ = j;
 					// cantRepitencia++;
 
 					/*
@@ -193,13 +255,15 @@ public class Minutiae {
 					 */
 				}
 			}
-			if (maxPairs != 0) { // se agarra el primero que se paresca mas
-				possibleCandidateIM.add(i);
-				possibleCandidateBM.add(valJ);
-				mTuplesBMAux.remove(valJ);
-			}
+			//if (maxPairs != 0) {
+			//	possibleCandidateIM.add(i);
+			//	possibleCandidateBM.add(valJ);
+			//	mTuplesBMAux.remove(valJ);
+			//}
 		}
-
+		
+		return totalRelations;
+		/*
 		orderList(possibleCandidateIM);
 		orderList(possibleCandidateBM);
 
@@ -219,6 +283,7 @@ public class Minutiae {
 			indexListBM.remove(possibleCandidateBM.get(i) - i);
 
 		excludedMinutiaeBM = indexListBM;
+		*/
 	}
 
 	private static int analizePairListTuple(List<Tupla> tIM, List<Tupla> tBM) {
@@ -312,7 +377,7 @@ public class Minutiae {
 									minutiaeFound.get(possibleCandidateIMAux.get(i)),
 									minutiaeFound.get(possibleCandidateIMAux.get(i + 2)), cuadranteIMAux, ratioIMAux,
 									angleIMAux);
-						if ((i + 2) < possibleCandidateBMAux.size())//existe siguiente punto tras eliminar
+						if ((i + 2) < possibleCandidateIMAux.size())//existe siguiente punto tras eliminar
 							sacarCaracteristicas(minutiaeFound.get(possibleCandidateBMAux.get(i - 1)),
 									minutiaeFound.get(possibleCandidateBMAux.get(i)),
 									minutiaeFound.get(possibleCandidateBMAux.get(i + 2)), cuadranteBMAux, ratioBMAux,
