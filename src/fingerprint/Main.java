@@ -20,8 +20,8 @@ public class Main {
 	 */
 	public static void main(String[] args) throws IOException {
 
-		BufferedImage imageBase = ImageIO.read(new File("C:/Users/lenovo/Desktop/PUCP/DP1/AlgoritmoChino/input2.png"));
-		BufferedImage imageInput = ImageIO.read(new File("C:/Users/lenovo/Desktop/PUCP/DP1/AlgoritmoChino/input2.png"));
+		BufferedImage imageBase = ImageIO.read(new File("C:/Users/Administrador/Desktop/Christian/9no/DP1/GIT GIT GIT GIT/adb-installer.log/src/fingerprint/aa.png"));
+		BufferedImage imageInput = ImageIO.read(new File("C:/Users/Administrador/Desktop/Christian/9no/DP1/GIT GIT GIT GIT/adb-installer.log/src/fingerprint/input.png"));
 
 		int[][] imageDataBase = new int[imageBase.getHeight()][imageBase.getWidth()];
 		int[][] imageDataInput = new int[imageInput.getHeight()][imageInput.getWidth()];
@@ -133,8 +133,8 @@ public class Main {
 		
 		//MOSTRANDO LAS MINUCIAS ENCONTRADAS
 			
-	    ImageIO.write(imageBase, "png", new File("C:/Users/lenovo/Desktop/PUCP/DP1/AlgoritmoChino/MinuciasBase.png"));
-	    ImageIO.write(imageInput, "png", new File("C:/Users/lenovo/Desktop/PUCP/DP1/AlgoritmoChino/MinuciasInput.png"));
+	    ImageIO.write(imageBase, "png", new File("C:/Users/Administrador/Desktop/Christian/9no/DP1/GIT GIT GIT GIT/adb-installer.log/src/fingerprint/MinuciasBase.png"));
+	    ImageIO.write(imageInput, "png", new File("C:/Users/Administrador/Desktop/Christian/9no/DP1/GIT GIT GIT GIT/adb-installer.log/src/fingerprint/MinuciasInput.png"));
 
 
 		//sacar las 10 tuplas de c/ minucia
