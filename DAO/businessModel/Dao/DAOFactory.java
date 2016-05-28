@@ -1,5 +1,13 @@
 package businessModel.Dao;
 
-public class DAOFactory {
 
+
+
+
+
+public abstract class DAOFactory {
+	public static DAOFactory getDAOFactory(){
+		return new MySQLDAOFactory();
+	}
+	public abstract DAOPartPolitico getDAOPartPolitico();
 }
