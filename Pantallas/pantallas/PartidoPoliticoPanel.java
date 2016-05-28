@@ -5,16 +5,23 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
+import models.PartidoPolitico;
+import bModel.ProcessManager;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
 public class PartidoPoliticoPanel extends JPanel {
 	private JTextField txtFieldNombre;
 	private JTextField txtFieldNRep;
 	private JTextField txtFieldTel;
-	private JTextField txtField_3;
+	private JTextField txtFieldCorreo;
 
 	/**
 	 * Create the panel.
 	 */
 	public PartidoPoliticoPanel() {
+		
 		setLayout(null);
 		
 		JLabel lblNombre = new JLabel("Nombre");
@@ -36,6 +43,16 @@ public class PartidoPoliticoPanel extends JPanel {
 		txtFieldNRep.setColumns(10);
 		
 		JButton btnGuardar = new JButton("Guardar");
+		btnGuardar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				PartidoPolitico p=new PartidoPolitico();
+				p.setCorreo(txtFieldCorreo.getText());
+				p.setNombre(txtFieldNombre.getText());
+				p.setNombreRep(txtFieldNRep.getText());
+				p.setTelefono(txtFieldTel.getText());
+				ProcessManager.addPartPolitico(p);
+			}
+		});
 		btnGuardar.setBounds(82, 193, 89, 23);
 		add(btnGuardar);
 		
@@ -56,10 +73,10 @@ public class PartidoPoliticoPanel extends JPanel {
 		lblCorreo.setBounds(28, 117, 46, 14);
 		add(lblCorreo);
 		
-		txtField_3 = new JTextField();
-		txtField_3.setBounds(181, 114, 173, 20);
-		add(txtField_3);
-		txtField_3.setColumns(10);
+		txtFieldCorreo = new JTextField();
+		txtFieldCorreo.setBounds(181, 114, 173, 20);
+		add(txtFieldCorreo);
+		txtFieldCorreo.setColumns(10);
 
 	}
 }
