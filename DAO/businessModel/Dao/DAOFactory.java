@@ -10,4 +10,7 @@ public abstract class DAOFactory {
 		return new MySQLDAOFactory();
 	}
 	public abstract DAOPartPolitico getDAOPartPolitico();
+	public abstract DaoLogin getDAOLogin();
+	
+	
 }

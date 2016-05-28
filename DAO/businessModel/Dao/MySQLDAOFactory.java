@@ -10,4 +10,10 @@ public class MySQLDAOFactory extends DAOFactory{
 		return new MySQLDAOPartPolitico();
 	}
 
+	@Override
+	public DaoLogin getDAOLogin() {
+		// TODO Auto-generated method stub
+		return new MySQLDaoLogin();
+	}
+
 }
