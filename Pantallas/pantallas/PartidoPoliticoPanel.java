@@ -11,8 +11,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 import models.PartidoPolitico;
-import pe.edu.pucp.sales.bm.SalesManager;
-import pe.edu.pucp.sales.model.bean.Product;
 import bModel.ProcessManager;
 
 import java.awt.event.ActionListener;
