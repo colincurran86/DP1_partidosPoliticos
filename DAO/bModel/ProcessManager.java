@@ -2,6 +2,9 @@ package bModel;
 
 
 import models.Usuario;
+
+import java.util.ArrayList;
+
 import models.PartidoPolitico;
 
 public class ProcessManager {
@@ -21,6 +24,8 @@ public class ProcessManager {
         partPoliticoDB.add(p);
     };
 	
-	
+	public static ArrayList<PartidoPolitico> queryAllPartPol(){
+		return partPoliticoDB.queryAllPartPol();
+	}
 	
 }
