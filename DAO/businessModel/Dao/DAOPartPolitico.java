@@ -8,4 +8,5 @@ import models.PartidoPolitico;
 public interface DAOPartPolitico {
 	void add(PartidoPolitico p);
 	ArrayList<PartidoPolitico> queryAllPartPol();
+	void updatePartPol(PartidoPolitico p);
 }

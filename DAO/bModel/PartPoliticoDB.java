@@ -20,4 +20,8 @@ public class PartPoliticoDB {
     public ArrayList<PartidoPolitico> queryAllPartPol(){
     	return daoPartPolitico.queryAllPartPol();
     }
+    
+    public void updatePartPol(PartidoPolitico p){
+    	daoPartPolitico.updatePartPol(p);
+    }
 }

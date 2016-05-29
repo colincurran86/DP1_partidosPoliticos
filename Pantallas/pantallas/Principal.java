@@ -15,7 +15,7 @@ import java.awt.event.ActionEvent;
 
 public class Principal {
 
-	public JFrame frame;
+	public static JFrame frame;
 
 	/**
 	 * Launch the application.

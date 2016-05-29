@@ -91,4 +91,10 @@ public class MySQLDAOPartPolitico implements DAOPartPolitico{
 		return arr;
 	}
 
+	@Override
+	public void updatePartPol(PartidoPolitico p) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

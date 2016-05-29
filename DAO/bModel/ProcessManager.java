@@ -26,6 +26,9 @@ public class ProcessManager {
 	
 	public static ArrayList<PartidoPolitico> queryAllPartPol(){
 		return partPoliticoDB.queryAllPartPol();
-	}
+	};
 	
+	public static void updatePartPol(PartidoPolitico p){
+		partPoliticoDB.updatePartPol(p);
+	};
 }
