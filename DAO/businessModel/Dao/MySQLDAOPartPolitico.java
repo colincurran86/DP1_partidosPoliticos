@@ -96,10 +96,11 @@ public class MySQLDAOPartPolitico implements DAOPartPolitico {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			connect = DriverManager.getConnection(DBConnection.URL_JDBC_MySQL, DBConnection.user,
 					DBConnection.password);
-			statement = connect.createStatement();
-			statement.executeUpdate("UPDATE PartidosPoliticos " + "SET Nombre= " + p.getNombre() + ", Representante= "
-					+ p.getNombreRep() + ", TelefonoRepre= " + p.getTelefono() + ", Correo= " + p.getCorreo()
-					+ " WHERE IdPartidosPoliticos= " + p.getId());
+			statement = connect.createStatement();			
+			statement.executeUpdate("UPDATE PartidosPoliticos " + 
+					"SET Nombre= '" + p.getNombre() + "', Representante= '"
+					+ p.getNombreRep() + "', TelefonoRepre= '" + p.getTelefono() 
+					+ "', Correo= '" + p.getCorreo() + "' WHERE IdPartidosPoliticos= " + p.getId());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -122,8 +123,8 @@ public class MySQLDAOPartPolitico implements DAOPartPolitico {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			connect = DriverManager.getConnection(DBConnection.URL_JDBC_MySQL, DBConnection.user,
 					DBConnection.password);
-			statement = connect.createStatement();			
-			statement.executeUpdate("DELETE FROM PartidosPoliticos WHERE IdPartidosPoliticos=" + id);
+			statement = connect.createStatement();					
+			statement.executeUpdate("DELETE FROM PartidosPoliticos WHERE IdPartidosPoliticos = " + id);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -6,8 +6,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 import models.PartidoPolitico;
@@ -18,24 +16,27 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-public class PartidoPoliticoPanel extends JPanel {
+public class PartidoPoliticoPanel extends JPanel implements ActionListener{
 	private JTextField txtFieldNombre;
 	private JTextField txtFieldNRep;
 	private JTextField txtFieldTel;
 	private JTextField txtFieldCorreo;
 	private JTable tblPartPol;
 	MyTableModel partPolModel;
+	private int idRow;
+	private JButton btnAgregar;
+	private JButton btnModificar;
+	private JButton btnEliminar;
 
 	/**
 	 * Create the panel.
 	 */
 	public PartidoPoliticoPanel() {
-		
+
 		setLayout(null);
 
 		JLabel lblNombre = new JLabel("Nombre");
@@ -56,45 +57,13 @@ public class PartidoPoliticoPanel extends JPanel {
 		add(txtFieldNRep);
 		txtFieldNRep.setColumns(10);
 
-		JButton btnAgregar = new JButton("Agregar");
-		btnAgregar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				PartidoPolitico p = new PartidoPolitico();
-				p.setCorreo(txtFieldCorreo.getText());
-				p.setNombre(txtFieldNombre.getText());
-				p.setNombreRep(txtFieldNRep.getText());
-				p.setTelefono(txtFieldTel.getText());
-				ProcessManager.addPartPolitico(p);
-				refreshTblProducts();
-			}
-		});
+		btnAgregar = new JButton("Agregar");
+		
 		btnAgregar.setBounds(34, 153, 89, 23);
 		add(btnAgregar);
 
-		JButton btnModificar = new JButton("Modificar");
-		btnModificar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				int selRow = tblPartPol.getSelectedRow();
-				int id = Integer.parseInt(tblPartPol.getValueAt(selRow, 0).toString());
-				String nombre=txtFieldNombre.getText();
-				String rep=txtFieldNRep.getText();
-				String tel=txtFieldTel.getText();
-				String correo=txtFieldCorreo.getText();
-				
-				PartidoPolitico p= new PartidoPolitico();
-				p.setId(id);
-				p.setNombre(nombre);
-				p.setNombreRep(rep);
-				p.setTelefono(tel);
-				p.setCorreo(correo);
-						
-				ProcessManager.updatePartPol(p);
-				refreshTblProducts();
-
-			}
-		});
-		btnModificar.setBounds(133, 153, 89, 23);
+		btnModificar = new JButton("Modificar");		
+		btnModificar.setBounds(150, 153, 89, 23);
 		add(btnModificar);
 
 		JLabel lblTelefono = new JLabel("Telefono Representante");
@@ -115,20 +84,8 @@ public class PartidoPoliticoPanel extends JPanel {
 		add(txtFieldCorreo);
 		txtFieldCorreo.setColumns(10);
 
-		JButton btnEliminar = new JButton("Eliminar");
-		btnEliminar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				/*
-				 * int res = JOptionPane.showConfirmDialog(Principal.frame,
-				 * "¿Está seguro?"); if (res == JOptionPane.OK_OPTION) {
-				 * //ProcessManager.deletePartPol(Integer.parseInt(txtId.getText
-				 * ())); refreshTblProducts(); }
-				 */
-
-			}
-		});
-		btnEliminar.setBounds(232, 153, 89, 23);
-
+		btnEliminar = new JButton("Eliminar");	
+		btnEliminar.setBounds(266, 153, 89, 23);
 		add(btnEliminar);
 
 		JPanel panel = new JPanel();
@@ -150,7 +107,8 @@ public class PartidoPoliticoPanel extends JPanel {
 		tblPartPol.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				int selRow = tblPartPol.getSelectedRow();
-				int id = Integer.parseInt(tblPartPol.getValueAt(selRow, 0).toString());				
+				int id = Integer.parseInt(tblPartPol.getValueAt(selRow, 0).toString());
+				idRow=id;
 				String nombre = tblPartPol.getValueAt(selRow, 1).toString();
 				String rep = tblPartPol.getValueAt(selRow, 2).toString();
 				String tel = tblPartPol.getValueAt(selRow, 3).toString();
@@ -159,9 +117,14 @@ public class PartidoPoliticoPanel extends JPanel {
 				txtFieldNombre.setText(nombre);
 				txtFieldNRep.setText(rep);
 				txtFieldTel.setText(tel);
-				txtFieldCorreo.setText(correo);
+				txtFieldCorreo.setText(correo);				
 			}
 		});
+		
+		
+		btnAgregar.addActionListener(this);
+		btnModificar.addActionListener(this);
+		btnEliminar.addActionListener(this);
 	}
 
 	class MyTableModel extends AbstractTableModel {
@@ -208,9 +171,49 @@ public class PartidoPoliticoPanel extends JPanel {
 		}
 	}
 
-	public void refreshTblProducts() {
+	public void refreshTblPartPol() {
 		partPolModel.partPolLst = ProcessManager.queryAllPartPol();
 		partPolModel.fireTableChanged(null);
 	}
 
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		if(e.getSource() == btnAgregar){			
+			PartidoPolitico p = new PartidoPolitico();
+			p.setCorreo(txtFieldCorreo.getText());
+			p.setNombre(txtFieldNombre.getText());
+			p.setNombreRep(txtFieldNRep.getText());
+			p.setTelefono(txtFieldTel.getText());
+			ProcessManager.addPartPolitico(p);
+			refreshTblPartPol();
+		}
+		if(e.getSource() == btnModificar){			
+			String nombre = txtFieldNombre.getText();
+			String rep = txtFieldNRep.getText();
+			String tel = txtFieldTel.getText();
+			String correo = txtFieldCorreo.getText();
+
+			PartidoPolitico p = new PartidoPolitico();
+			p.setId(idRow);
+			p.setNombre(nombre);
+			p.setNombreRep(rep);
+			p.setTelefono(tel);
+			p.setCorreo(correo);
+
+			ProcessManager.updatePartPol(p);
+			refreshTblPartPol();
+		}
+		if(e.getSource() == btnEliminar){
+			// int res =
+			// JOptionPane.showConfirmDialog(Principal.frame,"¿Está
+			// seguro?"); if (res == JOptionPane.OK_OPTION) {
+			//int selRow = tblPartPol.getSelectedRow();
+			//int id = Integer.parseInt(tblPartPol.getValueAt(selRow, 0).toString());				
+			ProcessManager.deletePartPol(idRow);
+			refreshTblPartPol();
+		}
+	}
+	
+	
 }
