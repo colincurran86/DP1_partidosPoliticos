@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
@@ -25,9 +26,9 @@ import businessModel.Dao.MySQLDAOTipoProceso;
 
 public class TipoProcesoPanel extends JPanel {
 	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField txtFieldDescripcion;
 	private JTable tblPartPol;
-	private int id;
+	private int idRow;
 	MyTableModel partPolModel;
 
 	/**
@@ -46,19 +47,19 @@ public class TipoProcesoPanel extends JPanel {
 		add(lblPorcentaje);
 		
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(131, 44, 147, 20);
-		add(textField_1);
-		textField_1.setColumns(10);
+		txtFieldDescripcion = new JTextField();
+		txtFieldDescripcion.setBounds(131, 44, 147, 20);
+		add(txtFieldDescripcion);
+		txtFieldDescripcion.setColumns(10);
 
 		JSpinner spinner = new JSpinner();
 		spinner.setBounds(131, 94 , 64, 20);
 		add(spinner);
 
 		
-		JButton btnGuardar = new JButton("Guardar");
-		btnGuardar.setBounds(24, 145, 89, 23);
-		add(btnGuardar);
+		JButton btnAgregar = new JButton("Agregar");
+		btnAgregar.setBounds(24, 145, 89, 23);
+		add(btnAgregar);
 
 		JButton btnModificar = new JButton("Modificar");
 		btnModificar.setBounds(154, 145, 89, 23);
@@ -68,34 +69,39 @@ public class TipoProcesoPanel extends JPanel {
 		btnEliminar.setBounds(284, 145, 89, 23);
 		add(btnEliminar);
 		
-		btnGuardar.addActionListener(new ActionListener() { 
+		btnAgregar.addActionListener(new ActionListener() { 
 		    public void actionPerformed(ActionEvent e) { 
-		    	String descripcion = textField_1.getText();
-		    	int porcentaje = (int) spinner.getValue();	
-		    	MySQLDAOTipoProceso pr = new MySQLDAOTipoProceso();
-		    	pr.add(descripcion, porcentaje);
-		    	refreshTblProducts();
-		    	//almacenar base de datos
+		    	String descripcion = txtFieldDescripcion.getText();
+		    	int porcentaje = (int) spinner.getValue();
+		    	TipoProceso tp=new TipoProceso();
+		    	tp.setDescripcion(descripcion);
+		    	tp.setPorcentaje(porcentaje);		    
+		    	ProcessManager.addTProc(tp);
+		    	refreshTblTProc();
+		    	
 		    } 
 		});
 		
 		btnModificar.addActionListener(new ActionListener() { 
 		    public void actionPerformed(ActionEvent e) { 
-		    	String descripcion = textField_1.getText();
+		    	String descripcion = txtFieldDescripcion.getText();
 		    	int porcentaje = (int) spinner.getValue();	
-		    	MySQLDAOTipoProceso pr = new MySQLDAOTipoProceso();
-		    	pr.modificar(descripcion, porcentaje, id);
-		    	refreshTblProducts();
+		    	TipoProceso tp=new TipoProceso();
+		    	tp.setDescripcion(descripcion);
+		    	tp.setPorcentaje(porcentaje);	
+		    	tp.setId(idRow);
+		    	ProcessManager.updateTProc(tp);		    	
+		    	refreshTblTProc();
 		    } 
 		});
 		
 		btnEliminar.addActionListener(new ActionListener() { 
 		    public void actionPerformed(ActionEvent e) { 
-		    	String descripcion = textField_1.getText();
-		    	int porcentaje = (int) spinner.getValue();	
-		    	MySQLDAOTipoProceso pr = new MySQLDAOTipoProceso();
-		    	pr.eliminar(id);
-		    	refreshTblProducts();
+		    	int res = JOptionPane.showConfirmDialog(null,"¿Está seguro?"); 
+				if (res == JOptionPane.OK_OPTION) {					
+					ProcessManager.deleteTProc(idRow);
+					refreshTblTProc();
+				}		    	
 		    } 
 		});
 
@@ -119,11 +125,11 @@ public class TipoProcesoPanel extends JPanel {
 		tblPartPol.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {	
 				int selRow = tblPartPol.getSelectedRow();
-			    id = Integer.parseInt(tblPartPol.getValueAt(selRow, 0).toString());				
+			    idRow = Integer.parseInt(tblPartPol.getValueAt(selRow, 0).toString());				
 				String descripcion = tblPartPol.getValueAt(selRow, 1).toString();
 				String rep = tblPartPol.getValueAt(selRow, 2).toString();
 				int foo = Integer.parseInt(rep);
-				textField_1.setText(descripcion);
+				txtFieldDescripcion.setText(descripcion);
 				spinner.setValue(foo);
 			}
 		});
@@ -132,9 +138,8 @@ public class TipoProcesoPanel extends JPanel {
 	
 
 	class MyTableModel extends AbstractTableModel {
-		ArrayList<TipoProceso> partPolLst = MySQLDAOTipoProceso.queryAllPartPol();
-		String[] titles = { "Código", "Descripción", "Porcentaje" };
-		
+		ArrayList<TipoProceso> tProcLst=ProcessManager.queryAllTProc();
+		String[] titles = { "Código", "Descripción", "Porcentaje" };		
 		
 		
 		@Override
@@ -146,7 +151,7 @@ public class TipoProcesoPanel extends JPanel {
 		@Override
 		public int getRowCount() {
 			// TODO Auto-generated method stub
-			return partPolLst.size();
+			return tProcLst.size();
 		}
 
 		@Override
@@ -154,14 +159,14 @@ public class TipoProcesoPanel extends JPanel {
 			String value = "";
 			switch (col) {
 			case 0:
-				value = "" + partPolLst.get(row).getId();
+				value = "" + tProcLst.get(row).getId();
 				break;
 			case 1:
-				value = partPolLst.get(row).getDescripcion();
+				value = tProcLst.get(row).getDescripcion();
 
 				break;
 			case 2:
-				value = "" + partPolLst.get(row).getPorcentaje();
+				value = "" + tProcLst.get(row).getPorcentaje();
 				break;
 
 			}
@@ -173,8 +178,8 @@ public class TipoProcesoPanel extends JPanel {
 		}
 	}
 
-	public void refreshTblProducts() {
-		partPolModel.partPolLst = MySQLDAOTipoProceso.queryAllPartPol();
+	public void refreshTblTProc() {
+		partPolModel.tProcLst = ProcessManager.queryAllTProc();
 		partPolModel.fireTableChanged(null);
 	}
 

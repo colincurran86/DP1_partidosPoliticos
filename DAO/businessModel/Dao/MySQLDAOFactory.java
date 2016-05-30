@@ -16,4 +16,10 @@ public class MySQLDAOFactory extends DAOFactory{
 		return new MySQLDaoLogin();
 	}
 
+	@Override
+	public DAOTipoProceso getDAOTProceso() {
+		// TODO Auto-generated method stub
+		return new MySQLDAOTipoProceso();
+	}
+
 }

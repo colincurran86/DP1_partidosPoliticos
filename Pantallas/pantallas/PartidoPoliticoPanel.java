@@ -120,8 +120,7 @@ public class PartidoPoliticoPanel extends JPanel implements ActionListener{
 				txtFieldCorreo.setText(correo);				
 			}
 		});
-		
-		
+				
 		btnAgregar.addActionListener(this);
 		btnModificar.addActionListener(this);
 		btnEliminar.addActionListener(this);
@@ -205,13 +204,11 @@ public class PartidoPoliticoPanel extends JPanel implements ActionListener{
 			refreshTblPartPol();
 		}
 		if(e.getSource() == btnEliminar){
-			// int res =
-			// JOptionPane.showConfirmDialog(Principal.frame,"¿Está
-			// seguro?"); if (res == JOptionPane.OK_OPTION) {
-			//int selRow = tblPartPol.getSelectedRow();
-			//int id = Integer.parseInt(tblPartPol.getValueAt(selRow, 0).toString());				
-			ProcessManager.deletePartPol(idRow);
-			refreshTblPartPol();
+			int res = JOptionPane.showConfirmDialog(null,"¿Está seguro?"); 
+			if (res == JOptionPane.OK_OPTION) {					
+				ProcessManager.deletePartPol(idRow);
+				refreshTblPartPol();
+			}
 		}
 	}
 	
