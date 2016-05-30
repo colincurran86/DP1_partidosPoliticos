@@ -24,4 +24,8 @@ public class PartPoliticoDB {
     public void updatePartPol(PartidoPolitico p){
     	daoPartPolitico.updatePartPol(p);
     }
+    
+    public void deletePartPol(int id){
+    	daoPartPolitico.deletePartPol(id);
+    }
 }

@@ -31,4 +31,8 @@ public class ProcessManager {
 	public static void updatePartPol(PartidoPolitico p){
 		partPoliticoDB.updatePartPol(p);
 	};
+	
+	public static void deletePartPol(int id){
+		partPoliticoDB.deletePartPol(id);
+	}
 }
