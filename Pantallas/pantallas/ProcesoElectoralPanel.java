@@ -1,11 +1,17 @@
 package pantallas;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
+
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JSpinner;
 import javax.swing.JButton;
+
+import businessModel.Dao.MySQLDAOProceso;
 
 public class ProcesoElectoralPanel extends JPanel {
 	private JTextField textField;
@@ -48,6 +54,23 @@ public class ProcesoElectoralPanel extends JPanel {
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.setBounds(202, 208, 89, 23);
 		add(btnCancelar);
+		
+		MySQLDAOProceso pr = new MySQLDAOProceso();
+	  	System.out.println("xd");
+    	List<String> tipoProcesos = pr.getProcesos();
+    	
+    	// add elements to comboBox
+    	for (int i = 0; i<tipoProcesos.size(); i++) comboBox.addItem(tipoProcesos.get(i));    		
+  
+
+		btnGuardar.addActionListener(new ActionListener() { 
+		    public void actionPerformed(ActionEvent e) { 
+		    	String nombreProceso = textField.getText();
+		    	String tipoProceso = comboBox.getSelectedItem().toString();
+		    	int porcentaje = (int) spinner.getValue();
+		    	//agregar a la base de datos
+		    } 
+		});
 
 	}
 }

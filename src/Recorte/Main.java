@@ -21,8 +21,7 @@ public class Main {
 		ImagePlus padronJ = new ImagePlus();
 		/*IJ.run(padronJ, "Undo", "");
 		padronJ.close();*/
-		padronJ = IJ.openImage("C:/Users/inf250/git/DP1_partidosPoliticos/src/Recorte/padron.rayas.firmado.2.jpg");
-	
+		padronJ = IJ.openImage("C:/Users/lenovo/git/DP1_partidosPoliticos/src/Recorte/padron.rayas.firmado.2.jpg");
 		Prefs.blackBackground = false;
 		IJ.run(padronJ, "Make Binary", "");
 		//padronJ.show();
@@ -38,7 +37,7 @@ public class Main {
 		int width=padronJ.getWidth();
 		int height=padronJ.getHeight();
 		
-		int i,r = 0,g = 0,b = 0;
+		int i,r = 0,g = 0,b = 0 , m = 0;
 		for(i=0;i<width;i++){
 			 r = padronJ.getPixel(i, height/2)[0];
 			 g = padronJ.getPixel(i, height/2)[1];
@@ -110,15 +109,39 @@ public class Main {
 		//padronJ.show();
 		IJ.run(padronJ, "Skeletonize", "");
 
-		new FileSaver(padronJ).saveAsPng("C:/Users/inf250/git/DP1_partidosPoliticos/src/Recorte/recorteCostado.jpg");
+		new FileSaver(padronJ).saveAsPng("C:/Users/lenovo/git/DP1_partidosPoliticos/src/Recorte/recorteCostado.jpg");
 		Prefs.blackBackground = false;
 		
-		//double proporcion=widthPar/width;
+		int width1=padronJ.getWidth();
+		int height1=padronJ.getHeight();
+		int cont = 0, x = 0 ,y = 0;
 		
-		//IJ.run(padronJ, "Scale...", "y= "+ proporcion + " width=" + widthPar + " interpolation=Bilinear average create");
-		//IJ.run(padronJ, "Scale...", "x=- y=- width="+ widthPar +" interpolation=Bilinear average create");
-		//new FileSaver(padronJ).saveAsPng("C:\\Users\\Administrador\\Desktop\\Christian\\9no\\DP1\\Entrega de padrones\\aaa.png");
+		//obtienes esquina izquierda superior de una huella imp.setRoi(1027,204,28,24); imp.setRoi(y,x,cuadrado1,cuadrado2);
+		for(i=0;i<1000;i++){
+			 r = padronJ.getPixel(width1-3, i)[0];
+ 			 g = padronJ.getPixel(width1-3, i)[1];
+			 b = padronJ.getPixel(width1-3, i)[2];
+			 if (r != 0){
+				cont++;
+				if (cont == 2) {
+					for (m = width1-3; m > 0; m--){
+						 r = padronJ.getPixel(m, i-1)[0];
+						 g = padronJ.getPixel(m, i-1)[1];
+						 b = padronJ.getPixel(m, i-1)[2];
+						 if (r != 0){
+							 x = i+1;
+							 y = m+1;
+							 break;
+						 }
+					}
+					break;
+				}
+			 }
+		}
 		
+		System.out.println(x); System.out.println(y);
+		
+		/*
 		
 		//Cropeamos las firmas y las huellas para cada persona
 		List<ImagePlus>usuariosFirma = new ArrayList<ImagePlus>();
@@ -126,8 +149,8 @@ public class Main {
 
 		for (int m = 0; m<8; m++){
 			ImagePlus firmaUser,huellasUser = new ImagePlus();
-			firmaUser = IJ.openImage("C:/Users/inf250/git/DP1_partidosPoliticos/src/Recorte/recorteCostado.jpg");
-			huellasUser = IJ.openImage("C:/Users/inf250/git/DP1_partidosPoliticos/src/Recorte/recorteCostado.jpg");
+			firmaUser = IJ.openImage("C:/Users/lenovo/git/DP1_partidosPoliticos/src/Recorte/recorteCostado.jpg");
+			huellasUser = IJ.openImage("C:/Users/lenovo/git/DP1_partidosPoliticos/src/Recorte/recorteCostado.jpg");
 			usuariosFirma.add(firmaUser); 	usuariosHuella.add(huellasUser);
 		}	
 		//for (int m = 0; m < 8; m++) usuarios.get(m).show();
@@ -149,7 +172,7 @@ public class Main {
 				IJ.run(Copia2, "Crop", ""); 
 				Copia2.show();		
 		}
-		
+		*/
 
 	}
 
