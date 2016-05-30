@@ -1,5 +1,7 @@
 package Recorte;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +23,7 @@ public class Main {
 		ImagePlus padronJ = new ImagePlus();
 		/*IJ.run(padronJ, "Undo", "");
 		padronJ.close();*/
-		padronJ = IJ.openImage("C:/Users/lenovo/git/DP1_partidosPoliticos/src/Recorte/padron.rayas.firmado.2.jpg");
+		padronJ = IJ.openImage("D:/Users/a20101616/git/DP1_partidosPoliticos/src/Recorte/padron.rayas.firmado.2.jpg");
 		Prefs.blackBackground = false;
 		IJ.run(padronJ, "Make Binary", "");
 		//padronJ.show();
@@ -109,12 +111,12 @@ public class Main {
 		//padronJ.show();
 		IJ.run(padronJ, "Skeletonize", "");
 
-		new FileSaver(padronJ).saveAsPng("C:/Users/lenovo/git/DP1_partidosPoliticos/src/Recorte/recorteCostado.jpg");
+		new FileSaver(padronJ).saveAsPng("D:/Users/a20101616/git/DP1_partidosPoliticos/src/Recorte/recorteCostado.jpg");
 		Prefs.blackBackground = false;
 		
 		int width1=padronJ.getWidth();
 		int height1=padronJ.getHeight();
-		int cont = 0, x = 0 ,y = 0;
+		int cont = 0, xHuellas = 0 , yHuellas = 0;
 		
 		//obtienes esquina izquierda superior de una huella imp.setRoi(1027,204,28,24); imp.setRoi(y,x,cuadrado1,cuadrado2);
 		for(i=0;i<1000;i++){
@@ -129,8 +131,9 @@ public class Main {
 						 g = padronJ.getPixel(m, i-1)[1];
 						 b = padronJ.getPixel(m, i-1)[2];
 						 if (r != 0){
-							 x = i+1;
-							 y = m+1;
+							 // esquina izquierda superior del cuadrado de las huellas
+							 xHuellas = i+1; 
+							 yHuellas = m+1;
 							 break;
 						 }
 					}
@@ -139,40 +142,82 @@ public class Main {
 			 }
 		}
 		
-		System.out.println(x); System.out.println(y);
+		//System.out.println(xHuellas); System.out.println(yHuellas);
+		System.out.println("Procesando");
+		//cropeamos los digitos del DNI
+
+		int distanceBetweenSquaresH = 85 ,distanceBetweenSquares = 15, widthSquare = 14, heightSquare = 84;
+
+		for (int n  = 0; n<8; n++){
+			ImagePlus Copia1;
+			String rutaAlmacenar = "D:/Users/a20101616/git/DP1_partidosPoliticos/src/Recorte/Resultado/Persona"
+			+ String.valueOf(n+1);
+			File file = new File(rutaAlmacenar); 
+			file.mkdir();
+			//alguna razon rara tengo q hacer esto otra vez para que cree la carpeta DNI :S
+			String rutaAlmacenar2 = "D:/Users/a20101616/git/DP1_partidosPoliticos/src/Recorte/Resultado/Persona"
+			+ String.valueOf(n+1)  + "/DNI/";
+			File file2 = new File(rutaAlmacenar2); 
+			file2.mkdir();
+			for (int h = 0; h<8 ; h++) {
+				Copia1 = IJ.openImage("D:/Users/a20101616/git/DP1_partidosPoliticos/src/Recorte/recorteCostado.jpg");
+				if (n<4) Copia1.setRoi(26 + distanceBetweenSquares*h, 206 + distanceBetweenSquaresH * n  , 11 , 82);
+				else Copia1.setRoi(26 + distanceBetweenSquares*h, 209 + distanceBetweenSquaresH * n  , 11 , 82);
+			   // Copia1.show();
+				IJ.run(Copia1, "Crop", ""); int k = h+1;
+			    String rutaDNI = "D:/Users/a20101616/git/DP1_partidosPoliticos/src/Recorte/Resultado/Persona"
+			    + String.valueOf(n+1) + "/DNI/" + k + ".jpg";
+				new FileSaver(Copia1).saveAsPng(rutaDNI);
+				Prefs.blackBackground = false;
+			}
+		}	
 		
-		/*
+		System.out.println("Finalizado");
+
+		
+		//Cropeamos el Nombre
+		
+		
+		
+		
+		//Cropeamos el Apellido
+		
+		
 		
 		//Cropeamos las firmas y las huellas para cada persona
 		List<ImagePlus>usuariosFirma = new ArrayList<ImagePlus>();
 		List<ImagePlus>usuariosHuella = new ArrayList<ImagePlus>();
 
-		for (int m = 0; m<8; m++){
+		for (int n  = 0; n<8; n++){
 			ImagePlus firmaUser,huellasUser = new ImagePlus();
-			firmaUser = IJ.openImage("C:/Users/lenovo/git/DP1_partidosPoliticos/src/Recorte/recorteCostado.jpg");
-			huellasUser = IJ.openImage("C:/Users/lenovo/git/DP1_partidosPoliticos/src/Recorte/recorteCostado.jpg");
+			firmaUser = IJ.openImage("D:/Users/a20101616/git/DP1_partidosPoliticos/src/Recorte/recorteCostado.jpg");
+			huellasUser = IJ.openImage("D:/Users/a20101616/git/DP1_partidosPoliticos/src/Recorte/recorteCostado.jpg");
 			usuariosFirma.add(firmaUser); 	usuariosHuella.add(huellasUser);
 		}	
 		//for (int m = 0; m < 8; m++) usuarios.get(m).show();
-		int distanceBetweenSquares = 86, widthSquare = 150, heightSquare = 75;
+	    distanceBetweenSquares = 86; widthSquare = 150; heightSquare = 75;
 		
 		// obtenerCoordenadasFirma = funcionParaObtenerla;
 		// por el momento se utilizara un valor predeterminado donde se encuentra la firma
 		
 		//para cada imagen leída de la carpeta de imagenes realizar lo de abajo. 
-		for (int m = 0; m<8; m++){
+		for (int n = 0; n<8; n++){
 			//firma
 				ImagePlus Copia1,Copia2;
-				Copia1 = usuariosFirma.get(m); Copia2 = usuariosHuella.get(m);
-				Copia1.setRoi(862, 207 + distanceBetweenSquares*m , widthSquare , heightSquare);
+				Copia1 = usuariosFirma.get(n); Copia2 = usuariosHuella.get(n);
+				Copia1.setRoi(862, 207 + distanceBetweenSquares*n , widthSquare , heightSquare);
 			    IJ.run(Copia1, "Crop", ""); 
-			    Copia1.show();
+				//new FileSaver(padronJ).saveAsPng("D:/Users/a20101616/git/DP1_partidosPoliticos/src/Recorte/recorteCostado.jpg");
+				//Prefs.blackBackground = false;
+			    //Copia1.show();
 			//huella
-				Copia2.setRoi(1029, 205+ distanceBetweenSquares*m , widthSquare + 12, heightSquare+4);
+				Copia2.setRoi(1029, 205+ distanceBetweenSquares*n , widthSquare + 12, heightSquare+4);
 				IJ.run(Copia2, "Crop", ""); 
-				Copia2.show();		
-		}
-		*/
+				//new FileSaver(padronJ).saveAsPng("D:/Users/a20101616/git/DP1_partidosPoliticos/src/Recorte/recorteCostado.jpg");
+				//Prefs.blackBackground = false;
+				//Copia2.show();		
+		}	
+		
 
 	}
 

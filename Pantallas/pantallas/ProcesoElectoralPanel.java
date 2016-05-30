@@ -35,7 +35,7 @@ public class ProcesoElectoralPanel extends JPanel {
 		add(textField);
 		textField.setColumns(10);
 		
-		JComboBox comboBox = new JComboBox();
+		final JComboBox comboBox = new JComboBox();
 		comboBox.setBounds(145, 86, 172, 20);
 		add(comboBox);
 		
@@ -43,7 +43,7 @@ public class ProcesoElectoralPanel extends JPanel {
 		lblPorcentaje.setBounds(45, 147, 64, 14);
 		add(lblPorcentaje);
 		
-		JSpinner spinner = new JSpinner();
+		final JSpinner spinner = new JSpinner();
 		spinner.setBounds(142, 144, 64, 20);
 		add(spinner);
 		

@@ -4,11 +4,11 @@
 	<classpathentry kind="src" path="DAO"/>
 	<classpathentry kind="src" path="Model"/>
 	<classpathentry kind="src" path="Pantallas"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="lib" path="lib/ij.jar"/>
 	<classpathentry kind="lib" path="lib/mysql-connector-java-5.1.35-bin.jar"/>
-	<classpathentry kind="lib" path="C:/Users/lenovo/git/DP1_partidosPoliticos/lib/Catalano.Math.jar"/>
-	<classpathentry kind="lib" path="C:/Users/lenovo/git/DP1_partidosPoliticos/lib/Catalano.Image.jar"/>
-	<classpathentry kind="lib" path="C:/Users/lenovo/git/DP1_partidosPoliticos/lib/Catalano.Core.jar"/>
+	<classpathentry kind="lib" path="D:/Users/a20101616/git/DP1_partidosPoliticos/lib/Catalano.Core.jar"/>
+	<classpathentry kind="lib" path="D:/Users/a20101616/git/DP1_partidosPoliticos/lib/Catalano.Image.jar"/>
+	<classpathentry kind="lib" path="D:/Users/a20101616/git/DP1_partidosPoliticos/lib/Catalano.Math.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

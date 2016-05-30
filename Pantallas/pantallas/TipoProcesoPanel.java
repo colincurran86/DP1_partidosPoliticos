@@ -51,7 +51,7 @@ public class TipoProcesoPanel extends JPanel {
 		add(textField_1);
 		textField_1.setColumns(10);
 
-		JSpinner spinner = new JSpinner();
+		final JSpinner spinner = new JSpinner();
 		spinner.setBounds(131, 94 , 64, 20);
 		add(spinner);
 

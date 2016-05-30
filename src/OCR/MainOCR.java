@@ -37,10 +37,7 @@ public class MainOCR {
 	public MainOCR() {
 		initialize();
 		
-		
-		
-		
-		
+	
 	}
 
 	/**
