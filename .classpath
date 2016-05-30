@@ -11,8 +11,5 @@
 	<classpathentry kind="lib" path="lib/Catalano.Image.jar"/>
 	<classpathentry kind="lib" path="lib/Catalano.Math.jar"/>
 	<classpathentry kind="lib" path="lib/jcalendar-1.4.jar"/>
-	<classpathentry kind="lib" path="D:/Users/a20101616/git/DP1_partidosPoliticos/lib/Catalano.Core.jar"/>
-	<classpathentry kind="lib" path="D:/Users/a20101616/git/DP1_partidosPoliticos/lib/Catalano.Image.jar"/>
-	<classpathentry kind="lib" path="D:/Users/a20101616/git/DP1_partidosPoliticos/lib/Catalano.Math.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
