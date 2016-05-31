@@ -27,4 +27,8 @@ public class TipoProcDB {
     public void deleteTProc(int id){
     	daoTProc.deleteTProc(id);
     }
+    
+    public TipoProceso queryTPById(int id){
+    	return daoTProc.queryTPById(id);
+    }
 }

@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import models.Calendario;
 import models.PartidoPolitico;
 import models.Rol;
 import models.TipoProceso;
@@ -52,7 +53,7 @@ public class MySQLDAOTipoProceso implements DAOTipoProceso {
 				p.setPorcentaje(porcentaje);
 				arr.add(p);
 			}
-
+			connect.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -81,7 +82,7 @@ public class MySQLDAOTipoProceso implements DAOTipoProceso {
 			statement = connect.createStatement();
 			statement.executeUpdate("INSERT INTO TipoProceso " + "(Porcentaje , Descripcion) " + "VALUES ('"
 					+ tp.getPorcentaje() + "', '" + tp.getDescripcion() + "')");
-
+			connect.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -111,7 +112,7 @@ public class MySQLDAOTipoProceso implements DAOTipoProceso {
 					+ "' , Porcentaje= " + tp.getPorcentaje() + " WHERE idTipoProceso= " + tp.getId();
 
 			statement.executeUpdate(sql);
-
+			connect.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -137,7 +138,7 @@ public class MySQLDAOTipoProceso implements DAOTipoProceso {
 					DBConnection.password);
 			statement = connect.createStatement();
 			statement.executeUpdate("DELETE FROM TipoProceso WHERE idTipoProceso=" + id);
-
+			connect.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -151,6 +152,44 @@ public class MySQLDAOTipoProceso implements DAOTipoProceso {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public TipoProceso queryTPById(int id) {
+		// TODO Auto-generated method stub
+		TipoProceso tp=null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			connect = DriverManager.getConnection(DBConnection.URL_JDBC_MySQL, DBConnection.user,
+					DBConnection.password);
+			statement = connect.createStatement();			
+			resultSet=statement.executeQuery("SELECT * FROM TipoProceso " + 
+							"WHERE idTipoProceso= " + id);
+			
+			if (resultSet.next()){
+				int idFound = resultSet.getInt("idTipoProceso");
+				int porc=(int)resultSet.getDouble("Porcentaje");
+				String des=resultSet.getString("Descripcion");				
+				tp = new TipoProceso();
+				tp.setId(idFound);
+				tp.setPorcentaje(porc);
+				tp.setDescripcion(des);
+			}
+			connect.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return tp;
 	}
 
 }

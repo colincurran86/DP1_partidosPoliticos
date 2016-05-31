@@ -19,4 +19,8 @@ public class CalendarioDB {
     public void updateCal(Calendario c){
     	daoCalendario.updateCalendario(c);
     }
+    
+    public Calendario queryCalById(int id){
+    	return daoCalendario.queryCalById(id);
+    }
 }

@@ -9,4 +9,5 @@ public interface DAOTipoProceso {
 	void updateTProc(TipoProceso tp);
 	void deleteTProc(int id);	
 	ArrayList<TipoProceso> queryAllTProc();
+	TipoProceso queryTPById(int id);
 }

@@ -62,6 +62,10 @@ public class ProcessManager {
 		tProcesoDB.deleteTProc(id);
 	}
 	
+	public static TipoProceso queryTPById(int id){
+		return tProcesoDB.queryTPById(id);
+	}
+	
 	//PROCESO
 	public static void addProc(ProcesoElectoral p)
     {
@@ -87,5 +91,9 @@ public class ProcessManager {
 	
 	public static void updateCal(Calendario c){
 		calDB.updateCal(c);
+	}
+	
+	public static Calendario queryCalById(int id){
+		return calDB.queryCalById(id);
 	}
 }

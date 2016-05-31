@@ -28,4 +28,6 @@ public class ProcesoDB {
     public void deleteTProc(int id){
     	daoProc.deleteProceso(id);
     }
+    
+    
 }

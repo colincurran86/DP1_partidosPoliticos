@@ -28,6 +28,7 @@ public class MySQLDAOPartPolitico implements DAOPartPolitico {
 			statement.executeUpdate("INSERT INTO PartidosPoliticos "
 					+ "(Nombre , Representante , TelefonoRepre , Correo) " + "VALUES ('" + p.getNombre() + "', '"
 					+ p.getNombreRep() + "', '" + p.getTelefono() + "', '" + p.getCorreo() + "')");
+			connect.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -71,6 +72,7 @@ public class MySQLDAOPartPolitico implements DAOPartPolitico {
 				p.setCorreo(correo);
 				arr.add(p);
 			}
+			connect.close();
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -101,6 +103,7 @@ public class MySQLDAOPartPolitico implements DAOPartPolitico {
 					"SET Nombre= '" + p.getNombre() + "', Representante= '"
 					+ p.getNombreRep() + "', TelefonoRepre= '" + p.getTelefono() 
 					+ "', Correo= '" + p.getCorreo() + "' WHERE IdPartidosPoliticos= " + p.getId());
+			connect.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -125,6 +128,7 @@ public class MySQLDAOPartPolitico implements DAOPartPolitico {
 					DBConnection.password);
 			statement = connect.createStatement();					
 			statement.executeUpdate("DELETE FROM PartidosPoliticos WHERE IdPartidosPoliticos = " + id);
+			connect.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

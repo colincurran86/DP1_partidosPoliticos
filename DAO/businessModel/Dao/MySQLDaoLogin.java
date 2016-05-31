@@ -44,7 +44,7 @@ public class MySQLDaoLogin implements DaoLogin {
 					+ usuario.getNombre() + "'" + "and Password= '" + usuario.getPassword() + "'");
 			resultSet.next();
 			int resultado = resultSet.getInt(1);
-
+			connect.close();
 			if (resultado == 1)
 				return true;
 			else

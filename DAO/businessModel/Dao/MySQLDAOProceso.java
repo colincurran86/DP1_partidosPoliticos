@@ -21,6 +21,7 @@ import models.Calendario;
 import models.PartidoPolitico;
 import models.ProcesoElectoral;
 import models.Rol;
+import models.TipoProceso;
 import models.Usuario;
 
 public class MySQLDAOProceso implements DAOProceso{
@@ -48,6 +49,10 @@ public class MySQLDAOProceso implements DAOProceso{
 			c.setFechaIni(p.getFechaIni());
 			c.setFechaFin(p.getFechaFin());
 			
+			connect.close();
+			//System.out.println(p.getFechaIni());
+			//System.out.println(p.getFechaFin());
+			
 			int id=ProcessManager.add(c);
 			p.setIdCalendario(id);
 			ProcessManager.updateProc(p);
@@ -71,7 +76,55 @@ public class MySQLDAOProceso implements DAOProceso{
 	public ArrayList<ProcesoElectoral> queryAllProceso() {
 		ArrayList<ProcesoElectoral> arr = new ArrayList<ProcesoElectoral>();
 		// TODO Auto-generated method stub
+		try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			connect = DriverManager.getConnection(DBConnection.URL_JDBC_MySQL, DBConnection.user,
+					DBConnection.password);
+
+			statement = connect.createStatement();
+			resultSet = statement.executeQuery("select * from Proceso");
+
+			while (resultSet.next()) {
+				int id = resultSet.getInt("IdProceso");
+				String nombre = resultSet.getString("Nombre");
+				int porc = Integer.parseInt(resultSet.getString("PorcentajeAceptado"));
+				int idTP = Integer.parseInt(resultSet.getString("idTipoProceso"));
+				int idCal=Integer.parseInt(resultSet.getString("idCalendario"));
+				
+				
+				ProcesoElectoral p = new ProcesoElectoral();
+				p.setId(id);
+				p.setNombre(nombre);
+				p.setPorcentaje(porc);
+				p.setIdTipoProceso(idTP);
+				p.setIdCalendario(idCal);
+				
+				Calendario c=ProcessManager.queryCalById(idCal);
+				p.setFechaIni(c.getFechaIni());
+				p.setFechaFin(c.getFechaFin());
+				
+				TipoProceso tp=ProcessManager.queryTPById(idTP);
+				p.setTipoProceso(tp.getDescripcion());
+								
+				arr.add(p);
+			}
+			connect.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return arr;
+
+		
 	}
 
 	@Override
@@ -92,6 +145,7 @@ public class MySQLDAOProceso implements DAOProceso{
 			c.setId(p.getIdCalendario());
 			c.setFechaIni(p.getFechaIni());
 			c.setFechaFin(p.getFechaFin());
+			connect.close();
 			ProcessManager.updateCal(c);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -117,6 +171,7 @@ public class MySQLDAOProceso implements DAOProceso{
 					DBConnection.password);
 			statement = connect.createStatement();					
 			statement.executeUpdate("DELETE FROM Proceso WHERE IdProceso = " + id);
+			connect.close();
 			//eliminar calendario ?
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
