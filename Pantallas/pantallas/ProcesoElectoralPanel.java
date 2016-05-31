@@ -263,7 +263,9 @@ public class ProcesoElectoralPanel extends JPanel implements ActionListener {
 			TipoProceso tp = listaTProc.get(comboBox.getSelectedIndex());
 			p.setIdTipoProceso(tp.getId());
 			p.setTipoProceso(tp.getDescripcion());
-
+			
+			p.setId(idRow);
+			
 			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
 			String startDateString = formatter.format(dateIni.getDate());

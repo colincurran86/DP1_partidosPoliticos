@@ -154,13 +154,20 @@ public class MySQLDAOProceso implements DAOProceso{
 					"SET Nombre= '" + p.getNombre() + "', PorcentajeAceptado= "
 					+ p.getPorcentaje() + ", IdTipoProceso= " + p.getIdTipoProceso() 
 					+ " WHERE IdProceso= " + p.getId());
+			
+			resultSet = statement.executeQuery("SELECT * FROM Proceso " + "WHERE idProceso= " + p.getId());
+			int idCal=1;
+			if (resultSet.next()) 
+				idCal = resultSet.getInt("idCalendario");			
+			
 			//falta actualizar calendario
-			Calendario c=new Calendario();
-			c.setId(p.getIdCalendario());
-			c.setFechaIni(p.getFechaIni());
-			c.setFechaFin(p.getFechaFin());
+			statement.executeUpdate("UPDATE Calendario " + "SET FechaInicio= '" 
+							+ p.getFechaIni() + "', FechaFin= '"
+							+ p.getFechaFin() + "' WHERE idCalendario= " + idCal);
+			
+			//ProcessManager.updateCal(c);
+			
 			connect.close();
-			ProcessManager.updateCal(c);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
