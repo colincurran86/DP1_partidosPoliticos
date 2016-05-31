@@ -30,14 +30,14 @@ public class Main {
 		
 		int width1=padronJ.getWidth();
 		int height1=padronJ.getHeight();
-		int cont = 0, alturaX = 0 , yHuellas = 0, yFirmas = 0;
+		int cont = 0, alturaX = 0 , yHuellas = 0, yFirmas = 0, yDNI = 0, yNombre = 0;
 		
-		//obtienes esquina izquierda superior de una huella imp.setRoi(1027,204,28,24); imp.setRoi(y,x,cuadrado1,cuadrado2);
 		rf.coordenadasHuella(padronJ); 	alturaX = rf.getX(); yHuellas = rf.getYHuellas();
 		rf.coordenadasFirma(padronJ); yFirmas = rf.getYFirmas();
+		rf.coordenadaDNIyNombre(padronJ); yDNI = rf.getYDNI(); yNombre = rf.getYNombre();
 		
 		//cropeamos los digitos del DNI
-
+		System.out.println(alturaX + " " + yDNI);
 		int distanceBetweenSquaresH = 85 ,distanceBetweenSquares = 15, widthSquare = 14, heightSquare = 84;
 
 		for (int n  = 0; n < personasxPadron; n++){
@@ -48,10 +48,11 @@ public class Main {
 			File file2 = new File(rutaAlmacenar); 	
 			file2.mkdirs();
 					
+			
 			for (int h = 0; h<8 ; h++) {
 				Copia1 = IJ.openImage(ruta2);
-				if (n<4) Copia1.setRoi(26 + distanceBetweenSquares*h, 206 + distanceBetweenSquaresH * n  , 11 , 82);
-				else Copia1.setRoi(26 + distanceBetweenSquares*h, 209 + distanceBetweenSquaresH * n  , 11 , 82);
+				if (n<4) Copia1.setRoi(yDNI + distanceBetweenSquares*h, alturaX  + 2 + distanceBetweenSquaresH * n  , 11 , 82);
+				else Copia1.setRoi(yDNI + distanceBetweenSquares*h, alturaX + 5 + distanceBetweenSquaresH * n  , 11 , 82);
 			   // Copia1.show();
 				IJ.run(Copia1, "Crop", ""); int k = h+1;
 			    String rutaDNI = workingDir + "/src/Recorte/Resultado/Persona"
