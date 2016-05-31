@@ -14,7 +14,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		String workingDir = System.getProperty("user.dir");
+		String workingDir = System.getProperty("user.dir"); // nos evitamos el problema de las rutas :'v
 		System.out.println(workingDir);
 
 		int personasxPadron = 8;

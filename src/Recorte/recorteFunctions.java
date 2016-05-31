@@ -14,7 +14,7 @@ public class recorteFunctions {
 		
 		int widthPar=2073;
 		int heightPar=972;
-		int personasxPadron = 8;
+		int personasxPadron = 8; // kappa
 		String ruta1 = workingDir +"/src/Recorte/padron.rayas.firmado.2.jpg";
 		String ruta2 = workingDir + "/src/Recorte/recorteCostado.jpg";
 		
