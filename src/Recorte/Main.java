@@ -14,17 +14,18 @@ public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		
+		String workingDir = System.getProperty("user.dir");
+		System.out.println(workingDir);
 
 		int personasxPadron = 8;
-		String ruta1 = "C:/Users/lenovo/git/DP1_partidosPoliticos/src/Recorte/padron.rayas.firmado.2.jpg";
-		String ruta2 = "C:/Users/lenovo/git/DP1_partidosPoliticos/src/Recorte/recorteCostado.jpg";
+		String ruta1 = workingDir + "/src/Recorte/padron.rayas.firmado.2.jpg";
+		String ruta2 = workingDir + "/src/Recorte/recorteCostado.jpg";
 		long startTime = System.currentTimeMillis();
 		
 		
 		System.out.println("Procesando");
 		recorteFunctions rf = new recorteFunctions();
-		rf.recortarCostadosProcesarPadron();
+		rf.recortarCostadosProcesarPadron(workingDir);
 		ImagePlus padronJ =  rf.getPadron();
 		
 		int width1=padronJ.getWidth();
@@ -41,7 +42,7 @@ public class Main {
 
 		for (int n  = 0; n < personasxPadron; n++){
 			ImagePlus Copia1;
-			String rutaAlmacenar = "C:/Users/lenovo/git/DP1_partidosPoliticos/src/Recorte/Resultado/Persona"
+			String rutaAlmacenar = workingDir + "/src/Recorte/Resultado/Persona"
 					+ String.valueOf(n+1)  + "/DNI/";
 			
 			File file2 = new File(rutaAlmacenar); 	
@@ -53,7 +54,7 @@ public class Main {
 				else Copia1.setRoi(26 + distanceBetweenSquares*h, 209 + distanceBetweenSquaresH * n  , 11 , 82);
 			   // Copia1.show();
 				IJ.run(Copia1, "Crop", ""); int k = h+1;
-			    String rutaDNI = "C:/Users/lenovo/git/DP1_partidosPoliticos/src/Recorte/Resultado/Persona"
+			    String rutaDNI = workingDir + "/src/Recorte/Resultado/Persona"
 			    + String.valueOf(n+1) + "/DNI/" + k + ".jpg";
 				new FileSaver(Copia1).saveAsPng(rutaDNI);
 				Prefs.blackBackground = false;
@@ -75,9 +76,9 @@ public class Main {
 
 		for (int n  = 0; n < personasxPadron; n++){
 			ImagePlus firmaUser,huellasUser = new ImagePlus();
-			String rutaAlmacenar = "C:/Users/lenovo/git/DP1_partidosPoliticos/src/Recorte/Resultado/Persona"
+			String rutaAlmacenar = workingDir + "/src/Recorte/Resultado/Persona"
 					+ String.valueOf(n+1)  + "/Huella/";
-			String rutaAlmacenar2 = "C:/Users/lenovo/git/DP1_partidosPoliticos/src/Recorte/Resultado/Persona"
+			String rutaAlmacenar2 = workingDir + "/src/Recorte/Resultado/Persona"
 					+ String.valueOf(n+1)  + "/Firma/";		
 			File file = new File(rutaAlmacenar);  file.mkdirs();
 			File file2 = new File(rutaAlmacenar2);  file2.mkdirs();
@@ -95,7 +96,7 @@ public class Main {
 				Copia1 = usuariosFirma.get(n); Copia2 = usuariosHuella.get(n);
 				Copia1.setRoi(yFirmas, alturaX + distanceBetweenSquares*n , widthSquare , heightSquare);
 			    IJ.run(Copia1, "Crop", ""); 
-				new FileSaver(Copia1).saveAsPng("C:/Users/lenovo/git/DP1_partidosPoliticos/src/Recorte/Resultado/Persona"
+				new FileSaver(Copia1).saveAsPng(workingDir + "/src/Recorte/Resultado/Persona"
 					+ String.valueOf(n+1)  + "/Firma/firma.jpg");
 				Prefs.blackBackground = false;
 			    //Copia1.show();
@@ -103,7 +104,7 @@ public class Main {
 				Copia2.setRoi(yHuellas, alturaX+ distanceBetweenSquares*n , widthSquare + 12, heightSquare+4);
 				IJ.run(Copia2, "Crop", ""); 
 				//new FileSaver(padronJ).saveAsPng("D:/Users/a20101616/git/DP1_partidosPoliticos/src/Recorte/recorteCostado.jpg");
-				new FileSaver(Copia2).saveAsPng("C:/Users/lenovo/git/DP1_partidosPoliticos/src/Recorte/Resultado/Persona"
+				new FileSaver(Copia2).saveAsPng(workingDir + "/src/Recorte/Resultado/Persona"
 						+ String.valueOf(n+1)  + "/Huella/Huella.jpg");
 				Prefs.blackBackground = false;
 				//Copia2.show();		

@@ -10,13 +10,13 @@ public class recorteFunctions {
 	private int x, yHuellas, yFirmas;
 	private ImagePlus padronJ = new ImagePlus();
 	
-	public void recortarCostadosProcesarPadron(){
+	public void recortarCostadosProcesarPadron(String workingDir){
 		
 		int widthPar=2073;
 		int heightPar=972;
 		int personasxPadron = 8;
-		String ruta1 = "C:/Users/lenovo/git/DP1_partidosPoliticos/src/Recorte/padron.rayas.firmado.2.jpg";
-		String ruta2 = "C:/Users/lenovo/git/DP1_partidosPoliticos/src/Recorte/recorteCostado.jpg";
+		String ruta1 = workingDir +"/src/Recorte/padron.rayas.firmado.2.jpg";
+		String ruta2 = workingDir + "/src/Recorte/recorteCostado.jpg";
 		
 		
 		ImagePlus padronJ = new ImagePlus();
