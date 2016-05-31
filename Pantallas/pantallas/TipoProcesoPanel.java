@@ -14,9 +14,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.JButton;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.text.DefaultFormatter;
 
 import models.PartidoPolitico;
 import models.TipoProceso;
@@ -51,9 +54,14 @@ public class TipoProcesoPanel extends JPanel {
 		txtFieldDescripcion.setBounds(131, 44, 147, 20);
 		add(txtFieldDescripcion);
 		txtFieldDescripcion.setColumns(10);
-
+		
+		
+		SpinnerModel sm = new SpinnerNumberModel(0, 0, 100, 1); //default value,lower bound,upper bound,increment by 
 		JSpinner spinner = new JSpinner();
 		spinner.setBounds(131, 94 , 64, 20);
+		JSpinner.NumberEditor jsEditor = (JSpinner.NumberEditor)spinner.getEditor();
+		DefaultFormatter formatter = (DefaultFormatter) jsEditor.getTextField().getFormatter();
+		formatter.setAllowsInvalid(false);		
 		add(spinner);
 
 		
@@ -71,27 +79,34 @@ public class TipoProcesoPanel extends JPanel {
 		
 		btnAgregar.addActionListener(new ActionListener() { 
 		    public void actionPerformed(ActionEvent e) { 
-		    	String descripcion = txtFieldDescripcion.getText();
-		    	int porcentaje = (int) spinner.getValue();
-		    	TipoProceso tp=new TipoProceso();
-		    	tp.setDescripcion(descripcion);
-		    	tp.setPorcentaje(porcentaje);		    
-		    	ProcessManager.addTProc(tp);
-		    	refreshTblTProc();
-		    	
+		    	if (camposNull()) {
+					JOptionPane.showMessageDialog(null, "Rellene los campos");
+				} else {
+					String descripcion = txtFieldDescripcion.getText();
+			    	int porcentaje = (int) spinner.getValue();
+			    	TipoProceso tp=new TipoProceso();
+			    	tp.setDescripcion(descripcion);
+			    	tp.setPorcentaje(porcentaje);		    
+			    	ProcessManager.addTProc(tp);
+			    	refreshTblTProc();
+				}		    			    	
 		    } 
 		});
 		
 		btnModificar.addActionListener(new ActionListener() { 
 		    public void actionPerformed(ActionEvent e) { 
-		    	String descripcion = txtFieldDescripcion.getText();
-		    	int porcentaje = (int) spinner.getValue();	
-		    	TipoProceso tp=new TipoProceso();
-		    	tp.setDescripcion(descripcion);
-		    	tp.setPorcentaje(porcentaje);	
-		    	tp.setId(idRow);
-		    	ProcessManager.updateTProc(tp);		    	
-		    	refreshTblTProc();
+		    	if (camposNull()) {
+					JOptionPane.showMessageDialog(null, "Rellene los campos");
+				} else {
+					String descripcion = txtFieldDescripcion.getText();
+			    	int porcentaje = (int) spinner.getValue();	
+			    	TipoProceso tp=new TipoProceso();
+			    	tp.setDescripcion(descripcion);
+			    	tp.setPorcentaje(porcentaje);	
+			    	tp.setId(idRow);
+			    	ProcessManager.updateTProc(tp);		    	
+			    	refreshTblTProc();
+				}		    	
 		    } 
 		});
 		
@@ -182,5 +197,11 @@ public class TipoProcesoPanel extends JPanel {
 		partPolModel.tProcLst = ProcessManager.queryAllTProc();
 		partPolModel.fireTableChanged(null);
 	}
-
+	
+	private boolean camposNull() {
+		boolean v = false;
+		if (txtFieldDescripcion.getText().equals(""))
+			v = true;
+		return v;
+	}
 }

@@ -18,9 +18,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.text.DefaultFormatter;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JButton;
@@ -76,9 +80,15 @@ public class ProcesoElectoralPanel extends JPanel implements ActionListener {
 		JLabel lblPorcentaje = new JLabel("Porcentaje");
 		lblPorcentaje.setBounds(45, 114, 64, 14);
 		add(lblPorcentaje);
-
-		spinner = new JSpinner();
+		
+		SpinnerModel sm = new SpinnerNumberModel(0, 0, 100, 1); //default value,lower bound,upper bound,increment by 
+		spinner = new JSpinner(sm);
 		spinner.setBounds(142, 111, 64, 20);
+		JSpinner.NumberEditor jsEditor = (JSpinner.NumberEditor)spinner.getEditor();
+		DefaultFormatter formatter = (DefaultFormatter) jsEditor.getTextField().getFormatter();
+		formatter.setAllowsInvalid(false);
+		//JFormattedTextField txt = ((JSpinner.NumberEditor) spinner.getEditor()).getTextField();		
+        //((NumberFormatter)txt.getFormatter()).setAllowsInvalid(false);
 		add(spinner);
 
 		btnAgregar = new JButton("Agregar");
@@ -226,65 +236,76 @@ public class ProcesoElectoralPanel extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub			
+		
 		if (e.getSource() == btnAgregar) {
-			ProcesoElectoral p = new ProcesoElectoral();
-			p.setNombre(txtFieldNombre.getText());
-			p.setPorcentaje((int) spinner.getValue());
-			TipoProceso tp = listaTProc.get(comboBox.getSelectedIndex());
-			p.setIdTipoProceso(tp.getId());
-			p.setTipoProceso(tp.getDescripcion());
-
-			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-
-			String startDateString = formatter.format(dateIni.getDate());
-			Date d;
-			try {
-				d = new Date(formatter.parse(startDateString).getTime());
-				p.setFechaIni(d);
-
-				startDateString = formatter.format(dateFin.getDate());
-				d = new Date(formatter.parse(startDateString).getTime());
-				p.setFechaFin(d);
-
-			} catch (ParseException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
 			
+			if (camposNull()) {
+				JOptionPane.showMessageDialog(null, "Rellene los campos");
+			} else {
+				ProcesoElectoral p = new ProcesoElectoral();
+				p.setNombre(txtFieldNombre.getText());
+				p.setPorcentaje((int) spinner.getValue());
+				TipoProceso tp = listaTProc.get(comboBox.getSelectedIndex());
+				p.setIdTipoProceso(tp.getId());
+				p.setTipoProceso(tp.getDescripcion());
 
-			ProcessManager.addProc(p);
-			refreshTblProc();
+				SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+
+				String startDateString = formatter.format(dateIni.getDate());
+				Date d;
+				try {
+					d = new Date(formatter.parse(startDateString).getTime());
+					p.setFechaIni(d);
+
+					startDateString = formatter.format(dateFin.getDate());
+					d = new Date(formatter.parse(startDateString).getTime());
+					p.setFechaFin(d);
+
+				} catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}				
+
+				ProcessManager.addProc(p);
+				refreshTblProc();
+			}						
 		}
 		if (e.getSource() == btnModificar) {
-			ProcesoElectoral p = new ProcesoElectoral();
-			p.setNombre(txtFieldNombre.getText());
-			p.setPorcentaje((int) spinner.getValue());
-			TipoProceso tp = listaTProc.get(comboBox.getSelectedIndex());
-			p.setIdTipoProceso(tp.getId());
-			p.setTipoProceso(tp.getDescripcion());
 			
-			p.setId(idRow);
+			if (camposNull()) {
+				JOptionPane.showMessageDialog(null, "Rellene los campos");
+			} else {
+				ProcesoElectoral p = new ProcesoElectoral();
+				p.setNombre(txtFieldNombre.getText());
+				p.setPorcentaje((int) spinner.getValue());
+				TipoProceso tp = listaTProc.get(comboBox.getSelectedIndex());
+				p.setIdTipoProceso(tp.getId());
+				p.setTipoProceso(tp.getDescripcion());
+				
+				p.setId(idRow);
+				
+				SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+
+				String startDateString = formatter.format(dateIni.getDate());
+				Date d;
+				try {
+					d = new Date(formatter.parse(startDateString).getTime());
+					p.setFechaIni(d);
+
+					startDateString = formatter.format(dateFin.getDate());
+					d = new Date(formatter.parse(startDateString).getTime());
+					p.setFechaFin(d);
+
+				} catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+				ProcessManager.updateProc(p);
+				refreshTblProc();
+			}			
 			
-			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-
-			String startDateString = formatter.format(dateIni.getDate());
-			Date d;
-			try {
-				d = new Date(formatter.parse(startDateString).getTime());
-				p.setFechaIni(d);
-
-				startDateString = formatter.format(dateFin.getDate());
-				d = new Date(formatter.parse(startDateString).getTime());
-				p.setFechaFin(d);
-
-			} catch (ParseException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-
-			ProcessManager.updateProc(p);
-			refreshTblProc();
 		}
 		if (e.getSource() == btnEliminar) {
 			int res = JOptionPane.showConfirmDialog(null, "¿Está seguro?");
@@ -293,5 +314,12 @@ public class ProcesoElectoralPanel extends JPanel implements ActionListener {
 				refreshTblProc();
 			}
 		}
+	}
+	
+	private boolean camposNull() {
+		boolean v = false;
+		if (txtFieldNombre.getText().equals(""))
+			v = true;
+		return v;
 	}
 }

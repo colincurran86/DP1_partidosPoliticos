@@ -6,7 +6,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.text.NumberFormatter;
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 
 import models.PartidoPolitico;
 import bModel.ProcessManager;
@@ -14,16 +16,17 @@ import bModel.ProcessManager;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-public class PartidoPoliticoPanel extends JPanel implements ActionListener{
+public class PartidoPoliticoPanel extends JPanel implements ActionListener {
 	private JTextField txtFieldNombre;
 	private JTextField txtFieldNRep;
-	private JTextField txtFieldTel;
+	private JTextField txtFieldTel;// JFormattedTextField txtFieldTel;//
 	private JTextField txtFieldCorreo;
 	private JTable tblPartPol;
 	MyTableModel partPolModel;
@@ -58,11 +61,11 @@ public class PartidoPoliticoPanel extends JPanel implements ActionListener{
 		txtFieldNRep.setColumns(10);
 
 		btnAgregar = new JButton("Agregar");
-		
+
 		btnAgregar.setBounds(34, 153, 89, 23);
 		add(btnAgregar);
 
-		btnModificar = new JButton("Modificar");		
+		btnModificar = new JButton("Modificar");
 		btnModificar.setBounds(150, 153, 89, 23);
 		add(btnModificar);
 
@@ -70,7 +73,15 @@ public class PartidoPoliticoPanel extends JPanel implements ActionListener{
 		lblTelefono.setBounds(28, 86, 129, 14);
 		add(lblTelefono);
 
-		txtFieldTel = new JTextField();
+		/*
+		 * NumberFormat format = NumberFormat.getNumberInstance();
+		 * NumberFormatter formatter = new NumberFormatter(format);
+		 * formatter.setMinimum(0); formatter.setMaximum(Integer.MAX_VALUE);
+		 * formatter.setValueClass(Integer.class);
+		 * formatter.setCommitsOnValidEdit(true);
+		 */
+
+		txtFieldTel = new JTextField();// new JFormattedTextField(format);//
 		txtFieldTel.setBounds(180, 83, 175, 20);
 		add(txtFieldTel);
 		txtFieldTel.setColumns(10);
@@ -84,7 +95,7 @@ public class PartidoPoliticoPanel extends JPanel implements ActionListener{
 		add(txtFieldCorreo);
 		txtFieldCorreo.setColumns(10);
 
-		btnEliminar = new JButton("Eliminar");	
+		btnEliminar = new JButton("Eliminar");
 		btnEliminar.setBounds(266, 153, 89, 23);
 		add(btnEliminar);
 
@@ -108,7 +119,7 @@ public class PartidoPoliticoPanel extends JPanel implements ActionListener{
 			public void mouseClicked(MouseEvent e) {
 				int selRow = tblPartPol.getSelectedRow();
 				int id = Integer.parseInt(tblPartPol.getValueAt(selRow, 0).toString());
-				idRow=id;
+				idRow = id;
 				String nombre = tblPartPol.getValueAt(selRow, 1).toString();
 				String rep = tblPartPol.getValueAt(selRow, 2).toString();
 				String tel = tblPartPol.getValueAt(selRow, 3).toString();
@@ -117,13 +128,14 @@ public class PartidoPoliticoPanel extends JPanel implements ActionListener{
 				txtFieldNombre.setText(nombre);
 				txtFieldNRep.setText(rep);
 				txtFieldTel.setText(tel);
-				txtFieldCorreo.setText(correo);				
+				txtFieldCorreo.setText(correo);
 			}
 		});
-				
+
 		btnAgregar.addActionListener(this);
 		btnModificar.addActionListener(this);
 		btnEliminar.addActionListener(this);
+
 	}
 
 	class MyTableModel extends AbstractTableModel {
@@ -178,39 +190,57 @@ public class PartidoPoliticoPanel extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		if(e.getSource() == btnAgregar){			
-			PartidoPolitico p = new PartidoPolitico();
-			p.setCorreo(txtFieldCorreo.getText());
-			p.setNombre(txtFieldNombre.getText());
-			p.setNombreRep(txtFieldNRep.getText());
-			p.setTelefono(txtFieldTel.getText());
-			ProcessManager.addPartPolitico(p);
-			refreshTblPartPol();
-		}
-		if(e.getSource() == btnModificar){			
-			String nombre = txtFieldNombre.getText();
-			String rep = txtFieldNRep.getText();
-			String tel = txtFieldTel.getText();
-			String correo = txtFieldCorreo.getText();
+		if (e.getSource() == btnAgregar) {
+			if (camposNull()) {
+				JOptionPane.showMessageDialog(null, "Rellene los campos");
+			} else {
+				PartidoPolitico p = new PartidoPolitico();
+				p.setCorreo(txtFieldCorreo.getText());
+				p.setNombre(txtFieldNombre.getText());
+				p.setNombreRep(txtFieldNRep.getText());
+				p.setTelefono(txtFieldTel.getText());
+				ProcessManager.addPartPolitico(p);
+				refreshTblPartPol();
+			}
 
-			PartidoPolitico p = new PartidoPolitico();
-			p.setId(idRow);
-			p.setNombre(nombre);
-			p.setNombreRep(rep);
-			p.setTelefono(tel);
-			p.setCorreo(correo);
-
-			ProcessManager.updatePartPol(p);
-			refreshTblPartPol();
 		}
-		if(e.getSource() == btnEliminar){
-			int res = JOptionPane.showConfirmDialog(null,"¿Está seguro?"); 
-			if (res == JOptionPane.OK_OPTION) {					
-				ProcessManager.deletePartPol(idRow);
+		if (e.getSource() == btnModificar) {
+
+			if (camposNull()) {
+				JOptionPane.showMessageDialog(null, "Rellene los campos");
+			} else {
+				String nombre = txtFieldNombre.getText();
+				String rep = txtFieldNRep.getText();
+				String tel = txtFieldTel.getText();
+				String correo = txtFieldCorreo.getText();
+
+				PartidoPolitico p = new PartidoPolitico();
+				p.setId(idRow);
+				p.setNombre(nombre);
+				p.setNombreRep(rep);
+				p.setTelefono(tel);
+				p.setCorreo(correo);
+
+				ProcessManager.updatePartPol(p);
 				refreshTblPartPol();
 			}
 		}
+		if (e.getSource() == btnEliminar) {
+
+			int res = JOptionPane.showConfirmDialog(null, "¿Está seguro?");
+			if (res == JOptionPane.OK_OPTION) {
+				ProcessManager.deletePartPol(idRow);
+				refreshTblPartPol();
+			}
+
+		}
 	}
-	
-	
+
+	private boolean camposNull() {
+		boolean v = false;
+		if (txtFieldNombre.getText().equals("") || txtFieldNRep.getText().equals("") || txtFieldTel.getText().equals("")
+				|| txtFieldCorreo.getText().equals(""))
+			v = true;
+		return v;
+	}
 }
