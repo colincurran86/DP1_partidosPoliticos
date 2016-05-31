@@ -7,7 +7,7 @@ import ij.io.FileSaver;
 
 public class recorteFunctions {
 	
-	private int x, yHuellas, yFirmas;
+	private int x, yHuellas, yFirmas, yDNI, yNombre;
 	private ImagePlus padronJ = new ImagePlus();
 	
 	public void recortarCostadosProcesarPadron(String workingDir){
@@ -142,24 +142,41 @@ public class recorteFunctions {
 		int width1=padronJ.getWidth();
 		int height1=padronJ.getHeight();
 		int m, i, r , g , b , cont = 0 , alturaX = this.x - 3 , anchoY = this.yHuellas - 2;
-		//System.out.println("altura x " + alturaX);
-		//System.out.println("altura y " +anchoY);
-		//System.out.println(padronJ.getPixel(887, 201)[0]);
-		//System.out.println(padronJ.getPixel(1026, 201)[0]);
 		for(i=anchoY;i>0;i--){
 			 r = padronJ.getPixel(i, alturaX)[0];
 			 if (r != 0){
 				 this.yFirmas = i + 1;
 				 break;
+				 
 			 }
 		}
 		
 	}
 	
+	
+	public void coordenadaDNIyNombre(ImagePlus padronJ){
+		
+		int width1=padronJ.getWidth();
+		int height1=padronJ.getHeight();
+		int m, i, r , g , b , cont = 0 , alturaX = this.x - 3 , anchoY = this.yFirmas - 2;
+		for(i=anchoY;i>0;i--){
+			 r = padronJ.getPixel(i, alturaX)[0];
+			 if (r != 0){
+				 cont++;
+				 if (cont == 1) this.yNombre = i+1;
+				 if (cont == 2){
+					 this.yDNI = i + 2;
+					 break;	 
+				 }
+			 }
+		}
+		
+	}
+	
+	
 	public ImagePlus getPadron(){
 		return this.padronJ;
 	}
-	
 	
 	
 	public int getX (){
@@ -172,6 +189,14 @@ public class recorteFunctions {
 	
 	public int getYFirmas (){
 		return this.yFirmas;
+	}
+	
+	public int getYDNI (){
+		return this.yDNI;
+	}
+	
+	public int getYNombre(){
+		return this.yNombre;
 	}
 	
 }
