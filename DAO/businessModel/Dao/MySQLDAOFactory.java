@@ -22,4 +22,16 @@ public class MySQLDAOFactory extends DAOFactory{
 		return new MySQLDAOTipoProceso();
 	}
 
+	@Override
+	public DAOProceso getDAOProceso() {
+		// TODO Auto-generated method stub
+		return new MySQLDAOProceso();
+	}
+
+	@Override
+	public DAOCalendario getDAOCalendario() {
+		// TODO Auto-generated method stub
+		return new MySQLDAOCalendario();
+	}
+
 }

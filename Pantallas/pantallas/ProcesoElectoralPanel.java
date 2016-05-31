@@ -3,12 +3,20 @@ package pantallas;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.sql.Date;
 import java.util.List;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.AbstractTableModel;
@@ -19,6 +27,8 @@ import javax.swing.JButton;
 
 import businessModel.Dao.MySQLDAOProceso;
 import models.PartidoPolitico;
+import models.ProcesoElectoral;
+import models.TipoProceso;
 import pantallas.PartidoPoliticoPanel.MyTableModel;
 
 import com.toedter.calendar.JDateChooser;
@@ -26,7 +36,7 @@ import com.toedter.calendar.JDateChooser;
 import bModel.ProcessManager;
 
 public class ProcesoElectoralPanel extends JPanel implements ActionListener{
-	private JTextField textField;
+	private JTextField txtFieldNombre;
 	private JTable tblProcesos;
 	private JSpinner spinner;
 	private JDateChooser dateIni;
@@ -38,6 +48,7 @@ public class ProcesoElectoralPanel extends JPanel implements ActionListener{
 	private JButton btnAgregar;
 	private JButton btnModificar;
 	private JButton btnEliminar;
+	private List<TipoProceso> listaTProc;
 	
 
 	/**
@@ -54,10 +65,10 @@ public class ProcesoElectoralPanel extends JPanel implements ActionListener{
 		lblTipoProceso.setBounds(45, 78, 75, 14);
 		add(lblTipoProceso);
 		
-		textField = new JTextField();
-		textField.setBounds(142, 43, 172, 20);
-		add(textField);
-		textField.setColumns(10);
+		txtFieldNombre = new JTextField();
+		txtFieldNombre.setBounds(142, 43, 172, 20);
+		add(txtFieldNombre);
+		txtFieldNombre.setColumns(10);
 		
 		comboBox = new JComboBox();
 		comboBox.setBounds(142, 75, 172, 20);
@@ -80,20 +91,22 @@ public class ProcesoElectoralPanel extends JPanel implements ActionListener{
 		add(btnModificar);
 		
 		dateIni = new JDateChooser();
-		dateIni.setBounds(142, 142, 87, 20);
+		dateIni.setBounds(142, 141, 87, 20);
 		add(dateIni);
+		//dateIni.setCalendar(Calendar.getInstance());
+		
+		dateFin = new JDateChooser();
+		dateFin.setBounds(142, 172, 87, 20);
+		add(dateFin);
 		
 		JLabel lblFechaInicial = new JLabel("Fecha Inicial");
-		lblFechaInicial.setBounds(45, 149, 75, 14);
+		lblFechaInicial.setBounds(45, 147, 75, 14);
 		add(lblFechaInicial);
 		
 		JLabel lblFechaFin = new JLabel("Fecha Fin");
 		lblFechaFin.setBounds(45, 178, 64, 14);
 		add(lblFechaFin);
-		
-		JDateChooser dateFin = new JDateChooser();
-		dateFin.setBounds(142, 173, 87, 20);
-		add(dateFin);
+		//dateFin.setCalendar(Calendar.getInstance());
 		
 		btnEliminar = new JButton("Eliminar");
 		btnEliminar.setBounds(265, 211, 89, 23);
@@ -102,7 +115,7 @@ public class ProcesoElectoralPanel extends JPanel implements ActionListener{
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Datos de Procesos", TitledBorder.LEADING, TitledBorder.TOP,
 				null, null));
-		panel.setBounds(31, 258, 327, 198);
+		panel.setBounds(45, 245, 327, 198);
 		add(panel);
 		panel.setLayout(new GridLayout(1, 1, 0, 0));
 
@@ -115,29 +128,45 @@ public class ProcesoElectoralPanel extends JPanel implements ActionListener{
 		procModel = new MyTableModel();
 		tblProc.setModel(procModel);
 		
-		
-		/*MySQLDAOProceso pr = new MySQLDAOProceso();	  	
-    	List<String> tipoProcesos = pr.getProcesos();
-    	
-    	// add elements to comboBox
-    	for (int i = 0; i<tipoProcesos.size(); i++) comboBox.addItem(tipoProcesos.get(i));*/    		
+		listaTProc=ProcessManager.queryAllTProc();
+		for(int i=0;i<listaTProc.size();i++) comboBox.addItem(listaTProc.get(i).getDescripcion());
+				    		
   
     	btnAgregar.addActionListener(this);
     	btnModificar.addActionListener(this);
     	btnEliminar.addActionListener(this);
     	
-		/*btnAgregar.addActionListener(new ActionListener() { 
-		    public void actionPerformed(ActionEvent e) { 
-		    	String nombreProceso = textField.getText();
-		    	String tipoProceso = comboBox.getSelectedItem().toString();
-		    	int porcentaje = (int) spinner.getValue();
-		    	//agregar a la base de datos
-		    } 
-		});*/
+    	tblProc.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				
+				int selRow = tblProc.getSelectedRow();
+				int id = Integer.parseInt(tblProc.getValueAt(selRow, 0).toString());
+				idRow=id;
+				String nombre = tblProc.getValueAt(selRow, 1).toString();
+				String tp = tblProc.getValueAt(selRow, 2).toString();			
+				String porc = tblProc.getValueAt(selRow, 3).toString();
+				String fIni = tblProc.getValueAt(selRow, 4).toString();
+				String fFin = tblProc.getValueAt(selRow, 5).toString();
+				
+				DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+				
+				txtFieldNombre.setText(nombre);				
+				comboBox.setSelectedItem(tp);;				
+				spinner.setValue(porc);				
+				try {
+					dateIni.setDate(formatter.parse(fIni));
+					dateFin.setDate(formatter.parse(fFin));
+				} catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+			}
+		});
 
 	}
 	class MyTableModel extends AbstractTableModel {
-		//ArrayList<PartidoPolitico> partPolLst = ProcessManager.queryAllPartPol();
+		ArrayList<ProcesoElectoral> procLst = ProcessManager.queryAllProc();
 		String[] titles = { "Código", "Nombre", "Tipo de Proc.", " % ", "Inicio", "Fin" };
 		
 		@Override
@@ -149,33 +178,38 @@ public class ProcesoElectoralPanel extends JPanel implements ActionListener{
 		@Override
 		public int getRowCount() {
 			// TODO Auto-generated method stub
-			//return partPolLst.size();
-			return 0;
+			return procLst.size();
+			
 		}
 
 		@Override
-		public Object getValueAt(int arg0, int arg1) {
+		public Object getValueAt(int row, int col) {
 			// TODO Auto-generated method stub
-			/*String value = "";
+			String value = "";
+			DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+			
 			switch (col) {
 			case 0:
-				value = "" + partPolLst.get(row).getId();
+				value = "" + procLst.get(row).getId();
 				break;
 			case 1:
-				value = partPolLst.get(row).getNombre();
+				value = procLst.get(row).getNombre();
 				break;
 			case 2:
-				value = "" + partPolLst.get(row).getNombreRep();
+				value = "" + procLst.get(row).getTipoProceso();
 				break;
 			case 3:
-				value = "" + partPolLst.get(row).getTelefono();
+				value = "" + procLst.get(row).getPorcentaje();
 				break;
 			case 4:
-				value = "" + partPolLst.get(row).getCorreo();
+				value = "" + formatter.format(procLst.get(row).getFechaIni());
+				break;
+			
+			case 5:
+				value = "" + formatter.format(procLst.get(row).getFechaFin());
 				break;
 			}
-			return value;*/
-			return null;
+			return value;			
 		}
 		
 		public String getColumnName(int col) {
@@ -185,21 +219,65 @@ public class ProcesoElectoralPanel extends JPanel implements ActionListener{
 	}
 	
 	public void refreshTblProc() {
-		//procModel.partPolLst = ProcessManager.queryAllPartPol();
-		//procModel.fireTableChanged(null);
+		procModel.procLst = ProcessManager.queryAllProc();
+		procModel.fireTableChanged(null);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getSource() == btnAgregar){	
+			ProcesoElectoral p=new ProcesoElectoral();
+			p.setNombre(txtFieldNombre.getText());
+			p.setPorcentaje((int)spinner.getValue());
+			TipoProceso tp=listaTProc.get(comboBox.getSelectedIndex());
+			p.setIdTipoProceso(tp.getId());
+			p.setTipoProceso(tp.getDescripcion());									
+			//p.setFechaIni(dateIni.getDate());
+			//p.setFechaFin(dateFin.getDate());			
 			
+			
+			
+
+			
+			ProcessManager.addProc(p);			
+			refreshTblProc();
 		}
 		if(e.getSource() == btnModificar){	
+			ProcesoElectoral p=new ProcesoElectoral();
+			p.setNombre(txtFieldNombre.getText());
+			p.setPorcentaje((int)spinner.getValue());
+			TipoProceso tp=listaTProc.get(comboBox.getSelectedIndex());
+			p.setIdTipoProceso(tp.getId());
+			p.setTipoProceso(tp.getDescripcion());	
 			
+			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+			
+			String startDateString = formatter.format(dateIni.getDate());			
+			Date d;
+			try {
+				d = new Date(formatter.parse(startDateString).getTime());
+				p.setFechaIni(d);
+				
+				startDateString=formatter.format(dateFin.getDate());
+				d=new Date(formatter.parse(startDateString).getTime());
+				p.setFechaFin(d);					
+				
+			} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			ProcessManager.updateProc(p);
+			refreshTblProc();
 		}
 		if(e.getSource() == btnEliminar){	
-			
+			int res = JOptionPane.showConfirmDialog(null,"¿Está seguro?"); 
+			if (res == JOptionPane.OK_OPTION) {					
+				ProcessManager.deleteProc(idRow);
+				refreshTblProc();
+			}
 		}
 	}
 }
+
