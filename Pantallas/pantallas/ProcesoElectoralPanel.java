@@ -151,8 +151,8 @@ public class ProcesoElectoralPanel extends JPanel implements ActionListener {
 
 				txtFieldNombre.setText(nombre);
 				comboBox.setSelectedItem(tp);
-				;
-				spinner.setValue(porc);
+				
+				spinner.setValue(Integer.parseInt(porc));
 				try {
 					dateIni.setDate(formatter.parse(fIni));
 					dateFin.setDate(formatter.parse(fFin));

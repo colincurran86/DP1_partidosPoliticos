@@ -35,27 +35,41 @@ public class MySQLDAOProceso implements DAOProceso{
 	@Override
 	public void add(ProcesoElectoral p) {
 		// TODO Auto-generated method stub
+		int numero=0;
+		int risultato=-1;
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			connect = DriverManager.getConnection(DBConnection.URL_JDBC_MySQL, DBConnection.user,
 					DBConnection.password);
 			statement = connect.createStatement();
-			statement.executeUpdate("INSERT INTO Proceso "
+			numero =statement.executeUpdate("INSERT INTO Proceso "
 					+ "(Nombre , PorcentajeAceptado , idTipoProceso) " 
 					+ "VALUES ('" + p.getNombre() + "', " + p.getPorcentaje() 
-					+ ", " + p.getIdTipoProceso() + ")");
+					+ ", " + p.getIdTipoProceso() + ")",Statement.RETURN_GENERATED_KEYS);
+			
+			ResultSet rs = statement.getGeneratedKeys();
+	        if (rs.next()){
+	        	//System.out.println(risultato);
+	            risultato=rs.getInt(1);
+	        }
+	        rs.close();
 			
 			Calendario c=new Calendario();
 			c.setFechaIni(p.getFechaIni());
 			c.setFechaFin(p.getFechaFin());
 			
-			connect.close();
+			
 			//System.out.println(p.getFechaIni());
 			//System.out.println(p.getFechaFin());
 			
 			int id=ProcessManager.add(c);
-			p.setIdCalendario(id);
-			ProcessManager.updateProc(p);
+									
+			statement.executeUpdate("UPDATE Proceso " + 
+					"SET idCalendario= " + id + " WHERE IdProceso= " + risultato);
+			
+			connect.close();
+			//p.setIdCalendario(id);
+			//ProcessManager.updateProc(p);
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
