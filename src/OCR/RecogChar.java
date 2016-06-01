@@ -7,6 +7,11 @@
 package OCR;
 
 import java.applet.Applet;
+import ij.IJ;
+import ij.ImagePlus;
+import ij.Prefs;
+import ij.io.FileSaver;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
@@ -564,7 +569,7 @@ public class RecogChar extends JFrame
 
 */ 
     	
-    	System.out.println( map[best]); // redirijo la salida a consola !!
+    	System.out.print( map[best]); // redirijo la salida a consola !!
     	
 //	clear_actionPerformed(null);
 	
@@ -667,11 +672,11 @@ public class RecogChar extends JFrame
   	}
 
 
-	public void recognize_actionPerformedDNI(String ruta) {
+	public void recognize_actionPerformedDNI(Image ruta) {
 		// TODO Auto-generated method stub
 
-  		File kappa = new File(ruta);
-  		BufferedImage imageFull = null; 
+  		//File kappa = new File(ruta);
+  	/*	BufferedImage imageFull = r; 
   		
   		try {
 			 imageFull = ImageIO.read(kappa);
@@ -685,15 +690,19 @@ public class RecogChar extends JFrame
   		
   		Image imageDigit =  null;
   		
-  		for (int i = 0 ; i < 8 ; i++) {
+  		*/ 
+		
+	 	recognize_actionPerformed(ruta);
+		
+	//	for (int i = 0 ; i < 8 ; i++) {
   			
-  			imageDigit =  imageFull.getSubimage (50 * i, 0, 50, 100 ); 
+  	//		imageDigit =  imageFull.getSubimage (50 * i, 0, 50, 100 ); 
   	  		
    	  		//BufferedImage buffered = (BufferedImage) imageFull;
   	  		
-  	  	recognize_actionPerformed(imageDigit);
+  	//  	recognize_actionPerformed(imageDigit);
   			
-  		}
+  	//	}
   		
 	}
 }
