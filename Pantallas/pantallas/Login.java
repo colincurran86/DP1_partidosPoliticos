@@ -12,6 +12,7 @@ import javax.swing.JPasswordField;
 import models.Rol;
 import models.Usuario;
 import bModel.ProcessManager;
+import clasesAux.JTextFieldLimit;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -92,6 +93,7 @@ public class Login {
 		txtUsuario.setBounds(113, 61, 172, 20);
 		frame.getContentPane().add(txtUsuario);
 		txtUsuario.setColumns(10);
+		txtUsuario.setDocument(new JTextFieldLimit(90));
 
 		JButton btnSalir = new JButton("Salir");
 		btnSalir.addActionListener(new ActionListener() {
@@ -107,6 +109,7 @@ public class Login {
 		frame.getContentPane().add(txtPassword);
 		txtPassword.setColumns(10);
 		txtPassword.setEchoChar('*');
+		txtPassword.setDocument(new JTextFieldLimit(20));
 
 		JLabel lblUsuario = new JLabel("Usuario");
 		lblUsuario.setBounds(34, 64, 56, 14);

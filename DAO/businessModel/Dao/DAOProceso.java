@@ -10,6 +10,6 @@ public interface DAOProceso {
 	void add(ProcesoElectoral e);
 	ArrayList<ProcesoElectoral> queryAllProceso();
 	void updateProceso(ProcesoElectoral p);
-	void deleteProceso(int id);
+	boolean deleteProceso(int id);
 
 }

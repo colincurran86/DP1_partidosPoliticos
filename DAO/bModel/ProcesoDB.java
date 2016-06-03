@@ -25,8 +25,8 @@ public class ProcesoDB {
     	daoProc.updateProceso(p);
     }
     
-    public void deleteTProc(int id){
-    	daoProc.deleteProceso(id);
+    public boolean deleteTProc(int id){
+    	return daoProc.deleteProceso(id);
     }
     
     

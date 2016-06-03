@@ -129,16 +129,30 @@ public class MySQLDAOTipoProceso implements DAOTipoProceso {
 	}
 
 	@Override
-	public void deleteTProc(int id) {
+	public boolean deleteTProc(int id) {
 		// TODO Auto-generated method stub
+		
 		try {
 			// Class.forName("mysql-connector-java-5.1.35-bin.jar");
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			connect = DriverManager.getConnection(DBConnection.URL_JDBC_MySQL, DBConnection.user,
 					DBConnection.password);
+			
 			statement = connect.createStatement();
-			statement.executeUpdate("DELETE FROM TipoProceso WHERE idTipoProceso=" + id);
-			connect.close();
+			
+			resultSet=statement.executeQuery("SELECT COUNT(*) "+
+								"FROM Proceso WHERE idTipoProceso=" + id);
+			resultSet.next();
+			int val=resultSet.getInt(1);
+			if(val==0) {
+				statement.executeUpdate("DELETE FROM TipoProceso WHERE idTipoProceso=" + id);
+				connect.close();
+				return true;
+			}else {
+				connect.close();
+				return false;
+			}
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -152,6 +166,7 @@ public class MySQLDAOTipoProceso implements DAOTipoProceso {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return false;
 	}
 
 	@Override

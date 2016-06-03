@@ -40,8 +40,8 @@ public class ProcessManager {
 		partPoliticoDB.updatePartPol(p);
 	};
 	
-	public static void deletePartPol(int id){
-		partPoliticoDB.deletePartPol(id);
+	public static boolean deletePartPol(int id){
+		return partPoliticoDB.deletePartPol(id);
 	}
 	
 	//TIPO DE PROCESOS
@@ -58,8 +58,8 @@ public class ProcessManager {
 		tProcesoDB.updateTProc(tp);
 	};
 	
-	public static void deleteTProc(int id){
-		tProcesoDB.deleteTProc(id);
+	public static boolean deleteTProc(int id){
+		return tProcesoDB.deleteTProc(id);
 	}
 	
 	public static TipoProceso queryTPById(int id){
@@ -80,8 +80,8 @@ public class ProcessManager {
 		procesoDB.updateTProc(p);
 	};
 	
-	public static void deleteProc(int id){
-		procesoDB.deleteTProc(id);
+	public static boolean deleteProc(int id){
+		return procesoDB.deleteTProc(id);
 	}
 	
 	//CALENDARIO

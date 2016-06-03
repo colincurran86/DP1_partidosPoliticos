@@ -184,15 +184,27 @@ public class MySQLDAOProceso implements DAOProceso{
 	}
 
 	@Override
-	public void deleteProceso(int id) {
+	public boolean deleteProceso(int id) {
 		// TODO Auto-generated method stub
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			connect = DriverManager.getConnection(DBConnection.URL_JDBC_MySQL, DBConnection.user,
 					DBConnection.password);
-			statement = connect.createStatement();					
-			statement.executeUpdate("DELETE FROM Proceso WHERE IdProceso = " + id);
-			connect.close();
+			statement = connect.createStatement();				
+			
+			resultSet = statement.executeQuery(
+					"SELECT COUNT(*) " + "FROM ProcesoxFasexPartidoPolitico WHERE IdProceso=" + id);
+			resultSet.next();
+			int val = resultSet.getInt(1);
+			if (val == 0) {
+				statement.executeUpdate("DELETE FROM Proceso WHERE IdProceso = " + id);
+				connect.close();
+				return true;
+			} else {
+				connect.close();
+				return false;
+			}
+												
 			//eliminar calendario ?
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -207,7 +219,7 @@ public class MySQLDAOProceso implements DAOProceso{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		return false;
 	}
 
 }

@@ -26,6 +26,7 @@ import models.TipoProceso;
 import pantallas.PartidoPoliticoPanel.MyTableModel;
 import bModel.ProcessManager;
 import businessModel.Dao.MySQLDAOTipoProceso;
+import clasesAux.JTextFieldLimit;
 
 public class TipoProcesoPanel extends JPanel {
 	private JTextField textField;
@@ -54,6 +55,7 @@ public class TipoProcesoPanel extends JPanel {
 		txtFieldDescripcion.setBounds(131, 44, 147, 20);
 		add(txtFieldDescripcion);
 		txtFieldDescripcion.setColumns(10);
+		txtFieldDescripcion.setDocument(new JTextFieldLimit(90));
 		
 		
 		SpinnerModel sm = new SpinnerNumberModel(0, 0, 100, 1); //default value,lower bound,upper bound,increment by 
@@ -79,8 +81,9 @@ public class TipoProcesoPanel extends JPanel {
 		
 		btnAgregar.addActionListener(new ActionListener() { 
 		    public void actionPerformed(ActionEvent e) { 
-		    	if (camposNull()) {
-					JOptionPane.showMessageDialog(null, "Rellene los campos");
+		    	String res=camposNull();
+		    	if (!res.equals("")) {
+					JOptionPane.showMessageDialog(null, "Rellene los campos\n"+res);
 				} else {
 					String descripcion = txtFieldDescripcion.getText();
 			    	int porcentaje = (int) spinner.getValue();
@@ -95,8 +98,9 @@ public class TipoProcesoPanel extends JPanel {
 		
 		btnModificar.addActionListener(new ActionListener() { 
 		    public void actionPerformed(ActionEvent e) { 
-		    	if (camposNull()) {
-					JOptionPane.showMessageDialog(null, "Rellene los campos");
+		    	String res=camposNull();
+		    	if (!res.equals("")) {
+					JOptionPane.showMessageDialog(null, "Rellene los campos\n"+res);
 				} else {
 					String descripcion = txtFieldDescripcion.getText();
 			    	int porcentaje = (int) spinner.getValue();	
@@ -114,7 +118,10 @@ public class TipoProcesoPanel extends JPanel {
 		    public void actionPerformed(ActionEvent e) { 
 		    	int res = JOptionPane.showConfirmDialog(null,"¿Está seguro?"); 
 				if (res == JOptionPane.OK_OPTION) {					
-					ProcessManager.deleteTProc(idRow);
+					if(!ProcessManager.deleteTProc(idRow)){
+						JOptionPane.showMessageDialog(null, "Existen procesos relacionados a este tipo de proceso.\n"
+													+ "No se puede realizar la eliminación");
+					}
 					refreshTblTProc();
 				}		    	
 		    } 
@@ -198,10 +205,14 @@ public class TipoProcesoPanel extends JPanel {
 		partPolModel.fireTableChanged(null);
 	}
 	
-	private boolean camposNull() {
+	private String camposNull() {
 		boolean v = false;
-		if (txtFieldDescripcion.getText().equals(""))
+		String resultado="";
+		if (txtFieldDescripcion.getText().equals("")){
+			resultado+="- Descripcion\n";
 			v = true;
-		return v;
+		}	
+			
+		return resultado;
 	}
 }

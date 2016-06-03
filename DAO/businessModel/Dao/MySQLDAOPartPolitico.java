@@ -25,6 +25,7 @@ public class MySQLDAOPartPolitico implements DAOPartPolitico {
 			connect = DriverManager.getConnection(DBConnection.URL_JDBC_MySQL, DBConnection.user,
 					DBConnection.password);
 			statement = connect.createStatement();
+
 			statement.executeUpdate("INSERT INTO PartidosPoliticos "
 					+ "(Nombre , Representante , TelefonoRepre , Correo) " + "VALUES ('" + p.getNombre() + "', '"
 					+ p.getNombreRep() + "', '" + p.getTelefono() + "', '" + p.getCorreo() + "')");
@@ -98,10 +99,9 @@ public class MySQLDAOPartPolitico implements DAOPartPolitico {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			connect = DriverManager.getConnection(DBConnection.URL_JDBC_MySQL, DBConnection.user,
 					DBConnection.password);
-			statement = connect.createStatement();			
-			statement.executeUpdate("UPDATE PartidosPoliticos " + 
-					"SET Nombre= '" + p.getNombre() + "', Representante= '"
-					+ p.getNombreRep() + "', TelefonoRepre= '" + p.getTelefono() 
+			statement = connect.createStatement();
+			statement.executeUpdate("UPDATE PartidosPoliticos " + "SET Nombre= '" + p.getNombre()
+					+ "', Representante= '" + p.getNombreRep() + "', TelefonoRepre= '" + p.getTelefono()
 					+ "', Correo= '" + p.getCorreo() + "' WHERE IdPartidosPoliticos= " + p.getId());
 			connect.close();
 		} catch (SQLException e) {
@@ -120,15 +120,27 @@ public class MySQLDAOPartPolitico implements DAOPartPolitico {
 	}
 
 	@Override
-	public void deletePartPol(int id) {
+	public boolean deletePartPol(int id) {
 		// TODO Auto-generated method stub
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			connect = DriverManager.getConnection(DBConnection.URL_JDBC_MySQL, DBConnection.user,
 					DBConnection.password);
-			statement = connect.createStatement();					
-			statement.executeUpdate("DELETE FROM PartidosPoliticos WHERE IdPartidosPoliticos = " + id);
-			connect.close();
+			statement = connect.createStatement();
+
+			resultSet = statement.executeQuery(
+					"SELECT COUNT(*) " + "FROM ProcesoxFasexPartidoPolitico WHERE IdPartidosPoliticos=" + id);
+			resultSet.next();
+			int val = resultSet.getInt(1);
+			if (val == 0) {
+				statement.executeUpdate("DELETE FROM PartidosPoliticos WHERE IdPartidosPoliticos = " + id);
+				connect.close();
+				return true;
+			} else {
+				connect.close();
+				return false;
+			}
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -142,6 +154,7 @@ public class MySQLDAOPartPolitico implements DAOPartPolitico {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return false;
 	}
 
 }

@@ -25,7 +25,7 @@ public class PartPoliticoDB {
     	daoPartPolitico.updatePartPol(p);
     }
     
-    public void deletePartPol(int id){
-    	daoPartPolitico.deletePartPol(id);
+    public boolean deletePartPol(int id){
+    	return daoPartPolitico.deletePartPol(id);
     }
 }

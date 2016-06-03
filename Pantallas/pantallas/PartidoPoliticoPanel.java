@@ -12,6 +12,7 @@ import javax.swing.JFormattedTextField;
 
 import models.PartidoPolitico;
 import bModel.ProcessManager;
+import clasesAux.JTextFieldLimit;
 
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -22,6 +23,8 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class PartidoPoliticoPanel extends JPanel implements ActionListener {
 	private JTextField txtFieldNombre;
@@ -54,11 +57,13 @@ public class PartidoPoliticoPanel extends JPanel implements ActionListener {
 		txtFieldNombre.setBounds(181, 18, 174, 20);
 		add(txtFieldNombre);
 		txtFieldNombre.setColumns(10);
+		txtFieldNombre.setDocument(new JTextFieldLimit(60));
 
 		txtFieldNRep = new JTextField();
 		txtFieldNRep.setBounds(181, 52, 173, 20);
 		add(txtFieldNRep);
 		txtFieldNRep.setColumns(10);
+		txtFieldNRep.setDocument(new JTextFieldLimit(80));
 
 		btnAgregar = new JButton("Agregar");
 
@@ -82,9 +87,18 @@ public class PartidoPoliticoPanel extends JPanel implements ActionListener {
 		 */
 
 		txtFieldTel = new JTextField();// new JFormattedTextField(format);//
+		txtFieldTel.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				if(!Character.isDigit(c) && !e.isAltDown())	e.consume();
+				
+			}
+		});
 		txtFieldTel.setBounds(180, 83, 175, 20);
 		add(txtFieldTel);
 		txtFieldTel.setColumns(10);
+		txtFieldTel.setDocument(new JTextFieldLimit(18));
 
 		JLabel lblCorreo = new JLabel("Correo");
 		lblCorreo.setBounds(28, 117, 46, 14);
@@ -94,6 +108,7 @@ public class PartidoPoliticoPanel extends JPanel implements ActionListener {
 		txtFieldCorreo.setBounds(181, 114, 173, 20);
 		add(txtFieldCorreo);
 		txtFieldCorreo.setColumns(10);
+		txtFieldCorreo.setDocument(new JTextFieldLimit(50));
 
 		btnEliminar = new JButton("Eliminar");
 		btnEliminar.setBounds(266, 153, 89, 23);
@@ -190,9 +205,11 @@ public class PartidoPoliticoPanel extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+		String res;
 		if (e.getSource() == btnAgregar) {
-			if (camposNull()) {
-				JOptionPane.showMessageDialog(null, "Rellene los campos");
+			res=camposNull();
+			if (!res.equals("")) {
+				JOptionPane.showMessageDialog(null, "Rellene los campos:\n"+res);
 			} else {
 				PartidoPolitico p = new PartidoPolitico();
 				p.setCorreo(txtFieldCorreo.getText());
@@ -205,9 +222,9 @@ public class PartidoPoliticoPanel extends JPanel implements ActionListener {
 
 		}
 		if (e.getSource() == btnModificar) {
-
-			if (camposNull()) {
-				JOptionPane.showMessageDialog(null, "Rellene los campos");
+			res=camposNull();
+			if (!res.equals("")) {
+				JOptionPane.showMessageDialog(null, "Rellene los campos:\n"+res);
 			} else {
 				String nombre = txtFieldNombre.getText();
 				String rep = txtFieldNRep.getText();
@@ -227,20 +244,41 @@ public class PartidoPoliticoPanel extends JPanel implements ActionListener {
 		}
 		if (e.getSource() == btnEliminar) {
 
-			int res = JOptionPane.showConfirmDialog(null, "¿Está seguro?");
-			if (res == JOptionPane.OK_OPTION) {
-				ProcessManager.deletePartPol(idRow);
+			int result = JOptionPane.showConfirmDialog(null, "¿Está seguro?");
+			if (result == JOptionPane.OK_OPTION) {
+				if(!ProcessManager.deletePartPol(idRow)){
+					JOptionPane.showMessageDialog(null, "Existen cargas relacionadas a este proceso.\n"
+													+ "No se puede realizar la eliminación");							
+				}
 				refreshTblPartPol();
 			}
 
 		}
 	}
 
-	private boolean camposNull() {
+	private String camposNull() {
 		boolean v = false;
-		if (txtFieldNombre.getText().equals("") || txtFieldNRep.getText().equals("") || txtFieldTel.getText().equals("")
-				|| txtFieldCorreo.getText().equals(""))
+		String resultado = "";
+		if (txtFieldNombre.getText().equals("")) {
+			resultado += "- Nombre\n";
 			v = true;
-		return v;
+		}
+
+		if (txtFieldNRep.getText().equals("")) {
+			resultado += "- Representante\n";
+			v = true;
+		}
+
+		if (txtFieldTel.getText().equals("")) {
+			resultado += "- Telefono\n";
+			v = true;
+		}
+
+		if (txtFieldCorreo.getText().equals("")) {
+			resultado += "- Correo\n";
+			v = true;
+		}
+
+		return resultado;
 	}
 }

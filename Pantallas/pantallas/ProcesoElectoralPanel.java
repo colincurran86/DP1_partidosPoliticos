@@ -30,6 +30,7 @@ import javax.swing.JTable;
 import javax.swing.JButton;
 
 import businessModel.Dao.MySQLDAOProceso;
+import clasesAux.JTextFieldLimit;
 import models.PartidoPolitico;
 import models.ProcesoElectoral;
 import models.TipoProceso;
@@ -72,6 +73,7 @@ public class ProcesoElectoralPanel extends JPanel implements ActionListener {
 		txtFieldNombre.setBounds(142, 43, 172, 20);
 		add(txtFieldNombre);
 		txtFieldNombre.setColumns(10);
+		txtFieldNombre.setDocument(new JTextFieldLimit(60));
 
 		comboBox = new JComboBox();
 		comboBox.setBounds(142, 75, 172, 20);
@@ -237,11 +239,11 @@ public class ProcesoElectoralPanel extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub			
-		
+		String res;
 		if (e.getSource() == btnAgregar) {
-			
-			if (camposNull()) {
-				JOptionPane.showMessageDialog(null, "Rellene los campos");
+			res=camposNull();
+			if (!res.equals("")) {
+				JOptionPane.showMessageDialog(null, "Rellene los campos:\n"+res);
 			} else {
 				ProcesoElectoral p = new ProcesoElectoral();
 				p.setNombre(txtFieldNombre.getText());
@@ -272,9 +274,9 @@ public class ProcesoElectoralPanel extends JPanel implements ActionListener {
 			}						
 		}
 		if (e.getSource() == btnModificar) {
-			
-			if (camposNull()) {
-				JOptionPane.showMessageDialog(null, "Rellene los campos");
+			res=camposNull();
+			if (!res.equals("")) {
+				JOptionPane.showMessageDialog(null, "Rellene los campos:\n"+res);
 			} else {
 				ProcesoElectoral p = new ProcesoElectoral();
 				p.setNombre(txtFieldNombre.getText());
@@ -308,18 +310,33 @@ public class ProcesoElectoralPanel extends JPanel implements ActionListener {
 			
 		}
 		if (e.getSource() == btnEliminar) {
-			int res = JOptionPane.showConfirmDialog(null, "¿Está seguro?");
-			if (res == JOptionPane.OK_OPTION) {
-				ProcessManager.deleteProc(idRow);
+			int result = JOptionPane.showConfirmDialog(null, "¿Está seguro?");
+			if (result == JOptionPane.OK_OPTION) {
+				if(!ProcessManager.deleteProc(idRow))
+					JOptionPane.showMessageDialog(null, "Existen cargas relacionadas a este proceso.\n"
+							+ "No se puede realizar la eliminación");
 				refreshTblProc();
 			}
 		}
 	}
 	
-	private boolean camposNull() {
+	private String camposNull() {															
 		boolean v = false;
-		if (txtFieldNombre.getText().equals(""))
+		String resultado="";
+		
+		if (txtFieldNombre.getText().equals("")){
+			resultado+="- Nombre\n";
 			v = true;
-		return v;
+		}
+		if (dateIni.getDate()==null){
+			resultado+="- Fecha Inicial\n";
+			v = true;			
+		}
+		if (dateFin.getDate()==null){
+			resultado+="- Fecha Final\n";
+			v = true;			
+		}		
+		
+		return resultado;
 	}
 }
