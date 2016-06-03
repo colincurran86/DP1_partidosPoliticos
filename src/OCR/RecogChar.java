@@ -689,14 +689,22 @@ public class RecogChar extends JFrame
   		
   		
   		//for (int i = 0 ; i < 8 ; i++) {
+  		*/ 
+		
+	 	recognize_actionPerformed(ruta);
+		
+	//	for (int i = 0 ; i < 8 ; i++) {
   			
   			//imageDigit =  imageFull.getSubimage (50 * i, 0, 50, 100 ); 
+  	//		imageDigit =  imageFull.getSubimage (50 * i, 0, 50, 100 ); 
   	  		
    	  		//BufferedImage buffered = (BufferedImage) imageFull;
   	  		
   	  	
+  	//  	recognize_actionPerformed(imageDigit);
   			
   		//}
+  	//	}
   		
 	}
 }

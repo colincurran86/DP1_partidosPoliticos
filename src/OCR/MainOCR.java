@@ -71,7 +71,7 @@ public class MainOCR {
 		  		recogChar.init();
 		  		recogChar.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		  		recogChar.setSize(820, 580);
-		  		recogChar.recognize_actionPerformedDNI( ruta);
+		  //	recogChar.recognize_actionPerformedDNI(ruta); ESPERA UN STRING XD
 			
 			}
 		});

@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JFrame;
+
+import OCR.RecogChar;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.Prefs;
@@ -37,10 +40,14 @@ public class Main {
 		rf.coordenadaDNIyNombre(padronJ); yDNI = rf.getYDNI(); yNombre = rf.getYNombre();
 		
 		//cropeamos los digitos del DNI
-		System.out.println(alturaX + " " + yDNI);
+	//	System.out.println(alturaX + " " + yDNI);
 		int distanceBetweenSquaresH = 85 ,distanceBetweenSquares = 15, widthSquare = 14, heightSquare = 84;
+		
+	
+		//RecogChar.recognize_actionPerformedDNI();
 
-		for (int n  = 0; n < personasxPadron; n++){
+
+		for (int n  = 0; n < 8; n++){
 			ImagePlus Copia1;
 			String rutaAlmacenar = workingDir + "/src/Recorte/Resultado/Persona"
 					+ String.valueOf(n+1)  + "/DNI/";
@@ -57,12 +64,25 @@ public class Main {
 				IJ.run(Copia1, "Crop", ""); int k = h+1;
 			    String rutaDNI = workingDir + "/src/Recorte/Resultado/Persona"
 			    + String.valueOf(n+1) + "/DNI/" + k + ".jpg";
-				new FileSaver(Copia1).saveAsPng(rutaDNI);
-				Prefs.blackBackground = false;
+			    //Copia1.show();
+			    
+			    //Ejecutamos 
+				RecogChar recogChar = new RecogChar();
+			  	recogChar.setVisible(false);
+			  	recogChar.init();
+			  	recogChar.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			  	recogChar.setSize(820, 580);
+			  	recogChar.recognize_actionPerformedDNI(Copia1.getImage());
+			  	
+			  	
+			    // Copia1.show();
+			    //new FileSaver(Copia1).saveAsPng(rutaDNI);
+				//Prefs.blackBackground = false;
 			}
 			
+			System.out.println();
 		}	
-		
+		/*
 
 		
 		//Cropeamos el Nombre
@@ -116,7 +136,7 @@ public class Main {
 		System.out.println("Finalizado");
 		System.out.println("El tiempo total de ejecucion del programa fue " + totalTime + " segundos");
 		
-
+		*/
 	}
 
 }
