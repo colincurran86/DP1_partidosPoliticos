@@ -72,7 +72,7 @@ public class Main {
 			  	recogChar.init();
 			  	recogChar.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			  	recogChar.setSize(820, 580);
-			  	recogChar.recognize_actionPerformedDNI(Copia1.getImage());
+			  	//recogChar.recognize_actionPerformedDNI(Copia1.getImage());
 			  	
 			  	
 			    // Copia1.show();

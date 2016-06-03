@@ -689,9 +689,9 @@ public class RecogChar extends JFrame
   		
   		
   		//for (int i = 0 ; i < 8 ; i++) {
-  		*/ 
+  		
 		
-	 	recognize_actionPerformed(ruta);
+	 	//recognize_actionPerformed(ruta);
 		
 	//	for (int i = 0 ; i < 8 ; i++) {
   			
