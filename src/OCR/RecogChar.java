@@ -683,17 +683,20 @@ public class RecogChar extends JFrame
   	
   		//La imagen full la corto quedandome unicamente con los primero 100 x 50 pixeles
   		
-  		Image imageDigit =  null;
+  		//Image imageDigit =  null;
   		
-  		for (int i = 0 ; i < 8 ; i++) {
+  		recognize_actionPerformed(imageFull);
+  		
+  		
+  		//for (int i = 0 ; i < 8 ; i++) {
   			
-  			imageDigit =  imageFull.getSubimage (50 * i, 0, 50, 100 ); 
+  			//imageDigit =  imageFull.getSubimage (50 * i, 0, 50, 100 ); 
   	  		
    	  		//BufferedImage buffered = (BufferedImage) imageFull;
   	  		
-  	  	recognize_actionPerformed(imageDigit);
+  	  	
   			
-  		}
+  		//}
   		
 	}
 }
