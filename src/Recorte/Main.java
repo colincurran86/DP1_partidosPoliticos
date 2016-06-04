@@ -29,6 +29,7 @@ public class Main {
 		System.out.println("Procesando");
 		recorteFunctions rf = new recorteFunctions();
 		rf.recortarCostadosProcesarPadron(workingDir);
+		/*	
 		ImagePlus padronJ =  rf.getPadron();
 		
 		int width1=padronJ.getWidth();

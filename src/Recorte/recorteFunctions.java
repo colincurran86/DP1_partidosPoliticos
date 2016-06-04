@@ -3,11 +3,14 @@ package Recorte;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.Prefs;
+import ij.gui.PolygonRoi;
+import ij.gui.Roi;
 import ij.io.FileSaver;
 
 public class recorteFunctions {
 	
 	private int x, yHuellas, yFirmas, yDNI, yNombre;
+	private int PX1, PY1, PX2, PY2, PX3, PY3;
 	private ImagePlus padronJ = new ImagePlus();
 	
 	public void recortarCostadosProcesarPadron(String workingDir){
@@ -15,15 +18,20 @@ public class recorteFunctions {
 		int widthPar=2073;
 		int heightPar=972;
 		int personasxPadron = 8; // kappa
-		String ruta1 = workingDir +"/src/Recorte/padron.rayas.firmado.2.jpg";
+		String ruta1 = workingDir +"/src/Recorte/222.jpg"; // lo cambie "/src/Recorte/padron.rayas.firmado.2.jpg"
 		String ruta2 = workingDir + "/src/Recorte/recorteCostado.jpg";
 		
 		
-		ImagePlus padronJ = new ImagePlus();
-		padronJ = IJ.openImage(ruta1);
-		Prefs.blackBackground = false;
-		IJ.run(padronJ, "Make Binary", "");
+		//verificamos que la imagen se encuentre correctamente alineada
 
+		ImagePlus padronJ = new ImagePlus();
+		padronJ = IJ.openImage(ruta1); this.padronJ = padronJ;
+		//padronJ.show();
+		Prefs.blackBackground = false;		
+		IJ.run(padronJ, "Make Binary", "");
+		alinearPadron();
+
+		/*
 		
 		//////////////
 		//ELIMINA LA PARTE DE LA IZQUIERDA
@@ -101,9 +109,56 @@ public class recorteFunctions {
 		new FileSaver(padronJ).saveAsPng(ruta2);
 		Prefs.blackBackground = false;
 		this.padronJ = padronJ;
+		*/
 		
 	}
+
+
+	public void alinearPadron(){
 	
+		
+		int width=padronJ.getWidth();
+		int height=padronJ.getHeight();
+		int i,r = 0,g = 0,b = 0 , m = 0;
+		
+		//System.out.println(height);
+		for(i=0;i<width;i++){
+			r = padronJ.getPixel(i, height/2)[0];
+			if(r!=0){//r=255 , g=0 , b=0 
+				System.out.println(i);
+				this.PX1 = i;
+				this.PY1 = height/2;
+				break;	
+			}
+		}
+		
+		// Ahora situamos X, Y-40
+		
+		this.PX2 = i;
+		this.PY2 = this.PY1-40;
+		
+		//obtenemos el ultimo punto para formar el angulo
+		
+		for(i=this.PX2;i>0;i--){
+			r = padronJ.getPixel(i, this.PY2)[0];
+			if(r!=0){//r=255 , g=0 , b=0 
+				this.PX3 = i;
+				this.PY3 = this.PY2;
+				break;	
+			}
+		}
+		
+		int[] xpoints1 = {this.PX3,this.PX1, this.PX2};
+		int[] ypoints1 = {this.PY3,this.PY1, this.PY2};
+		double anguloDouble = new PolygonRoi(xpoints1,ypoints1,3,Roi.ANGLE).getAngle();
+		int anguloInt = (int) Math.round(anguloDouble);
+		String str1 = "angle=" + anguloInt + " grid=0 interpolation=None";
+		IJ.run(this.padronJ, "Rotate... ", str1);
+		this.padronJ.show();
+
+
+	}
+
 	public void coordenadasHuella(ImagePlus padronJ){
 		
 		int width1=padronJ.getWidth();
@@ -136,6 +191,8 @@ public class recorteFunctions {
 		this.x = alturaX;
 		this.yHuellas = anchoY;
 	}
+	
+	
 	
 	public void coordenadasFirma(ImagePlus padronJ){
 		
