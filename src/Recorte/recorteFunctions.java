@@ -9,7 +9,7 @@ import ij.io.FileSaver;
 
 public class recorteFunctions {
 	
-	private int x, yHuellas, yFirmas, yDNI, yNombre;
+	private int x, yHuellas, yFirmas, yDNI, yNombre, yApellido;
 	private int PX1, PY1, PX2, PY2, PX3, PY3;
 	private ImagePlus padronJ = new ImagePlus();
 	
@@ -18,7 +18,7 @@ public class recorteFunctions {
 		int widthPar=2073;
 		int heightPar=972;
 		int personasxPadron = 8; // kappa
-		String ruta1 = workingDir +"/src/Recorte/222.jpg"; // lo cambie "/src/Recorte/padron.rayas.firmado.2.jpg"
+		String ruta1 = workingDir +"/src/Recorte/padron.rayas.firmado.2.jpg"; // lo cambie "/src/Recorte/padron.rayas.firmado.2.jpg"
 		String ruta2 = workingDir + "/src/Recorte/recorteCostado.jpg";
 		
 		
@@ -31,7 +31,7 @@ public class recorteFunctions {
 		IJ.run(padronJ, "Make Binary", "");
 		alinearPadron();
 
-		/*
+		
 		
 		//////////////
 		//ELIMINA LA PARTE DE LA IZQUIERDA
@@ -109,7 +109,7 @@ public class recorteFunctions {
 		new FileSaver(padronJ).saveAsPng(ruta2);
 		Prefs.blackBackground = false;
 		this.padronJ = padronJ;
-		*/
+		
 		
 	}
 
@@ -125,7 +125,6 @@ public class recorteFunctions {
 		for(i=0;i<width;i++){
 			r = padronJ.getPixel(i, height/2)[0];
 			if(r!=0){//r=255 , g=0 , b=0 
-				System.out.println(i);
 				this.PX1 = i;
 				this.PY1 = height/2;
 				break;	
@@ -154,7 +153,7 @@ public class recorteFunctions {
 		int anguloInt = (int) Math.round(anguloDouble);
 		String str1 = "angle=" + anguloInt + " grid=0 interpolation=None";
 		IJ.run(this.padronJ, "Rotate... ", str1);
-		this.padronJ.show();
+		//this.padronJ.show();
 
 
 	}
@@ -220,7 +219,7 @@ public class recorteFunctions {
 			 r = padronJ.getPixel(i, alturaX)[0];
 			 if (r != 0){
 				 cont++;
-				 if (cont == 1) this.yNombre = i+1;
+				 if (cont == 1) this.yApellido = i+1;
 				 if (cont == 2){
 					 this.yDNI = i + 2;
 					 break;	 
@@ -252,8 +251,8 @@ public class recorteFunctions {
 		return this.yDNI;
 	}
 	
-	public int getYNombre(){
-		return this.yNombre;
+	public int getYApellido(){
+		return this.yApellido;
 	}
 	
 }

@@ -29,16 +29,16 @@ public class Main {
 		System.out.println("Procesando");
 		recorteFunctions rf = new recorteFunctions();
 		rf.recortarCostadosProcesarPadron(workingDir);
-		/*	
+		
 		ImagePlus padronJ =  rf.getPadron();
 		
 		int width1=padronJ.getWidth();
 		int height1=padronJ.getHeight();
-		int cont = 0, alturaX = 0 , yHuellas = 0, yFirmas = 0, yDNI = 0, yNombre = 0;
+		int cont = 0, alturaX = 0 , yHuellas = 0, yFirmas = 0, yDNI = 0, yNombre = 0, yApellido =0;
 		
 		rf.coordenadasHuella(padronJ); 	alturaX = rf.getX(); yHuellas = rf.getYHuellas();
 		rf.coordenadasFirma(padronJ); yFirmas = rf.getYFirmas();
-		rf.coordenadaDNIyNombre(padronJ); yDNI = rf.getYDNI(); yNombre = rf.getYNombre();
+		rf.coordenadaDNIyNombre(padronJ); yDNI = rf.getYDNI(); yApellido = rf.getYApellido();
 		
 		//cropeamos los digitos del DNI
 	//	System.out.println(alturaX + " " + yDNI);
@@ -68,11 +68,11 @@ public class Main {
 			    //Copia1.show();
 			    
 			    //Ejecutamos 
-				RecogChar recogChar = new RecogChar();
-			  	recogChar.setVisible(false);
-			  	recogChar.init();
-			  	recogChar.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			  	recogChar.setSize(820, 580);
+			  //	RecogChar recogChar = new RecogChar();
+			  //recogChar.setVisible(false);
+			  //	recogChar.init();
+			  //	recogChar.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			  //	recogChar.setSize(820, 580);
 			  	//recogChar.recognize_actionPerformedDNI(Copia1.getImage());
 			  	
 			  	
@@ -81,16 +81,32 @@ public class Main {
 				//Prefs.blackBackground = false;
 			}
 			
-			System.out.println();
+			//System.out.println();
 		}	
-		/*
 
+		int apellidoEspacios = 25, nombreEspacios = 23, espacioLetras = 15, alturaLetras = 85;
 		
+		for (int n = 0; n < personasxPadron; n++){
+			ImagePlus Copia1;  String rutaAlmacenar = workingDir + "/src/Recorte/Resultado/Persona"
+					+ String.valueOf(n+1)  + "/Apellido/";
+			File file = new File(rutaAlmacenar);  file.mkdirs();
+
+		//Cropeamos el Apellido
+			for (int contApellido = 0; contApellido < apellidoEspacios; contApellido ++){
+				ImagePlus Copi41 = IJ.openImage(ruta2);
+			    String rutaNombre = workingDir + "/src/Recorte/Resultado/Persona"
+			    + String.valueOf(n+1) + "/Apellido/" + contApellido + ".jpg";
+			    if (n<3)Copi41.setRoi(yApellido + contApellido*espacioLetras, (alturaX + 1) + alturaLetras*n, widthSquare - 2 , heightSquare-3);
+			    else Copi41.setRoi(yApellido + 2 + contApellido*espacioLetras, (alturaX + 5) + alturaLetras*n, widthSquare - 4 , heightSquare-3);
+			    IJ.run(Copi41, "Crop", ""); 
+			    new FileSaver(Copi41).saveAsPng(rutaNombre);
+				//Prefs.blackBackground = false;
+			}
+			
 		//Cropeamos el Nombre
 		
 		
-		//Cropeamos el Apellido
-
+		}
 
 		//Cropeamos las firmas y las huellas para cada persona
 		List<ImagePlus>usuariosFirma = new ArrayList<ImagePlus>();
@@ -121,7 +137,7 @@ public class Main {
 				new FileSaver(Copia1).saveAsPng(workingDir + "/src/Recorte/Resultado/Persona"
 					+ String.valueOf(n+1)  + "/Firma/firma.jpg");
 				Prefs.blackBackground = false;
-			    //Copia1.show();
+			   // Copia1.show();
 			//huella
 				Copia2.setRoi(yHuellas, alturaX+ distanceBetweenSquares*n , widthSquare + 12, heightSquare+4);
 				IJ.run(Copia2, "Crop", ""); 
@@ -137,7 +153,7 @@ public class Main {
 		System.out.println("Finalizado");
 		System.out.println("El tiempo total de ejecucion del programa fue " + totalTime + " segundos");
 		
-		*/
+		
 	}
 
 }
