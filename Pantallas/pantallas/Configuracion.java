@@ -82,11 +82,16 @@ public class Configuracion extends JDialog implements ActionListener{
 		cmbBoxPE = new JComboBox();
 		cmbBoxPE.setBounds(247, 62, 253, 20);
 		contentPanel.add(cmbBoxPE);
-		
-		
+				
 		for (int i = 0; i < listaPE.size(); i++)
 			cmbBoxPE.addItem(listaPE.get(i).getNombre());
 		
+		if(Carga.idPE!=0){
+			int i;
+			for(i=0;i<listaPE.size();i++)
+				if(listaPE.get(i).getId()==Carga.idPE) break;
+			cmbBoxPE.setSelectedIndex(i);
+		}	
 		
 		cmbBoxPP = new JComboBox();
 		cmbBoxPP.setBounds(247, 237, 253, 20);
@@ -97,6 +102,13 @@ public class Configuracion extends JDialog implements ActionListener{
 			cmbBoxPP.addItem(listaPP.get(i).getNombre());
 		cmbBoxPP.disable();
 		
+		if(Carga.idPP!=0){
+			int i;
+			for(i=0;i<listaPP.size();i++)
+				if(listaPP.get(i).getId()==Carga.idPP) break;
+			cmbBoxPP.setSelectedIndex(i);
+		}	
+		
 		SpinnerModel sm = new SpinnerNumberModel(0, 0, 100, 1); //default value,lower bound,upper bound,increment by 
 		spinner = new JSpinner(sm);
 		spinner.setBounds(247, 128, 55, 20);
@@ -104,17 +116,28 @@ public class Configuracion extends JDialog implements ActionListener{
 		DefaultFormatter formatter = (DefaultFormatter) jsEditor.getTextField().getFormatter();
 		formatter.setAllowsInvalid(false);
 		if(listaPE.size()!=0) spinner.setValue(listaPE.get(0).getPorcentaje());
+		if(Carga.porc!=-1) spinner.setValue(Carga.porc);
 		
 		contentPanel.add(spinner);
 		
 		rdbtnCMasiva = new JRadioButton("Carga Masiva");
-		rdbtnCMasiva.setBounds(109, 183, 147, 23);
-		rdbtnCMasiva.setSelected(true);
+		rdbtnCMasiva.setBounds(109, 183, 147, 23);		
 		contentPanel.add(rdbtnCMasiva);
 		
 		rdbtnCIndividual = new JRadioButton("Carga individual");
 		rdbtnCIndividual.setBounds(358, 183, 142, 23);
 		contentPanel.add(rdbtnCIndividual);
+		
+		if(Carga.choiceCI==0 && Carga.choiceCI==0){
+			rdbtnCMasiva.setSelected(true);
+			cmbBoxPP.disable();
+		}
+		else
+			if(Carga.choiceCI==1) rdbtnCIndividual.setSelected(true);
+			else {
+				rdbtnCMasiva.setSelected(true);
+				cmbBoxPP.disable();
+			}		
 		
 		group=new ButtonGroup();
 		group.add(rdbtnCMasiva);
@@ -163,8 +186,14 @@ public class Configuracion extends JDialog implements ActionListener{
 				Carga.porc=porcentaje;
 			}
 			if (pp!=null) Carga.idPP=pp.getId();
-			if(rdbtnCMasiva.isSelected()) Carga.choiceCM=1;
-			else Carga.choiceCI=1;
+			if(rdbtnCMasiva.isSelected()){ 
+				Carga.choiceCM=1;
+				Carga.choiceCI=0;
+			}
+			else{ 
+				Carga.choiceCI=1;
+				Carga.choiceCM=0;
+			}
 			this.dispose();
 		}
 		

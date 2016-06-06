@@ -59,7 +59,7 @@ public class TipoProcesoPanel extends JPanel {
 		
 		
 		SpinnerModel sm = new SpinnerNumberModel(0, 0, 100, 1); //default value,lower bound,upper bound,increment by 
-		JSpinner spinner = new JSpinner();
+		JSpinner spinner = new JSpinner(sm);
 		spinner.setBounds(185, 195 , 64, 20);
 		JSpinner.NumberEditor jsEditor = (JSpinner.NumberEditor)spinner.getEditor();
 		DefaultFormatter formatter = (DefaultFormatter) jsEditor.getTextField().getFormatter();

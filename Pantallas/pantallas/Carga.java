@@ -24,7 +24,7 @@ public class Carga extends JPanel implements ActionListener{
 	private JButton btnConf;
 	public static int idPE=0;
 	public static int idPP=0;
-	public static int porc;
+	public static int porc=-1;
 	public static int choiceCM=0;
 	public static int choiceCI=0;
 	
@@ -79,7 +79,7 @@ public class Carga extends JPanel implements ActionListener{
 			Principal.getFrame().getContentPane().setVisible(false);
 			Principal.getFrame().setContentPane(pf);
 			
-			System.out.println(idPP + " " + idPE);
+			//System.out.println(idPP + " " + idPE);
 		}
 		if(e.getSource()==btnSegCarga){
 			
