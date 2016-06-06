@@ -53,7 +53,7 @@ public class ProcesoElectoralPanel extends JPanel implements ActionListener {
 	private JButton btnAgregar;
 	private JButton btnModificar;
 	private JButton btnEliminar;
-	private List<TipoProceso> listaTProc;
+	private List<TipoProceso> listaTProc=ProcessManager.queryAllTProc();
 
 	/**
 	 * Create the panel.
@@ -92,6 +92,7 @@ public class ProcesoElectoralPanel extends JPanel implements ActionListener {
 		//JFormattedTextField txt = ((JSpinner.NumberEditor) spinner.getEditor()).getTextField();		
         //((NumberFormatter)txt.getFormatter()).setAllowsInvalid(false);
 		add(spinner);
+		if(listaTProc.size()!=0) spinner.setValue(listaTProc.get(0).getPorcentaje());
 
 		btnAgregar = new JButton("Agregar");
 		btnAgregar.setBounds(80, 336, 89, 23);
@@ -138,14 +139,14 @@ public class ProcesoElectoralPanel extends JPanel implements ActionListener {
 
 		procModel = new MyTableModel();
 		tblProc.setModel(procModel);
-
-		listaTProc = ProcessManager.queryAllTProc();
+		
 		for (int i = 0; i < listaTProc.size(); i++)
 			comboBox.addItem(listaTProc.get(i).getDescripcion());
 
 		btnAgregar.addActionListener(this);
 		btnModificar.addActionListener(this);
 		btnEliminar.addActionListener(this);
+		comboBox.addActionListener(this);
 
 		tblProc.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
@@ -326,6 +327,9 @@ public class ProcesoElectoralPanel extends JPanel implements ActionListener {
 				refreshTblProc();
 			}
 		}
+		if(e.getSource() == comboBox)
+			if(listaTProc.size()!=0)	spinner.setValue(listaTProc.get(comboBox.getSelectedIndex()).getPorcentaje());
+		
 	}
 	
 	private String camposNull() {															

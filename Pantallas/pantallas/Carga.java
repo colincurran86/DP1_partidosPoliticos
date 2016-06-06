@@ -22,7 +22,11 @@ public class Carga extends JPanel implements ActionListener{
 	private JButton btnPrimCarga;
 	private JButton btnSegCarga;
 	private JButton btnConf;
-	
+	public static int idPE=0;
+	public static int idPP=0;
+	public static int porc;
+	public static int choiceCM=0;
+	public static int choiceCI=0;
 	
 	/**
 	 * Create the panel.
@@ -74,6 +78,8 @@ public class Carga extends JPanel implements ActionListener{
 			
 			Principal.getFrame().getContentPane().setVisible(false);
 			Principal.getFrame().setContentPane(pf);
+			
+			System.out.println(idPP + " " + idPE);
 		}
 		if(e.getSource()==btnSegCarga){
 			

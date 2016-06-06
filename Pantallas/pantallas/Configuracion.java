@@ -91,15 +91,15 @@ public class Configuracion extends JDialog implements ActionListener{
 		cmbBoxPP = new JComboBox();
 		cmbBoxPP.setBounds(247, 237, 253, 20);
 		contentPanel.add(cmbBoxPP);
-		cmbBoxPP.addActionListener(this);
+		cmbBoxPP.addActionListener(this);		
 		
-		
-		for (int i = 0; i < listaPE.size(); i++)
-			cmbBoxPE.addItem(listaPE.get(i).getNombre());
+		for (int i = 0; i < listaPP.size(); i++)
+			cmbBoxPP.addItem(listaPP.get(i).getNombre());
+		cmbBoxPP.disable();
 		
 		SpinnerModel sm = new SpinnerNumberModel(0, 0, 100, 1); //default value,lower bound,upper bound,increment by 
 		spinner = new JSpinner(sm);
-		spinner.setBounds(247, 128, 29, 20);
+		spinner.setBounds(247, 128, 55, 20);
 		JSpinner.NumberEditor jsEditor = (JSpinner.NumberEditor)spinner.getEditor();
 		DefaultFormatter formatter = (DefaultFormatter) jsEditor.getTextField().getFormatter();
 		formatter.setAllowsInvalid(false);
@@ -109,10 +109,11 @@ public class Configuracion extends JDialog implements ActionListener{
 		
 		rdbtnCMasiva = new JRadioButton("Carga Masiva");
 		rdbtnCMasiva.setBounds(109, 183, 147, 23);
+		rdbtnCMasiva.setSelected(true);
 		contentPanel.add(rdbtnCMasiva);
 		
 		rdbtnCIndividual = new JRadioButton("Carga individual");
-		rdbtnCIndividual.setBounds(358, 183, 109, 23);
+		rdbtnCIndividual.setBounds(358, 183, 142, 23);
 		contentPanel.add(rdbtnCIndividual);
 		
 		group=new ButtonGroup();
@@ -138,6 +139,9 @@ public class Configuracion extends JDialog implements ActionListener{
 		
 		okButton.addActionListener(this);
 		cancelButton.addActionListener(this);
+		rdbtnCMasiva.addActionListener(this);
+		rdbtnCIndividual.addActionListener(this);
+		cmbBoxPE.addActionListener(this);
 	}
 
 	@Override
@@ -148,16 +152,30 @@ public class Configuracion extends JDialog implements ActionListener{
 		}
 		
 		if(e.getSource()==okButton){
-			ProcesoElectoral pe;
-			PartidoPolitico pp;
+			ProcesoElectoral pe=null;
+			PartidoPolitico pp=null;
 			if(listaPE.size()!=0)  pe=listaPE.get(cmbBoxPE.getSelectedIndex());
 			if(listaPP.size()!=0) pp=listaPP.get(cmbBoxPP.getSelectedIndex());
 			int porcentaje=(int)spinner.getValue();
-			//cmbBoxPE.disable();
+			
+			if (pe!=null) {
+				Carga.idPE=pe.getId();
+				Carga.porc=porcentaje;
+			}
+			if (pp!=null) Carga.idPP=pp.getId();
+			if(rdbtnCMasiva.isSelected()) Carga.choiceCM=1;
+			else Carga.choiceCI=1;
+			this.dispose();
 		}
 		
 		if(e.getSource()==cmbBoxPE)
 			if(listaPE.size()!=0)	spinner.setValue(listaPE.get(cmbBoxPE.getSelectedIndex()).getPorcentaje());
+		
+		if(e.getSource()==rdbtnCMasiva)
+			cmbBoxPP.disable();
+		if(e.getSource()==rdbtnCIndividual)
+			cmbBoxPP.enable();
+		
 			
 	}
 }
