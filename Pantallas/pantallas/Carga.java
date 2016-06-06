@@ -17,6 +17,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 
 public class Carga extends JPanel implements ActionListener{
 	private JButton btnPrimCarga;
@@ -73,13 +74,23 @@ public class Carga extends JPanel implements ActionListener{
 			c.setVisible(true);
 		}
 		if(e.getSource()==btnPrimCarga){
-			PrimeraFase pf =new PrimeraFase();
-			pf.setVisible(true);
+			if(porc==-1)
+				JOptionPane.showMessageDialog(null, "Escoja los parámetros en la tuerca de configuración");
+			else{
+				PrimeraFase pf =new PrimeraFase();
+				pf.idPE=idPE;
+				pf.idPP=idPP;
+				pf.porc=porc;
+				pf.choiceCI=choiceCI;
+				pf.choiceCM=choiceCM;
+				pf.setVisible(true);
+				
+				Principal.getFrame().getContentPane().setVisible(false);
+				Principal.getFrame().setContentPane(pf);
+				
+				//System.out.println(idPP + " " + idPE);				
+			}
 			
-			Principal.getFrame().getContentPane().setVisible(false);
-			Principal.getFrame().setContentPane(pf);
-			
-			//System.out.println(idPP + " " + idPE);
 		}
 		if(e.getSource()==btnSegCarga){
 			

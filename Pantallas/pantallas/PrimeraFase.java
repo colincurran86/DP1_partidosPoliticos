@@ -22,6 +22,11 @@ public class PrimeraFase extends JPanel implements ActionListener {
 	private JButton btnCancelar;
 	private JButton btnBuscarBD;
 	private JButton btnBuscarPlan;
+	public static int idPE=0;
+	public static int idPP=0;
+	public static int porc=-1;
+	public static int choiceCM=0;
+	public static int choiceCI=0;
 
 	/**
 	 * Create the panel.

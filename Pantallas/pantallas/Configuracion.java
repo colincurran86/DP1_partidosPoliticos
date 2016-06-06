@@ -133,7 +133,10 @@ public class Configuracion extends JDialog implements ActionListener{
 			cmbBoxPP.disable();
 		}
 		else
-			if(Carga.choiceCI==1) rdbtnCIndividual.setSelected(true);
+			if(Carga.choiceCI==1) {
+				rdbtnCIndividual.setSelected(true);
+				cmbBoxPP.enable();
+			}							
 			else {
 				rdbtnCMasiva.setSelected(true);
 				cmbBoxPP.disable();
