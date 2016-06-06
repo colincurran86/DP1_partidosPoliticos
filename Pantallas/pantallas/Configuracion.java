@@ -7,10 +7,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.util.List;
 
+import javax.swing.ButtonGroup;
+import javax.swing.ButtonModel;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.DefaultFormatter;
 
 import bModel.ProcessManager;
 import models.PartidoPolitico;
@@ -20,6 +23,9 @@ import models.TipoProceso;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.JSpinner;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.JRadioButton;
 
 public class Configuracion extends JDialog implements ActionListener{
 	private JComboBox cmbBoxPE;
@@ -27,6 +33,9 @@ public class Configuracion extends JDialog implements ActionListener{
 	private JButton okButton;
 	private JButton cancelButton;
 	private JSpinner spinner;
+	private JRadioButton rdbtnCMasiva;
+	private JRadioButton rdbtnCIndividual;
+	private ButtonGroup group;
 	private List<ProcesoElectoral> listaPE=ProcessManager.queryAllProc();
 	private List<PartidoPolitico> listaPP= ProcessManager.queryAllPartPol();
 	
@@ -59,15 +68,15 @@ public class Configuracion extends JDialog implements ActionListener{
 		contentPanel.setLayout(null);
 		
 		JLabel lblProcesoElectoral = new JLabel("Proceso Electoral");
-		lblProcesoElectoral.setBounds(51, 65, 108, 14);
+		lblProcesoElectoral.setBounds(51, 65, 167, 14);
 		contentPanel.add(lblProcesoElectoral);
 		
 		JLabel lblNewLabel = new JLabel("Partido Politico");
-		lblNewLabel.setBounds(51, 131, 80, 14);
+		lblNewLabel.setBounds(51, 240, 154, 14);
 		contentPanel.add(lblNewLabel);
 		
 		JLabel lblPorcentajeDeAceptacin = new JLabel("Porcentaje de aceptaci\u00F3n");
-		lblPorcentajeDeAceptacin.setBounds(51, 220, 130, 14);
+		lblPorcentajeDeAceptacin.setBounds(51, 131, 167, 14);
 		contentPanel.add(lblPorcentajeDeAceptacin);
 		
 		cmbBoxPE = new JComboBox();
@@ -80,18 +89,36 @@ public class Configuracion extends JDialog implements ActionListener{
 		
 		
 		cmbBoxPP = new JComboBox();
-		cmbBoxPP.setBounds(247, 128, 253, 20);
+		cmbBoxPP.setBounds(247, 237, 253, 20);
 		contentPanel.add(cmbBoxPP);
+		cmbBoxPP.addActionListener(this);
 		
 		
 		for (int i = 0; i < listaPE.size(); i++)
 			cmbBoxPE.addItem(listaPE.get(i).getNombre());
 		
-		spinner = new JSpinner();
-		spinner.setBounds(247, 217, 29, 20);
+		SpinnerModel sm = new SpinnerNumberModel(0, 0, 100, 1); //default value,lower bound,upper bound,increment by 
+		spinner = new JSpinner(sm);
+		spinner.setBounds(247, 128, 29, 20);
+		JSpinner.NumberEditor jsEditor = (JSpinner.NumberEditor)spinner.getEditor();
+		DefaultFormatter formatter = (DefaultFormatter) jsEditor.getTextField().getFormatter();
+		formatter.setAllowsInvalid(false);
 		if(listaPE.size()!=0) spinner.setValue(listaPE.get(0).getPorcentaje());
 		
 		contentPanel.add(spinner);
+		
+		rdbtnCMasiva = new JRadioButton("Carga Masiva");
+		rdbtnCMasiva.setBounds(109, 183, 147, 23);
+		contentPanel.add(rdbtnCMasiva);
+		
+		rdbtnCIndividual = new JRadioButton("Carga individual");
+		rdbtnCIndividual.setBounds(358, 183, 109, 23);
+		contentPanel.add(rdbtnCIndividual);
+		
+		group=new ButtonGroup();
+		group.add(rdbtnCMasiva);
+		group.add(rdbtnCIndividual);
+				
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -119,10 +146,18 @@ public class Configuracion extends JDialog implements ActionListener{
 		if(e.getSource()==cancelButton){
 			this.dispose();
 		}
+		
 		if(e.getSource()==okButton){
-			ProcesoElectoral pe =listaPE.get(cmbBoxPE.getSelectedIndex());
-			PartidoPolitico pp=listaPP.get(cmbBoxPP.getSelectedIndex());
+			ProcesoElectoral pe;
+			PartidoPolitico pp;
+			if(listaPE.size()!=0)  pe=listaPE.get(cmbBoxPE.getSelectedIndex());
+			if(listaPP.size()!=0) pp=listaPP.get(cmbBoxPP.getSelectedIndex());
 			int porcentaje=(int)spinner.getValue();
+			//cmbBoxPE.disable();
 		}
+		
+		if(e.getSource()==cmbBoxPE)
+			if(listaPE.size()!=0)	spinner.setValue(listaPE.get(cmbBoxPE.getSelectedIndex()).getPorcentaje());
+			
 	}
 }

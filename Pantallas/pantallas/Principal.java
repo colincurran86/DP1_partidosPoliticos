@@ -7,7 +7,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JTextField;
-
+import javax.swing.SwingConstants;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionListener;
@@ -45,12 +45,13 @@ public class Principal {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		//frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		frame.setBounds(100, 100, 650, 800);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		JLabel lblBienvenido = new JLabel("BIENVENIDO!");
-		lblBienvenido.setFont(new Font("Tahoma", Font.PLAIN, 60));
+		lblBienvenido.setFont(new Font("Tahoma", Font.PLAIN, 60));		
 		
 		lblBienvenido.setBounds(44, 250, 370, 196);
 		frame.getContentPane().add(lblBienvenido);

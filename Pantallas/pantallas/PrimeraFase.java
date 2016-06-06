@@ -30,11 +30,11 @@ public class PrimeraFase extends JPanel implements ActionListener {
 		setLayout(null);
 
 		JLabel lblRutaDeLos = new JLabel("Ruta de los planillones");
-		lblRutaDeLos.setBounds(90, 177, 215, 14);
+		lblRutaDeLos.setBounds(90, 177, 291, 14);
 		add(lblRutaDeLos);
 
 		JLabel lblRutaDeLa = new JLabel("Ruta de la Base de Datos");
-		lblRutaDeLa.setBounds(90, 308, 228, 14);
+		lblRutaDeLa.setBounds(90, 308, 302, 14);
 		add(lblRutaDeLa);
 
 		btnProcesar = new JButton("Procesar");
