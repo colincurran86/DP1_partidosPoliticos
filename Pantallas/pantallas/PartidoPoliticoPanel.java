@@ -25,6 +25,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.Panel;
 
 public class PartidoPoliticoPanel extends JPanel implements ActionListener {
 	private JTextField txtFieldNombre;
@@ -46,36 +47,36 @@ public class PartidoPoliticoPanel extends JPanel implements ActionListener {
 		setLayout(null);
 
 		JLabel lblNombre = new JLabel("Nombre");
-		lblNombre.setBounds(28, 24, 46, 14);
+		lblNombre.setBounds(62, 62, 46, 14);
 		add(lblNombre);
 
 		JLabel lblNombreRep = new JLabel("Nombre de representante");
-		lblNombreRep.setBounds(28, 55, 143, 14);
+		lblNombreRep.setBounds(62, 120, 143, 14);
 		add(lblNombreRep);
 
 		txtFieldNombre = new JTextField();
-		txtFieldNombre.setBounds(181, 18, 174, 20);
+		txtFieldNombre.setBounds(215, 59, 329, 20);
 		add(txtFieldNombre);
 		txtFieldNombre.setColumns(10);
 		txtFieldNombre.setDocument(new JTextFieldLimit(60));
 
 		txtFieldNRep = new JTextField();
-		txtFieldNRep.setBounds(181, 52, 173, 20);
+		txtFieldNRep.setBounds(215, 117, 328, 20);
 		add(txtFieldNRep);
 		txtFieldNRep.setColumns(10);
 		txtFieldNRep.setDocument(new JTextFieldLimit(80));
 
 		btnAgregar = new JButton("Agregar");
 
-		btnAgregar.setBounds(34, 153, 89, 23);
+		btnAgregar.setBounds(80, 336, 89, 23);
 		add(btnAgregar);
 
 		btnModificar = new JButton("Modificar");
-		btnModificar.setBounds(150, 153, 89, 23);
+		btnModificar.setBounds(259, 336, 89, 23);
 		add(btnModificar);
 
 		JLabel lblTelefono = new JLabel("Telefono Representante");
-		lblTelefono.setBounds(28, 86, 129, 14);
+		lblTelefono.setBounds(62, 182, 129, 14);
 		add(lblTelefono);
 
 		/*
@@ -95,29 +96,29 @@ public class PartidoPoliticoPanel extends JPanel implements ActionListener {
 				
 			}
 		});
-		txtFieldTel.setBounds(180, 83, 175, 20);
+		txtFieldTel.setBounds(214, 179, 329, 20);
 		add(txtFieldTel);
 		txtFieldTel.setColumns(10);
 		txtFieldTel.setDocument(new JTextFieldLimit(18));
 
 		JLabel lblCorreo = new JLabel("Correo");
-		lblCorreo.setBounds(28, 117, 46, 14);
+		lblCorreo.setBounds(62, 250, 46, 14);
 		add(lblCorreo);
 
 		txtFieldCorreo = new JTextField();
-		txtFieldCorreo.setBounds(181, 114, 173, 20);
+		txtFieldCorreo.setBounds(216, 247, 327, 20);
 		add(txtFieldCorreo);
 		txtFieldCorreo.setColumns(10);
 		txtFieldCorreo.setDocument(new JTextFieldLimit(50));
 
 		btnEliminar = new JButton("Eliminar");
-		btnEliminar.setBounds(266, 153, 89, 23);
+		btnEliminar.setBounds(430, 336, 89, 23);
 		add(btnEliminar);
 
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Datos de Partidos Politicos", TitledBorder.LEADING, TitledBorder.TOP,
 				null, null));
-		panel.setBounds(28, 205, 327, 198);
+		panel.setBounds(28, 405, 579, 308);
 		add(panel);
 		panel.setLayout(new GridLayout(1, 1, 0, 0));
 
@@ -150,6 +151,13 @@ public class PartidoPoliticoPanel extends JPanel implements ActionListener {
 		btnAgregar.addActionListener(this);
 		btnModificar.addActionListener(this);
 		btnEliminar.addActionListener(this);
+		
+		JPanel panelReg = new JPanel();
+		panelReg.setBorder(new TitledBorder(null, "PARTIDOS POLITICOS", TitledBorder.LEADING, TitledBorder.TOP,
+				null, null));
+		panelReg.setBounds(28, 30, 573, 286);
+		add(panelReg);
+		panelReg.setLayout(new GridLayout(1, 1, 0, 0));
 
 	}
 

@@ -62,30 +62,30 @@ public class ProcesoElectoralPanel extends JPanel implements ActionListener {
 		setLayout(null);
 
 		JLabel lblNombre = new JLabel("Nombre");
-		lblNombre.setBounds(45, 46, 46, 14);
+		lblNombre.setBounds(70, 60, 46, 14);
 		add(lblNombre);
 
 		JLabel lblTipoProceso = new JLabel("Tipo Proceso");
-		lblTipoProceso.setBounds(45, 78, 75, 14);
+		lblTipoProceso.setBounds(70, 114, 75, 14);
 		add(lblTipoProceso);
 
 		txtFieldNombre = new JTextField();
-		txtFieldNombre.setBounds(142, 43, 172, 20);
+		txtFieldNombre.setBounds(184, 57, 299, 20);
 		add(txtFieldNombre);
 		txtFieldNombre.setColumns(10);
 		txtFieldNombre.setDocument(new JTextFieldLimit(60));
 
 		comboBox = new JComboBox();
-		comboBox.setBounds(142, 75, 172, 20);
+		comboBox.setBounds(184, 111, 299, 20);
 		add(comboBox);
 
 		JLabel lblPorcentaje = new JLabel("Porcentaje");
-		lblPorcentaje.setBounds(45, 114, 64, 14);
+		lblPorcentaje.setBounds(70, 161, 64, 14);
 		add(lblPorcentaje);
 		
 		SpinnerModel sm = new SpinnerNumberModel(0, 0, 100, 1); //default value,lower bound,upper bound,increment by 
 		spinner = new JSpinner(sm);
-		spinner.setBounds(142, 111, 64, 20);
+		spinner.setBounds(184, 158, 64, 20);
 		JSpinner.NumberEditor jsEditor = (JSpinner.NumberEditor)spinner.getEditor();
 		DefaultFormatter formatter = (DefaultFormatter) jsEditor.getTextField().getFormatter();
 		formatter.setAllowsInvalid(false);
@@ -94,39 +94,39 @@ public class ProcesoElectoralPanel extends JPanel implements ActionListener {
 		add(spinner);
 
 		btnAgregar = new JButton("Agregar");
-		btnAgregar.setBounds(43, 211, 89, 23);
+		btnAgregar.setBounds(80, 336, 89, 23);
 		add(btnAgregar);
 
 		btnModificar = new JButton("Modificar");
-		btnModificar.setBounds(152, 211, 89, 23);
+		btnModificar.setBounds(259, 336, 89, 23);
 		add(btnModificar);
 
 		dateIni = new JDateChooser();
-		dateIni.setBounds(142, 141, 87, 20);
+		dateIni.setBounds(184, 201, 145, 20);
 		add(dateIni);
 		// dateIni.setCalendar(Calendar.getInstance());
 
 		dateFin = new JDateChooser();
-		dateFin.setBounds(142, 172, 87, 20);
+		dateFin.setBounds(182, 260, 147, 20);
 		add(dateFin);
 
 		JLabel lblFechaInicial = new JLabel("Fecha Inicial");
-		lblFechaInicial.setBounds(45, 147, 75, 14);
+		lblFechaInicial.setBounds(70, 212, 75, 14);
 		add(lblFechaInicial);
 
 		JLabel lblFechaFin = new JLabel("Fecha Fin");
-		lblFechaFin.setBounds(45, 178, 64, 14);
+		lblFechaFin.setBounds(70, 266, 64, 14);
 		add(lblFechaFin);
 		// dateFin.setCalendar(Calendar.getInstance());
 
 		btnEliminar = new JButton("Eliminar");
-		btnEliminar.setBounds(265, 211, 89, 23);
+		btnEliminar.setBounds(430, 336, 89, 23);
 		add(btnEliminar);
 
 		JPanel panel = new JPanel();
 		panel.setBorder(
 				new TitledBorder(null, "Datos de Procesos", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel.setBounds(45, 245, 327, 198);
+		panel.setBounds(28, 405, 579, 308);
 		add(panel);
 		panel.setLayout(new GridLayout(1, 1, 0, 0));
 
@@ -175,7 +175,15 @@ public class ProcesoElectoralPanel extends JPanel implements ActionListener {
 
 			}
 		});
-
+		
+		JPanel panelReg = new JPanel();
+		panelReg.setBorder(new TitledBorder(null, "PROCESOS ELECTORALES", TitledBorder.LEADING, TitledBorder.TOP,
+				null, null));
+		panelReg.setBounds(28, 30, 573, 286);
+		add(panelReg);
+		panelReg.setLayout(new GridLayout(1, 1, 0, 0));
+		
+		
 	}
 
 	class MyTableModel extends AbstractTableModel {

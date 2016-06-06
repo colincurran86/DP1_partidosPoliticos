@@ -45,14 +45,14 @@ public class Principal {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 600);
+		frame.setBounds(100, 100, 650, 800);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		JLabel lblBienvenido = new JLabel("BIENVENIDO!");
-		lblBienvenido.setFont(new Font("Tahoma", Font.PLAIN, 42));
+		lblBienvenido.setFont(new Font("Tahoma", Font.PLAIN, 60));
 		
-		lblBienvenido.setBounds(101, 90, 258, 110);
+		lblBienvenido.setBounds(44, 250, 370, 196);
 		frame.getContentPane().add(lblBienvenido);
 		
 		JMenuBar menuBar = new JMenuBar();

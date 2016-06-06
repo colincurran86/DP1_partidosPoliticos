@@ -43,16 +43,16 @@ public class TipoProcesoPanel extends JPanel {
 		
 
 		JLabel lblDescripcion = new JLabel("Descripcion");
-		lblDescripcion.setBounds(38, 47, 72, 14);
+		lblDescripcion.setBounds(98, 114, 72, 14);
 		add(lblDescripcion);
 		
 		JLabel lblPorcentaje = new JLabel("Porcentaje");
-		lblPorcentaje.setBounds(38, 97, 62, 14);
+		lblPorcentaje.setBounds(98, 198, 62, 14);
 		add(lblPorcentaje);
 		
 		
 		txtFieldDescripcion = new JTextField();
-		txtFieldDescripcion.setBounds(131, 44, 147, 20);
+		txtFieldDescripcion.setBounds(185, 111, 290, 20);
 		add(txtFieldDescripcion);
 		txtFieldDescripcion.setColumns(10);
 		txtFieldDescripcion.setDocument(new JTextFieldLimit(90));
@@ -60,7 +60,7 @@ public class TipoProcesoPanel extends JPanel {
 		
 		SpinnerModel sm = new SpinnerNumberModel(0, 0, 100, 1); //default value,lower bound,upper bound,increment by 
 		JSpinner spinner = new JSpinner();
-		spinner.setBounds(131, 94 , 64, 20);
+		spinner.setBounds(185, 195 , 64, 20);
 		JSpinner.NumberEditor jsEditor = (JSpinner.NumberEditor)spinner.getEditor();
 		DefaultFormatter formatter = (DefaultFormatter) jsEditor.getTextField().getFormatter();
 		formatter.setAllowsInvalid(false);		
@@ -68,15 +68,15 @@ public class TipoProcesoPanel extends JPanel {
 
 		
 		JButton btnAgregar = new JButton("Agregar");
-		btnAgregar.setBounds(24, 145, 89, 23);
+		btnAgregar.setBounds(80, 336, 89, 23);
 		add(btnAgregar);
 
 		JButton btnModificar = new JButton("Modificar");
-		btnModificar.setBounds(154, 145, 89, 23);
+		btnModificar.setBounds(259, 336, 89, 23);
 		add(btnModificar);
 		
 		JButton btnEliminar = new JButton("Eliminar");
-		btnEliminar.setBounds(284, 145, 89, 23);
+		btnEliminar.setBounds(430, 336, 89, 23);
 		add(btnEliminar);
 		
 		btnAgregar.addActionListener(new ActionListener() { 
@@ -131,7 +131,7 @@ public class TipoProcesoPanel extends JPanel {
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Datos de Tipo de Procesos", TitledBorder.LEADING, TitledBorder.TOP,
 				null, null));
-		panel.setBounds(45, 195, 327, 198);
+		panel.setBounds(28, 405, 579, 308);
 		add(panel);
 		panel.setLayout(new GridLayout(1, 1, 0, 0));
 
@@ -155,7 +155,12 @@ public class TipoProcesoPanel extends JPanel {
 				spinner.setValue(foo);
 			}
 		});
-		
+		JPanel panelReg = new JPanel();
+		panelReg.setBorder(new TitledBorder(null, "TIPO DE PROCESOS", TitledBorder.LEADING, TitledBorder.TOP,
+				null, null));
+		panelReg.setBounds(28, 30, 573, 286);
+		add(panelReg);
+		panelReg.setLayout(new GridLayout(1, 1, 0, 0));
 	}
 	
 
