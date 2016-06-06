@@ -77,6 +77,7 @@ public class Login {
 						Principal window = new Principal();
 						Principal carga = new Principal();
 						carga.frame.setVisible(true);
+						
 					} else {
 						JOptionPane.showMessageDialog(null, "Usuario incorrecto");	
 					}

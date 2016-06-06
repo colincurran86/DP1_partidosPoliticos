@@ -2,6 +2,9 @@ package pantallas;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -18,13 +21,16 @@ import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.JSpinner;
 
-public class Configuracion extends JDialog {
+public class Configuracion extends JDialog implements ActionListener{
 	private JComboBox cmbBoxPE;
 	private JComboBox cmbBoxPP;
 	private JButton okButton;
 	private JButton cancelButton;
-	private List<ProcesoElectoral> listaPE;
-	private List<PartidoPolitico> listaPP;
+	private JSpinner spinner;
+	private List<ProcesoElectoral> listaPE=ProcessManager.queryAllProc();
+	private List<PartidoPolitico> listaPP= ProcessManager.queryAllPartPol();
+	
+	
 	
 	private final JPanel contentPanel = new JPanel();
 	
@@ -68,7 +74,7 @@ public class Configuracion extends JDialog {
 		cmbBoxPE.setBounds(247, 62, 253, 20);
 		contentPanel.add(cmbBoxPE);
 		
-		listaPE = ProcessManager.queryAllProc();
+		
 		for (int i = 0; i < listaPE.size(); i++)
 			cmbBoxPE.addItem(listaPE.get(i).getNombre());
 		
@@ -77,12 +83,14 @@ public class Configuracion extends JDialog {
 		cmbBoxPP.setBounds(247, 128, 253, 20);
 		contentPanel.add(cmbBoxPP);
 		
-		listaPP = ProcessManager.queryAllPartPol();
+		
 		for (int i = 0; i < listaPE.size(); i++)
 			cmbBoxPE.addItem(listaPE.get(i).getNombre());
 		
-		JSpinner spinner = new JSpinner();
+		spinner = new JSpinner();
 		spinner.setBounds(247, 217, 29, 20);
+		if(listaPE.size()!=0) spinner.setValue(listaPE.get(0).getPorcentaje());
+		
 		contentPanel.add(spinner);
 		{
 			JPanel buttonPane = new JPanel();
@@ -99,6 +107,22 @@ public class Configuracion extends JDialog {
 				//cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
+		}
+		
+		okButton.addActionListener(this);
+		cancelButton.addActionListener(this);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		if(e.getSource()==cancelButton){
+			this.dispose();
+		}
+		if(e.getSource()==okButton){
+			ProcesoElectoral pe =listaPE.get(cmbBoxPE.getSelectedIndex());
+			PartidoPolitico pp=listaPP.get(cmbBoxPP.getSelectedIndex());
+			int porcentaje=(int)spinner.getValue();
 		}
 	}
 }

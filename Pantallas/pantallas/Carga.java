@@ -68,5 +68,15 @@ public class Carga extends JPanel implements ActionListener{
 			Configuracion c= new Configuracion();
 			c.setVisible(true);
 		}
+		if(e.getSource()==btnPrimCarga){
+			PrimeraFase pf =new PrimeraFase();
+			pf.setVisible(true);
+			
+			Principal.getFrame().getContentPane().setVisible(false);
+			Principal.getFrame().setContentPane(pf);
+		}
+		if(e.getSource()==btnSegCarga){
+			
+		}
 	}
 }

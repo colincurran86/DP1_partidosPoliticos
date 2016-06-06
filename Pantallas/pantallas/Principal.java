@@ -15,7 +15,7 @@ import java.awt.event.ActionEvent;
 
 public class Principal {
 
-	public JFrame frame;
+	public static JFrame frame;
 
 	/**
 	 * Launch the application.
@@ -65,7 +65,7 @@ public class Principal {
 		mntmCarga.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Carga carga =new Carga();
-				carga.setVisible(true);
+				carga.setVisible(true);				
 				frame.getContentPane().setVisible(false);
 				frame.setContentPane(carga);				
 			}
@@ -116,5 +116,9 @@ public class Principal {
 			}
 		});
 		mnMantenimientos.add(mntmPartidoPoltico);
+	}
+	
+	public static JFrame getFrame(){
+		return frame;
 	}
 }
