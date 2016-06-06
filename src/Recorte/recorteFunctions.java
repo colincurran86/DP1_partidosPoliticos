@@ -1,5 +1,7 @@
 package Recorte;
 
+import java.io.File;
+
 import ij.IJ;
 import ij.ImagePlus;
 import ij.Prefs;
@@ -13,13 +15,16 @@ public class recorteFunctions {
 	private int PX1, PY1, PX2, PY2, PX3, PY3;
 	private ImagePlus padronJ = new ImagePlus();
 	
-	public void recortarCostadosProcesarPadron(String workingDir){
+	public int contarPadrones(){
+		String workingDir = System.getProperty("user.dir"); // nos evitamos el problema de las rutas :'v
+		return new File(workingDir + "/src/Recorte/padrones/").list().length;
+	}
+	
+	public void recortarCostadosProcesarPadron(String ruta1, String ruta2){
 		
 		int widthPar=2073;
 		int heightPar=972;
 		int personasxPadron = 8; // kappa
-		String ruta1 = workingDir +"/src/Recorte/padron.rayas.firmado.2.jpg"; // lo cambie "/src/Recorte/padron.rayas.firmado.2.jpg"
-		String ruta2 = workingDir + "/src/Recorte/recorteCostado.jpg";
 		
 		
 		//verificamos que la imagen se encuentre correctamente alineada
@@ -219,7 +224,10 @@ public class recorteFunctions {
 			 r = padronJ.getPixel(i, alturaX)[0];
 			 if (r != 0){
 				 cont++;
-				 if (cont == 1) this.yApellido = i+1;
+				 if (cont == 1) {
+					 this.yApellido = i+1;
+					 this.yNombre = i-1 + (25*15);
+				 }
 				 if (cont == 2){
 					 this.yDNI = i + 2;
 					 break;	 
@@ -255,4 +263,7 @@ public class recorteFunctions {
 		return this.yApellido;
 	}
 	
+	public int getYNombre(){
+		return this.yNombre;
+	}
 }
