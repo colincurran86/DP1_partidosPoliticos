@@ -10,10 +10,12 @@ package Firmas;
  * @author LUIS S
  */
 public class Resultado {
-    public double resul;
+    public double indFirmaMatch;
+    public double porcentaje;
+
 
     public Resultado(double r) {
-    this.resul=r;
+    this.indFirmaMatch=r;
     }
     
     

@@ -827,12 +827,12 @@ public class Main {
             menor2= 99999;
             indiceMayor=0;
             for (int k = 0; k < listaDistancia2Listas.get(i).size(); k++) {
-                if(listaDistancia2Listas.get(i).get(k).resul>=mayor){
+                if(listaDistancia2Listas.get(i).get(k).indFirmaMatch >=mayor){
                    
                     
                     
                     
-                    mayor =listaDistancia2Listas.get(i).get(k).resul; 
+                    mayor =listaDistancia2Listas.get(i).get(k).indFirmaMatch; 
                    // menor = listaPuntosBaseDatos.get(k).size()-listaDistancia2Listas.get(i).get(k).resul;
                     indiceMayor=k;
                    // menor2 = listaPuntos.get(i).size()-listaPuntosBaseDatos.get(k).size();
@@ -850,7 +850,7 @@ public class Main {
             System.out.println("Figura: "+i+" ");
             System.out.println("----------------------------------");
             for (int k = 0; k < listaDistancia2Listas.get(i).size(); k++) {
-                System.out.println(k+" ) "+listaDistancia2Listas.get(i).get(k).resul);
+                System.out.println(k+" ) "+listaDistancia2Listas.get(i).get(k).indFirmaMatch);
             }
         }
         

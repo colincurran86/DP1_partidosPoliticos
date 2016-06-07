@@ -9,10 +9,21 @@ package Firmas;
 import Catalano.Imaging.FastBitmap;
 import Catalano.Imaging.Filters.BradleyLocalThreshold;
 import Catalano.Imaging.Tools.IntegralImage;
+import net.coobird.thumbnailator.Thumbnails;
+import net.coobird.thumbnailator.resizers.Resizers;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+
+import org.imgscalr.Scalr;
+import org.imgscalr.Scalr.Method;
+
 import Catalano.Imaging.Filters.Crop;
+import Catalano.Imaging.Filters.OtsuThreshold;
 import Catalano.Imaging.Filters.Rotate;
 import Catalano.Imaging.Filters.Resize;
 
@@ -31,7 +42,8 @@ public class AlgoritmoFirmas {
     private boolean dibujarImagenCorte;
     private boolean dibujarImagenesBaseDatos;
     private int umbralMatch;
-
+    
+    
     public AlgoritmoFirmas(String ruta, String rutaImagen1, String rutaImagen2, boolean corte, boolean dibujarTodasImagenes, boolean dibujarImagenCorte, boolean dibujarImagenesBaseDatos, int umbralMatch) {
         this.rutaCarpetaImagenes = ruta;
         this.rutaImagen1 = rutaImagen1;
@@ -52,6 +64,8 @@ public class AlgoritmoFirmas {
         this.umbralMatch = umbralMatch;
     }
 
+    public AlgoritmoFirmas(){};
+    
     /**
      * @return the ruta
      */
@@ -389,9 +403,9 @@ public class AlgoritmoFirmas {
             
             indiceMayor=0;
             for (int k = 0; k < listaDistancia2Listas.get(i).size(); k++) {
-                if(listaDistancia2Listas.get(i).get(k).resul>=mayor){
+                if(listaDistancia2Listas.get(i).get(k).indFirmaMatch>=mayor){
                   
-                    mayor =listaDistancia2Listas.get(i).get(k).resul; 
+                    mayor =listaDistancia2Listas.get(i).get(k).indFirmaMatch; 
                     indiceMayor=k;
                 }
                 
@@ -439,4 +453,684 @@ public class AlgoritmoFirmas {
     return indiceNO;
     }
 
+    
+    
+
+    void procesar2() throws IOException
+    {	//double umbral=85;
+    	double umbral=5;
+    	int d1 = 0,d2=0;
+    	
+        Resize redimensionar = new Resize(260,116);
+        FastCornersDetector fast = new FastCornersDetector(); //Inicio del algoritmo Fast
+        
+        List<List<Resultado>> arre = new ArrayList<List<Resultado>>();  
+        ArrayList<Resultado> arr;
+        
+        
+        for (int isuperior = 1; isuperior <2; isuperior++) {
+			
+		
+        FastBitmap imagen1;
+        FastBitmap imagen2;
+        FastRetinaKeypointDetector freak1 = new FastRetinaKeypointDetector(fast); //Incio del algoritmo Freak
+        FastRetinaKeypointDetector freak2 = new FastRetinaKeypointDetector(fast);
+        List<FastRetinaKeypoint> descriptores1;
+        List<FastRetinaKeypoint> descriptores2;
+        Distance distancia = new Distance();
+  // String url1 = new String("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\"+isuperior+"cccn.jpg");
+  String url1 = new String("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\42r.jpg");
+   //String url1 = new String("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\"+isuperior+"r.jpg");
+        
+        //String url1 = new String("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\c1"+isuperior+".jpg");
+        OtsuThreshold o = new OtsuThreshold();
+        
+        imagen1 = new FastBitmap(url1);
+        imagen1.toRGB();
+        imagen1.toGrayscale();
+        //BradleyLocalThreshold bradley4 = new BradleyLocalThreshold();
+        //bradley4.applyInPlace(imagen1);
+        o.applyInPlace(imagen1);
+        //imagen1.saveAsJPG("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\imagen_primera_procesada.jpg");
+        descriptores1 = new ArrayList<FastRetinaKeypoint>();
+        descriptores1 = freak1.ProcessImage(imagen1);
+         
+        
+        
+
+  /*      
+        Firmas.FastBitmap fb4DibujarBase;
+        fb4DibujarBase = new Firmas.FastBitmap(url1);
+        FastGraphics graficarPuntos2Base = new FastGraphics(fb4DibujarBase);
+        //graficarPuntos2Base.setColor(Color.Blue);     
+        graficarPuntos2Base.setColor(Color.Black);
+
+         //Funcion 0
+        for (int ii = 0; ii < descriptores1.size(); ii++) {
+            int x1 = (int) descriptores1.get(ii).x;
+            int y1 = (int) descriptores1.get(ii).y;
+            graficarPuntos2Base.DrawCircle(x1, y1, 2);
+        }
+
+        JOptionPane.showMessageDialog(null, fb4DibujarBase.toIcon(), "Result con Puntos", JOptionPane.PLAIN_MESSAGE);
+    */
+        System.out.println("A) Figura ejemplo: "+url1);
+        //System.out.println("Tamaño: "+descriptores1.size());
+        //System.out.println("Tamaño 1: "+imagen1.getWidth()+" "+imagen1.getHeight());
+        //System.out.println("Umbral: "+umbral);
+        arr = new ArrayList<Resultado>();
+        int ind;
+       for (ind = 1; ind < 2; ind++) {
+	
+       //String url2 = new String("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\"+ind+".jpg");
+     String url2 = new String("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\42.jpg");
+      //String url2 = new String("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\nueva_imagen_redimensionada.jpg");
+        	ind=42;
+        //System.out.println("Figura: "+ind);
+        System.out.println("Figura: "+url2);
+        imagen2 = new FastBitmap(url2);
+        //redimensionar.ApplyInPlace(imagen2);
+        //System.out.println("Imagen 1: "+imagen1.getWidth()+" "+imagen1.getHeight());
+        //System.out.println("Imagen 2: "+imagen2.getWidth()+" "+imagen2.getHeight());
+        
+        //Resize redimensionar2 = new Resize((imagen1.getWidth()),(imagen1.getHeight()),Algorithm.NEAREST_NEIGHBOR);
+        //redimensionar2.ApplyInPlace(imagen2);
+        //System.out.println("resize: "+imagen2.getWidth()+" "+imagen2.getHeight());
+        
+        
+   
+        //ProgressiveBilinearResizer pr = new ProgressiveBilinearResizer();
+    	
+        //BufferedImage aBufferedImage = null;
+
+        //pr.resize(imagen2.toBufferedImage(),aBufferedImage);
+
+        //imagen2 = new FastBitmap(aBufferedImage);
+        
+        //BufferedImage a = getScaledInstance(imagen2.toBufferedImage(),imagen1.getWidth(),imagen1.getHeight(),null,true);
+        
+        //Image a = resizeToBig(imagen2.toImage(),imagen1.getWidth(), imagen1.getHeight());
+        
+        //imagen2.setImage((BufferedImage) a);
+        //
+
+        
+        
+        //BufferedImage img = imagen2.toBufferedImage(); // load image
+        //BufferedImage scaledImg = Scalr.resize(img, Method.BALANCED, 210, 95);       
+        //imagen2 = new FastBitmap(scaledImg);
+
+        
+        //Resizers a = new Resizers() ;
+        //Antialiasing an = null;
+        //220 105
+        
+        
+        /*
+        BufferedImage bi = Thumbnails.of(new File(url2))
+        .size(imagen1.getWidth(), imagen1.getHeight())
+        .outputFormat("JPEG")
+        .outputQuality(1)
+        .resizer(Resizers.PROGRESSIVE)
+        .antialiasing(Antialiasing.ON)
+        .dithering(Dithering.ENABLE)
+        //.scalingMode(ScalingMode.PROGRESSIVE_BILINEAR)
+        .asBufferedImage();
+         */
+        
+       
+/*
+    	BufferedImage bbi = new BufferedImage(210, 105,BufferedImage.TYPE_INT_RGB);
+    	Graphics2D g = bbi.createGraphics();        
+        //Graphics g = imagen2.getGraphics();
+        Graphics2D g2 = (Graphics2D)g;
+        RenderingHints rh = new RenderingHints(
+                     RenderingHints.KEY_TEXT_ANTIALIASING,
+                     RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+            g2.setRenderingHints(rh);
+              g2.drawImage(bbi, null, 0, 0);
+*/
+        
+         
+        /*
+        BufferedImage dbi = null;
+            dbi = new BufferedImage(210, 105,BufferedImage.TYPE_INT_RGB);
+            Graphics2D g = dbi.createGraphics();
+            AffineTransform at = AffineTransform.getScaleInstance(210, 105);
+            g.drawRenderedImage(sbi, at);
+        */
+              
+        
+        /*
+        
+        Image ai = imagen2.toImage();
+        Image rescaled = ai.getScaledInstance(210, 105, Image.SCALE_AREA_AVERAGING);
+
+
+        	BufferedImage bbi = new BufferedImage(210, 105,BufferedImage.TYPE_INT_RGB);
+        	Graphics2D g = bbi.createGraphics();
+        	*/
+        
+        
+      
+            
+        
+        //.toFile(new File("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\thumbnail.jpg"));
+       
+        
+        //Metodo en uso
+        
+        
+        
+        
+        
+        
+     /*   
+        if((imagen2.getWidth()>=300 || imagen2.getHeight()>=300)||(imagen1.getWidth()>=320 || imagen1.getHeight()>=320)){
+        //System.out.println("todos");
+        BufferedImage img = imagen2.toBufferedImage(); // load image 220 105
+       BufferedImage scaledImg = Scalr.resize(img, Method.AUTOMATIC, imagen1.getWidth(), imagen1.getHeight(),Scalr.OP_BRIGHTER);       
+       // BufferedImage scaledImg = Scalr.resize(img, Method.BALANCED, 300, 156,Scalr.OP_BRIGHTER);       
+//        BufferedImage scaledImg = Scalr.resize(img, Method.BALANCED, imagen1.getWidth(), imagen2.getHeight(),Scalr.OP_ANTIALIAS);       
+        imagen2 = new FastBitmap(scaledImg);
+        }
+        imagen2.saveAsJPG("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\"+ind+"nuevoresize.jpg");
+       */ 
+        
+        
+        
+        
+        if(ind==36 || ind==37 || ind==38 || ind==39 || ind ==40 || ind==41 || ind==41 ||ind==42 ||ind==43){
+        
+        	if((imagen2.getWidth()>=300 || imagen2.getHeight()>=300)||(imagen1.getWidth()>=320 || imagen1.getHeight()>=320)){	
+        		
+        		BufferedImage bi = Thumbnails.of(new File("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\"+ind+".jpg"))
+        .size(imagen1.getWidth(), imagen1.getHeight())
+        .outputFormat("JPG")
+        .outputQuality(1)
+        .resizer(Resizers.PROGRESSIVE)
+        .asBufferedImage();
+       
+        imagen2 = new FastBitmap(bi);
+        }
+        }
+        else
+        {
+        
+        	BufferedImage img = imagen2.toBufferedImage(); // load image 220 105
+            BufferedImage scaledImg = Scalr.resize(img, Method.AUTOMATIC, imagen1.getWidth(), imagen1.getHeight(),Scalr.OP_BRIGHTER);       
+            // BufferedImage scaledImg = Scalr.resize(img, Method.BALANCED, 300, 156,Scalr.OP_BRIGHTER);       
+//             BufferedImage scaledImg = Scalr.resize(img, Method.BALANCED, imagen1.getWidth(), imagen2.getHeight(),Scalr.OP_ANTIALIAS);       
+             imagen2 = new FastBitmap(scaledImg);
+        	
+        }
+        
+        //imagen2.saveAsJPG("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\37Thumbnails.jpg");
+        
+        
+        
+      //  BufferedImage scaledImg = Scalr.resize(img, Method.QUALITY, 
+        //        150, 100, Scalr.OP_ANTIALIAS);
+        
+        //imagen2.saveAsJPG("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\nueva_metodo.jpg");
+
+        //imagen2 = new FastBitmap(bi);
+        //imagen2.saveAsJPG("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\nueva_metodo.jpg");
+        imagen2.toRGB();
+        imagen2.toGrayscale();
+        //BradleyLocalThreshold bradleyBase = new BradleyLocalThreshold();
+        //bradleyBase.applyInPlace(imagen2);
+        //redimensionar2.ApplyInPlace(imagen2);
+        o.applyInPlace(imagen2);
+        //BradleyLocalThreshold bradleyBase = new BradleyLocalThreshold();
+        //bradleyBase.applyInPlace(imagen2);
+        
+        //imagen2.saveAsJPG("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\nueva_imagen_redimensionada.jpg");
+
+        descriptores2 = new ArrayList<FastRetinaKeypoint>();
+        descriptores2 = freak2.ProcessImage(imagen2);
+        //System.out.println("Tamaño de 2: "+imagen2.getWidth()+" "+imagen2.getHeight());
+        //System.out.println("tamaño 2:"+descriptores2.size());  
+        //System.out.println();
+      System.out.println(descriptores1.size());
+      System.out.println(descriptores2.size());
+        
+
+/*        
+        Firmas.FastBitmap fb4DibujarBase2;
+        fb4DibujarBase2 = new Firmas.FastBitmap(url2);
+        FastGraphics graficarPuntos2Base2 = new FastGraphics(fb4DibujarBase2);
+        //graficarPuntos2Base.setColor(Color.Blue);     
+        graficarPuntos2Base.setColor(Color.Black);
+
+        
+        //Funcion 0
+        for (int ii = 0; ii < descriptores2.size(); ii++) {
+            int x1 = (int) descriptores2.get(ii).x;
+            int y1 = (int) descriptores2.get(ii).y;
+            graficarPuntos2Base2.DrawCircle(x1, y1, 2);
+        }
+
+        
+        JOptionPane.showMessageDialog(null, fb4DibujarBase2.toIcon(), "Result con Puntos", JOptionPane.PLAIN_MESSAGE);
+*/    
+        
+        
+        int contadorMatching=0;
+        
+        double distanciaResultado;
+        double porcentaje = 0;
+        
+        /*
+        for (int i = 0; i < descriptores1.size(); i++) {
+		  
+       	 for (int j = 0; j < descriptores2.size(); j++) {
+       		 distanciaResultado=distancia.Hamming(descriptores1.get(i).toBinary(), descriptores2.get(j).toBinary());
+       		 //System.out.println(distanciaResultado);
+       		 if(distanciaResultado<=umbral)
+       			 contadorMatching=contadorMatching+1;
+       		 	 break;
+        	 }	
+		}
+        */
+  
+        
+        Distance d = new Distance();
+        int j;
+        double distancia1;
+        int distanciaMinima = 45; //41 default 45 y 20 jpg ,  no puede subir mas , por ahora, DEFAULT = 45
+        //Funcion 3, 20
+        for(int i = 0; i < descriptores1.size(); i++){
+           // distanciaMinima=0;
+            int indiceDistanciaMinima=-1;
+            for(j = 0; j < descriptores2.size(); j++)
+            {  
+            	if(descriptores1.get(i).primerosBits(descriptores2.get(j))>=14){ //20 no falla 34, 5 DEFAULT ,
+            		//15, falla 14
+            		//10, falla 10
+            		//5, falla 10
+            		//14 , falla 12 en total
+            		
+            	if(descriptores2.get(j).getIndexMatch()==-1){
+            	
+            
+                distancia1 = d.Hamming(descriptores1.get(i).toBinary(),descriptores2.get(j).toBinary());
+                       // System.out.println("d = "+distancia1);
+                if (distancia1<=distanciaMinima){
+                    //distanciaMinima=distancia;
+                    indiceDistanciaMinima = j;
+                    descriptores2.get(indiceDistanciaMinima).setIndexMatch(i);
+                    break;
+                }
+                
+                }
+            	}
+            }
+        descriptores1.get(i).setIndexMatch(indiceDistanciaMinima);
+         }
+         
+        
+        
+       
+        
+        
+        
+        int c=0;
+        for (int i = 0; i < descriptores1.size(); i++) {
+			if(descriptores1.get(i).getIndexMatch()!=-1)
+				c++;
+		}
+        int cor=0;
+        //System.out.println("Similitud: "+contadorMatching);
+        System.out.println("Similitud: "+c);
+        //System.out.println(descriptores1.get(0).toBinary());
+        //System.out.println(descriptores2.get(0).toBinary());
+       
+        if(descriptores1.size()>0){
+         //porcentaje de 1 imagen
+        porcentaje = ((c*100)/descriptores1.size());
+        //porcentaje de 2 imagen
+        //porcentaje = ((c*100)/descriptores2.size());
+        System.out.println("Porcentaje: "+porcentaje);
+        }
+        //28, 20
+        //55, ok
+        //20 , ok
+        //10 pp ok
+        if (porcentaje>=35){ //20 defualt;   
+        	//esta entre 34 y 20
+        	Resultado r1 = new Resultado(ind);
+        	r1.porcentaje = porcentaje;
+            arr.add(r1);
+        		
+        	
+        	System.out.println("Ejemplo "+url1);
+        	System.out.println("Esta es la imagen conincide:(1xImagen) "+url2);
+        	System.out.println("------------------------------------------------------------------");
+        	}
+        System.out.println();
+        d2=descriptores2.get(0).getDescriptor().length;
+       }
+        for (int i = 0; i < descriptores1.size(); i++) {
+			if(descriptores1.get(i).getIndexMatch()!=-1)
+				descriptores1.get(i).setIndexMatch(-1);
+		}
+        arre.add(arr);
+        d1=descriptores1.get(0).getDescriptor().length;
+        
+        }
+        
+
+        int kk=0;
+        System.out.println("Lista:");
+        for (int i = 0; i < arre.size(); i++) {
+        	System.out.println("i :"+(i+1));
+        	if (arre.get(i).size()>=2 || arre.get(i).size()==0) kk++;
+        	for (int k = 0; k < arre.get(i).size(); k++) {
+				
+				System.out.println(arre.get(i).get(k).indFirmaMatch+"  p: "+arre.get(i).get(k).porcentaje);
+			}
+        	System.out.println();
+		}
+       System.out.println("Fallas: "+kk);
+       System.out.println(" "+d1+" "+d2);
+    }
+
+    
+    
+    
+    
+    
+    
+    
+    public List<Integer> verificarFirmas1(List<Integer> idPersonas,List<Integer> idFirmas,String direccionPersonaPorPlanillon, String direccionBaseDatosFirmas) throws IOException
+    {
+    	ArrayList<Integer> listaFirmasAutentificadas = new ArrayList<Integer>();
+        FastCornersDetector fastDetector = new FastCornersDetector(); 
+        List<List<Resultado>> listaTemporalPersona = new ArrayList<List<Resultado>>();  
+        ArrayList<Resultado> idFirmasValidadas;
+        int indicePersona;
+        int indiceBaseDatos;
+        double distanciaMinimaHamming = 45; 
+        
+        for (indicePersona = 1; indicePersona < idFirmas.size(); indicePersona++)
+	        {
+	        FastBitmap imagen1;
+	        FastBitmap imagen2;
+	        FastRetinaKeypointDetector freak1 = new FastRetinaKeypointDetector(fastDetector); 
+	        FastRetinaKeypointDetector freak2 = new FastRetinaKeypointDetector(fastDetector);
+	        List<FastRetinaKeypoint> descriptores1;
+	        List<FastRetinaKeypoint> descriptores2;
+	        Distance distancia = new Distance();
+	        String url1 = new String(direccionPersonaPorPlanillon+"\\Persona"+idPersonas.get(indicePersona)+"\\Firma\\firma.jpg");        												
+	        OtsuThreshold o = new OtsuThreshold();
+	        imagen1 = new FastBitmap(url1);
+	        imagen1.toRGB();
+	        imagen1.toGrayscale();
+	        //BradleyLocalThreshold bradley4 = new BradleyLocalThreshold();
+	        //bradley4.applyInPlace(imagen1);
+	        o.applyInPlace(imagen1);
+	        //imagen1.saveAsJPG("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\imagen_primera_procesada.jpg");
+	        descriptores1 = new ArrayList<FastRetinaKeypoint>();
+	        descriptores1 = freak1.ProcessImage(imagen1);
+	
+	        idFirmasValidadas = new ArrayList<Resultado>();
+	        
+	        for (indiceBaseDatos = 1; indiceBaseDatos < 59; indiceBaseDatos++) 
+	        {
+	        	String url2 = null;
+		        if(indiceBaseDatos<10)
+		        	url2 = new String(direccionBaseDatosFirmas+"\\f00"+indiceBaseDatos+".jpg");
+		        else
+		        	url2 = new String(direccionBaseDatosFirmas+"\\f0"+indiceBaseDatos+".jpg");
+		        
+		        imagen2 = new FastBitmap(url2);
+		        Distance d = new Distance();
+		        double porcentaje = 0;
+		        double distanciaResultado;
+		        int puntosSimilares=0;
+		        int j;
+		        if(indiceBaseDatos==36 || indiceBaseDatos==37 || indiceBaseDatos==38 || indiceBaseDatos==39 || indiceBaseDatos ==40 || indiceBaseDatos==41 || indiceBaseDatos==41 ||indiceBaseDatos==42 ||indiceBaseDatos==43){
+		        
+		        	if((imagen2.getWidth()>=300 || imagen2.getHeight()>=300)||(imagen1.getWidth()>=320 || imagen1.getHeight()>=320)){	
+		       
+		        		BufferedImage bufferTmp = Thumbnails.of(new File(url2+"\\f0"+indiceBaseDatos+".jpg"))
+		        .size(imagen1.getWidth(), imagen1.getHeight())
+		        .outputFormat("JPG")
+		        .outputQuality(1)
+		        .resizer(Resizers.PROGRESSIVE)
+		        .asBufferedImage();
+		       
+		        imagen2 = new FastBitmap(bufferTmp);
+		        }
+		        }
+		        else
+		        {
+		        	BufferedImage bufferTmp = imagen2.toBufferedImage(); 
+		            BufferedImage imagenRedimensionada = Scalr.resize(bufferTmp, Method.AUTOMATIC, imagen1.getWidth(), imagen1.getHeight(),Scalr.OP_BRIGHTER);       
+		            imagen2 = new FastBitmap(imagenRedimensionada);	
+		        }
+		        
+		        imagen2.toRGB();
+		        imagen2.toGrayscale();
+		        //BradleyLocalThreshold bradleyBase = new BradleyLocalThreshold();
+		        //bradleyBase.applyInPlace(imagen2);
+		        //redimensionar2.ApplyInPlace(imagen2);
+		        o.applyInPlace(imagen2);
+		        //BradleyLocalThreshold bradleyBase = new BradleyLocalThreshold();
+		        //bradleyBase.applyInPlace(imagen2);
+		        
+		        descriptores2 = new ArrayList<FastRetinaKeypoint>();
+		        descriptores2 = freak2.ProcessImage(imagen2);
+		         
+		        for(int i = 0; i < descriptores1.size(); i++)
+		        {
+		            int indiceDistanciaMinima=-1;
+		            for(j = 0; j < descriptores2.size(); j++)
+		            {  
+		            	if(descriptores1.get(i).primerosBits(descriptores2.get(j))>=14)
+		            	{    		
+			            	if(descriptores2.get(j).getIndexMatch()==-1){
+			            		distanciaResultado = d.Hamming(descriptores1.get(i).toBinary(),descriptores2.get(j).toBinary());
+				                if (distanciaResultado<=distanciaMinimaHamming)
+				                {
+				                    indiceDistanciaMinima = j;
+				                    descriptores2.get(indiceDistanciaMinima).setIndexMatch(i);
+				                    break;
+				                }
+			                
+			                }
+		            	}
+		            }
+		        descriptores1.get(i).setIndexMatch(indiceDistanciaMinima);
+		         }
+		         
+		        for (int i = 0; i < descriptores1.size(); i++) {
+					if(descriptores1.get(i).getIndexMatch()!=-1)
+						puntosSimilares++;
+				}
+		
+		        if(descriptores1.size()>0)
+		        {
+		        	porcentaje = ((puntosSimilares*100)/descriptores1.size());
+		        }
+		        else
+		        {
+		        	porcentaje = 0;
+		        }
+		        
+		        if (porcentaje>=35)
+		        { 
+		        	Resultado datosResultadoTemporal = new Resultado(indiceBaseDatos);
+		        	datosResultadoTemporal.porcentaje = porcentaje;
+		            idFirmasValidadas.add(datosResultadoTemporal);
+		        }
+	       }
+	        
+	       for (int i = 0; i < descriptores1.size(); i++) 
+	       {
+				if(descriptores1.get(i).getIndexMatch()!=-1)
+					descriptores1.get(i).setIndexMatch(-1);
+	       }
+	       
+	       listaTemporalPersona.add(idFirmasValidadas);
+        }
+        
+        for (int i = 0; i < listaTemporalPersona.size(); i++) {	
+        	for (int k = 0; k < listaTemporalPersona.get(i).size(); k++) {
+				listaFirmasAutentificadas.add((int)listaTemporalPersona.get(i).get(k).indFirmaMatch);
+			}
+		}    	
+    	  	
+    	return listaFirmasAutentificadas;
+    }
+   
+    
+    
+    
+    public List<List<Resultado>> verificarFirmas2(List<Integer> idPersonas,List<Integer> idFirmas,String direccionPersonaPorPlanillon, String direccionBaseDatosFirmas) throws IOException
+    {
+    	ArrayList<Integer> listaFirmasAutentificadas = new ArrayList<Integer>();
+        FastCornersDetector fastDetector = new FastCornersDetector(); 
+        List<List<Resultado>> listaTemporalPersona = new ArrayList<List<Resultado>>();  
+        ArrayList<Resultado> idFirmasValidadas;
+        int indicePersona;
+        int indiceBaseDatos;
+        double distanciaMinimaHamming = 45; 
+        
+        for (indicePersona = 0; indicePersona < idFirmas.size(); indicePersona++)
+	        {
+	        FastBitmap imagen1;
+	        FastBitmap imagen2;
+	        FastRetinaKeypointDetector freak1 = new FastRetinaKeypointDetector(fastDetector); 
+	        FastRetinaKeypointDetector freak2 = new FastRetinaKeypointDetector(fastDetector);
+	        List<FastRetinaKeypoint> descriptores1;
+	        List<FastRetinaKeypoint> descriptores2;
+	        Distance distancia = new Distance();
+	        String url1 = new String(direccionPersonaPorPlanillon+"\\Persona"+idPersonas.get(indicePersona)+"\\Firma\\firma.jpg");        												
+	        OtsuThreshold o = new OtsuThreshold();
+	        imagen1 = new FastBitmap(url1);
+	        imagen1.toRGB();
+	        imagen1.toGrayscale();
+	        //BradleyLocalThreshold bradley4 = new BradleyLocalThreshold();
+	        //bradley4.applyInPlace(imagen1);
+	        o.applyInPlace(imagen1);
+	        //imagen1.saveAsJPG("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\imagen_primera_procesada.jpg");
+	        descriptores1 = new ArrayList<FastRetinaKeypoint>();
+	        descriptores1 = freak1.ProcessImage(imagen1);
+	
+	        idFirmasValidadas = new ArrayList<Resultado>();
+	        
+	        for (indiceBaseDatos = 1; indiceBaseDatos < 59; indiceBaseDatos++) 
+	        {
+	        	String url2 = null;
+		        if(indiceBaseDatos<10)
+		        	url2 = new String(direccionBaseDatosFirmas+"\\f00"+indiceBaseDatos+".jpg");
+		        else
+		        	url2 = new String(direccionBaseDatosFirmas+"\\f0"+indiceBaseDatos+".jpg");
+		        
+		        imagen2 = new FastBitmap(url2);
+		        Distance d = new Distance();
+		        double porcentaje = 0;
+		        double distanciaResultado;
+		        int puntosSimilares=0;
+		        int j;
+		        if(indiceBaseDatos==36 || indiceBaseDatos==37 || indiceBaseDatos==38 || indiceBaseDatos==39 || indiceBaseDatos ==40 || indiceBaseDatos==41 || indiceBaseDatos==41 ||indiceBaseDatos==42 ||indiceBaseDatos==43){
+		        
+		        	if((imagen2.getWidth()>=300 || imagen2.getHeight()>=300)||(imagen1.getWidth()>=320 || imagen1.getHeight()>=320))
+		        	{	
+		        		BufferedImage bufferTmp = Thumbnails.of(new File(url2+"\\f0"+indiceBaseDatos+".jpg"))
+		        				.size(imagen1.getWidth(), imagen1.getHeight())
+		        				.outputFormat("JPG")
+		        				.outputQuality(1)
+		        				.resizer(Resizers.PROGRESSIVE)
+		        				.asBufferedImage();
+		        		imagen2 = new FastBitmap(bufferTmp);
+		        }
+		        }
+		        else
+		        {
+		        	BufferedImage bufferTmp = imagen2.toBufferedImage(); 
+		            BufferedImage imagenRedimensionada = Scalr.resize(bufferTmp, Method.AUTOMATIC, imagen1.getWidth(), imagen1.getHeight(),Scalr.OP_BRIGHTER);       
+		            imagen2 = new FastBitmap(imagenRedimensionada);	
+		        }
+		        
+		        imagen2.toRGB();
+		        imagen2.toGrayscale();
+		        //BradleyLocalThreshold bradleyBase = new BradleyLocalThreshold();
+		        //bradleyBase.applyInPlace(imagen2);
+		        //redimensionar2.ApplyInPlace(imagen2);
+		        o.applyInPlace(imagen2);
+		        //BradleyLocalThreshold bradleyBase = new BradleyLocalThreshold();
+		        //bradleyBase.applyInPlace(imagen2);
+		        
+		        descriptores2 = new ArrayList<FastRetinaKeypoint>();
+		        descriptores2 = freak2.ProcessImage(imagen2);
+		         
+		        for(int i = 0; i < descriptores1.size(); i++)
+		        {
+		            int indiceDistanciaMinima=-1;
+		            for(j = 0; j < descriptores2.size(); j++)
+		            {  
+		            	if(descriptores1.get(i).primerosBits(descriptores2.get(j))>=14)
+		            	{    		
+			            	if(descriptores2.get(j).getIndexMatch()==-1){
+			            		distanciaResultado = d.Hamming(descriptores1.get(i).toBinary(),descriptores2.get(j).toBinary());
+				                if (distanciaResultado<=distanciaMinimaHamming)
+				                {
+				                    indiceDistanciaMinima = j;
+				                    descriptores2.get(indiceDistanciaMinima).setIndexMatch(i);
+				                    break;
+				                }
+			                
+			                }
+		            	}
+		            }
+		        descriptores1.get(i).setIndexMatch(indiceDistanciaMinima);
+		         }
+		         
+		        for (int i = 0; i < descriptores1.size(); i++) {
+					if(descriptores1.get(i).getIndexMatch()!=-1)
+						puntosSimilares++;
+				}
+		
+		        if(descriptores1.size()>0)
+		        {
+		        	porcentaje = ((puntosSimilares*100)/descriptores1.size());
+		        }
+		        else
+		        {
+		        	porcentaje = 0;
+		        }
+		        
+		        if (porcentaje>=35)
+		        { 
+		        	Resultado datosResultadoTemporal = new Resultado(indiceBaseDatos);
+		        	datosResultadoTemporal.porcentaje = porcentaje;
+		            idFirmasValidadas.add(datosResultadoTemporal);
+		        }
+	       }
+	        
+	       for (int i = 0; i < descriptores1.size(); i++) 
+	       {
+				if(descriptores1.get(i).getIndexMatch()!=-1)
+					descriptores1.get(i).setIndexMatch(-1);
+	       }
+	       
+	       listaTemporalPersona.add(idFirmasValidadas);
+        }
+        
+    	return listaTemporalPersona;
+    }
+    
+    
+
+    
 }
+    
+
+    
+    
+
+
+

@@ -78,6 +78,21 @@ class FastRetinaKeypoint {
     public void setDescriptor(byte[] descriptor) {
         this.descriptor = descriptor;
     }
+    
+    /**
+     * @return the indexMatch
+     */
+    public int getIndexMatch() {
+        return indexMatch;
+    }
+
+    /**
+     * @param indexMatch the indexMatch to set
+     */
+    public void setIndexMatch(int indexMatch) {
+        this.indexMatch = indexMatch;
+    }
+    
 
     /**
      * Initializes a new instance of the FastRetinaKeypoint class.
@@ -125,6 +140,7 @@ class FastRetinaKeypoint {
     public IntPoint toIntPoint(){
         return new IntPoint(x, y);
     }
+    
 
     @Override
     public boolean equals(Object obj) {
@@ -138,19 +154,24 @@ class FastRetinaKeypoint {
         return true;
         
     }
-
-    /**
-     * @return the indexMatch
-     */
-    public int getIndexMatch() {
-        return indexMatch;
+    
+    
+    public int primerosBits(Object obj)
+    {int count=0;
+       FastRetinaKeypoint p = (FastRetinaKeypoint)obj;
+        //Distance d1 = new Distance();
+        byte[] d = p.descriptor;
+        for (int i = 0; i < 32; i++){
+            
+            if(descriptor[i] == d[i])
+                {count++;         
+                }
+        }
+        
+        return count;
     }
 
-    /**
-     * @param indexMatch the indexMatch to set
-     */
-    public void setIndexMatch(int indexMatch) {
-        this.indexMatch = indexMatch;
-    }
+
+
     
 }

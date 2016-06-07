@@ -32,7 +32,7 @@ class FastRetinaKeypointDescriptor {
 
     FastRetinaKeypointDescriptor(FastBitmap grayImage, IntegralImage integral, FastRetinaKeypointPattern pattern) {
         this.isExtended = false;
-        this.isOrientationNormal = true;
+        this.isOrientationNormal = false;
         this.isScaleNormal = true;
         this.Image = grayImage;
         this.Integral = integral;

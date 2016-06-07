@@ -33,7 +33,7 @@ class FastRetinaKeypointPattern {
     /**
      * Smallest keypoint size.
      */
-    public static final int Size = 7;
+    public static final int Size = 7; //7
     
     private int octaves;
     private float scale;
