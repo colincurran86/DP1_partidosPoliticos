@@ -15,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JTextField;
 
+import Recorte.Main;
 import clasesAux.Testing;
 
 public class PrimeraFase extends JPanel implements ActionListener {
@@ -88,7 +89,8 @@ public class PrimeraFase extends JPanel implements ActionListener {
 		}
 		if (e.getSource() == btnProcesar) {
 			
-			
+			Main m = new Main();
+			m.main(txtFieldPlan.getText());
 			// rico pe
 			
 			

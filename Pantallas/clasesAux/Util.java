@@ -13,7 +13,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class Util {
 	public void llenarBDReniec(){
 		try {
-			InputStream file = new FileInputStream(new File("C:/Users/inf250/Desktop/dp1/registro.nacional.v.1.xlsx"));
+			InputStream file = new FileInputStream(new File("C:/Users/Administrador/Desktop/Christian/9no/DP1/Entrega de padrones/registro.nacional.v.1.xlsx"));
 
 			// Get the workbook instance for XLS file
 			XSSFWorkbook wb = new XSSFWorkbook(file); // (2)
