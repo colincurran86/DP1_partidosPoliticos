@@ -15,6 +15,8 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JTextField;
 
+import clasesAux.Testing;
+
 public class PrimeraFase extends JPanel implements ActionListener {
 	private JTextField txtFieldPlan;
 	private JTextField txtFieldBD;
@@ -85,7 +87,11 @@ public class PrimeraFase extends JPanel implements ActionListener {
 			Principal.getFrame().setContentPane(carga);
 		}
 		if (e.getSource() == btnProcesar) {
+			
+			
 			// rico pe
+			
+			
 		}
 		if (e.getSource() == btnBuscarBD) {
 			JFileChooser jFileChooser = new JFileChooser();
