@@ -1466,8 +1466,10 @@ public class AlgoritmoFirmas {
 		        double distanciaResultado;
 		        int puntosSimilares=0;
 		        int j;
-		        if(indiceBaseDatos==36 || indiceBaseDatos==37 || indiceBaseDatos==38 || indiceBaseDatos==39 || indiceBaseDatos ==40 || indiceBaseDatos==41 || indiceBaseDatos==41 ||indiceBaseDatos==42 ||indiceBaseDatos==43){
-		        
+		    
+		        //  if(indiceBaseDatos==36 || indiceBaseDatos==37 || indiceBaseDatos==38 || indiceBaseDatos==39 || indiceBaseDatos ==40 || indiceBaseDatos==41 || indiceBaseDatos==41 ||indiceBaseDatos==42 ||indiceBaseDatos==43)
+		        if(imagen2.getWidth()<=272 && imagen2.getHeight()<=134)
+		        {
 		        	if((imagen2.getWidth()>=300 || imagen2.getHeight()>=300)||(imagen1.getWidth()>=320 || imagen1.getHeight()>=320))
 		        	{	
 		        		BufferedImage bufferTmp = Thumbnails.of(new File(url2+"\\f0"+indiceBaseDatos+".jpg"))
@@ -1485,6 +1487,8 @@ public class AlgoritmoFirmas {
 		            BufferedImage imagenRedimensionada = Scalr.resize(bufferTmp, Method.AUTOMATIC, imagen1.getWidth(), imagen1.getHeight(),Scalr.OP_BRIGHTER);       
 		            imagen2 = new FastBitmap(imagenRedimensionada);	
 		        }
+		        
+		        
 		        
 		        imagen2.toRGB();
 		        imagen2.toGrayscale();
@@ -1538,9 +1542,9 @@ public class AlgoritmoFirmas {
 		        { 
 		        	Resultado datosResultadoTemporal = new Resultado(indiceBaseDatos);
 		        	datosResultadoTemporal.porcentaje = porcentaje;
-		        	
 		        	datosResultadoTemporal.idPersona = indicePersona;
 		        	idFirmasValidadas.add(datosResultadoTemporal);
+		        	//System.out.println("Firma: "+indiceBaseDatos+" Ancho:"+imagen2.getWidth()+" Alto:"+imagen2.getHeight());
 		        }
 	       }
 	        
