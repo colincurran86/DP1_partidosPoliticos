@@ -27,6 +27,17 @@ public class Util {
 				nuevaRuta += ruta.charAt(i);
 		return nuevaRuta;
 	}
+	
+	public String formatearRuta2(String ruta) {
+		String nuevaRuta = "";
+		for (int i = 0; i < ruta.length(); i++)
+			if (ruta.charAt(i) == '/')
+				nuevaRuta += "\\";
+			else
+				nuevaRuta += ruta.charAt(i);
+		return nuevaRuta;
+	}
+
 
 	public void llenarBDReniec(String rutaBD) {
 		try {
@@ -67,7 +78,7 @@ public class Util {
 				PersonaReniec pr = new PersonaReniec();
 				pr.setApellidos(apellido.getStringCellValue());
 				pr.setDni((int) dni.getNumericCellValue());
-				pr.setIdFirma((int) idFirma.getNumericCellValue());
+				pr.setIdFirma(idFirma.getStringCellValue());
 				pr.setIdHuella((int) idHuella.getNumericCellValue());
 				pr.setNombre(nombre.getStringCellValue());
 				pr.setUbigeo((int) ubigeo.getNumericCellValue());
@@ -91,10 +102,12 @@ public class Util {
 			String dni = Main.lista.get(i);
 			entro = false;
 			for (int j = 0; j < ReniecBD.lista.size(); j++) 
+		if(dni!=null){		
 				if (ReniecBD.lista.get(j).getDni() == Integer.parseInt(dni)) {
 					entro=true;
 					pr.add(ReniecBD.lista.get(j));
 				}
+		}
 			if(!entro) pr.add(null);
 		}
 		return pr;

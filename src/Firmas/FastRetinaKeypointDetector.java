@@ -99,7 +99,7 @@ public class FastRetinaKeypointDetector {
         }
         else{
             grayImage = new FastBitmap(fastBitmap);
-            grayImage.toGrayscale();
+            grayImage.toGrayscale();  //descomentar eso
             //System.out.println("Con escala de grisies");
         }
         

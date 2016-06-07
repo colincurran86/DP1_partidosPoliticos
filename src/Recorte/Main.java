@@ -1,5 +1,6 @@
 package Recorte;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,6 +17,8 @@ import ij.io.FileSaver;
 public class Main {
 
 public static List<String> lista = new ArrayList<String>()  ; 
+public static List<BufferedImage> listaBImage = new ArrayList<BufferedImage>()  ; 
+
 
     public  void  main(String args) {
         // TODO Auto-generated method stub
@@ -88,30 +91,30 @@ public static List<String> lista = new ArrayList<String>()  ;
                     
                      
                  //Ejecutamos el OCR
-            //     RecogChar recogChar = new RecogChar();
-            //     recogChar.setVisible(false);
-            //     recogChar.init();
-            //     recogChar.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            //     recogChar.setSize(820, 580);
+                 RecogChar recogChar = new RecogChar();
+                 recogChar.setVisible(false);
+                recogChar.init();
+                 recogChar.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                 recogChar.setSize(820, 580);
         
-            //    numero =     recogChar.recognize_actionPerformed( Copia1.getImage());
+                numero =     recogChar.recognize_actionPerformed( Copia1.getImage());
                 
-            //    if (dni == "") {
-            //        dni = ""+numero;
-            //        //System.out.println(numero);
+                if (dni == "") {
+                    dni = ""+numero;
+                    //System.out.println(numero);
                     
-            //    } else {
-            //        dni=dni +numero;
+                } else {
+                    dni=dni +numero;
                     
-            //    } ; 
-                
+                } ; 
+               
                      //Copia1.show();
-                   new FileSaver(Copia1).saveAsPng(rutaDNI);
+                   //new FileSaver(Copia1).saveAsPng(rutaDNI);
                     //Prefs.blackBackground = false;
                 }
                 
                 //System.out.println(  dni );
-                //    lista.add(dni);
+                    lista.add(dni);
             }    
             /*  
             
@@ -179,14 +182,22 @@ public static List<String> lista = new ArrayList<String>()  ;
             for (int n = 0; n< 8; n++){
                 //firma
                     ImagePlus Copia1,Copia2;
-                    Copia1 = IJ.openImage(ruta3);
-                    Copia1.setRoi(yFirmas+3, alturaFirma+2 , widthSquare , heightSquare);
+                    // ******BLANCOYNEGRO*****
+                      Copia1 = IJ.openImage(ruta3);
+                      Copia1.setRoi(yFirmas+3, alturaFirma+2 , widthSquare , heightSquare);
+                    // ******BLANCOYNEGRO*****
+                    // ******COLOOOOOOOOOOOOOOOOOR*****
+                    //  Copia1 = IJ.openImage(ruta1);
+                    //  Copia1.setRoi(yFirmas+39, alturaFirma+2 , widthSquare , heightSquare);
+                    // ******COLOOOOOOOOOOOOOOOOOR*****
+
                     if (n != 7 ) alturaFirma = rf.obtenerSiguienteEspacioFirmas(yFirmas+3, alturaFirma);
                     IJ.run(Copia1, "Crop", ""); 
                     new FileSaver(Copia1).saveAsPng(workingDir + "/src/Recorte/Resultado/Persona"
                         + String.valueOf(n+1+(8*contPadrones))  + "/Firma/firma.jpg");
                     Prefs.blackBackground = false;
                    // Copia1.show();
+                    listaBImage.add(Copia1.getBufferedImage());
                     
                     
                 //huella
@@ -195,7 +206,7 @@ public static List<String> lista = new ArrayList<String>()  ;
                     Copia2.setRoi(yHuellas+2, alturaFirma2+2 , widthSquare , heightSquare+2);
                   //  System.out.println("Valor nuevo " + alturaFirma2);
                     if (n != 7 ) alturaFirma2 = rf.obtenerSiguienteEspacioFirmas(yFirmas+3, alturaFirma2+2);
-                    IJ.run(Copia2, "Crop", ""); 
+                    IJ.run(Copia2, "CSrop", ""); 
                     //new FileSaver(padronJ).saveAsPng("D:/Users/a20101616/git/DP1_partidosPoliticos/src/Recorte/recorteCostado.jpg");
                     new FileSaver(Copia2).saveAsPng(workingDir + "/src/Recorte/Resultado/Persona"
                             + String.valueOf(n+1+(8*contPadrones))  + "/Huella/Huella.jpg");

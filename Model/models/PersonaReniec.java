@@ -6,7 +6,7 @@ public class PersonaReniec {
 	private int dni;
 	private int ubigeo;
 	private int idHuella;
-	private int idFirma;
+	private String idFirma;
 	
 	public String getNombre() {
 		return nombre;
@@ -38,10 +38,10 @@ public class PersonaReniec {
 	public void setIdHuella(int idHuella) {
 		this.idHuella = idHuella;
 	}
-	public int getIdFirma() {
+	public String getIdFirma() {
 		return idFirma;
 	}
-	public void setIdFirma(int idFirma) {
+	public void setIdFirma(String idFirma) {
 		this.idFirma = idFirma;
 	}
 	

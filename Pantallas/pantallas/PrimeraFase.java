@@ -10,12 +10,15 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JTextField;
 
+import Firmas.AlgoritmoFirmas;
+import Firmas.Resultado;
 import Recorte.Main;
 import clasesAux.Testing;
 import clasesAux.Util;
@@ -28,11 +31,11 @@ public class PrimeraFase extends JPanel implements ActionListener {
 	private JButton btnCancelar;
 	private JButton btnBuscarBD;
 	private JButton btnBuscarPlan;
-	public static int idPE=0;
-	public static int idPP=0;
-	public static int porc=-1;
-	public static int choiceCM=0;
-	public static int choiceCI=0;
+	public static int idPE = 0;
+	public static int idPP = 0;
+	public static int porc = -1;
+	public static int choiceCM = 0;
+	public static int choiceCI = 0;
 
 	/**
 	 * Create the panel.
@@ -91,48 +94,89 @@ public class PrimeraFase extends JPanel implements ActionListener {
 			Principal.getFrame().setContentPane(carga);
 		}
 		if (e.getSource() == btnProcesar) {
-			Util u=new Util();
-			
+			Util u = new Util();
+
 			Main m = new Main();
-			String formatearRuta=u.formatearRuta(txtFieldPlan.getText());
-			m.main(formatearRuta);
-						
-			formatearRuta=u.formatearRuta(txtFieldBD.getText());
-			u.llenarBDReniec(formatearRuta + "registro.nacional.v.1.xlsx");
+			String formatearRutaPlan = u.formatearRuta(txtFieldPlan.getText());
+			m.main(formatearRutaPlan);
+			System.out.println("Lista de DNIS " + Main.lista.size());
+			System.out.println("Lista de Imagenes" + Main.listaBImage.size());
 			
-			List<PersonaReniec> pr=u.ocrMasReniec();
+			String formatearRutaBD = u.formatearRuta(txtFieldBD.getText());
+			u.llenarBDReniec(formatearRutaBD + "/registro.nacional.v.1.xlsx");
+
+			List<PersonaReniec> pr = u.ocrMasReniec();
 			// rico pe
-			
+			List<String> idFirmasLst = new ArrayList<String>();
+			List<Integer> idRegistroLst = new ArrayList<Integer>();
+			System.out.println("ts:" +pr.size());
+			for (int i = 0; i < pr.size(); i++) {
+				if(pr.get(i)!=null){
+					idFirmasLst.add(pr.get(i).getIdFirma());					
+					idRegistroLst.add(i + 1);
+				}
+				else
+				{
+					idFirmasLst.add("-1");					
+					idRegistroLst.add(i + 1);		
+				}
+				
+			}
+			System.out.println("ts:" +idRegistroLst.size());
+			List<Resultado> listaTemporalPersona = null;
+			System.out.println("Inicio firmas:");
+			AlgoritmoFirmas algoritmoFrimas = new AlgoritmoFirmas();
+	
+			try {
+	listaTemporalPersona = algoritmoFrimas.verificarFirmas6(idRegistroLst, idFirmasLst,Main.listaBImage , u.formatearRuta2(formatearRutaBD + "/firmas.jpg/"));
+	
+	for (int i = 0; i < listaTemporalPersona.size(); i++) {
+		// for (int k = 0; k < listaTemporalPersona.get(i).size(); k++)
+		// {
+		System.out.println("por "
+				+ listaTemporalPersona.get(i).porcentaje + " " + listaTemporalPersona.get(i).idPersona);
+		// }
+	}
+	System.out.println("Fin firmas:");
+
+	
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
+
+
 			
 		}
 		if (e.getSource() == btnBuscarBD) {
 			JFileChooser jFileChooser = new JFileChooser();
 			jFileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 			jFileChooser.setAcceptAllFileFilterUsed(false);
-			
-			int result = jFileChooser.showOpenDialog(this);
-			StringBuffer buffer = new StringBuffer();					
 
-			if (result == JFileChooser.APPROVE_OPTION) {// abrir				
+			int result = jFileChooser.showOpenDialog(this);
+			StringBuffer buffer = new StringBuffer();
+
+			if (result == JFileChooser.APPROVE_OPTION) {// abrir
 				File file = jFileChooser.getSelectedFile();
 				txtFieldBD.setText(file.getAbsolutePath());
 
 			}
 		}
-		if (e.getSource() == btnBuscarPlan){
+		if (e.getSource() == btnBuscarPlan) {
 			JFileChooser jFileChooser = new JFileChooser();
 			jFileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 			jFileChooser.setAcceptAllFileFilterUsed(false);
-			
+
 			int result = jFileChooser.showOpenDialog(this);
-			StringBuffer buffer = new StringBuffer();			
-			
-			
-			if (result == JFileChooser.APPROVE_OPTION) {// abrir				
+			StringBuffer buffer = new StringBuffer();
+
+			if (result == JFileChooser.APPROVE_OPTION) {// abrir
 				File file = jFileChooser.getSelectedFile();
-				/*if (!file.isDirectory()) 
-			        file = file.getParentFile();
-			        file= file.getCurrentDirectory();*/			    
+				/*
+				 * if (!file.isDirectory()) file = file.getParentFile(); file=
+				 * file.getCurrentDirectory();
+				 */
 				txtFieldPlan.setText(file.getAbsolutePath());
 			}
 		}

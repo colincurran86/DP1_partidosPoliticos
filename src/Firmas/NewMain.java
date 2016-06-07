@@ -73,15 +73,15 @@ public class NewMain {
     */
         
         
-        List<Resultado> listaTemporalPersona = af.verificarFirmas5(idPersonas, idFirmas, url1, url2);
-        
+ //       List<Resultado> listaTemporalPersona = af.verificarFirmas5(idPersonas, idFirmas, url1, url2);
+   /*     
         
         for (int i = 0; i < listaTemporalPersona.size(); i++) {	
         //	for (int k = 0; k < listaTemporalPersona.get(i).size(); k++) {
         	System.out.println(listaTemporalPersona.get(i).indFirmaMatch+" "+listaTemporalPersona.get(i).porcentaje+" "+listaTemporalPersona.get(i).idPersona);
 		//	}
 		}  
-        
+     */   
         
     }
     
