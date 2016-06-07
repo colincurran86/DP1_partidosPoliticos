@@ -1124,7 +1124,473 @@ public class AlgoritmoFirmas {
     }
     
     
-
+    
+    /*
+    public ArrayList<Resultado> verificarFirmas4(List<Integer> idPersonas,List<Integer> idFirmas,String direccionPersonaPorPlanillon, String direccionBaseDatosFirmas) throws IOException
+    {
+    	ArrayList<Resultado> listaFirmasAutentificadas = new ArrayList<Resultado>();
+        FastCornersDetector fastDetector = new FastCornersDetector(); 
+        List<List<Resultado>> listaTemporalPersona = new ArrayList<List<Resultado>>();  
+        ArrayList<Resultado> idFirmasValidadas;
+        int indicePersona;
+        int indiceBaseDatos;
+        double distanciaMinimaHamming = 45; 
+        
+        for (indicePersona = 1; indicePersona < idFirmas.size(); indicePersona++)
+	        {
+	        FastBitmap imagen1;
+	        FastBitmap imagen2;
+	        FastRetinaKeypointDetector freak1 = new FastRetinaKeypointDetector(fastDetector); 
+	        FastRetinaKeypointDetector freak2 = new FastRetinaKeypointDetector(fastDetector);
+	        List<FastRetinaKeypoint> descriptores1;
+	        List<FastRetinaKeypoint> descriptores2;
+	        Distance distancia = new Distance();
+	        String url1 = new String(direccionPersonaPorPlanillon+"\\Persona"+idPersonas.get(indicePersona)+"\\Firma\\firma.jpg");        												
+	        OtsuThreshold o = new OtsuThreshold();
+	        imagen1 = new FastBitmap(url1);
+	        imagen1.toRGB();
+	        imagen1.toGrayscale();
+	        //BradleyLocalThreshold bradley4 = new BradleyLocalThreshold();
+	        //bradley4.applyInPlace(imagen1);
+	        o.applyInPlace(imagen1);
+	        //imagen1.saveAsJPG("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\imagen_primera_procesada.jpg");
+	        descriptores1 = new ArrayList<FastRetinaKeypoint>();
+	        descriptores1 = freak1.ProcessImage(imagen1);
+	
+	        idFirmasValidadas = new ArrayList<Resultado>();
+	        
+	        for (indiceBaseDatos = 1; indiceBaseDatos < 59; indiceBaseDatos++) 
+	        {
+	        	String url2 = null;
+		        if(indiceBaseDatos<10)
+		        	url2 = new String(direccionBaseDatosFirmas+"\\f00"+indiceBaseDatos+".jpg");
+		        else
+		        	url2 = new String(direccionBaseDatosFirmas+"\\f0"+indiceBaseDatos+".jpg");
+		        
+		        imagen2 = new FastBitmap(url2);
+		        Distance d = new Distance();
+		        double porcentaje = 0;
+		        double distanciaResultado;
+		        int puntosSimilares=0;
+		        int j;
+		        if(indiceBaseDatos==36 || indiceBaseDatos==37 || indiceBaseDatos==38 || indiceBaseDatos==39 || indiceBaseDatos ==40 || indiceBaseDatos==41 || indiceBaseDatos==41 ||indiceBaseDatos==42 ||indiceBaseDatos==43){
+		        
+		        	if((imagen2.getWidth()>=300 || imagen2.getHeight()>=300)||(imagen1.getWidth()>=320 || imagen1.getHeight()>=320)){	
+		       
+		        		BufferedImage bufferTmp = Thumbnails.of(new File(url2+"\\f0"+indiceBaseDatos+".jpg"))
+		        .size(imagen1.getWidth(), imagen1.getHeight())
+		        .outputFormat("JPG")
+		        .outputQuality(1)
+		        .resizer(Resizers.PROGRESSIVE)
+		        .asBufferedImage();
+		       
+		        imagen2 = new FastBitmap(bufferTmp);
+		        }
+		        }
+		        else
+		        {
+		        	BufferedImage bufferTmp = imagen2.toBufferedImage(); 
+		            BufferedImage imagenRedimensionada = Scalr.resize(bufferTmp, Method.AUTOMATIC, imagen1.getWidth(), imagen1.getHeight(),Scalr.OP_BRIGHTER);       
+		            imagen2 = new FastBitmap(imagenRedimensionada);	
+		        }
+		        
+		        imagen2.toRGB();
+		        imagen2.toGrayscale();
+		        //BradleyLocalThreshold bradleyBase = new BradleyLocalThreshold();
+		        //bradleyBase.applyInPlace(imagen2);
+		        //redimensionar2.ApplyInPlace(imagen2);
+		        o.applyInPlace(imagen2);
+		        //BradleyLocalThreshold bradleyBase = new BradleyLocalThreshold();
+		        //bradleyBase.applyInPlace(imagen2);
+		        
+		        descriptores2 = new ArrayList<FastRetinaKeypoint>();
+		        descriptores2 = freak2.ProcessImage(imagen2);
+		         
+		        for(int i = 0; i < descriptores1.size(); i++)
+		        {
+		            int indiceDistanciaMinima=-1;
+		            for(j = 0; j < descriptores2.size(); j++)
+		            {  
+		            	if(descriptores1.get(i).primerosBits(descriptores2.get(j))>=14)
+		            	{    		
+			            	if(descriptores2.get(j).getIndexMatch()==-1){
+			            		distanciaResultado = d.Hamming(descriptores1.get(i).toBinary(),descriptores2.get(j).toBinary());
+				                if (distanciaResultado<=distanciaMinimaHamming)
+				                {
+				                    indiceDistanciaMinima = j;
+				                    descriptores2.get(indiceDistanciaMinima).setIndexMatch(i);
+				                    break;
+				                }
+			                
+			                }
+		            	}
+		            }
+		        descriptores1.get(i).setIndexMatch(indiceDistanciaMinima);
+		         }
+		         
+		        for (int i = 0; i < descriptores1.size(); i++) {
+					if(descriptores1.get(i).getIndexMatch()!=-1)
+						puntosSimilares++;
+				}
+		
+		        if(descriptores1.size()>0)
+		        {
+		        	porcentaje = ((puntosSimilares*100)/descriptores1.size());
+		        }
+		        else
+		        {
+		        	porcentaje = 0;
+		        }
+		        
+		        if (porcentaje>=35)
+		        { 
+		        	Resultado datosResultadoTemporal = new Resultado(indiceBaseDatos);
+		        	datosResultadoTemporal.porcentaje = porcentaje;
+		            idFirmasValidadas.add(datosResultadoTemporal);
+		        }
+	       }
+	        
+	       for (int i = 0; i < descriptores1.size(); i++) 
+	       {
+				if(descriptores1.get(i).getIndexMatch()!=-1)
+					descriptores1.get(i).setIndexMatch(-1);
+	       }
+	       
+	       listaTemporalPersona.add(idFirmasValidadas);
+        }
+        
+        for (int i = 0; i < listaTemporalPersona.size(); i++) {	
+        	//System.out.println("1");
+        	//if (listaTemporalPersona.get(i).size()>=1){
+        		listaFirmasAutentificadas.add(listaTemporalPersona.get(i).get(0));
+	//	}    	
+    	  	
+    	
+    }
+        return listaFirmasAutentificadas;
+		
+   
+  }
+   */
+    
+    
+    public List<Resultado> verificarFirmas4(List<Integer> idPersonas,List<Integer> idFirmas,String direccionPersonaPorPlanillon, String direccionBaseDatosFirmas) throws IOException
+    {
+    	ArrayList<Resultado> listaFirmasAutentificadas = new ArrayList<Resultado>();
+        FastCornersDetector fastDetector = new FastCornersDetector(); 
+        List<List<Resultado>> listaTemporalPersona = new ArrayList<List<Resultado>>();  
+        ArrayList<Resultado> idFirmasValidadas;
+        int indicePersona;
+        int indiceBaseDatos;
+        double distanciaMinimaHamming = 45; 
+        
+        for (indicePersona = 0; indicePersona < idFirmas.size(); indicePersona++)
+	        {
+	        FastBitmap imagen1;
+	        FastBitmap imagen2;
+	        FastRetinaKeypointDetector freak1 = new FastRetinaKeypointDetector(fastDetector); 
+	        FastRetinaKeypointDetector freak2 = new FastRetinaKeypointDetector(fastDetector);
+	        List<FastRetinaKeypoint> descriptores1;
+	        List<FastRetinaKeypoint> descriptores2;
+	        Distance distancia = new Distance();
+	        String url1 = new String(direccionPersonaPorPlanillon+"\\Persona"+idPersonas.get(indicePersona)+"\\Firma\\firma.jpg");        												
+	        OtsuThreshold o = new OtsuThreshold();
+	        imagen1 = new FastBitmap(url1);
+	        imagen1.toRGB();
+	        imagen1.toGrayscale();
+	        //BradleyLocalThreshold bradley4 = new BradleyLocalThreshold();
+	        //bradley4.applyInPlace(imagen1);
+	        o.applyInPlace(imagen1);
+	        //imagen1.saveAsJPG("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\imagen_primera_procesada.jpg");
+	        descriptores1 = new ArrayList<FastRetinaKeypoint>();
+	        descriptores1 = freak1.ProcessImage(imagen1);
+	
+	        idFirmasValidadas = new ArrayList<Resultado>();
+	        
+	        for (indiceBaseDatos = 1; indiceBaseDatos < 59; indiceBaseDatos++) 
+	        {
+	        	String url2 = null;
+		        if(indiceBaseDatos<10)
+		        	url2 = new String(direccionBaseDatosFirmas+"\\f00"+indiceBaseDatos+".jpg");
+		        else
+		        	url2 = new String(direccionBaseDatosFirmas+"\\f0"+indiceBaseDatos+".jpg");
+		        
+		        imagen2 = new FastBitmap(url2);
+		        Distance d = new Distance();
+		        double porcentaje = 0;
+		        double distanciaResultado;
+		        int puntosSimilares=0;
+		        int j;
+		        if(indiceBaseDatos==36 || indiceBaseDatos==37 || indiceBaseDatos==38 || indiceBaseDatos==39 || indiceBaseDatos ==40 || indiceBaseDatos==41 || indiceBaseDatos==41 ||indiceBaseDatos==42 ||indiceBaseDatos==43){
+		        
+		        	if((imagen2.getWidth()>=300 || imagen2.getHeight()>=300)||(imagen1.getWidth()>=320 || imagen1.getHeight()>=320))
+		        	{	
+		        		BufferedImage bufferTmp = Thumbnails.of(new File(url2+"\\f0"+indiceBaseDatos+".jpg"))
+		        				.size(imagen1.getWidth(), imagen1.getHeight())
+		        				.outputFormat("JPG")
+		        				.outputQuality(1)
+		        				.resizer(Resizers.PROGRESSIVE)
+		        				.asBufferedImage();
+		        		imagen2 = new FastBitmap(bufferTmp);
+		        }
+		        }
+		        else
+		        {
+		        	BufferedImage bufferTmp = imagen2.toBufferedImage(); 
+		            BufferedImage imagenRedimensionada = Scalr.resize(bufferTmp, Method.AUTOMATIC, imagen1.getWidth(), imagen1.getHeight(),Scalr.OP_BRIGHTER);       
+		            imagen2 = new FastBitmap(imagenRedimensionada);	
+		        }
+		        
+		        imagen2.toRGB();
+		        imagen2.toGrayscale();
+		        //BradleyLocalThreshold bradleyBase = new BradleyLocalThreshold();
+		        //bradleyBase.applyInPlace(imagen2);
+		        //redimensionar2.ApplyInPlace(imagen2);
+		        o.applyInPlace(imagen2);
+		        //BradleyLocalThreshold bradleyBase = new BradleyLocalThreshold();
+		        //bradleyBase.applyInPlace(imagen2);
+		        
+		        descriptores2 = new ArrayList<FastRetinaKeypoint>();
+		        descriptores2 = freak2.ProcessImage(imagen2);
+		         
+		        for(int i = 0; i < descriptores1.size(); i++)
+		        {
+		            int indiceDistanciaMinima=-1;
+		            for(j = 0; j < descriptores2.size(); j++)
+		            {  
+		            	if(descriptores1.get(i).primerosBits(descriptores2.get(j))>=14)
+		            	{    		
+			            	if(descriptores2.get(j).getIndexMatch()==-1){
+			            		distanciaResultado = d.Hamming(descriptores1.get(i).toBinary(),descriptores2.get(j).toBinary());
+				                if (distanciaResultado<=distanciaMinimaHamming)
+				                {
+				                    indiceDistanciaMinima = j;
+				                    descriptores2.get(indiceDistanciaMinima).setIndexMatch(i);
+				                    break;
+				                }
+			                
+			                }
+		            	}
+		            }
+		        descriptores1.get(i).setIndexMatch(indiceDistanciaMinima);
+		         }
+		         
+		        for (int i = 0; i < descriptores1.size(); i++) {
+					if(descriptores1.get(i).getIndexMatch()!=-1)
+						puntosSimilares++;
+				}
+		
+		        if(descriptores1.size()>0)
+		        {
+		        	porcentaje = ((puntosSimilares*100)/descriptores1.size());
+		        }
+		        else
+		        {
+		        	porcentaje = 0;
+		        }
+		        
+		        if (porcentaje>=35)
+		        { 
+		        	Resultado datosResultadoTemporal = new Resultado(indiceBaseDatos);
+		        	datosResultadoTemporal.porcentaje = porcentaje;
+		            idFirmasValidadas.add(datosResultadoTemporal);
+		        }
+	       }
+	        
+	       for (int i = 0; i < descriptores1.size(); i++) 
+	       {
+				if(descriptores1.get(i).getIndexMatch()!=-1)
+					descriptores1.get(i).setIndexMatch(-1);
+	       }
+	       
+	       listaTemporalPersona.add(idFirmasValidadas);
+        }
+        
+        
+        for (int i = 0; i < listaTemporalPersona.size(); i++){ 
+        //{	
+       
+        	if (listaTemporalPersona.get(i).size()>=1){
+        		listaFirmasAutentificadas.add(listaTemporalPersona.get(i).get(0));
+        	}  
+        }
+        
+    	return listaFirmasAutentificadas;
+    }
+    
+    
+    public List<Resultado> verificarFirmas5(List<Integer> idPersonas,List<Integer> idFirmas,String direccionPersonaPorPlanillon, String direccionBaseDatosFirmas) throws IOException
+    {
+    	ArrayList<Resultado> listaFirmasAutentificadas = new ArrayList<Resultado>();
+        FastCornersDetector fastDetector = new FastCornersDetector(); 
+        List<List<Resultado>> listaTemporalPersona = new ArrayList<List<Resultado>>();  
+        ArrayList<Resultado> idFirmasValidadas;
+        int indicePersona;
+        int indiceBaseDatos;
+        double distanciaMinimaHamming = 45; 
+        
+        for (indicePersona = 0; indicePersona < idPersonas.size(); indicePersona++)
+	        {
+	        FastBitmap imagen1;
+	        FastBitmap imagen2;
+	        FastRetinaKeypointDetector freak1 = new FastRetinaKeypointDetector(fastDetector); 
+	        FastRetinaKeypointDetector freak2 = new FastRetinaKeypointDetector(fastDetector);
+	        List<FastRetinaKeypoint> descriptores1;
+	        List<FastRetinaKeypoint> descriptores2;
+	        Distance distancia = new Distance();
+	        String url1 = new String(direccionPersonaPorPlanillon+"\\Persona"+idPersonas.get(indicePersona)+"\\Firma\\firma.jpg");        												
+	        OtsuThreshold o = new OtsuThreshold();
+	        imagen1 = new FastBitmap(url1);
+	        imagen1.toRGB();
+	        imagen1.toGrayscale();
+	        //BradleyLocalThreshold bradley4 = new BradleyLocalThreshold();
+	        //bradley4.applyInPlace(imagen1);
+	        o.applyInPlace(imagen1);
+	        //imagen1.saveAsJPG("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\imagen_primera_procesada.jpg");
+	        descriptores1 = new ArrayList<FastRetinaKeypoint>();
+	        descriptores1 = freak1.ProcessImage(imagen1);
+	
+	        idFirmasValidadas = new ArrayList<Resultado>();
+	        
+	        for (indiceBaseDatos = 1; indiceBaseDatos < 59; indiceBaseDatos++) 
+	        {
+	        	String url2 = null;
+		        if(indiceBaseDatos<10)
+		        	url2 = new String(direccionBaseDatosFirmas+"\\f00"+indiceBaseDatos+".jpg");
+		        else
+		        	url2 = new String(direccionBaseDatosFirmas+"\\f0"+indiceBaseDatos+".jpg");
+		        
+		        imagen2 = new FastBitmap(url2);
+		        Distance d = new Distance();
+		        double porcentaje = 0;
+		        double distanciaResultado;
+		        int puntosSimilares=0;
+		        int j;
+		    
+		        //  if(indiceBaseDatos==36 || indiceBaseDatos==37 || indiceBaseDatos==38 || indiceBaseDatos==39 || indiceBaseDatos ==40 || indiceBaseDatos==41 || indiceBaseDatos==41 ||indiceBaseDatos==42 ||indiceBaseDatos==43)
+		        if(imagen2.getWidth()<=272 && imagen2.getHeight()<=134)
+		        {
+		        	if((imagen2.getWidth()>=300 || imagen2.getHeight()>=300)||(imagen1.getWidth()>=320 || imagen1.getHeight()>=320))
+		        	{	
+		        		BufferedImage bufferTmp = Thumbnails.of(new File(url2+"\\f0"+indiceBaseDatos+".jpg"))
+		        				.size(imagen1.getWidth(), imagen1.getHeight())
+		        				.outputFormat("JPG")
+		        				.outputQuality(1)
+		        				.resizer(Resizers.PROGRESSIVE)
+		        				.asBufferedImage();
+		        		imagen2 = new FastBitmap(bufferTmp);
+		        }
+		        }
+		        else
+		        {
+		        	BufferedImage bufferTmp = imagen2.toBufferedImage(); 
+		            BufferedImage imagenRedimensionada = Scalr.resize(bufferTmp, Method.AUTOMATIC, imagen1.getWidth(), imagen1.getHeight(),Scalr.OP_BRIGHTER);       
+		            imagen2 = new FastBitmap(imagenRedimensionada);	
+		        }
+		        
+		        
+		        
+		        imagen2.toRGB();
+		        imagen2.toGrayscale();
+		        //BradleyLocalThreshold bradleyBase = new BradleyLocalThreshold();
+		        //bradleyBase.applyInPlace(imagen2);
+		        //redimensionar2.ApplyInPlace(imagen2);
+		        o.applyInPlace(imagen2);
+		        //BradleyLocalThreshold bradleyBase = new BradleyLocalThreshold();
+		        //bradleyBase.applyInPlace(imagen2);
+		        
+		        descriptores2 = new ArrayList<FastRetinaKeypoint>();
+		        descriptores2 = freak2.ProcessImage(imagen2);
+		         
+		        for(int i = 0; i < descriptores1.size(); i++)
+		        {
+		            int indiceDistanciaMinima=-1;
+		            for(j = 0; j < descriptores2.size(); j++)
+		            {  
+		            	if(descriptores1.get(i).primerosBits(descriptores2.get(j))>=14)
+		            	{    		
+			            	if(descriptores2.get(j).getIndexMatch()==-1){
+			            		distanciaResultado = d.Hamming(descriptores1.get(i).toBinary(),descriptores2.get(j).toBinary());
+				                if (distanciaResultado<=distanciaMinimaHamming)
+				                {
+				                    indiceDistanciaMinima = j;
+				                    descriptores2.get(indiceDistanciaMinima).setIndexMatch(i);
+				                    break;
+				                }
+			                
+			                }
+		            	}
+		            }
+		        descriptores1.get(i).setIndexMatch(indiceDistanciaMinima);
+		         }
+		         
+		        for (int i = 0; i < descriptores1.size(); i++) {
+					if(descriptores1.get(i).getIndexMatch()!=-1)
+						puntosSimilares++;
+				}
+		
+		        if(descriptores1.size()>0)
+		        {
+		        	porcentaje = ((puntosSimilares*100)/descriptores1.size());
+		        }
+		        else
+		        {
+		        	porcentaje = 0;
+		        }
+		        
+		        if (porcentaje>=35)
+		        { 
+		        	Resultado datosResultadoTemporal = new Resultado(indiceBaseDatos);
+		        	datosResultadoTemporal.porcentaje = porcentaje;
+		        	datosResultadoTemporal.idPersona = indicePersona;
+		        	idFirmasValidadas.add(datosResultadoTemporal);
+		        	//System.out.println("Firma: "+indiceBaseDatos+" Ancho:"+imagen2.getWidth()+" Alto:"+imagen2.getHeight());
+		        }
+	       }
+	        
+	       for (int i = 0; i < descriptores1.size(); i++) 
+	       {
+				if(descriptores1.get(i).getIndexMatch()!=-1)
+					descriptores1.get(i).setIndexMatch(-1);
+	       }
+	       
+	       listaTemporalPersona.add(idFirmasValidadas);
+        }
+        
+        
+        for (int i = 0; i < listaTemporalPersona.size(); i++){ 
+        //{	
+       
+        	if (listaTemporalPersona.get(i).size()>=1){
+        		listaFirmasAutentificadas.add(listaTemporalPersona.get(i).get(0));
+        	}  
+        }
+        
+    	return listaFirmasAutentificadas;
+    }
+       
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+ 
     
 }
     
