@@ -71,7 +71,7 @@ public class Main {
 				
 				for (int h = 0; h<8 ; h++) {
 					Copia1 = IJ.openImage(ruta2);
-					Copia1.setRoi(yDNI + distanceBetweenSquares*h, alturaX  + distanceBetweenSquaresH * n  , 11 , 81);
+					Copia1.setRoi(yDNI + distanceBetweenSquares*h, alturaX  + distanceBetweenSquaresH * n  , 11 , 79);
 					//if (n<4) Copia1.setRoi(yDNI + distanceBetweenSquares*h, alturaX  + 2 + distanceBetweenSquaresH * n  , 12 , 84);
 					//else Copia1.setRoi(yDNI + distanceBetweenSquares*h, alturaX + 5 + distanceBetweenSquaresH * n  , 12 , 84);
 				   // Copia1.show();
@@ -80,13 +80,14 @@ public class Main {
 				    + String.valueOf(n+1+(8*contPadrones)) + "/DNI/" + k + ".jpg";
 				    //Copia1.show();
 				    
+				   
 				    //Ejecutamos 
-				  //	RecogChar recogChar = new RecogChar();
-				  //recogChar.setVisible(false);
-				  //	recogChar.init();
-				  //	recogChar.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				  //	recogChar.setSize(820, 580);
-				  	//recogChar.recognize_actionPerformedDNI(Copia1.getImage());
+				 	RecogChar recogChar = new RecogChar();
+				 recogChar.setVisible(false);
+				 	recogChar.init();
+					recogChar.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				  recogChar.setSize(820, 580);
+				  	recogChar.recognize_actionPerformedDNI(Copia1.getImage());
 				  	
 				  	
 				    // Copia1.show();
@@ -94,7 +95,7 @@ public class Main {
 					//Prefs.blackBackground = false;
 				}
 				
-				//System.out.println();
+				System.out.println();
 			}	
 	
 			int apellidoEspacios = 25, nombreEspacios = 23, espacioLetras = 15, alturaLetras = 85;
