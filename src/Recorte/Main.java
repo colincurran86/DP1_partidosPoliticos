@@ -15,11 +15,11 @@ import ij.io.FileSaver;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String args) {
 		// TODO Auto-generated method stub
 		String workingDir = System.getProperty("user.dir"); // nos evitamos el problema de las rutas :'v
 		System.out.println(workingDir);
-
+		System.out.println(args);
 		int personasxPadron = 8;
 		long startTime = System.currentTimeMillis();
 		System.out.println("Procesando");
