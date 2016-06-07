@@ -15,7 +15,9 @@ import ij.io.FileSaver;
 
 public class Main {
 
-	public static void main(String args) {
+public static List<String> lista = new ArrayList<String>()  ; 
+
+	public static void  main(String args) {
 		// TODO Auto-generated method stub
 		String workingDir = System.getProperty("user.dir"); // nos evitamos el problema de las rutas :'v
 		System.out.println(workingDir);
@@ -112,12 +114,11 @@ public class Main {
 				
 				//System.out.println(  dni );
 				
-				dniLista.add(dni);
+				lista.add(dni);
 			}	
 			
-			for(int m = 0 ; m < dniLista.size() ; m ++ ) 
-				
-				System.out.println(dniLista.get(m));
+			
+	
 	
 			
 			
@@ -203,7 +204,7 @@ public class Main {
 
 			System.out.println("Padron numero " + (contPadrones+1) + " Procesado");
 			
-			
+		
 		}
 			
 		long endTime   = System.currentTimeMillis();
@@ -212,5 +213,7 @@ public class Main {
 		System.out.println("El tiempo total de ejecucion del programa fue " + totalTime + " segundos");
 		
 	}
+	
+	
 
 }
