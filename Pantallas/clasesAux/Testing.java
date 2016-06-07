@@ -26,7 +26,7 @@ public class Testing {
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		try {
-			InputStream file = new FileInputStream(new File("C:/Users/inf250/Desktop/dp1/registro.nacional.v.1.xlsx"));
+			InputStream file = new FileInputStream(new File("C:/temp/registro.nacional.v.1.xlsx"));
 
 			// Get the workbook instance for XLS file
 			XSSFWorkbook wb = new XSSFWorkbook(file); // (2)

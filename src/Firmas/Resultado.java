@@ -12,7 +12,7 @@ package Firmas;
 public class Resultado {
     public double indFirmaMatch;
     public double porcentaje;
-
+    public int idPersona;
 
     public Resultado(double r) {
     this.indFirmaMatch=r;

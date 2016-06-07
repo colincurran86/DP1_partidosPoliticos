@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -17,6 +18,8 @@ import javax.swing.JTextField;
 
 import Recorte.Main;
 import clasesAux.Testing;
+import clasesAux.Util;
+import models.PersonaReniec;
 
 public class PrimeraFase extends JPanel implements ActionListener {
 	private JTextField txtFieldPlan;
@@ -88,9 +91,16 @@ public class PrimeraFase extends JPanel implements ActionListener {
 			Principal.getFrame().setContentPane(carga);
 		}
 		if (e.getSource() == btnProcesar) {
+			Util u=new Util();
 			
 			Main m = new Main();
-			m.main(txtFieldPlan.getText());
+			String formatearRuta=u.formatearRuta(txtFieldPlan.getText());
+			m.main(formatearRuta);
+						
+			formatearRuta=u.formatearRuta(txtFieldBD.getText());
+			u.llenarBDReniec(formatearRuta + "registro.nacional.v.1.xlsx");
+			
+			List<PersonaReniec> pr=u.ocrMasReniec();
 			// rico pe
 			
 			
