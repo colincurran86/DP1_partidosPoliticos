@@ -26,29 +26,40 @@ public class Main {
 		recorteFunctions rf = new recorteFunctions();
 		//verificamos cuantos padrones existen
 		int totalPadrones = rf.contarPadrones();	
+
+		System.out.println(totalPadrones);
+		
 		for (int contPadrones = 0; contPadrones<totalPadrones; contPadrones++){
+			
 			String ruta1 = workingDir + "/src/Recorte/padrones/padron.rayas.firmado." + (contPadrones+1) +".jpg";
 			String ruta2 = workingDir + "/src/Recorte/padrones/recorteCostado.jpg";
 			rf.recortarCostadosProcesarPadron(ruta1,ruta2);
 			ImagePlus padronJ =  rf.getPadron();
-			
 			int width1=padronJ.getWidth();
 			int height1=padronJ.getHeight();
 			int cont = 0, alturaX = 0 , yHuellas = 0, yFirmas = 0, yDNI = 0, yNombre = 0, yApellido =0;
 			
-			rf.coordenadasHuella(padronJ); 	alturaX = rf.getX(); yHuellas = rf.getYHuellas();
-			rf.coordenadasFirma(padronJ); yFirmas = rf.getYFirmas();
-			rf.coordenadaDNIyNombre(padronJ); yDNI = rf.getYDNI(); yApellido = rf.getYApellido(); yNombre = rf.getYNombre();
+			rf.coordenadasHuella(padronJ); 
 			
+
+			alturaX = rf.getX(); yHuellas = rf.getYHuellas();
+
 			
+			rf.coordenadasFirma(padronJ); 
+			yFirmas = rf.getYFirmas();
+		
+			rf.coordenadaDNIyNombre(padronJ);
+			yDNI = rf.getYDNI(); yApellido = rf.getYApellido(); yNombre = rf.getYNombre();
+
 			//cropeamos los digitos del DNI
 		//	System.out.println(alturaX + " " + yDNI);
-			int distanceBetweenSquaresH = 85 ,distanceBetweenSquares = 15, widthSquare = 14, heightSquare = 84;
+			int distanceBetweenSquaresH = 87 ,distanceBetweenSquares = 14, widthSquare = 14, heightSquare = 84;
 			
 		
 			//RecogChar.recognize_actionPerformedDNI();
 	
-	
+			System.out.println(yDNI);
+			System.out.println(alturaX);
 			for (int n  = 0; n < 8; n++){
 				ImagePlus Copia1;
 				String rutaAlmacenar = workingDir + "/src/Recorte/Resultado/Persona"
@@ -60,8 +71,9 @@ public class Main {
 				
 				for (int h = 0; h<8 ; h++) {
 					Copia1 = IJ.openImage(ruta2);
-					if (n<4) Copia1.setRoi(yDNI + distanceBetweenSquares*h, alturaX  + 2 + distanceBetweenSquaresH * n  , 11 , 82);
-					else Copia1.setRoi(yDNI + distanceBetweenSquares*h, alturaX + 5 + distanceBetweenSquaresH * n  , 11 , 82);
+					Copia1.setRoi(yDNI + distanceBetweenSquares*h, alturaX  + distanceBetweenSquaresH * n  , 11 , 81);
+					//if (n<4) Copia1.setRoi(yDNI + distanceBetweenSquares*h, alturaX  + 2 + distanceBetweenSquaresH * n  , 12 , 84);
+					//else Copia1.setRoi(yDNI + distanceBetweenSquares*h, alturaX + 5 + distanceBetweenSquaresH * n  , 12 , 84);
 				   // Copia1.show();
 					IJ.run(Copia1, "Crop", ""); int k = h+1;
 				    String rutaDNI = workingDir + "/src/Recorte/Resultado/Persona"
@@ -78,7 +90,7 @@ public class Main {
 				  	
 				  	
 				    // Copia1.show();
-				    //new FileSaver(Copia1).saveAsPng(rutaDNI);
+				    new FileSaver(Copia1).saveAsPng(rutaDNI);
 					//Prefs.blackBackground = false;
 				}
 				

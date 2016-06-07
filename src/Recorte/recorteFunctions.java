@@ -20,6 +20,66 @@ public class recorteFunctions {
 		return new File(workingDir + "/src/Recorte/padrones/").list().length;
 	}
 	
+	public void eliminarLineasNegras(){
+		
+		int width=padronJ.getWidth();
+		int height=padronJ.getHeight();
+		int pixels = 10;
+
+		//Verificamos el lado izquierdo
+		for (int i = 0; i< width; i++ ){
+			int R = padronJ.getPixel(i, height/2)[0];
+			if ( R == 0 ){
+				//System.out.println("entre aka xd");
+				if (i != 0){
+					padronJ.setRoi(i,0,width-i-1,height-1);
+					IJ.run(padronJ, "Crop", "");	
+					//padronJ.show();
+				}
+				break;
+			}
+		}
+		
+		//Verificamos el lado derecho
+		/*
+		for(int j=width;j>0;j--){
+			 int R = padronJ.getPixel(j, pixels)[0];
+			if(R == 0){
+				if (j !=0){
+					padronJ.setRoi(0,j,width-j-1,height-1);
+					IJ.run(padronJ, "Crop", "");	
+					break;	
+				}
+			}
+		}
+
+		
+		//Verificamos abajo
+
+		for(int i=height; i>0 ; i--){
+			 int R = padronJ.getPixel(pixels, i)[0];
+			if(R==0){//r=255 , g=0 , b=0 
+				if (i != 0){
+					padronJ.setRoi(i,0,width-i-1,height-1);
+					IJ.run(padronJ, "Crop", "");	
+					//padronJ.show();
+				}				
+				break;			
+			}
+		}
+		
+		
+
+		//Verificamos abajo
+
+		
+		
+				
+	*/
+	}
+	
+
+	
 	public void recortarCostadosProcesarPadron(String ruta1, String ruta2){
 		
 		int widthPar=2073;
@@ -34,9 +94,15 @@ public class recorteFunctions {
 		//padronJ.show();
 		Prefs.blackBackground = false;		
 		IJ.run(padronJ, "Make Binary", "");
+		
+		padronJ.show();
+		
+		//Verificamos si es que no existe lineas negras en la imagen
+		
+		eliminarLineasNegras();		
 		alinearPadron();
 
-		
+
 		
 		//////////////
 		//ELIMINA LA PARTE DE LA IZQUIERDA
@@ -114,6 +180,7 @@ public class recorteFunctions {
 		new FileSaver(padronJ).saveAsPng(ruta2);
 		Prefs.blackBackground = false;
 		this.padronJ = padronJ;
+		padronJ.show();
 		
 		
 	}
@@ -266,4 +333,5 @@ public class recorteFunctions {
 	public int getYNombre(){
 		return this.yNombre;
 	}
+	
 }
