@@ -58,6 +58,8 @@ public class NewMain {
         
         String url1 = new String("C:\\Users\\LUIS S\\git\\Firmas Pruebas");
         String url2 = new String("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\Imagenes\\firmas.jpg");
+        
+        /*
         List<List<Resultado>> listaTemporalPersona = af.verificarFirmas2(idPersonas, idFirmas, url1, url2);
         
  
@@ -66,6 +68,19 @@ public class NewMain {
 				System.out.println(listaTemporalPersona.get(i).get(k).indFirmaMatch+" "+listaTemporalPersona.get(i).get(k).porcentaje);
 			}
 		}    	
+        
+       
+    */
+        
+        
+        List<Resultado> listaTemporalPersona = af.verificarFirmas5(idPersonas, idFirmas, url1, url2);
+        
+        
+        for (int i = 0; i < listaTemporalPersona.size(); i++) {	
+        //	for (int k = 0; k < listaTemporalPersona.get(i).size(); k++) {
+        	System.out.println(listaTemporalPersona.get(i).indFirmaMatch+" "+listaTemporalPersona.get(i).porcentaje+" "+listaTemporalPersona.get(i).idPersona);
+		//	}
+		}  
         
         
     }
