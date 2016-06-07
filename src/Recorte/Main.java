@@ -54,8 +54,9 @@ public class Main {
 			//cropeamos los digitos del DNI
 		//	System.out.println(alturaX + " " + yDNI);
 			int distanceBetweenSquaresH = 87 ,distanceBetweenSquares = 14, widthSquare = 14, heightSquare = 84;
-			
 		
+			List <String> dniLista  = new ArrayList <String>() ;
+		int numero; 
 			//RecogChar.recognize_actionPerformedDNI();
 	
 			System.out.println(yDNI);
@@ -67,7 +68,8 @@ public class Main {
 				
 				File file2 = new File(rutaAlmacenar); 	
 				file2.mkdirs();
-						
+				String dni = "";		
+		//		System.out.println(dni + "pruebita");
 				
 				for (int h = 0; h<8 ; h++) {
 					Copia1 = IJ.openImage(ruta2);
@@ -87,17 +89,38 @@ public class Main {
 				 	recogChar.init();
 					recogChar.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				  recogChar.setSize(820, 580);
-				  	recogChar.recognize_actionPerformedDNI(Copia1.getImage());
 				  	
-				  	
+				  
+				numero = 	recogChar.recognize_actionPerformed( Copia1.getImage());
+				
+				if (dni == "") {
+					dni = ""+numero;
+					//System.out.println(numero);
+					
+				} else {
+					dni=dni +numero;
+					
+				} ; 
+				
+				
+			
+				
 				    // Copia1.show();
 				    new FileSaver(Copia1).saveAsPng(rutaDNI);
 					//Prefs.blackBackground = false;
 				}
 				
-				System.out.println();
+				//System.out.println(  dni );
+				
+				dniLista.add(dni);
 			}	
+			
+			for(int m = 0 ; m < dniLista.size() ; m ++ ) 
+				
+				System.out.println(dniLista.get(m));
 	
+			
+			
 			int apellidoEspacios = 25, nombreEspacios = 23, espacioLetras = 15, alturaLetras = 85;
 			
 			for (int n = 0; n < personasxPadron; n++){

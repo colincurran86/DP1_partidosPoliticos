@@ -617,7 +617,7 @@ public class RecogChar extends JFrame
   	}
     */
   	  	
-  	void recognize_actionPerformed(Image image)
+ public int recognize_actionPerformed(Image image)
   	{
   		
  
@@ -636,7 +636,7 @@ public class RecogChar extends JFrame
 			messag="I need to be trained first!";
 			javax.swing.JOptionPane.showMessageDialog(null,messag,"output",javax.swing.JOptionPane.WARNING_MESSAGE);
       		message.setText("I need to be trained first!");
-      		return;
+      		return 0 ;
     	}
     	entry.downSample();
 
@@ -687,7 +687,8 @@ public class RecogChar extends JFrame
 
 */ 
     	
-    	System.out.print( map[best]); // redirijo la salida a consola !!
+    
+    	return  Character.getNumericValue( map[best]); // redirijo la salida a consola !!
     	
 //	clear_actionPerformed(null);
 	
