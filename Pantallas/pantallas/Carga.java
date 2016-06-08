@@ -72,6 +72,9 @@ public class Carga extends JPanel implements ActionListener{
 		if (e.getSource() == btnConf) {
 			Configuracion c= new Configuracion();
 			c.setVisible(true);
+			
+			
+			
 		}
 		if(e.getSource()==btnPrimCarga){
 			if(porc==-1)

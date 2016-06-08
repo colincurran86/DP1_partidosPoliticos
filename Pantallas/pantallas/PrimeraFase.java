@@ -107,12 +107,25 @@ public class PrimeraFase extends JPanel implements ActionListener {
 
 			List<PersonaReniec> pr = u.ocrMasReniec();
 			// rico pe
+			
+	        
+	    	Main mainRecorte = new Main();
+	        mainRecorte.main("kaka");
+	        Util kaka2 = new Util();
+	       
+	        for (int i = 0; i< mainRecorte.lista.size(); i++) System.out.println( mainRecorte.lista.get(i)) ;
+	        List<PersonaReniec> pr1 = kaka2.ocrMasReniec();
+	       // System.out.println("cuantos ha encontrado: " + pr.size());
+
+			
+			
+			
 			List<String> idFirmasLst = new ArrayList<String>();
 			List<Integer> idRegistroLst = new ArrayList<Integer>();
-			System.out.println("ts:" +pr.size());
-			for (int i = 0; i < pr.size(); i++) {
-				if(pr.get(i)!=null){
-					idFirmasLst.add(pr.get(i).getIdFirma());					
+			System.out.println("ts:" +pr1.size());
+			for (int i = 0; i < pr1.size(); i++) {
+				if(pr1.get(i)!=null){
+					idFirmasLst.add(pr1.get(i).getIdFirma());					
 					idRegistroLst.add(i + 1);
 				}
 				else

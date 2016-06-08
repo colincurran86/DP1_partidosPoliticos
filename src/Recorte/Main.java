@@ -114,7 +114,7 @@ public static List<BufferedImage> listaBImage = new ArrayList<BufferedImage>()  
                 }
                 
                 //System.out.println(  dni );
-                    lista.add(dni);
+                 lista.add(dni);
             }    
             /*  
             
@@ -206,7 +206,7 @@ public static List<BufferedImage> listaBImage = new ArrayList<BufferedImage>()  
                     Copia2.setRoi(yHuellas+2, alturaFirma2+2 , widthSquare , heightSquare+2);
                   //  System.out.println("Valor nuevo " + alturaFirma2);
                     if (n != 7 ) alturaFirma2 = rf.obtenerSiguienteEspacioFirmas(yFirmas+3, alturaFirma2+2);
-                    IJ.run(Copia2, "CSrop", ""); 
+                    IJ.run(Copia2, "Crop", ""); 
                     //new FileSaver(padronJ).saveAsPng("D:/Users/a20101616/git/DP1_partidosPoliticos/src/Recorte/recorteCostado.jpg");
                     new FileSaver(Copia2).saveAsPng(workingDir + "/src/Recorte/Resultado/Persona"
                             + String.valueOf(n+1+(8*contPadrones))  + "/Huella/Huella.jpg");
