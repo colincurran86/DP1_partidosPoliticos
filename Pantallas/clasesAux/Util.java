@@ -101,7 +101,7 @@ public class Util {
 		for (int i = 0; i < Main.lista.size(); i++) {
 			String dni = Main.lista.get(i);
 			entro = false;
-			System.out.println("DNI" + dni);
+			System.out.println("DNI RECONOCIDO DE LAS IMAGENES: " + dni);
 			for (int j = 0; j < ReniecBD.lista.size(); j++) 
 		if(dni!=null){		
 				if (ReniecBD.lista.get(j).getDni() == Integer.parseInt(dni)) {

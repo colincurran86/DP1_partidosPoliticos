@@ -94,35 +94,42 @@ public class PrimeraFase extends JPanel implements ActionListener {
 			Principal.getFrame().setContentPane(carga);
 		}
 		if (e.getSource() == btnProcesar) {
+			
+	        long startTime = System.currentTimeMillis();
+	        System.out.println("Procesando");
+			
+	        
+	        
 			Util u = new Util();
-
 			Main m = new Main();
 			String formatearRutaPlan = u.formatearRuta(txtFieldPlan.getText());
 			m.main(formatearRutaPlan);
-			System.out.println("Lista de DNIS " + Main.lista.size());
-			System.out.println("Lista de Imagenes" + Main.listaBImage.size());
-			
 			String formatearRutaBD = u.formatearRuta(txtFieldBD.getText());
 			u.llenarBDReniec(formatearRutaBD + "/registro.nacional.v.1.xlsx");
 
-			List<PersonaReniec> pr = u.ocrMasReniec();
-			// rico pe
 			
+			System.out.println("**************************************************");
+			System.out.println("DNI");
+			System.out.println("**************************************************");
+			
+			
+			List<PersonaReniec> pr1 = u.ocrMasReniec();
+			
+			System.out.println("**************************************************");
+			System.out.println("FIRMAS");
+			System.out.println("**************************************************");
+			
+			// Firmas
+		
 	        
-	    	Main mainRecorte = new Main();
-	        mainRecorte.main("kaka");
-	        Util kaka2 = new Util();
-	       
-	        for (int i = 0; i< mainRecorte.lista.size(); i++) System.out.println( mainRecorte.lista.get(i)) ;
-	        List<PersonaReniec> pr1 = kaka2.ocrMasReniec();
-	       // System.out.println("cuantos ha encontrado: " + pr.size());
+	    	//Main mainRecorte = new Main();
 
-			
-			
-			
+
 			List<String> idFirmasLst = new ArrayList<String>();
 			List<Integer> idRegistroLst = new ArrayList<Integer>();
-			System.out.println("ts:" +pr1.size());
+			
+			
+			// si no encuentra el dni, no considera la firma :v
 			for (int i = 0; i < pr1.size(); i++) {
 				if(pr1.get(i)!=null){
 					idFirmasLst.add(pr1.get(i).getIdFirma());					
@@ -132,36 +139,38 @@ public class PrimeraFase extends JPanel implements ActionListener {
 				{
 					idFirmasLst.add("-1");					
 					idRegistroLst.add(i + 1);		
-				}
-				
+				}	
 			}
-			System.out.println("ts:" +idRegistroLst.size());
+			
 			List<Resultado> listaTemporalPersona = null;
 			System.out.println("Inicio firmas:");
 			AlgoritmoFirmas algoritmoFrimas = new AlgoritmoFirmas();
 	
 			try {
-	listaTemporalPersona = algoritmoFrimas.verificarFirmas6(idRegistroLst, idFirmasLst,Main.listaBImage , u.formatearRuta2(formatearRutaBD + "/firmas.jpg/"));
-	
-	for (int i = 0; i < listaTemporalPersona.size(); i++) {
-		// for (int k = 0; k < listaTemporalPersona.get(i).size(); k++)
-		// {
-		System.out.println("por "
-				+ listaTemporalPersona.get(i).porcentaje + " " + listaTemporalPersona.get(i).idPersona);
-		// }
-	}
-	System.out.println("Fin firmas:");
+				listaTemporalPersona = algoritmoFrimas.verificarFirmas6(idRegistroLst, idFirmasLst,Main.listaBImage , u.formatearRuta2(formatearRutaBD + "/firmas.jpg/"));
+				System.out.println("Porcentaje de Firmas ");
+				for (int i = 0; i < listaTemporalPersona.size(); i++) {
+					System.out.println("% "+ listaTemporalPersona.get(i).porcentaje + " IDPersona:  " + listaTemporalPersona.get(i).idPersona);
+				}
+			
+			System.out.println("Fin firmas:");
+			System.out.println("**************************************************");
 
 	
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-
-
-
+			    
 			
+	        long endTime   = System.currentTimeMillis();
+	        double totalTime = (endTime - startTime) / 1000.0;
+	        System.out.println("Finalizado");
+	        System.out.println("El tiempo total de ejecucion del programa fue " + totalTime + " segundos");
+	
 		}
+		
+		
 		if (e.getSource() == btnBuscarBD) {
 			JFileChooser jFileChooser = new JFileChooser();
 			jFileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);

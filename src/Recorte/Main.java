@@ -26,23 +26,29 @@ public static List<BufferedImage> listaBImage = new ArrayList<BufferedImage>()  
        //System.out.println(workingDir);
        // System.out.println(args);
         int personasxPadron = 8;
-        long startTime = System.currentTimeMillis();
-        System.out.println("Procesando");
+
         recorteFunctions rf = new recorteFunctions();
         
 
         //verificamos cuantos padrones existen
         int totalPadrones = rf.contarPadrones();    
-
+ 
        // System.out.println(totalPadrones);
         
         for (int contPadrones = 0; contPadrones<totalPadrones; contPadrones++){
         
-            String ruta1 = workingDir + "/src/Recorte/padrones/padron.rayas.firmado." + (contPadrones+1) +".jpg";
+            //String ruta1 = workingDir + "/src/Recorte/padrones/padron.rayas.firmado." + (contPadrones+1) +".jpg";
         //    String ruta1 = workingDir + "/src/Recorte/padrones/xd.jpg";
-            String ruta2 = workingDir + "/src/Recorte/Auxiliar/recorteCostado.jpg";
-            String ruta3 = workingDir + "/src/Recorte/Auxiliar/recorteBN.jpg";
+           // String ruta2 = workingDir + "/src/Recorte/Auxiliar/recorteCostado.jpg";
+            //String ruta3 = workingDir + "/src/Recorte/Auxiliar/recorteBN.jpg";
 
+        	String ruta1 = args + "/padron.rayas.firmado." + (contPadrones+1) +".jpg";
+        //	String rutaAlfa =  workingDir + "/src/Recorte/padrones/padron.rayas.firmado." + (contPadrones+1) +".jpg";
+        	String ruta2 =  workingDir + "/src/Recorte/Auxiliar/recorteCostado.jpg";
+        	String ruta3 = workingDir + "/src/Recorte/Auxiliar/recorteBN.jpg";
+        	
+        
+            
             rf.recortarCostadosProcesarPadron(ruta1,ruta2,ruta3);
             
             ImagePlus padronJ =  rf.getPadron();
@@ -50,7 +56,7 @@ public static List<BufferedImage> listaBImage = new ArrayList<BufferedImage>()  
             int height1=padronJ.getHeight();
             int cont = 0, alturaX = 0 , yHuellas = 0, yFirmas = 0, yDNI = 0, yNombre = 0, yApellido =0;
             
-    
+
 
             rf.coordenadasHuella(padronJ);  alturaX = rf.getX(); yHuellas = rf.getYHuellas();
             rf.coordenadasFirma(padronJ);  yFirmas = rf.getYFirmas();
@@ -222,10 +228,7 @@ public static List<BufferedImage> listaBImage = new ArrayList<BufferedImage>()  
             
         }
             
-        long endTime   = System.currentTimeMillis();
-        double totalTime = (endTime - startTime) / 1000.0;
-        System.out.println("Finalizado");
-        System.out.println("El tiempo total de ejecucion del programa fue " + totalTime + " segundos");
+
         
     }
     

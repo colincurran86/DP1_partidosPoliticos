@@ -1597,8 +1597,6 @@ public class AlgoritmoFirmas {
  
         
         
-System.out.println("tamño bufer image: "+listFirmas.size());
-System.out.println("tamño personas image: "+idPersonas.size());
 
         for (indicePersona = 0; indicePersona < idPersonas.size(); indicePersona++)
 	        {
@@ -1615,7 +1613,6 @@ System.out.println("tamño personas image: "+idPersonas.size());
 	        //String url1 = new String(direccionPersonaPorPlanillon+"\\Persona"+idPersonas.get(indicePersona)+"\\Firma\\firma.jpg");        												
 	        OtsuThreshold o = new OtsuThreshold();
 	        
-	        System.out.println("firma1 base datos : "+direccionBaseDatosFirmas);
 	        
 	        	
 	        imagen1 = new FastBitmap(listFirmas.get(indicePersona));
@@ -1637,7 +1634,6 @@ System.out.println("tamño personas image: "+idPersonas.size());
 	     //  {
 	        	String url2 = null;
 	        	url2 = new String(direccionBaseDatosFirmas+""+idFirmas.get(indicePersona)+".jpg");
-	        	System.out.println("url2:"+url2);
 	        	/*
 	        	if(indiceBaseDatos<10)
 		        	url2 = new String(direccionBaseDatosFirmas+"\\f00"+indiceBaseDatos+".jpg");
