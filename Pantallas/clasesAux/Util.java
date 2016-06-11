@@ -27,7 +27,7 @@ public class Util {
 				nuevaRuta += ruta.charAt(i);
 		return nuevaRuta;
 	}
-	
+
 	public String formatearRuta2(String ruta) {
 		String nuevaRuta = "";
 		for (int i = 0; i < ruta.length(); i++)
@@ -37,7 +37,6 @@ public class Util {
 				nuevaRuta += ruta.charAt(i);
 		return nuevaRuta;
 	}
-
 
 	public void llenarBDReniec(String rutaBD) {
 		try {
@@ -102,15 +101,48 @@ public class Util {
 			String dni = Main.lista.get(i);
 			entro = false;
 			System.out.println("DNI RECONOCIDO DE LAS IMAGENES: " + dni);
-			for (int j = 0; j < ReniecBD.lista.size(); j++) 
-		if(dni!=null){		
-				if (ReniecBD.lista.get(j).getDni() == Integer.parseInt(dni)) {
-					entro=true;
-					pr.add(ReniecBD.lista.get(j));
+			for (int j = 0; j < ReniecBD.lista.size(); j++)
+				if (dni != null) {
+					if (ReniecBD.lista.get(j).getDni() == Integer.parseInt(dni)) {
+						entro = true;
+						pr.add(ReniecBD.lista.get(j));
+					}
 				}
-		}
-			if(!entro) pr.add(null);
+			if (!entro)
+				pr.add(null);
 		}
 		return pr;
 	}
+	
+	public List<PersonaReniec> sacaListaCandidatos(int dni){
+		List<PersonaReniec> candidatos=new ArrayList<PersonaReniec>();
+		String dniCad="" + dni;
+		String dniRecortado="";
+		int size;				
+		
+		for(size=7;size>3;size--){//cadenas de tamanho 7 que coincidan
+			for(int i=0;i<8-size+1;i++){//posicion
+				dniRecortado="";
+				for(int j=i;j<size;j++) //recorto
+					dniRecortado+=dniCad.charAt(j);
+				int dniRec=Integer.parseInt(dniRecortado);
+				
+				for(int k=0;k<ReniecBD.lista.size();k++){//comparo esa parte de la cadena con la bd
+					String reniecDni=""+ReniecBD.lista.get(k).getDni();
+					String reniecRecorte="";
+					for(int l=i;l<size;l++)//recorte de la bd
+						reniecRecorte+=reniecDni.charAt(l);
+					int reniecRec=Integer.parseInt(reniecRecorte);
+					if(reniecRec==dniRec) {
+						for(int m=0;m<candidatos.size();m++)//para que no se repita 
+							if(candidatos.get(m).getDni()!=ReniecBD.lista.get(k).getDni())
+								candidatos.add(ReniecBD.lista.get(k));
+					}
+				}
+			}
+		}
+		
+		return candidatos;
+	}
+	
 }
