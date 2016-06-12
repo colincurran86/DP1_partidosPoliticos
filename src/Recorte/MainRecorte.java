@@ -1,5 +1,7 @@
 package Recorte;
 
+
+
 import java.awt.FlowLayout;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -21,13 +23,13 @@ import ij.ImagePlus;
 import ij.Prefs;
 import ij.io.FileSaver;
 
-public class Main {
+public class MainRecorte {
 
 public static List<String> lista = new ArrayList<String>()  ; 
 public static List<BufferedImage> listaBImage = new ArrayList<BufferedImage>()  ; 
 
 
-    public  void  main(String args) {
+    public  void  procedimiento (String args) {
         // TODO Auto-generated method stub
         String workingDir = System.getProperty("user.dir"); // nos evitamos el problema de las rutas :'v
        //System.out.println(workingDir);
