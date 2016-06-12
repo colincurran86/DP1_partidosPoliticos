@@ -1,7 +1,17 @@
 package Recorte;
 
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JPanel;
+
+import Catalano.Imaging.FastBitmap;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.Prefs;
@@ -19,6 +29,23 @@ public class recorteFunctions {
         String workingDir = System.getProperty("user.dir"); // nos evitamos el problema de las rutas :'v
         return new File(workingDir + "/src/Recorte/padrones/").list().length;
     }
+    
+    public void tamanhoEstandar(String workingDir, int totalPadrones){
+        BufferedImage image = null;
+    	for (int i = 1; i<= totalPadrones ; i++){
+        	String ruta1 = workingDir + "/padron.rayas.firmado." + i +".jpg";	
+            ImageIcon ii = new ImageIcon(ruta1);
+            BufferedImage bi = new BufferedImage(1280, 965, BufferedImage.TYPE_INT_RGB);
+            Graphics2D g2d = (Graphics2D)bi.createGraphics();
+            g2d.addRenderingHints(new RenderingHints(RenderingHints.KEY_RENDERING,RenderingHints.VALUE_RENDER_QUALITY));
+            boolean b = g2d.drawImage(ii.getImage(), 0, 0, 1280, 965, null);
+            FastBitmap fb = new FastBitmap(bi);
+            fb.saveAsPNG(ruta1);
+    	}
+    
+    }
+
+    
     
     public void eliminarLineasNegras(){
         
