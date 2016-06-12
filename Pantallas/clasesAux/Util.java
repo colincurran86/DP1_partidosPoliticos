@@ -121,12 +121,13 @@ public class Util {
 		int posCad1=0,posCad2=0,posCad3=0;
 		String cad1="",cad2="",cad3="";
 		
-		for(int i=0;i<7;i++){
-			cad1="";
-			cad2="";
-			cad3="";
+		for(int i=0;i<7;i++){			
 			
-			for(int j=i+1;j<8;j++){				
+			for(int j=i+1;j<8;j++){		
+				cad1="";
+				cad2="";
+				cad3="";
+				
 				posCad1=0;
 				posCad2=i+1;
 				posCad3=j+1;

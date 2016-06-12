@@ -34,7 +34,7 @@ public class PartidoPoliticoPanel extends JPanel implements ActionListener {
 	private JTextField txtFieldCorreo;
 	private JTable tblPartPol;
 	MyTableModel partPolModel;
-	private int idRow;
+	private int idRow = -1;
 	private JButton btnAgregar;
 	private JButton btnModificar;
 	private JButton btnEliminar;
@@ -92,8 +92,9 @@ public class PartidoPoliticoPanel extends JPanel implements ActionListener {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				char c = e.getKeyChar();
-				if(!Character.isDigit(c) && !e.isAltDown())	e.consume();
-				
+				if (!Character.isDigit(c) && !e.isAltDown())
+					e.consume();
+
 			}
 		});
 		txtFieldTel.setBounds(214, 179, 329, 20);
@@ -151,10 +152,10 @@ public class PartidoPoliticoPanel extends JPanel implements ActionListener {
 		btnAgregar.addActionListener(this);
 		btnModificar.addActionListener(this);
 		btnEliminar.addActionListener(this);
-		
+
 		JPanel panelReg = new JPanel();
-		panelReg.setBorder(new TitledBorder(null, "PARTIDOS POLITICOS", TitledBorder.LEADING, TitledBorder.TOP,
-				null, null));
+		panelReg.setBorder(
+				new TitledBorder(null, "PARTIDOS POLITICOS", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panelReg.setBounds(28, 30, 573, 286);
 		add(panelReg);
 		panelReg.setLayout(new GridLayout(1, 1, 0, 0));
@@ -215,52 +216,74 @@ public class PartidoPoliticoPanel extends JPanel implements ActionListener {
 		// TODO Auto-generated method stub
 		String res;
 		if (e.getSource() == btnAgregar) {
-			res=camposNull();
+			res = camposNull();
 			if (!res.equals("")) {
-				JOptionPane.showMessageDialog(null, "Rellene los campos:\n"+res);
+				JOptionPane.showMessageDialog(null, "Rellene los campos:\n" + res);
 			} else {
 				PartidoPolitico p = new PartidoPolitico();
 				p.setCorreo(txtFieldCorreo.getText());
 				p.setNombre(txtFieldNombre.getText());
 				p.setNombreRep(txtFieldNRep.getText());
 				p.setTelefono(txtFieldTel.getText());
-				ProcessManager.addPartPolitico(p);
-				refreshTblPartPol();
+
+				try {
+					ProcessManager.addPartPolitico(p);
+					refreshTblPartPol();
+				} catch (Exception ex) {
+					JOptionPane.showMessageDialog(null, "Fallo al insertar datos");
+				}
+
 			}
 
 		}
 		if (e.getSource() == btnModificar) {
-			res=camposNull();
-			if (!res.equals("")) {
-				JOptionPane.showMessageDialog(null, "Rellene los campos:\n"+res);
-			} else {
-				String nombre = txtFieldNombre.getText();
-				String rep = txtFieldNRep.getText();
-				String tel = txtFieldTel.getText();
-				String correo = txtFieldCorreo.getText();
+			if (idRow == -1)
+				JOptionPane.showMessageDialog(null, "Escoja una fila");
+			else {
+				res = camposNull();
+				if (!res.equals("")) {
+					JOptionPane.showMessageDialog(null, "Rellene los campos:\n" + res);
+				} else {
+					String nombre = txtFieldNombre.getText();
+					String rep = txtFieldNRep.getText();
+					String tel = txtFieldTel.getText();
+					String correo = txtFieldCorreo.getText();
 
-				PartidoPolitico p = new PartidoPolitico();
-				p.setId(idRow);
-				p.setNombre(nombre);
-				p.setNombreRep(rep);
-				p.setTelefono(tel);
-				p.setCorreo(correo);
+					PartidoPolitico p = new PartidoPolitico();
+					p.setId(idRow);
+					p.setNombre(nombre);
+					p.setNombreRep(rep);
+					p.setTelefono(tel);
+					p.setCorreo(correo);
 
-				ProcessManager.updatePartPol(p);
-				refreshTblPartPol();
+					try {
+						ProcessManager.updatePartPol(p);
+						refreshTblPartPol();
+					} catch (Exception ex) {
+						JOptionPane.showMessageDialog(null, "Fallo al actualizar los datos");
+					}
+
+				}
 			}
+
 		}
 		if (e.getSource() == btnEliminar) {
-
-			int result = JOptionPane.showConfirmDialog(null, "¿Está seguro?");
-			if (result == JOptionPane.OK_OPTION) {
-				if(!ProcessManager.deletePartPol(idRow)){
-					JOptionPane.showMessageDialog(null, "Existen cargas relacionadas a este proceso.\n"
-													+ "No se puede realizar la eliminación");							
+			if (idRow == -1)
+				JOptionPane.showMessageDialog(null, "Escoja una fila");
+			else {
+				int result = JOptionPane.showConfirmDialog(null, "¿Está seguro?");
+				if (result == JOptionPane.OK_OPTION) {
+					try {
+						if (!ProcessManager.deletePartPol(idRow)) {
+							JOptionPane.showMessageDialog(null, "Existen cargas relacionadas a este proceso.\n"
+									+ "No se puede realizar la eliminación");
+						}
+						refreshTblPartPol();
+					} catch (Exception ex) {
+						JOptionPane.showMessageDialog(null, "Fallo al borrar datos");
+					}
 				}
-				refreshTblPartPol();
 			}
-
 		}
 	}
 

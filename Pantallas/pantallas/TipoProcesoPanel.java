@@ -32,7 +32,7 @@ public class TipoProcesoPanel extends JPanel {
 	private JTextField textField;
 	private JTextField txtFieldDescripcion;
 	private JTable tblPartPol;
-	private int idRow;
+	private int idRow = -1;
 	MyTableModel partPolModel;
 
 	/**
@@ -40,33 +40,33 @@ public class TipoProcesoPanel extends JPanel {
 	 */
 	public TipoProcesoPanel() {
 		setLayout(null);
-		
 
 		JLabel lblDescripcion = new JLabel("Descripcion");
 		lblDescripcion.setBounds(98, 114, 72, 14);
 		add(lblDescripcion);
-		
+
 		JLabel lblPorcentaje = new JLabel("Porcentaje");
 		lblPorcentaje.setBounds(98, 198, 62, 14);
 		add(lblPorcentaje);
-		
-		
+
 		txtFieldDescripcion = new JTextField();
 		txtFieldDescripcion.setBounds(185, 111, 290, 20);
 		add(txtFieldDescripcion);
 		txtFieldDescripcion.setColumns(10);
 		txtFieldDescripcion.setDocument(new JTextFieldLimit(90));
-		
-		
-		SpinnerModel sm = new SpinnerNumberModel(0, 0, 100, 1); //default value,lower bound,upper bound,increment by 
+
+		SpinnerModel sm = new SpinnerNumberModel(0, 0, 100, 1); // default
+																// value,lower
+																// bound,upper
+																// bound,increment
+																// by
 		JSpinner spinner = new JSpinner(sm);
-		spinner.setBounds(185, 195 , 64, 20);
-		JSpinner.NumberEditor jsEditor = (JSpinner.NumberEditor)spinner.getEditor();
+		spinner.setBounds(185, 195, 64, 20);
+		JSpinner.NumberEditor jsEditor = (JSpinner.NumberEditor) spinner.getEditor();
 		DefaultFormatter formatter = (DefaultFormatter) jsEditor.getTextField().getFormatter();
-		formatter.setAllowsInvalid(false);		
+		formatter.setAllowsInvalid(false);
 		add(spinner);
 
-		
 		JButton btnAgregar = new JButton("Agregar");
 		btnAgregar.setBounds(80, 336, 89, 23);
 		add(btnAgregar);
@@ -74,59 +74,78 @@ public class TipoProcesoPanel extends JPanel {
 		JButton btnModificar = new JButton("Modificar");
 		btnModificar.setBounds(259, 336, 89, 23);
 		add(btnModificar);
-		
+
 		JButton btnEliminar = new JButton("Eliminar");
 		btnEliminar.setBounds(430, 336, 89, 23);
 		add(btnEliminar);
-		
-		btnAgregar.addActionListener(new ActionListener() { 
-		    public void actionPerformed(ActionEvent e) { 
-		    	String res=camposNull();
-		    	if (!res.equals("")) {
-					JOptionPane.showMessageDialog(null, "Rellene los campos\n"+res);
-				} else {
+
+		btnAgregar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String res = camposNull();
+				if (!res.equals(""))
+					JOptionPane.showMessageDialog(null, "Rellene los campos\n" + res);
+				else {
 					String descripcion = txtFieldDescripcion.getText();
-			    	int porcentaje = (int) spinner.getValue();
-			    	TipoProceso tp=new TipoProceso();
-			    	tp.setDescripcion(descripcion);
-			    	tp.setPorcentaje(porcentaje);		    
-			    	ProcessManager.addTProc(tp);
-			    	refreshTblTProc();
-				}		    			    	
-		    } 
-		});
-		
-		btnModificar.addActionListener(new ActionListener() { 
-		    public void actionPerformed(ActionEvent e) { 
-		    	String res=camposNull();
-		    	if (!res.equals("")) {
-					JOptionPane.showMessageDialog(null, "Rellene los campos\n"+res);
-				} else {
-					String descripcion = txtFieldDescripcion.getText();
-			    	int porcentaje = (int) spinner.getValue();	
-			    	TipoProceso tp=new TipoProceso();
-			    	tp.setDescripcion(descripcion);
-			    	tp.setPorcentaje(porcentaje);	
-			    	tp.setId(idRow);
-			    	ProcessManager.updateTProc(tp);		    	
-			    	refreshTblTProc();
-				}		    	
-		    } 
-		});
-		
-		btnEliminar.addActionListener(new ActionListener() { 
-		    public void actionPerformed(ActionEvent e) { 
-		    	int res = JOptionPane.showConfirmDialog(null,"¿Está seguro?"); 
-				if (res == JOptionPane.OK_OPTION) {					
-					if(!ProcessManager.deleteTProc(idRow)){
-						JOptionPane.showMessageDialog(null, "Existen procesos relacionados a este tipo de proceso.\n"
-													+ "No se puede realizar la eliminación");
+					int porcentaje = (int) spinner.getValue();
+					TipoProceso tp = new TipoProceso();
+					tp.setDescripcion(descripcion);
+					tp.setPorcentaje(porcentaje);
+					try {
+						ProcessManager.addTProc(tp);
+						refreshTblTProc();
+					} catch (Exception ex) {
+						JOptionPane.showMessageDialog(null, "Fallo al insertar datos");
 					}
-					refreshTblTProc();
-				}		    	
-		    } 
+				}
+			}
 		});
 
+		btnModificar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (idRow == -1)
+					JOptionPane.showMessageDialog(null, "Escoja una fila");
+				else {
+					String res = camposNull();
+					if (!res.equals(""))
+						JOptionPane.showMessageDialog(null, "Rellene los campos\n" + res);
+					else {
+						String descripcion = txtFieldDescripcion.getText();
+						int porcentaje = (int) spinner.getValue();
+						TipoProceso tp = new TipoProceso();
+						tp.setDescripcion(descripcion);
+						tp.setPorcentaje(porcentaje);
+						tp.setId(idRow);
+						try {
+							ProcessManager.updateTProc(tp);
+							refreshTblTProc();
+						} catch (Exception ex) {
+							JOptionPane.showMessageDialog(null, "Fallo al actualizar los datos");
+						}
+					}
+				}
+			}
+		});
+
+		btnEliminar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (idRow == -1)
+					JOptionPane.showMessageDialog(null, "Escoja una fila");
+				else {
+					int res = JOptionPane.showConfirmDialog(null, "¿Está seguro?");
+					if (res == JOptionPane.OK_OPTION) {
+						try {
+							if (!ProcessManager.deleteTProc(idRow))
+								JOptionPane.showMessageDialog(null,
+										"Existen procesos relacionados a este tipo de proceso.\n"
+												+ "No se puede realizar la eliminación");
+							refreshTblTProc();
+						} catch (Exception ex) {
+							JOptionPane.showMessageDialog(null, "Fallo al borrar datos");
+						}
+					}
+				}
+			}
+		});
 
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Datos de Tipo de Procesos", TitledBorder.LEADING, TitledBorder.TOP,
@@ -145,9 +164,9 @@ public class TipoProcesoPanel extends JPanel {
 		tblPartPol.setModel(partPolModel);
 
 		tblPartPol.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {	
+			public void mouseClicked(MouseEvent e) {
 				int selRow = tblPartPol.getSelectedRow();
-			    idRow = Integer.parseInt(tblPartPol.getValueAt(selRow, 0).toString());				
+				idRow = Integer.parseInt(tblPartPol.getValueAt(selRow, 0).toString());
 				String descripcion = tblPartPol.getValueAt(selRow, 1).toString();
 				String rep = tblPartPol.getValueAt(selRow, 2).toString();
 				int foo = Integer.parseInt(rep);
@@ -156,19 +175,17 @@ public class TipoProcesoPanel extends JPanel {
 			}
 		});
 		JPanel panelReg = new JPanel();
-		panelReg.setBorder(new TitledBorder(null, "TIPO DE PROCESOS", TitledBorder.LEADING, TitledBorder.TOP,
-				null, null));
+		panelReg.setBorder(
+				new TitledBorder(null, "TIPO DE PROCESOS", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panelReg.setBounds(28, 30, 573, 286);
 		add(panelReg);
 		panelReg.setLayout(new GridLayout(1, 1, 0, 0));
 	}
-	
 
 	class MyTableModel extends AbstractTableModel {
-		ArrayList<TipoProceso> tProcLst=ProcessManager.queryAllTProc();
-		String[] titles = { "Código", "Descripción", "Porcentaje" };		
-		
-		
+		ArrayList<TipoProceso> tProcLst = ProcessManager.queryAllTProc();
+		String[] titles = { "Código", "Descripción", "Porcentaje" };
+
 		@Override
 		public int getColumnCount() {
 			// TODO Auto-generated method stub
@@ -209,15 +226,15 @@ public class TipoProcesoPanel extends JPanel {
 		partPolModel.tProcLst = ProcessManager.queryAllTProc();
 		partPolModel.fireTableChanged(null);
 	}
-	
+
 	private String camposNull() {
 		boolean v = false;
-		String resultado="";
-		if (txtFieldDescripcion.getText().equals("")){
-			resultado+="- Descripcion\n";
+		String resultado = "";
+		if (txtFieldDescripcion.getText().equals("")) {
+			resultado += "- Descripcion\n";
 			v = true;
-		}	
-			
+		}
+
 		return resultado;
 	}
 }
