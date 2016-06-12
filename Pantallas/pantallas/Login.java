@@ -74,8 +74,9 @@ public class Login {
 					u.setRol(r);
 
 					if (ProcessManager.search(u)) {
-						Principal window = new Principal();
+						//Principal window = new Principal();
 						Principal carga = new Principal();
+						frame.setVisible(false);
 						carga.frame.setVisible(true);
 						
 					} else {

@@ -113,12 +113,62 @@ public class Util {
 		}
 		return pr;
 	}
-	
+
 	public List<PersonaReniec> sacaListaCandidatos(int dni){
-		List<PersonaReniec> candidatos=new ArrayList<PersonaReniec>();
+		List<PersonaReniec> candidatos=new ArrayList<PersonaReniec>();		
 		String dniCad="" + dni;
+								
+		int posCad1=0,posCad2=0,posCad3=0;
+		String cad1="",cad2="",cad3="";
+		
+		for(int i=0;i<7;i++){
+			cad1="";
+			cad2="";
+			cad3="";
+			
+			for(int j=i+1;j<8;j++){				
+				posCad1=0;
+				posCad2=i+1;
+				posCad3=j+1;
+				
+				if(i==0) cad1="";
+				else
+					for(int m=posCad1;m<i;m++)
+						cad1+=dniCad.charAt(m);	
+				
+				if(i==6) cad2="";
+				else
+					for(int m=posCad2;m<j;m++)
+						cad2+=dniCad.charAt(m);
+				
+				if(j==7) cad3="";
+				else
+					for(int m=posCad3;m<8;m++)
+						cad3+=dniCad.charAt(m);
+				
+				for(int k=0;k<ReniecBD.lista.size();k++){
+					String reniecDni=""+ReniecBD.lista.get(k).getDni();
+					if(cad1!="")
+						for(int m=posCad1;m<cad1.length()+posCad1;m++)
+							if(dniCad.charAt(m)!=reniecDni.charAt(m))break;
+											
+					if(cad2!="")
+						for(int m=posCad2;m<cad2.length()+posCad2;m++)
+							if(dniCad.charAt(m)!=reniecDni.charAt(m))break;
+					
+					if(cad3!="")
+						for(int m=posCad3;m<cad3.length()+posCad3;m++)
+							if(dniCad.charAt(m)!=reniecDni.charAt(m))break;
+					//si no llego a ningun break, anhade
+					for(int m=0;m<candidatos.size();m++)//para que no se repita 
+						if(candidatos.get(m).getDni()!=ReniecBD.lista.get(k).getDni())
+							candidatos.add(ReniecBD.lista.get(k));
+				}
+			}
+		}
+		/*
 		String dniRecortado="";
-		int size;				
+		int size;
 		
 		for(size=7;size>3;size--){//cadenas de tamanho 7 que coincidan
 			for(int i=0;i<8-size+1;i++){//posicion
@@ -140,9 +190,9 @@ public class Util {
 					}
 				}
 			}
-		}
+		}*/
 		
 		return candidatos;
 	}
-	
+
 }
