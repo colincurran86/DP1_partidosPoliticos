@@ -102,7 +102,7 @@ public class Util {
 			entro = false;
 			System.out.println("DNI RECONOCIDO DE LAS IMAGENES: " + dni);
 			for (int j = 0; j < ReniecBD.lista.size(); j++)
-				if (dni != null) {
+				if (dni != null || dni.length() == 0) {
 					if (ReniecBD.lista.get(j).getDni() == Integer.parseInt(dni)) {
 						entro = true;
 						pr.add(ReniecBD.lista.get(j));
