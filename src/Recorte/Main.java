@@ -1,13 +1,17 @@
 package Recorte;
 
+import java.awt.FlowLayout;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
+import Catalano.Imaging.FastBitmap;
 import OCR.RecogChar;
 import ij.IJ;
 import ij.ImagePlus;
@@ -26,14 +30,14 @@ public static List<BufferedImage> listaBImage = new ArrayList<BufferedImage>()  
        //System.out.println(workingDir);
        // System.out.println(args);
         int personasxPadron = 8;
-
         recorteFunctions rf = new recorteFunctions();
-        
+        RecogChar recogChar = new RecogChar();
+     //   recogChar.setVisible(false);
+        recogChar.init();
 
-        //verificamos cuantos padrones existen
+        //verificamos cuantos padrones existen	
         int totalPadrones = rf.contarPadrones();    
  
-       // System.out.println(totalPadrones);
         
         for (int contPadrones = 0; contPadrones<totalPadrones; contPadrones++){
         
@@ -50,6 +54,7 @@ public static List<BufferedImage> listaBImage = new ArrayList<BufferedImage>()  
         
             
             rf.recortarCostadosProcesarPadron(ruta1,ruta2,ruta3);
+            
             
             ImagePlus padronJ =  rf.getPadron();
             int width1=padronJ.getWidth();
@@ -94,33 +99,22 @@ public static List<BufferedImage> listaBImage = new ArrayList<BufferedImage>()  
                     String rutaDNI = workingDir + "/src/Recorte/Resultado/Persona"
                     + String.valueOf(n+1+(8*contPadrones))     + "/DNI/" + k + ".jpg";
                     if (h != 7 ) yDNI = rf.obtenerSiguienteEspacioDNI(yDNI,alturaX+5);
-                    
-                     
-                 //Ejecutamos el OCR
-                 RecogChar recogChar = new RecogChar();
-                 recogChar.setVisible(false);
-                recogChar.init();
-                 recogChar.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                 recogChar.setSize(820, 580);
-        
-                numero =     recogChar.recognize_actionPerformed( Copia1.getImage());
-                
-                if (dni == "") {
-                    dni = ""+numero;
-                    //System.out.println(numero);
-                    
-                } else {
-                    dni=dni +numero;
-                    
-                } ; 
-               
-                     //Copia1.show();
-                   //new FileSaver(Copia1).saveAsPng(rutaDNI);
-                    //Prefs.blackBackground = false;
-                }
-                
-                //System.out.println(  dni );
-                 lista.add(dni);
+                                 
+	                //Ejecutamos el OCR
+	             //   recogChar.setVisible(false);
+	             //   recogChar.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	             //   recogChar.setSize(820, 580);
+	                
+	                numero =  recogChar.recognize_actionPerformed(Copia1.getImage());
+
+	                if (dni == "") dni = ""+numero;	             
+	                else dni=dni +numero;    
+	                 //Copia1.show();
+	                 //new FileSaver(Copia1).saveAsPng(rutaDNI);
+	                 //Prefs.blackBackground = false;
+	              }
+	
+	               lista.add(dni);
             }    
             /*  
             
@@ -199,12 +193,16 @@ public static List<BufferedImage> listaBImage = new ArrayList<BufferedImage>()  
 
                     if (n != 7 ) alturaFirma = rf.obtenerSiguienteEspacioFirmas(yFirmas+3, alturaFirma);
                     IJ.run(Copia1, "Crop", ""); 
-                    new FileSaver(Copia1).saveAsPng(workingDir + "/src/Recorte/Resultado/Persona"
-                        + String.valueOf(n+1+(8*contPadrones))  + "/Firma/firma.jpg");
+                   // new FileSaver(Copia1).saveAsPng(workingDir + "/src/Recorte/Resultado/Persona"
+                   //     + String.valueOf(n+1+(8*contPadrones))  + "/Firma/firma.jpg");
                     Prefs.blackBackground = false;
+                    FastBitmap fb = new FastBitmap(Copia1.getBufferedImage());
+                   // fb.saveAsPNG(workingDir + "/src/Recorte/Resultado/Persona"  + String.valueOf(n+1+(8*contPadrones))  + "/Firma/firma.jpg");
                    // Copia1.show();
-                    listaBImage.add(Copia1.getBufferedImage());
+   
+                    // ==listaBImage.add(Copia1.getBufferedImage());
                     
+                  
                     
                 //huella
                     Copia2 = IJ.openImage(ruta3);

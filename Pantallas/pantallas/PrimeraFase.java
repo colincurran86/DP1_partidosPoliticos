@@ -155,6 +155,7 @@ public class PrimeraFase extends JPanel implements ActionListener {
 
 				// Main mainRecorte = new Main();
 
+				/*
 				List<String> idFirmasLst = new ArrayList<String>();
 				List<Integer> idRegistroLst = new ArrayList<Integer>();
 
@@ -189,7 +190,7 @@ public class PrimeraFase extends JPanel implements ActionListener {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-
+*/
 				long endTime = System.currentTimeMillis();
 				double totalTime = (endTime - startTime) / 1000.0;
 				System.out.println("Finalizado");

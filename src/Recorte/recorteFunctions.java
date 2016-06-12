@@ -32,13 +32,15 @@ public class recorteFunctions {
             if ( R == 0 ){
                 //System.out.println("entre aka xd");
                 if (i != 0){
-                    padronJ.setRoi(i,0,width-i-1,height-1);
+                   padronJ.setRoi(i,0,width-i-1,height-1);
+                    System.out.println(i);
                     IJ.run(padronJ, "Crop", "");    
                     //padronJ.show();
                 }
                 break;
             }
         }
+        
         
         //Verificamos el lado derecho
         /*
@@ -96,11 +98,10 @@ public class recorteFunctions {
         IJ.run(padronJ, "Make Binary", "");
         
         
+     
         //Verificamos si es que no existe lineas negras en la imagen
-        
-        eliminarLineasNegras();        
+        eliminarLineasNegras(); 
         alinearPadron();
-
 
         
         //////////////
@@ -144,6 +145,8 @@ public class recorteFunctions {
         padronJ.setRoi(0,0,width-1,i-1);
         IJ.run(padronJ, "Crop", "");
 
+        
+        
         //////////////
         //ELIMINA LA PARTE DE LA DERECHA
         //////////////
@@ -182,7 +185,7 @@ public class recorteFunctions {
         this.padronJ = padronJ;
     //    padronJ.show();
         
-        
+	
     }
     
 
