@@ -10,15 +10,15 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 
 import pantallas.ProgressMonitorExample;
 import Catalano.Imaging.FastBitmap;
+import Catalano.Imaging.Filters.Resize;
+
 import OCR.RecogChar;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.Prefs;
-import ij.gui.MessageDialog;
 import ij.io.FileSaver;
 
 public class Main {
@@ -40,7 +40,7 @@ public static List<BufferedImage> listaBImage = new ArrayList<BufferedImage>()  
 
         //verificamos cuantos padrones existen	
         int totalPadrones = rf.contarPadrones();    
- 
+        rf.tamanhoEstandar(args, totalPadrones);
         
         for (int contPadrones = 0; contPadrones<totalPadrones; contPadrones++){
         
@@ -102,39 +102,30 @@ public static List<BufferedImage> listaBImage = new ArrayList<BufferedImage>()  
                 for (int h = 0; h<8 ; h++) {
                     
                     //Detectamos el proximo espacio en blanco
-                        
                     Copia1 = IJ.openImage(ruta2);
                 //  System.out.println("ancho DNI " + yDNI);
                 //  Copia1.setRoi(yDNI + distanceBetweenSquares*h, alturaX  + distanceBetweenSquaresH * n  , 11 , 79);
                    
-                    int valor = rf.getAnchoDNI(yDNI+1, (alturaX+3) + distanceBetweenSquaresH * n);
+                    int valor = rf.getAnchoDNI(yDNI+1, (alturaX+5) + distanceBetweenSquaresH * n);
+                    if (valor == 0) valor = 13;
+                    System.out.println("valor crop " + valor);
                 //  Copia1.setRoi(yDNI+1, (alturaX+5)  + distanceBetweenSquaresH * n  , 10 , 70);
-                    Copia1.setRoi(yDNI+1, (alturaX+5)  + distanceBetweenSquaresH * n  , valor , 70);
+                    Copia1.setRoi(yDNI+2, (alturaX+5)  + distanceBetweenSquaresH * n  , valor , 70);
                     IJ.run(Copia1, "Crop", ""); int k = h+1;
                     String rutaDNI = workingDir + "/src/Recorte/Resultado/Persona"
                     + String.valueOf(n+1+(8*contPadrones))     + "/DNI/" + k + ".jpg";
                     if (h != 7 ) yDNI = rf.obtenerSiguienteEspacioDNI(yDNI,alturaX+5);
                                  
-	                //Ejecutamos el OCR
-	             //   recogChar.setVisible(false);
-	             //   recogChar.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	             //   recogChar.setSize(820, 580);
-	                
 	                numero =  recogChar.recognize_actionPerformed(Copia1.getImage());
+                    new FileSaver(Copia1).saveAsPng(rutaDNI);
+	                if (dni == "") dni = ""+ numero;	             
+	                else dni=dni + numero;    
 
-	                if (dni == "") dni = ""+numero;	             
-	                else dni=dni +numero;    
-	                 //Copia1.show();
-	                 //new FileSaver(Copia1).saveAsPng(rutaDNI);
-	                 //Prefs.blackBackground = false;
 	              }
-            
-                
-               if ( dni.toLowerCase().contains("-") )JOptionPane.showMessageDialog(null, "My Goodness, the program is going to crash !! Error: - ");
+	
 	               lista.add(dni);
             }    
             
-
             int apellidoEspacios = 25, nombreEspacios = 23, espacioLetras = 15, alturaLetras = 85;
             
             for (int n = 0; n < personasxPadron; n++){
@@ -151,8 +142,8 @@ public static List<BufferedImage> listaBImage = new ArrayList<BufferedImage>()  
                     ImagePlus Copi41 = IJ.openImage(ruta2);
                     String rutaNombre = workingDir + "/src/Recorte/Resultado/Persona"
                     + String.valueOf(n+1+(8*contPadrones)) + "/Apellido/" + contApellido + ".jpg";
-                    if (n<3)Copi41.setRoi(yApellido + contApellido*espacioLetras, (alturaX + 1) + alturaLetras*n, widthSquare - 2 , heightSquare-3);
-                    else Copi41.setRoi(yApellido + 2 + contApellido*espacioLetras, (alturaX + 5) + alturaLetras*n, widthSquare - 4 , heightSquare-3);
+                    if (n<3)Copi41.setRoi(yApellido + contApellido*espacioLetras, (alturaX + 1) + alturaLetras*n, widthSquare  , heightSquare-3);
+                    else Copi41.setRoi(yApellido + 2 + contApellido*espacioLetras, (alturaX + 5) + alturaLetras*n, widthSquare  , heightSquare-3);
                     IJ.run(Copi41, "Crop", ""); 
                     new FileSaver(Copi41).saveAsPng(rutaNombre);
                     //Prefs.blackBackground = false;
@@ -190,7 +181,6 @@ public static List<BufferedImage> listaBImage = new ArrayList<BufferedImage>()  
              //   huellasUser = IJ.openImage(ruta2);
               //  usuariosFirma.add(firmaUser);     usuariosHuella.add(huellasUser);
             }    
-
             
              distanceBetweenSquares = 86; widthSquare = 150;  heightSquare = 75;        
             //para cada imagen leída de la carpeta de imagenes realizar lo de abajo. 
@@ -209,13 +199,15 @@ public static List<BufferedImage> listaBImage = new ArrayList<BufferedImage>()  
                     //  Copia1.setRoi(yFirmas+39, alturaFirma+2 , widthSquare , heightSquare);
                     // ******COLOOOOOOOOOOOOOOOOOR*****
 
-                    if (n != 7 ) alturaFirma = rf.obtenerSiguienteEspacioFirmas(yFirmas+3, alturaFirma);
+                    if (n != 7 ) alturaFirma = rf.obtenerSiguienteEspacioFirmas(yFirmas+4, alturaFirma);
                     IJ.run(Copia1, "Crop", ""); 
                    // new FileSaver(Copia1).saveAsPng(workingDir + "/src/Recorte/Resultado/Persona"
                    //     + String.valueOf(n+1+(8*contPadrones))  + "/Firma/firma.jpg");
                     Prefs.blackBackground = false;
+
                     FastBitmap fb = new FastBitmap(Copia1.getBufferedImage());
-                    fb.saveAsPNG(workingDir + "/src/Recorte/Resultado/Persona"  + String.valueOf(n+1+(8*contPadrones))  + "/Firma/firma.jpg");
+                    
+                   // fb.saveAsPNG(workingDir + "/src/Recorte/Resultado/Persona"  + String.valueOf(n+1+(8*contPadrones))  + "/Firma/firma.jpg");
                    // Copia1.show();
    
                     // ==listaBImage.add(Copia1.getBufferedImage());
@@ -225,9 +217,9 @@ public static List<BufferedImage> listaBImage = new ArrayList<BufferedImage>()  
                 //huella
                     Copia2 = IJ.openImage(ruta3);
                    // Copia2.setRoi(yHuellas, alturaX+ distanceBetweenSquares*n , widthSquare + 12, heightSquare+4);
-                    Copia2.setRoi(yHuellas+4, alturaFirma2+2 , widthSquare , heightSquare+2);
+                    Copia2.setRoi(yHuellas+2, alturaFirma2+2 , widthSquare , heightSquare+2);
                   //  System.out.println("Valor nuevo " + alturaFirma2);
-                    if (n != 7 ) alturaFirma2 = rf.obtenerSiguienteEspacioFirmas(yFirmas+3, alturaFirma2+2);
+                    if (n != 7 ) alturaFirma2 = rf.obtenerSiguienteEspacioFirmas(yFirmas+5, alturaFirma2+2);
                     IJ.run(Copia2, "Crop", ""); 
                     //new FileSaver(padronJ).saveAsPng("D:/Users/a20101616/git/DP1_partidosPoliticos/src/Recorte/recorteCostado.jpg");
                     new FileSaver(Copia2).saveAsPng(workingDir + "/src/Recorte/Resultado/Persona"
