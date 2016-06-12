@@ -154,7 +154,7 @@ public class PrimeraFase extends JPanel implements ActionListener {
 				u.llenarBDReniec(formatearRutaBD + "/registro.nacional.v.1.xlsx");
 
 				System.out.println("**************************************************");
-				System.out.println("DNI");
+				System.out.println("DNIasdasdsd");
 				System.out.println("**************************************************");
 
 				List<PersonaReniec> pr1 = u.ocrMasReniec();
