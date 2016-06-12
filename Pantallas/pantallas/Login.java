@@ -72,17 +72,21 @@ public class Login {
 					u.setNombre(txtUsuario.getText());
 					u.setPassword(txtPassword.getText());
 					u.setRol(r);
-
-					if (ProcessManager.search(u)) {
-						//Principal window = new Principal();
-						Principal carga = new Principal();
-						frame.setVisible(false);
-						carga.frame.setVisible(true);
-						
-					} else {
-						JOptionPane.showMessageDialog(null, "Usuario incorrecto");	
+					
+					try{
+						if (ProcessManager.search(u)) {
+							//Principal window = new Principal();
+							Principal carga = new Principal();
+							frame.setVisible(false);
+							carga.frame.setVisible(true);
+							
+						} else {
+							JOptionPane.showMessageDialog(null, "Usuario incorrecto");	
+						};
+					}catch(Exception ex){
+						JOptionPane.showMessageDialog(null, "Fallo el proceso");
 					}
-					;
+					
 					// System.out.println( "Ingreso"); else
 					// System.out.println("STOP");
 				}

@@ -48,7 +48,7 @@ public class ProcesoElectoralPanel extends JPanel implements ActionListener {
 	private JDateChooser dateFin;
 	private JTable tblProc;
 	MyTableModel procModel;
-	private int idRow;
+	private int idRow=-1;
 	private JComboBox comboBox;
 	private JButton btnAgregar;
 	private JButton btnModificar;
@@ -276,56 +276,78 @@ public class ProcesoElectoralPanel extends JPanel implements ActionListener {
 				} catch (ParseException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
+				}
+				
+				try{
+					ProcessManager.addProc(p);
+					refreshTblProc();
+				}catch(Exception ex){
+					JOptionPane.showMessageDialog(null, "Fallo al insertar datos");
 				}				
-
-				ProcessManager.addProc(p);
-				refreshTblProc();
 			}						
 		}
 		if (e.getSource() == btnModificar) {
-			res=camposNull();
-			if (!res.equals("")) {
-				JOptionPane.showMessageDialog(null, "Rellene los campos:\n"+res);
-			} else {
-				ProcesoElectoral p = new ProcesoElectoral();
-				p.setNombre(txtFieldNombre.getText());
-				p.setPorcentaje((int) spinner.getValue());
-				TipoProceso tp = listaTProc.get(comboBox.getSelectedIndex());
-				p.setIdTipoProceso(tp.getId());
-				p.setTipoProceso(tp.getDescripcion());
-				
-				p.setId(idRow);
-				
-				SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+			if(idRow==-1)
+				JOptionPane.showMessageDialog(null, "Escoja una fila");
+			else{
+				res=camposNull();
+				if (!res.equals("")) {
+					JOptionPane.showMessageDialog(null, "Rellene los campos:\n"+res);
+				} else {
+					ProcesoElectoral p = new ProcesoElectoral();
+					p.setNombre(txtFieldNombre.getText());
+					p.setPorcentaje((int) spinner.getValue());
+					TipoProceso tp = listaTProc.get(comboBox.getSelectedIndex());
+					p.setIdTipoProceso(tp.getId());
+					p.setTipoProceso(tp.getDescripcion());
+					
+					p.setId(idRow);
+					
+					SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
-				String startDateString = formatter.format(dateIni.getDate());
-				Date d;
-				try {
-					d = new Date(formatter.parse(startDateString).getTime());
-					p.setFechaIni(d);
+					String startDateString = formatter.format(dateIni.getDate());
+					Date d;
+					try {
+						d = new Date(formatter.parse(startDateString).getTime());
+						p.setFechaIni(d);
 
-					startDateString = formatter.format(dateFin.getDate());
-					d = new Date(formatter.parse(startDateString).getTime());
-					p.setFechaFin(d);
+						startDateString = formatter.format(dateFin.getDate());
+						d = new Date(formatter.parse(startDateString).getTime());
+						p.setFechaFin(d);
 
-				} catch (ParseException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+					} catch (ParseException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
+					try{
+						ProcessManager.updateProc(p);
+						refreshTblProc();
+					}catch(Exception ex){
+						JOptionPane.showMessageDialog(null, "Fallo al actualizar los datos");
+					}					
+				}			
 
-				ProcessManager.updateProc(p);
-				refreshTblProc();
-			}			
-			
+			}
+						
 		}
 		if (e.getSource() == btnEliminar) {
-			int result = JOptionPane.showConfirmDialog(null, "¿Está seguro?");
-			if (result == JOptionPane.OK_OPTION) {
-				if(!ProcessManager.deleteProc(idRow))
-					JOptionPane.showMessageDialog(null, "Existen cargas relacionadas a este proceso.\n"
-							+ "No se puede realizar la eliminación");
-				refreshTblProc();
-			}
+			if(idRow==-1)
+				JOptionPane.showMessageDialog(null, "Escoja una fila");
+			else{
+				int result = JOptionPane.showConfirmDialog(null, "¿Está seguro?");
+				if (result == JOptionPane.OK_OPTION) {
+					try{
+						if(!ProcessManager.deleteProc(idRow))
+							JOptionPane.showMessageDialog(null, "Existen cargas relacionadas a este proceso.\n"
+									+ "No se puede realizar la eliminación");
+						refreshTblProc();
+					}catch(Exception ex){
+						JOptionPane.showMessageDialog(null, "Fallo al borrar datos");
+					}
+					
+				}
+			}			
 		}
 		if(e.getSource() == comboBox)
 			if(listaTProc.size()!=0)	spinner.setValue(listaTProc.get(comboBox.getSelectedIndex()).getPorcentaje());
