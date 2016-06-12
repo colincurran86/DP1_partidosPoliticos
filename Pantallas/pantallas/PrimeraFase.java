@@ -131,13 +131,25 @@ public class PrimeraFase extends JPanel implements ActionListener {
 			if (!res.equals("")) {
 				JOptionPane.showMessageDialog(null, "Escoja las rutas de:\n"+res);
 			} else {
+				
+				ProgressMonitorExample  p1 = new ProgressMonitorExample ();
+				p1.setVisible(true);
+				
+				Principal.getFrame().getContentPane().setVisible(false);
+				Principal.getFrame().setContentPane(p1);
+			
+				
+				
 				long startTime = System.currentTimeMillis();
 				System.out.println("Procesando");
 
 				Util u = new Util();
 				Main m = new Main();
+				txtFieldPlan.setText("D:\\Users\\jemarroquin\\git\\DP1_partidosPoliticos\\src\\Recorte\\Padrones");
 				String formatearRutaPlan = u.formatearRuta(txtFieldPlan.getText());
 				m.main(formatearRutaPlan);
+				
+				txtFieldBDRNV.setText("D:\\Users\\jemarroquin\\git\\DP1_partidosPoliticos\\src");
 				String formatearRutaBD = u.formatearRuta(txtFieldBDRNV.getText());
 				u.llenarBDReniec(formatearRutaBD + "/registro.nacional.v.1.xlsx");
 
@@ -148,7 +160,7 @@ public class PrimeraFase extends JPanel implements ActionListener {
 				List<PersonaReniec> pr1 = u.ocrMasReniec();
 
 				System.out.println("**************************************************");
-				System.out.println("FIRMAS");
+				System.out.println("FIRMAS Reconocidas : ");
 				System.out.println("**************************************************");
 
 				// Firmas

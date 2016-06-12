@@ -10,12 +10,14 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import Catalano.Imaging.FastBitmap;
 import OCR.RecogChar;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.Prefs;
+import ij.gui.MessageDialog;
 import ij.io.FileSaver;
 
 public class Main {
@@ -121,7 +123,9 @@ public static List<BufferedImage> listaBImage = new ArrayList<BufferedImage>()  
 	                 //new FileSaver(Copia1).saveAsPng(rutaDNI);
 	                 //Prefs.blackBackground = false;
 	              }
-	
+            
+                
+               if ( dni.toLowerCase().contains("-") )JOptionPane.showMessageDialog(null, "My Goodness, the program is going to crash !! Error: - ");
 	               lista.add(dni);
             }    
             

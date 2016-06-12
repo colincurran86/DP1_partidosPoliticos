@@ -1,18 +1,5 @@
 package pantallas;
 
-/*
-Java Swing, 2nd Edition
-By Marc Loy, Robert Eckstein, Dave Wood, James Elliott, Brian Cole
-ISBN: 0-596-00408-7
-Publisher: O'Reilly 
-*/
-
-// ProgressMonitorExample.java
-// A demonstration of the ProgressMonitor toolbar. A timer is used to induce
-// progress. This example also shows how to use the UIManager properties
-// associated with progress monitors.
-//
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -23,27 +10,31 @@ import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 
-public class Procesando extends JPanel implements ActionListener {
+public class ProgressMonitorExample extends JPanel implements ActionListener {
 
   static ProgressMonitor pbar;
 
-public  static int counter = 0;
+  static int counter = 0;
 
-  public Procesando() {
+  public ProgressMonitorExample() {
    // super("Progress Monitor Demo");
-    setSize(365, 198);
+    setSize(250, 100);
    // setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     pbar = new ProgressMonitor(null, "Monitoring Progress",
         "Initializing . . .", 0, 100);
 
     // Fire a timer every once in a while to update the progress.
-   // Timer timer = new Timer(500, this);
-   // timer.start();
-   // setVisible(true);
+    Timer timer = new Timer(500, this);
+    timer.start();
+    setVisible(true);
   }
 
-
+  public static void main(String args[]) {
+    UIManager.put("ProgressMonitor.progressText", "This is progress?");
+    UIManager.put("OptionPane.cancelButtonText", "Go Away");
+    new ProgressMonitorExample();
+  }
 
   public void actionPerformed(ActionEvent e) {
     // Invoked by the timer every half second. Simply place
@@ -59,8 +50,10 @@ public  static int counter = 0;
       }
       pbar.setProgress(counter);
       pbar.setNote("Operation is " + counter + "% complete");
-     counter += 2;
+      counter += 2;
     }
   }
 }
            
+         
+    
