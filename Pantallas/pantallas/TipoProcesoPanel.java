@@ -150,7 +150,7 @@ public class TipoProcesoPanel extends JPanel {
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Datos de Tipo de Procesos", TitledBorder.LEADING, TitledBorder.TOP,
 				null, null));
-		panel.setBounds(28, 405, 579, 308);
+		panel.setBounds(28, 385, 579, 308);
 		add(panel);
 		panel.setLayout(new GridLayout(1, 1, 0, 0));
 
@@ -177,7 +177,7 @@ public class TipoProcesoPanel extends JPanel {
 		JPanel panelReg = new JPanel();
 		panelReg.setBorder(
 				new TitledBorder(null, "TIPO DE PROCESOS", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panelReg.setBounds(28, 30, 573, 286);
+		panelReg.setBounds(28, 30, 567, 471);
 		add(panelReg);
 		panelReg.setLayout(new GridLayout(1, 1, 0, 0));
 	}

@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.GridLayout;
 
 public class Principal {
 
@@ -46,14 +47,14 @@ public class Principal {
 	private void initialize() {
 		frame = new JFrame();
 		//frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
-		frame.setBounds(100, 100, 650, 800);
+		frame.setBounds(100, 100, 650, 680);
+		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		JLabel lblBienvenido = new JLabel("BIENVENIDO!");
-		lblBienvenido.setFont(new Font("Tahoma", Font.PLAIN, 60));		
-		
-		lblBienvenido.setBounds(44, 250, 370, 196);
+		lblBienvenido.setBounds(124, 218, 386, 156);
+		lblBienvenido.setFont(new Font("Tahoma", Font.PLAIN, 60));
 		frame.getContentPane().add(lblBienvenido);
 		
 		JMenuBar menuBar = new JMenuBar();

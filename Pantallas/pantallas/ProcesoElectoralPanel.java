@@ -127,7 +127,7 @@ public class ProcesoElectoralPanel extends JPanel implements ActionListener {
 		JPanel panel = new JPanel();
 		panel.setBorder(
 				new TitledBorder(null, "Datos de Procesos", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel.setBounds(28, 405, 579, 308);
+		panel.setBounds(28, 385, 579, 308);
 		add(panel);
 		panel.setLayout(new GridLayout(1, 1, 0, 0));
 

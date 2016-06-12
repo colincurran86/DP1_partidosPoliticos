@@ -129,33 +129,27 @@ public class PrimeraFase extends JPanel implements ActionListener {
 			Principal.getFrame().setContentPane(carga);
 		}
 		if (e.getSource() == btnProcesar) {
-			
-			
-			
-			
-			res=camposNull();
-			if (res.equals("")) {// 	if (!res.equals("")) {
-				JOptionPane.showMessageDialog(null, "Escoja las rutas de:\n"+res);
+
+			res = camposNull();
+			if (res.equals("")) {// if (!res.equals("")) {
+				JOptionPane.showMessageDialog(null, "Escoja las rutas de:\n" + res);
 			} else {
-				
-			
-				
 
-			Procesando p1;
-			try {
-				p1 = new Procesando();
-				p1.setVisible(true);
-			    
-				Principal.getFrame().getContentPane().setVisible(false);
-				Principal.getFrame().setContentPane(p1);
+				Procesando p1;
+				try {
+					p1 = new Procesando();
+					p1.setVisible(true);
 
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+					Principal.getFrame().getContentPane().setVisible(false);
+					Principal.getFrame().setContentPane(p1);
+
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 
 			}
-			
+
 		}
 
 		if (e.getSource() == btnBuscarBDRNV) {
@@ -224,7 +218,7 @@ public class PrimeraFase extends JPanel implements ActionListener {
 			}
 		}
 	}
-	
+
 	private String camposNull() {
 		boolean v = false;
 		String resultado = "";
