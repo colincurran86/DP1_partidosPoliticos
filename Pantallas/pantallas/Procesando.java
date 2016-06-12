@@ -6,6 +6,7 @@ import javax.swing.JProgressBar;
 
 import models.PersonaReniec;
 import Recorte.Main;
+import Recorte.MainRecorte;
 import clasesAux.Util;
 
 import java.awt.TextArea;
@@ -118,6 +119,7 @@ public class Procesando extends JPanel {
 
 		aumentarPorcentaje(100);
 	}
+	
 
 	public void aumentarPorcentaje(int count) {
 

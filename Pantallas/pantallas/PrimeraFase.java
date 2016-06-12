@@ -130,31 +130,50 @@ public class PrimeraFase extends JPanel implements ActionListener {
 		}
 		if (e.getSource() == btnProcesar) {
 
-			res = camposNull();
-			if (res.equals("")) {// if (!res.equals("")) {
-				JOptionPane.showMessageDialog(null, "Escoja las rutas de:\n" + res);
-			} else {
 
-				Procesando p1;
-				try {
-					p1 = new Procesando();
-					p1.setVisible(true);
+//			res = camposNull();
+//			if (res.equals("")) {// if (!res.equals("")) {
+//				JOptionPane.showMessageDialog(null, "Escoja las rutas de:\n"
+//						+ res);
+//			} else {
+//
+//				Procesando p1;
+//				p1 = new Procesando();
+//				p1.setVisible(true);
+//
+//		//		Principal.getFrame().getContentPane().setVisible(false);
+//				Principal.getFrame().setContentPane(p1);
+//
+//		
+//				
+//				// p1.llamarNecesario();
+//
+//			}
 
-					Principal.getFrame().getContentPane().setVisible(false);
-					Principal.getFrame().setContentPane(p1);
-
-				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-
+			Procesando p1;
+			try {
+				p1 = new Procesando();
+				p1.setVisible(true);
+				
+				Principal.getFrame().getContentPane().setVisible(false);
+				Principal.getFrame().setContentPane(p1);
+				
+				//p1.llamarRecortes();
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
-
+			
+			
+			
+			
+			
 		}
 
 		if (e.getSource() == btnBuscarBDRNV) {
 			JFileChooser jFileChooser = new JFileChooser();
-			jFileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+			jFileChooser
+					.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 			jFileChooser.setAcceptAllFileFilterUsed(false);
 
 			int result = jFileChooser.showOpenDialog(this);
@@ -168,7 +187,8 @@ public class PrimeraFase extends JPanel implements ActionListener {
 		}
 		if (e.getSource() == btnBuscarPlan) {
 			JFileChooser jFileChooser = new JFileChooser();
-			jFileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+			jFileChooser
+					.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 			jFileChooser.setAcceptAllFileFilterUsed(false);
 
 			int result = jFileChooser.showOpenDialog(this);
@@ -185,7 +205,8 @@ public class PrimeraFase extends JPanel implements ActionListener {
 		}
 		if (e.getSource() == btnBuscarBDHuellas) {
 			JFileChooser jFileChooser = new JFileChooser();
-			jFileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+			jFileChooser
+					.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 			jFileChooser.setAcceptAllFileFilterUsed(false);
 
 			int result = jFileChooser.showOpenDialog(this);
@@ -202,7 +223,8 @@ public class PrimeraFase extends JPanel implements ActionListener {
 		}
 		if (e.getSource() == btnBuscarBDFirmas) {
 			JFileChooser jFileChooser = new JFileChooser();
-			jFileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+			jFileChooser
+					.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 			jFileChooser.setAcceptAllFileFilterUsed(false);
 
 			int result = jFileChooser.showOpenDialog(this);
