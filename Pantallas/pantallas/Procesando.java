@@ -1,66 +1,167 @@
 package pantallas;
 
-/*
-Java Swing, 2nd Edition
-By Marc Loy, Robert Eckstein, Dave Wood, James Elliott, Brian Cole
-ISBN: 0-596-00408-7
-Publisher: O'Reilly 
-*/
-
-// ProgressMonitorExample.java
-// A demonstration of the ProgressMonitor toolbar. A timer is used to induce
-// progress. This example also shows how to use the UIManager properties
-// associated with progress monitors.
-//
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.ProgressMonitor;
-import javax.swing.SwingUtilities;
-import javax.swing.Timer;
-import javax.swing.UIManager;
+import javax.swing.JProgressBar;
 
-public class Procesando extends JPanel implements ActionListener {
+import models.PersonaReniec;
+import Recorte.Main;
+import clasesAux.Util;
 
-  static ProgressMonitor pbar;
+import java.awt.TextArea;
+import java.util.List;
 
-public  static int counter = 0;
+public class Procesando extends JPanel {
 
-  public Procesando() {
-   // super("Progress Monitor Demo");
-    setSize(365, 198);
-   // setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	//static JProgressBar progressBar = new JProgressBar();
+	static public JProgressBar progressBar = new JProgressBar();
+	static public TextArea textArea = new TextArea();
+    
+	static int porcentaje = 0 ;
+	/**
+	 * Create the panel.
+	 * @throws InterruptedException 
+	 */
+	public Procesando() throws InterruptedException {
+		setLayout(null);
+		
+		//JProgressBar progressBar = new JProgressBar();
+		progressBar.setBounds(118, 46, 296, 26);
+		add(progressBar);
+		
+		
+		//  JFrame f = new JFrame("JProgressBar Sample");
+		  //  f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		   // Container content = f.getContentPane();
+		    //JProgressBar progressBar = new JProgressBar();
+		    progressBar.setValue(25);
+		    progressBar.setStringPainted(true);
+		    
+	
+		    textArea.setBounds(83, 100, 380, 160);
+		    add(textArea);
+		   
+		    
+		    
 
-    pbar = new ProgressMonitor(null, "Monitoring Progress",
-        "Initializing . . .", 0, 100);
+	
+			    
+			//    System.out.println("13213");
+	
+				
+			long startTime = System.currentTimeMillis();
+			
+			Thread.sleep(22);
 
-    // Fire a timer every once in a while to update the progress.
-   // Timer timer = new Timer(500, this);
-   // timer.start();
-   // setVisible(true);
-  }
+		    Thread.sleep(4000);
+				
+				
+			
+			//	System.out.println("Procesando");
+
+				Util u = new Util();
+				Main m = new Main();
+				// txtFieldPlan.setText("D:\\Users\\jemarroquin\\git\\DP1_partidosPoliticos\\src\\Recorte\\Padrones");
+				// String formatearRutaPlan = u.formatearRuta(txtFieldPlan.getText());
+				m.main("D:\\Users\\jemarroquin\\git\\DP1_partidosPoliticos\\src\\Recorte\\Padrones");
+				
+			//	txtFieldBDRNV.setText("D:\\Users\\jemarroquin\\git\\DP1_partidosPoliticos\\src");
+			//	String formatearRutaBD = u.formatearRuta(txtFieldBDRNV.getText());
+				u.llenarBDReniec("D:\\Users\\jemarroquin\\git\\DP1_partidosPoliticos\\src" + "/registro.nacional.v.1.xlsx");
+
+				
+				escribirTextArea( "****************************");
+				//System.out.println("**************************************************");
+				//System.out.println("DNIasdasdsd");
+				//System.out.println("**************************************************");
 
 
+				escribirTextArea("DNI");
+				
+				escribirTextArea("******************************************");
+				
+				
+				List<PersonaReniec> pr1 = u.ocrMasReniec();
 
-  public void actionPerformed(ActionEvent e) {
-    // Invoked by the timer every half second. Simply place
-    // the progress monitor update on the event queue.
-    SwingUtilities.invokeLater(new Update());
-  }
+				System.out.println("**************************************************");
+				System.out.println("FIRMAS Reconocidas : ");
+				System.out.println("**************************************************");
 
-  class Update implements Runnable {
-    public void run() {
-      if (pbar.isCanceled()) {
-        pbar.close();
-        System.exit(1);
-      }
-      pbar.setProgress(counter);
-      pbar.setNote("Operation is " + counter + "% complete");
-     counter += 2;
-    }
-  }
+
+		    
+		    
+				// Firmas
+
+				// Main mainRecorte = new Main();
+
+				/*descomentar aquiii2222
+				List<String> idFirmasLst = new ArrayList<String>();
+				List<Integer> idRegistroLst = new ArrayList<Integer>();
+
+				// si no encuentra el dni, no considera la firma :v
+				for (int i = 0; i < pr1.size(); i++) {
+					if (pr1.get(i) != null) {
+						idFirmasLst.add(pr1.get(i).getIdFirma());
+						idRegistroLst.add(i + 1);
+					} else {
+						idFirmasLst.add("-1");
+						idRegistroLst.add(i + 1);
+					}
+				}
+
+				List<Resultado> listaTemporalPersona = null;
+				System.out.println("Inicio firmas:");
+				AlgoritmoFirmas algoritmoFrimas = new AlgoritmoFirmas();
+
+				try {
+					listaTemporalPersona = algoritmoFrimas.verificarFirmas6(idRegistroLst, idFirmasLst, Main.listaBImage,
+							u.formatearRuta2(formatearRutaBD + "/firmas.jpg/"));
+					System.out.println("Porcentaje de Firmas ");
+					for (int i = 0; i < listaTemporalPersona.size(); i++) {
+						System.out.println("% " + listaTemporalPersona.get(i).porcentaje + " IDPersona:  "
+								+ listaTemporalPersona.get(i).idPersona);
+					}
+
+					System.out.println("Fin firmas:");
+					System.out.println("**************************************************");
+
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+*/ // descomentar aquiii222
+				long endTime = System.currentTimeMillis();
+				double totalTime = (endTime - startTime) / 1000.0;
+		//		System.out.println("Finalizado");
+			//	System.out.println("El tiempo total de ejecucion del programa fue " + totalTime + " segundos");
+				
+				escribirTextArea(  "El tiempo total de ejecucion del programa fue " + totalTime + " segundos"   );
+				
+aumentarPorcentaje(100 );
+			}
+			
+		    
+		    
+		    
+		    
+		    
+		
+
+	
+	public void aumentarPorcentaje ( int count ) {
+		
+		porcentaje = count ; 
+	    progressBar.setValue(porcentaje);
+		
+	} 
+	
+	public void escribirTextArea ( String cadena ) {
+		
+		
+		textArea.append(cadena+ "\n");
+		
+		
+	} 
 }
-           
+
+

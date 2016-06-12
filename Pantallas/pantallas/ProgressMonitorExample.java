@@ -14,7 +14,7 @@ public class ProgressMonitorExample extends JPanel implements ActionListener {
 
   static ProgressMonitor pbar;
 
-  static int counter = 0;
+  public static int counter = 0;
 
   public ProgressMonitorExample() {
    // super("Progress Monitor Demo");
@@ -50,7 +50,7 @@ public class ProgressMonitorExample extends JPanel implements ActionListener {
       }
       pbar.setProgress(counter);
       pbar.setNote("Operation is " + counter + "% complete");
-      counter += 2;
+     // counter += 2;
     }
   }
 }

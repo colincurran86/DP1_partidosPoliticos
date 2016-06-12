@@ -3,7 +3,10 @@ package pantallas;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JProgressBar;
+import javax.swing.Timer;
 
+import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -127,86 +130,33 @@ public class PrimeraFase extends JPanel implements ActionListener {
 		}
 		if (e.getSource() == btnProcesar) {
 			
+			
+			
+			
 			res=camposNull();
-			if (!res.equals("")) {
+			if (res.equals("")) {// 	if (!res.equals("")) {
 				JOptionPane.showMessageDialog(null, "Escoja las rutas de:\n"+res);
 			} else {
 				
-				ProgressMonitorExample  p1 = new ProgressMonitorExample ();
-				p1.setVisible(true);
-				
-				Principal.getFrame().getContentPane().setVisible(false);
-				Principal.getFrame().setContentPane(p1);
 			
 				
 				
-				long startTime = System.currentTimeMillis();
-				System.out.println("Procesando");
-
-				Util u = new Util();
-				Main m = new Main();
-				txtFieldPlan.setText("D:\\Users\\jemarroquin\\git\\DP1_partidosPoliticos\\src\\Recorte\\Padrones");
-				String formatearRutaPlan = u.formatearRuta(txtFieldPlan.getText());
-				m.main(formatearRutaPlan);
+			Procesando p1;
+			try {
+				p1 = new Procesando();
+				p1.setVisible(true);
+			    
+				Principal.getFrame().getContentPane().setVisible(false);
+				Principal.getFrame().setContentPane(p1);
 				
-				txtFieldBDRNV.setText("D:\\Users\\jemarroquin\\git\\DP1_partidosPoliticos\\src");
-				String formatearRutaBD = u.formatearRuta(txtFieldBDRNV.getText());
-				u.llenarBDReniec(formatearRutaBD + "/registro.nacional.v.1.xlsx");
-
-				System.out.println("**************************************************");
-				System.out.println("DNIasdasdsd");
-				System.out.println("**************************************************");
-
-				List<PersonaReniec> pr1 = u.ocrMasReniec();
-
-				System.out.println("**************************************************");
-				System.out.println("FIRMAS Reconocidas : ");
-				System.out.println("**************************************************");
-
-				// Firmas
-
-				// Main mainRecorte = new Main();
-
-				/*
-				List<String> idFirmasLst = new ArrayList<String>();
-				List<Integer> idRegistroLst = new ArrayList<Integer>();
-
-				// si no encuentra el dni, no considera la firma :v
-				for (int i = 0; i < pr1.size(); i++) {
-					if (pr1.get(i) != null) {
-						idFirmasLst.add(pr1.get(i).getIdFirma());
-						idRegistroLst.add(i + 1);
-					} else {
-						idFirmasLst.add("-1");
-						idRegistroLst.add(i + 1);
-					}
-				}
-
-				List<Resultado> listaTemporalPersona = null;
-				System.out.println("Inicio firmas:");
-				AlgoritmoFirmas algoritmoFrimas = new AlgoritmoFirmas();
-
-				try {
-					listaTemporalPersona = algoritmoFrimas.verificarFirmas6(idRegistroLst, idFirmasLst, Main.listaBImage,
-							u.formatearRuta2(formatearRutaBD + "/firmas.jpg/"));
-					System.out.println("Porcentaje de Firmas ");
-					for (int i = 0; i < listaTemporalPersona.size(); i++) {
-						System.out.println("% " + listaTemporalPersona.get(i).porcentaje + " IDPersona:  "
-								+ listaTemporalPersona.get(i).idPersona);
-					}
-
-					System.out.println("Fin firmas:");
-					System.out.println("**************************************************");
-
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-*/
-				long endTime = System.currentTimeMillis();
-				double totalTime = (endTime - startTime) / 1000.0;
-				System.out.println("Finalizado");
-				System.out.println("El tiempo total de ejecucion del programa fue " + totalTime + " segundos");
+				
+				
+				
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		
 			}
 			
 		}
