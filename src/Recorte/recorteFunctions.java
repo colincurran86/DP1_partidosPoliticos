@@ -75,7 +75,6 @@ public class recorteFunctions {
         //Verificamos abajo
 
         
-        
                 
     */
     }
@@ -153,7 +152,6 @@ public class recorteFunctions {
         //////////////
         width=padronJ.getWidth();
         height=padronJ.getHeight();
-        System.out.println("widtth derechona" + width);
         for(i=0;i<height;i++){
              r = padronJ.getPixel(pixels, i)[0];
             //System.out.println(r + " "+ g + " " + b);
@@ -161,9 +159,7 @@ public class recorteFunctions {
                 //System.out.println(r + " "+ g + " " + b);
                 break;        
         }
-        
-        System.out.println("	 " + i);
-        
+                
         i++; 	
         int j;
         for(j=width;j>0;j--){
@@ -186,7 +182,6 @@ public class recorteFunctions {
         this.padronJ = padronJ;
     //    padronJ.show();
        
-        padronJ.show();
             
    
     }
@@ -261,8 +256,6 @@ public class recorteFunctions {
         
         return siguientePunto;
         
-        
-    
     }
 
     public void coordenadasHuella(ImagePlus padronJ){
@@ -272,11 +265,12 @@ public class recorteFunctions {
        // this.padronJ.show();
         int m, i, r , g , b , cont = 0 , alturaX = 0, anchoY = 0;
         for(i=0;i<1000;i++){
-             r = padronJ.getPixel(width1-7, i)[0];
+             //r = padronJ.getPixel(width1-7, i)[0];
+        	r = padronJ.getPixel(width1-13, i)[0];
              if (r != 0){
                 cont++;
                 if (cont == 2) {
-                    for (m = width1-7; m > 0; m--){
+                    for (m = width1-13; m > 0; m--){
                          r = padronJ.getPixel(m, i-1)[0];
                          if (r != 0){
                              // esquina izquierda superior del cuadrado de las huellas
