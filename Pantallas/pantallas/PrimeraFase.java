@@ -145,11 +145,11 @@ public class PrimeraFase extends JPanel implements ActionListener {
 
 				Util u = new Util();
 				Main m = new Main();
-				txtFieldPlan.setText("D:\\Users\\jemarroquin\\git\\DP1_partidosPoliticos\\src\\Recorte\\Padrones");
+				//txtFieldPlan.setText("D:\\Users\\jemarroquin\\git\\DP1_partidosPoliticos\\src\\Recorte\\Padrones");
 				String formatearRutaPlan = u.formatearRuta(txtFieldPlan.getText());
 				m.main(formatearRutaPlan);
 				
-				txtFieldBDRNV.setText("D:\\Users\\jemarroquin\\git\\DP1_partidosPoliticos\\src");
+			//	txtFieldBDRNV.setText("D:\\Users\\jemarroquin\\git\\DP1_partidosPoliticos\\src");
 				String formatearRutaBD = u.formatearRuta(txtFieldBDRNV.getText());
 				u.llenarBDReniec(formatearRutaBD + "/registro.nacional.v.1.xlsx");
 
