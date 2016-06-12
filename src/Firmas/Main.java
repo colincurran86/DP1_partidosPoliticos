@@ -243,7 +243,7 @@ public class Main {
         g2 = frd2.ProcessImage(fb3);
 
         
-     //SampleApplication.FastBitmap fb4 = new SampleApplication.FastBitmap("/home/wirox91/Escritorio/B- pc/Backup/Imagenes/2otsu.png");
+    //SampleApplication.FastBitmap fb4 = new SampleApplication.FastBitmap("/home/wirox91/Escritorio/B- pc/Backup/Imagenes/2otsu.png");
     //SampleApplication.FastBitmap fb4 = new SampleApplication.FastBitmap("C:\\Users\\LUIS S\\Desktop\\Firmas Java\\Imagenes\\2otsu.png"); 
     //SampleApplication.FastBitmap fb4 = new SampleApplication.FastBitmap("C:\\Users\\LUIS S\\Desktop\\Firmas Java\\Imagenes\\4.png");  
     //SampleApplication.FastBitmap fb4 = new SampleApplication.FastBitmap("C:\\Users\\LUIS S\\Desktop\\Firmas Java\\Imagenes\\5.jpg");
