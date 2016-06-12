@@ -185,6 +185,7 @@ public static List<BufferedImage> listaBImage = new ArrayList<BufferedImage>()  
              //   huellasUser = IJ.openImage(ruta2);
               //  usuariosFirma.add(firmaUser);     usuariosHuella.add(huellasUser);
             }    
+
             
              distanceBetweenSquares = 86; widthSquare = 150;  heightSquare = 75;        
             //para cada imagen leída de la carpeta de imagenes realizar lo de abajo. 
@@ -209,7 +210,7 @@ public static List<BufferedImage> listaBImage = new ArrayList<BufferedImage>()  
                    //     + String.valueOf(n+1+(8*contPadrones))  + "/Firma/firma.jpg");
                     Prefs.blackBackground = false;
                     FastBitmap fb = new FastBitmap(Copia1.getBufferedImage());
-                   // fb.saveAsPNG(workingDir + "/src/Recorte/Resultado/Persona"  + String.valueOf(n+1+(8*contPadrones))  + "/Firma/firma.jpg");
+                    fb.saveAsPNG(workingDir + "/src/Recorte/Resultado/Persona"  + String.valueOf(n+1+(8*contPadrones))  + "/Firma/firma.jpg");
                    // Copia1.show();
    
                     // ==listaBImage.add(Copia1.getBufferedImage());
@@ -219,7 +220,7 @@ public static List<BufferedImage> listaBImage = new ArrayList<BufferedImage>()  
                 //huella
                     Copia2 = IJ.openImage(ruta3);
                    // Copia2.setRoi(yHuellas, alturaX+ distanceBetweenSquares*n , widthSquare + 12, heightSquare+4);
-                    Copia2.setRoi(yHuellas+2, alturaFirma2+2 , widthSquare , heightSquare+2);
+                    Copia2.setRoi(yHuellas+4, alturaFirma2+2 , widthSquare , heightSquare+2);
                   //  System.out.println("Valor nuevo " + alturaFirma2);
                     if (n != 7 ) alturaFirma2 = rf.obtenerSiguienteEspacioFirmas(yFirmas+3, alturaFirma2+2);
                     IJ.run(Copia2, "Crop", ""); 
@@ -230,9 +231,13 @@ public static List<BufferedImage> listaBImage = new ArrayList<BufferedImage>()  
                     //Copia2.show();        
                    
             }    
+            	
+
 
             System.out.println("Padron numero " + (contPadrones+1) + " Procesado");
-            
+            System.out.println("yDNI " + (contPadrones+1) + " " +  yDNI);  
+            System.out.println("alturaX " + (contPadrones+1) + " " +	 alturaX);  
+
             
         }
             
