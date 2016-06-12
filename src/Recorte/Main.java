@@ -67,7 +67,14 @@ public static List<BufferedImage> listaBImage = new ArrayList<BufferedImage>()  
             rf.coordenadasFirma(padronJ);  yFirmas = rf.getYFirmas();
             rf.coordenadaDNIyNombre(padronJ);
             yDNI = rf.getYDNI(); yApellido = rf.getYApellido(); yNombre = rf.getYNombre();
-
+            
+            /*
+            System.out.println(yDNI);
+            System.out.println(yApellido);
+            System.out.println(yNombre);
+            System.out.println(yFirmas);
+            System.out.println(yHuellas);
+			*/
           // System.out.println("AlturaX " + alturaX);             
           //  System.out.println("yFirma " + yFirmas);
             
@@ -75,9 +82,10 @@ public static List<BufferedImage> listaBImage = new ArrayList<BufferedImage>()  
             //cropeamos los digitos del DNI    
             List <String> dniLista  = new ArrayList <String>() ;
             int numero, valorOriginal = yDNI,   valorOriginalFirma = yFirmas;
+            int distanceBetweenSquaresH = 87 ,distanceBetweenSquares = 14, widthSquare = 14, heightSquare = 84;
+
             for (int n  = 0; n < 8; n++){    
                 
-                int distanceBetweenSquaresH = 87 ,distanceBetweenSquares = 14, widthSquare = 14, heightSquare = 84;
                 ImagePlus Copia1;
                 String rutaAlmacenar = workingDir + "/src/Recorte/Resultado/Persona"
                         + String.valueOf(n+1+(8*contPadrones))  + "/DNI/";
@@ -116,8 +124,8 @@ public static List<BufferedImage> listaBImage = new ArrayList<BufferedImage>()  
 	
 	               lista.add(dni);
             }    
-            /*  
             
+
             int apellidoEspacios = 25, nombreEspacios = 23, espacioLetras = 15, alturaLetras = 85;
             
             for (int n = 0; n < personasxPadron; n++){
@@ -155,7 +163,7 @@ public static List<BufferedImage> listaBImage = new ArrayList<BufferedImage>()  
                 }
             }
 
-             */
+      
             //Cropeamos las firmas y las huellas para cada persona
         //    List<ImagePlus>usuariosFirma = new ArrayList<ImagePlus>();
         //   List<ImagePlus>usuariosHuella = new ArrayList<ImagePlus>();
@@ -174,7 +182,7 @@ public static List<BufferedImage> listaBImage = new ArrayList<BufferedImage>()  
               //  usuariosFirma.add(firmaUser);     usuariosHuella.add(huellasUser);
             }    
             
-            int distanceBetweenSquares = 86; int widthSquare = 150; int heightSquare = 75;        
+             distanceBetweenSquares = 86; widthSquare = 150;  heightSquare = 75;        
             //para cada imagen leída de la carpeta de imagenes realizar lo de abajo. 
 
             int alturaFirma =  alturaX + 4;
@@ -218,8 +226,6 @@ public static List<BufferedImage> listaBImage = new ArrayList<BufferedImage>()  
                     //Copia2.show();        
                    
             }    
-            
-
 
             System.out.println("Padron numero " + (contPadrones+1) + " Procesado");
             

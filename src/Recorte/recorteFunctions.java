@@ -125,6 +125,8 @@ public class recorteFunctions {
 
         padronJ.setRoi(i,0,width-i-1,height-1);
         IJ.run(padronJ, "Crop", "");
+        
+        
         //////////////
         //ELIMINA LA PARTE DE ABAJO
         //////////////
@@ -133,9 +135,7 @@ public class recorteFunctions {
         
         int pixels=10;
         for(i=height;i>0;i--){
-             r = padronJ.getPixel(pixels, i)[0];
-             g = padronJ.getPixel(pixels, i)[1];
-             b = padronJ.getPixel(pixels, i)[2];
+             r = padronJ.getPixel(width/2, i)[0];
             //System.out.println(r + " "+ g + " " + b);
             if(r!=0)//r=255 , g=0 , b=0 
                 //System.out.println(r + " "+ g + " " + b);
@@ -145,6 +145,7 @@ public class recorteFunctions {
         padronJ.setRoi(0,0,width-1,i-1);
         IJ.run(padronJ, "Crop", "");
 
+
         
         
         //////////////
@@ -152,22 +153,21 @@ public class recorteFunctions {
         //////////////
         width=padronJ.getWidth();
         height=padronJ.getHeight();
-        
+        System.out.println("widtth derechona" + width);
         for(i=0;i<height;i++){
              r = padronJ.getPixel(pixels, i)[0];
-             g = padronJ.getPixel(pixels, i)[1];
-             b = padronJ.getPixel(pixels, i)[2];
             //System.out.println(r + " "+ g + " " + b);
             if(r!=0)//r=255 , g=0 , b=0 
                 //System.out.println(r + " "+ g + " " + b);
                 break;        
         }
-        i++;
+        
+        System.out.println("	 " + i);
+        
+        i++; 	
         int j;
         for(j=width;j>0;j--){
-             r = padronJ.getPixel(j, i)[0];
-             g = padronJ.getPixel(j, i)[1];
-             b = padronJ.getPixel(j, i)[2];
+             r = padronJ.getPixel(j, height/2)[0];
             //System.out.println(r + " "+ g + " " + b);
             if(r!=0)//r=255 , g=0 , b=0 
                 //System.out.println(r + " "+ g + " " + b);
@@ -176,6 +176,7 @@ public class recorteFunctions {
         
         padronJ.setRoi(0,0,j,height);
         IJ.run(padronJ, "Crop", "");
+        
         //padronJ.show();
         new FileSaver(padronJ).saveAsPng(ruta3);
         IJ.run(padronJ, "Skeletonize", "");
@@ -184,10 +185,13 @@ public class recorteFunctions {
     //    Prefs.blackBackground = false;
         this.padronJ = padronJ;
     //    padronJ.show();
-        
-	
+       
+        padronJ.show();
+            
+   
     }
     
+
 
 
     public void alinearPadron(){
