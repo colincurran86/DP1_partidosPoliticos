@@ -56,11 +56,11 @@ public class Procesando extends JPanel {
 		Main m = new Main();
 		// txtFieldPlan.setText("D:\\Users\\jemarroquin\\git\\DP1_partidosPoliticos\\src\\Recorte\\Padrones");
 		// String formatearRutaPlan = u.formatearRuta(txtFieldPlan.getText());
-		m.main("D:\\Users\\jemarroquin\\git\\DP1_partidosPoliticos\\src\\Recorte\\Padrones");
+		m.main("C:\\Users\\Administrador\\Desktop\\Christian\\9no\\DP1\\aaa");
 
 		// txtFieldBDRNV.setText("D:\\Users\\jemarroquin\\git\\DP1_partidosPoliticos\\src");
 		// String formatearRutaBD = u.formatearRuta(txtFieldBDRNV.getText());
-		u.llenarBDReniec("D:\\Users\\jemarroquin\\git\\DP1_partidosPoliticos\\src" + "/registro.nacional.v.1.xlsx");
+		u.llenarBDReniec("C:\\Users\\Administrador\\Desktop\\Christian\\9no\\DP1\\aaa" + "/registro.nacional.v.1.xlsx");
 
 		escribirTextArea("****************************");
 		// System.out.println("**************************************************");

@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.JLabel;
@@ -89,10 +90,16 @@ public class Principal {
 		JMenuItem mntmTipoDeProceso = new JMenuItem("Tipo de Proceso");
 		mntmTipoDeProceso.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TipoProcesoPanel tipoProcP =new TipoProcesoPanel();
-				tipoProcP.setVisible(true);
-				frame.getContentPane().setVisible(false);
-				frame.setContentPane(tipoProcP);
+				try{
+					TipoProcesoPanel tipoProcP =new TipoProcesoPanel();
+					tipoProcP.setVisible(true);
+					frame.getContentPane().setVisible(false);
+					frame.setContentPane(tipoProcP);
+				}catch(Exception ex){
+					JOptionPane.showMessageDialog(null, "Hubo un error al realizar esta operacion");
+				}
+				
+				
 			}
 		});
 		mnMantenimientos.add(mntmTipoDeProceso);
@@ -100,10 +107,15 @@ public class Principal {
 		JMenuItem mntmProcesoElectoral = new JMenuItem("Proceso Electoral");
 		mntmProcesoElectoral.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ProcesoElectoralPanel procElectoralP =new ProcesoElectoralPanel();
-				procElectoralP.setVisible(true);
-				frame.getContentPane().setVisible(false);
-				frame.setContentPane(procElectoralP);
+				try{
+					ProcesoElectoralPanel procElectoralP =new ProcesoElectoralPanel();
+					procElectoralP.setVisible(true);
+					frame.getContentPane().setVisible(false);
+					frame.setContentPane(procElectoralP);
+				}catch(Exception ex){
+					JOptionPane.showMessageDialog(null, "Hubo un error al realizar esta operacion");
+				}				
+				
 			}
 		});
 		mnMantenimientos.add(mntmProcesoElectoral);
@@ -111,10 +123,15 @@ public class Principal {
 		JMenuItem mntmPartidoPoltico = new JMenuItem("Partido Pol\u00EDtico");
 		mntmPartidoPoltico.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				PartidoPoliticoPanel partPoliticoP =new PartidoPoliticoPanel();
-				partPoliticoP.setVisible(true);
-				frame.getContentPane().setVisible(false);
-				frame.setContentPane(partPoliticoP);
+				try{
+					PartidoPoliticoPanel partPoliticoP =new PartidoPoliticoPanel();
+					partPoliticoP.setVisible(true);
+					frame.getContentPane().setVisible(false);
+					frame.setContentPane(partPoliticoP);
+				}catch(Exception ex){
+					JOptionPane.showMessageDialog(null, "Hubo un error al realizar esta operacion");
+				}
+				
 			}
 		});
 		mnMantenimientos.add(mntmPartidoPoltico);
