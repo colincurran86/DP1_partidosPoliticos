@@ -51,7 +51,7 @@ public class PartidoPoliticoPanel extends JPanel implements ActionListener {
 		add(lblNombre);
 
 		JLabel lblNombreRep = new JLabel("Nombre de representante");
-		lblNombreRep.setBounds(62, 120, 143, 14);
+		lblNombreRep.setBounds(62, 120, 205, 14);
 		add(lblNombreRep);
 
 		txtFieldNombre = new JTextField();
@@ -76,7 +76,7 @@ public class PartidoPoliticoPanel extends JPanel implements ActionListener {
 		add(btnModificar);
 
 		JLabel lblTelefono = new JLabel("Telefono Representante");
-		lblTelefono.setBounds(62, 182, 129, 14);
+		lblTelefono.setBounds(62, 182, 194, 14);
 		add(lblTelefono);
 
 		/*

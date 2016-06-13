@@ -52,6 +52,7 @@ public class Carga extends JPanel implements ActionListener{
 		} catch (IOException ex) {
 		}*/
 		Icon i = new ImageIcon("lib/conf.png");
+		
 		btnConf.setIcon(i);
 		
 
@@ -75,7 +76,7 @@ public class Carga extends JPanel implements ActionListener{
 				c.setVisible(true);
 				
 			}catch(Exception ex){
-				JOptionPane.showMessageDialog(null, "Hubo un error al abrir la ventana de configuracion");
+				JOptionPane.showMessageDialog(null, "Hubo un error al abrir la ventana de configuracion	");
 			}
 			
 

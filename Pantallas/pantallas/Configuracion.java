@@ -9,6 +9,8 @@ import java.util.List;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ButtonModel;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -60,12 +62,16 @@ public class Configuracion extends JDialog implements ActionListener{
 	 * Create the dialog.
 	 */
 	public Configuracion() {
+		this.setTitle("Configuracion");
 		setModal(true);
 		setBounds(100, 100, 599, 407);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
+		
+		ImageIcon img = new ImageIcon("lib/conf.png");
+		this.setIconImage(img.getImage());
 		
 		JLabel lblProcesoElectoral = new JLabel("Proceso Electoral");
 		lblProcesoElectoral.setBounds(51, 65, 167, 14);

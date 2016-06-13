@@ -1,7 +1,9 @@
 package pantallas;
 
+import java.awt.Dimension;
 import java.awt.EventQueue;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -14,6 +16,7 @@ import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 
 public class Principal {
 
@@ -47,11 +50,16 @@ public class Principal {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		//frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		//frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		frame.setBounds(100, 100, 650, 680);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setTitle("Sistema de verificación de planillones");
 		frame.getContentPane().setLayout(null);
+		
+		ImageIcon img = new ImageIcon("lib/system.png");
+		frame.setIconImage(img.getImage());
 		
 		JLabel lblBienvenido = new JLabel("BIENVENIDO!");
 		lblBienvenido.setBounds(124, 218, 386, 156);

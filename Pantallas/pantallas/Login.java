@@ -1,12 +1,16 @@
 package pantallas;
 
 import java.awt.EventQueue;
+import java.awt.GridLayout;
 
 import javax.swing.JFrame;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 
 import models.Rol;
@@ -56,8 +60,12 @@ public class Login {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 381, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setTitle("Log In");
 		frame.getContentPane().setLayout(null);
 
+		ImageIcon img = new ImageIcon("lib/login.png");
+		frame.setIconImage(img.getImage());
+		
 		JButton btnIngresar = new JButton("Ingresar");
 		btnIngresar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -92,11 +100,11 @@ public class Login {
 				}
 			}
 		});
-		btnIngresar.setBounds(65, 166, 89, 23);
+		btnIngresar.setBounds(67, 178, 89, 23);
 		frame.getContentPane().add(btnIngresar);
 
 		txtUsuario = new JTextField();
-		txtUsuario.setBounds(113, 61, 172, 20);
+		txtUsuario.setBounds(113, 61, 184, 20);
 		frame.getContentPane().add(txtUsuario);
 		txtUsuario.setColumns(10);
 		txtUsuario.setDocument(new JTextFieldLimit(90));
@@ -107,11 +115,11 @@ public class Login {
 				System.exit(0);
 			}
 		});
-		btnSalir.setBounds(189, 166, 89, 23);
+		btnSalir.setBounds(196, 178, 89, 23);
 		frame.getContentPane().add(btnSalir);
 
 		txtPassword = new JPasswordField();
-		txtPassword.setBounds(113, 92, 172, 20);
+		txtPassword.setBounds(113, 92, 184, 20);
 		frame.getContentPane().add(txtPassword);
 		txtPassword.setColumns(10);
 		txtPassword.setEchoChar('*');
@@ -126,8 +134,16 @@ public class Login {
 		frame.getContentPane().add(lblContrasea);
 
 		JCheckBox chckbx = new JCheckBox("Mostrar contrase\u00F1a");
-		chckbx.setBounds(113, 119, 172, 23);
+		chckbx.setBounds(154, 136, 172, 23);
 		frame.getContentPane().add(chckbx);
+		
+		JPanel panelReg = new JPanel();
+		panelReg.setBorder(
+				new TitledBorder(null, "Sistema de verificacion de planillones", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panelReg.setBounds(21, 30, 318, 103);
+		frame.getContentPane().add(panelReg);
+		panelReg.setLayout(new GridLayout(1, 1, 0, 0));
+
 
 		chckbx.addItemListener(new ItemListener() {
 			@Override
