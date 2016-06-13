@@ -70,15 +70,11 @@ public class Carga extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnConf) {
-			try{
-				Configuracion c= new Configuracion();
-				c.setVisible(true);
-				
-			}catch(Exception ex){
-				JOptionPane.showMessageDialog(null, "Hubo un error al abrir la ventana de configuracion");
-			}
+			Configuracion c= new Configuracion();
+			c.setVisible(true);
 			
-
+			
+			
 		}
 		if(e.getSource()==btnPrimCarga){
 			if(porc==-1)
