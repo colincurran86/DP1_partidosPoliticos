@@ -5,9 +5,13 @@
  */
 package Firmas;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.List;
+
+
 
 /**
  *
@@ -26,13 +30,23 @@ public class NewMain {
         //System.out.println("Inicio");
         //indicePersonaFallaron= af.procesar(false, true, false, false, false, 55);
         if(indicePersonaFallaron!=null)
+        	
+        	
         for (int i = 0; i < indicePersonaFallaron.length; i++) {
             System.out.println("Persona fallo firma con id: "+(indicePersonaFallaron[i]+1));
         }       
        //
         
-      //af.procesar2();
-        
+        //indicePersonaFallaron= af.procesarr10(false, true, false, false, false, 55);
+   
+       // af.procesar2();
+       ArrayList<FirmaRecortada>lbi = new ArrayList<FirmaRecortada>();
+       
+       
+       lbi = af.verificarFirmas10(); 
+       af.procesar3(lbi);
+
+      // af.verificarFirmas9();
         
         
         //Posibles candidatos
@@ -65,7 +79,8 @@ public class NewMain {
  
         for (int i = 0; i < listaTemporalPersona.size(); i++) {	
         	for (int k = 0; k < listaTemporalPersona.get(i).size(); k++) {
-				System.out.println(listaTemporalPersona.get(i).get(k).indFirmaMatch+" "+listaTemporalPersona.get(i).get(k).porcentaje);
+				System.out.printl
+				n(listaTemporalPersona.get(i).get(k).indFirmaMatch+" "+listaTemporalPersona.get(i).get(k).porcentaje);
 			}
 		}    	
         
@@ -81,8 +96,15 @@ public class NewMain {
         	System.out.println(listaTemporalPersona.get(i).indFirmaMatch+" "+listaTemporalPersona.get(i).porcentaje+" "+listaTemporalPersona.get(i).idPersona);
 		//	}
 		}  
-     */   
+     */ 
+        
+        
+        
+        
+      // af.verificarFirmas8();
         
     }
+
+//	 public float scale = 22.0f;
     
 }

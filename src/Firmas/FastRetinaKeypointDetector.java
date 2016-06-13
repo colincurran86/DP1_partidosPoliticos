@@ -51,7 +51,7 @@ public class FastRetinaKeypointDetector {
     }
     
     private FastRetinaKeypointDescriptorType featureType = FastRetinaKeypointDescriptorType.Standard;
-    private float scale = 22.0f; //22.0f
+    public float scale; //22.0f
     private int octaves = 4;
 
     private IntegralImage integral;
