@@ -91,9 +91,9 @@ public static List<BufferedImage> listaBImage = new ArrayList<BufferedImage>()  
 
             for (int n  = 0; n < 8; n++){    
                 
-            	ProgressMonitorExample p1 = new ProgressMonitorExample() ;
+            	//ProgressMonitorExample p1 = new ProgressMonitorExample() ;
             	
-            	p1.counter += 23 ; 
+            	//p1.counter += 23 ; 
             	
                 ImagePlus Copia1;
                 String rutaAlmacenar = workingDir + "/src/Recorte/Resultado/Persona"

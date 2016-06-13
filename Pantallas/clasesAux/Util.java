@@ -17,6 +17,8 @@ import models.PersonaReniec;
 import models.ReniecBD;
 
 public class Util {
+	
+	public static String mensajeFinal = new String();
 
 	public String formatearRuta(String ruta) {
 		String nuevaRuta = "";
@@ -28,6 +30,95 @@ public class Util {
 		return nuevaRuta;
 	}
 
+	
+	public void gerardoRecortesWarning() {
+		
+
+		long startTime = System.currentTimeMillis();
+
+		Util u = new Util();
+		Main m = new Main();
+		// txtFieldPlan.setText("D:\\Users\\jemarroquin\\git\\DP1_partidosPoliticos\\src\\Recorte\\Padrones");
+		// String formatearRutaPlan = u.formatearRuta(txtFieldPlan.getText());
+		m.main("C:\\Users\\lenovo\\git\\DP1_partidosPoliticos\\src\\Recorte\\Padrones");
+
+		// txtFieldBDRNV.setText("D:\\Users\\jemarroquin\\git\\DP1_partidosPoliticos\\src");
+		// String formatearRutaBD = u.formatearRuta(txtFieldBDRNV.getText());
+llenarBDReniec("C:\\Users\\lenovo\\git\\DP1_partidosPoliticos\\src" + "/registro.nacional.v.1.xlsx");
+		
+		//escribirTextArea("****************************");
+		// System.out.println("**************************************************");
+		// System.out.println("DNIasdasdsd");
+		// System.out.println("**************************************************");
+
+		//escribirTextArea("DNI");
+
+	//	escribirTextArea("******************************************");
+
+		//List<PersonaReniec> pr1 = u.ocrMasReniec();
+		List<List<PersonaReniec>> pr1 = u.ocrMasReniec();
+		String cadenaFinal = new String();
+		for (int i = 0; i < pr1.size(); i++){
+			cadenaFinal = "DNI Reconocido es el siguiente: "; 
+			for (int j = 0 ; j < pr1.get(i).size(); j++ )
+				cadenaFinal = cadenaFinal + pr1.get(i).get(0).getDni() + "  ";
+			cadenaFinal = cadenaFinal + "\n";	
+			
+		}
+		this.mensajeFinal = cadenaFinal;
+
+		System.out.println("**************************************************");
+		System.out.println("FIRMAS Reconocidas : ");
+		System.out.println("**************************************************");
+
+		// Firmas
+
+		// Main mainRecorte = new Main();
+
+		/*
+		 * descomentar aquiii2222 List<String> idFirmasLst = new
+		 * ArrayList<String>(); List<Integer> idRegistroLst = new
+		 * ArrayList<Integer>();
+		 * 
+		 * // si no encuentra el dni, no considera la firma :v for (int i = 0; i
+		 * < pr1.size(); i++) { if (pr1.get(i) != null) {
+		 * idFirmasLst.add(pr1.get(i).getIdFirma()); idRegistroLst.add(i + 1); }
+		 * else { idFirmasLst.add("-1"); idRegistroLst.add(i + 1); } }
+		 * 
+		 * List<Resultado> listaTemporalPersona = null; System.out.println(
+		 * "Inicio firmas:"); AlgoritmoFirmas algoritmoFrimas = new
+		 * AlgoritmoFirmas();
+		 * 
+		 * try { listaTemporalPersona =
+		 * algoritmoFrimas.verificarFirmas6(idRegistroLst, idFirmasLst,
+		 * Main.listaBImage, u.formatearRuta2(formatearRutaBD +
+		 * "/firmas.jpg/")); System.out.println("Porcentaje de Firmas "); for
+		 * (int i = 0; i < listaTemporalPersona.size(); i++) {
+		 * System.out.println("% " + listaTemporalPersona.get(i).porcentaje +
+		 * " IDPersona:  " + listaTemporalPersona.get(i).idPersona); }
+		 * 
+		 * System.out.println("Fin firmas:"); System.out.println(
+		 * "**************************************************");
+		 * 
+		 * } catch (IOException e1) { // TODO Auto-generated catch block
+		 * e1.printStackTrace(); }
+		 */ // descomentar aquiii222
+		
+		 long endTime = System.currentTimeMillis();
+		 double totalTime = (endTime - startTime) / 1000.0;
+		 String almacenarMensaje = new String();
+		 almacenarMensaje = "Finalizado \n" + "El tiempo total de ejecucion del programa fue " + totalTime + " segundos \n" ;
+		 this.mensajeFinal = this.mensajeFinal + almacenarMensaje;
+		 
+		 //System.out.println("Finalizado");
+		 //System.out.println("El tiempo total de ejecucion del programa fue " +
+		 //totalTime + " segundos");
+
+		 //System.out.println("El tiempo total de ejecucion del programa fue " + totalTime + " segundos");
+
+	//	aumentarPorcentaje(100);
+		
+	}
 	public String formatearRuta2(String ruta) {
 		String nuevaRuta = "";
 		for (int i = 0; i < ruta.length(); i++)
@@ -93,27 +184,42 @@ public class Util {
 		}
 	}
 
-	public List<PersonaReniec> ocrMasReniec() {
-		List<PersonaReniec> pr = new ArrayList<PersonaReniec>();
+	public List<List<PersonaReniec>> ocrMasReniec() {
+		//List<PersonaReniec> pr = new ArrayList<PersonaReniec>();
+		List<List<PersonaReniec>> candidatos = new ArrayList<List<PersonaReniec>>();
+		for (int i =0 ; i<Main.lista.size(); i++){
+			List <PersonaReniec> xd = new ArrayList<PersonaReniec>();
+			candidatos.add(xd)			;
+		}
 		boolean entro = false;
+		
+		List<PersonaReniec> a= new ArrayList<PersonaReniec>();
 
 		for (int i = 0; i < Main.lista.size(); i++) {
 			String dni = Main.lista.get(i);
 			entro = false;
-			System.out.println("DNI RECONOCIDO DE LAS IMAGENES: " + dni);
+			//System.out.println("DNI RECONOCIDO DE LAS IMAGENES: " + dni);
+			//mensajeFinal = mensajeFinal + "DNI RECONOCIDO DE LAS IMAGENES: " + dni + "\n";
 			for (int j = 0; j < ReniecBD.lista.size(); j++)
-				if (dni != null || dni.length() == 0) {
+				if (dni != null || dni.length() != 0) {
 					if (ReniecBD.lista.get(j).getDni() == Integer.parseInt(dni)) {
 						entro = true;
-						pr.add(ReniecBD.lista.get(j));
+						a=sacaListaCandidatos(Integer.parseInt(dni));
+						a.add(ReniecBD.lista.get(j));
 					}
 				}
-			if (!entro)
-				pr.add(null);
+			if (!entro) a=sacaListaCandidatos(Integer.parseInt(dni));
+			candidatos.add(a);
 		}
-		return pr;
+		
+		return candidatos;
 	}
+	
 
+	
+
+
+	
 	public List<PersonaReniec> sacaListaCandidatos(int dni){
 		List<PersonaReniec> candidatos=new ArrayList<PersonaReniec>();		
 		String dniCad="" + dni;
@@ -137,7 +243,7 @@ public class Util {
 					for(int m=posCad1;m<i;m++)
 						cad1+=dniCad.charAt(m);	
 				
-				if(i==6) cad2="";
+				if(i==6 || ( j-1== 1)) cad2="";
 				else
 					for(int m=posCad2;m<j;m++)
 						cad2+=dniCad.charAt(m);
@@ -158,8 +264,12 @@ public class Util {
 							if(dniCad.charAt(m)!=reniecDni.charAt(m))break;
 					
 					if(cad3!="")
-						for(int m=posCad3;m<cad3.length()+posCad3;m++)
+						for(int m=posCad3;m<cad3.length()+posCad3;m++){
+							System.out.println("valor de m " + m);
+							System.out.println("valor dniCad " + dniCad);
+							System.out.println("valor reniecDNI " + reniecDni);
 							if(dniCad.charAt(m)!=reniecDni.charAt(m))break;
+						}
 					//si no llego a ningun break, anhade
 					for(int m=0;m<candidatos.size();m++)//para que no se repita 
 						if(candidatos.get(m).getDni()!=ReniecBD.lista.get(k).getDni())

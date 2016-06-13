@@ -77,7 +77,9 @@ public class Carga extends JPanel implements ActionListener{
 				
 			}catch(Exception ex){
 				JOptionPane.showMessageDialog(null, "Hubo un error al abrir la ventana de configuracion	");
-			}
+			}			
+			
+			
 			
 
 		}

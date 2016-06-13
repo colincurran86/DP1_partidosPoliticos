@@ -10,30 +10,44 @@ import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 
-public class ProgressMonitorExample extends JPanel implements ActionListener {
+import clasesAux.Util;
+
+public class ProgressMonitorExample  implements ActionListener {
 
   static ProgressMonitor pbar;
-
+  static int porcentaje = 0 ;
   public static int counter = 0;
-
-  public ProgressMonitorExample() {
+  Timer timer = new Timer(1000, this);
+  
+  public ProgressMonitorExample(int num) {
    // super("Progress Monitor Demo");
-    setSize(250, 100);
+	  
+	  // UIManager.put("ProgressMonitor.progressText", "Cargando");
+	   // UIManager.put("OptionPane.cancelButtonText", "Go Away");
+	    //UIManager.
+	    
+	    
+    //setSize(250, 1000);
+    //this.setVisible(false);
    // setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-    pbar = new ProgressMonitor(null, "Monitoring Progress",
-        "Initializing . . .", 0, 100);
+  //  pbar = new ProgressMonitor(null, "Monitoring Progress",  "Initializing . . .", 0, 100);
+    
 
     // Fire a timer every once in a while to update the progress.
-    Timer timer = new Timer(500, this);
+  //  System.out.println("nummmm " + num);
+  
+    
+    porcentaje = 10 ;
     timer.start();
-    setVisible(true);
+  //  setVisible(false);
+    
   }
 
   public static void main(String args[]) {
-    UIManager.put("ProgressMonitor.progressText", "This is progress?");
-    UIManager.put("OptionPane.cancelButtonText", "Go Away");
-    new ProgressMonitorExample();
+ //   UIManager.put("ProgressMonitor.progressText", "Cargando");
+  //  UIManager.put("OptionPane.cancelButtonText", "Go Away");
+  //  new ProgressMonitorExample();
   }
 
   public void actionPerformed(ActionEvent e) {
@@ -44,13 +58,32 @@ public class ProgressMonitorExample extends JPanel implements ActionListener {
 
   class Update implements Runnable {
     public void run() {
+    /*
       if (pbar.isCanceled()) {
-        pbar.close();
+          pbar.close();
         System.exit(1);
       }
       pbar.setProgress(counter);
       pbar.setNote("Operation is " + counter + "% complete");
-     // counter += 2;
+      */
+     counter += porcentaje;
+//     int contador2 = 1;
+     
+  	Procesando.escribirTextArea( "" + counter );
+  	
+	Procesando.aumentarPorcentaje( counter);
+	
+	
+    if (counter >= 100 + porcentaje){
+    	
+
+    	
+    	Procesando.escribirTextArea( Util.mensajeFinal );
+    	
+ 
+ timer.stop();
+   }
+
     }
   }
 }

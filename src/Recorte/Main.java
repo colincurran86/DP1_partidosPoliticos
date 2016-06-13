@@ -84,14 +84,14 @@ public static List<BufferedImage> listaBImage = new ArrayList<BufferedImage>()  
             
             //cropeamos los digitos del DNI    
             List <String> dniLista  = new ArrayList <String>() ;
-            int numero, valorOriginal = yDNI,   valorOriginalFirma = yFirmas;
+            int numero, valorOriginal = yDNI,   valorOriginalFirma = yFirmas, valorOriginalApellido = yApellido, valorOriginalNombre = yNombre;
             int distanceBetweenSquaresH = 87 ,distanceBetweenSquares = 14, widthSquare = 14, heightSquare = 84;
 
             for (int n  = 0; n < 8; n++){    
                 
-            	ProgressMonitorExample p1 = new ProgressMonitorExample() ;
+           // 	ProgressMonitorExample p1 = new ProgressMonitorExample() ;
             	
-            	p1.counter += 23 ; 
+            //	p1.counter += 23 ; 
             	
                 ImagePlus Copia1;
                 String rutaAlmacenar = workingDir + "/src/Recorte/Resultado/Persona"
@@ -99,26 +99,33 @@ public static List<BufferedImage> listaBImage = new ArrayList<BufferedImage>()  
             
                 File file2 = new File(rutaAlmacenar);      file2.mkdirs();
                 String dni = "";    yDNI = valorOriginal;
+              
+                
+                
+                
+                
+                
                 for (int h = 0; h<8 ; h++) {
                     
                     //Detectamos el proximo espacio en blanco
                     Copia1 = IJ.openImage(ruta2);
-                //  System.out.println("ancho DNI " + yDNI);
-                //  Copia1.setRoi(yDNI + distanceBetweenSquares*h, alturaX  + distanceBetweenSquaresH * n  , 11 , 79);
-                   
+            
                     int valor = rf.getAnchoDNI(yDNI+1, (alturaX+5) + distanceBetweenSquaresH * n);
                     if (valor == 0) valor = 13;
-                    //System.out.println("valor crop " + valor);
-                //  Copia1.setRoi(yDNI+1, (alturaX+5)  + distanceBetweenSquaresH * n  , 10 , 70);
+           
                     Copia1.setRoi(yDNI+2, (alturaX+5)  + distanceBetweenSquaresH * n  , valor , 70);
                     IJ.run(Copia1, "Crop", ""); int k = h+1;
-                    String rutaDNI = workingDir + "/src/Recorte/Resultado/Persona"
-                    + String.valueOf(n+1+(8*contPadrones))     + "/DNI/" + k + ".jpg";
+                    String rutaDNI = workingDir + "/src/Recorte/Resultado/Persona" + String.valueOf(n+1+(8*contPadrones))     + "/DNI/" + k + ".jpg";
                     if (h != 7 ) yDNI = rf.obtenerSiguienteEspacioDNI(yDNI,alturaX+5);
                                  
-	                numero =  recogChar.recognize_actionPerformed(Copia1.getImage());
+	                           
+                    numero =  recogChar.recognize_actionPerformed(Copia1.getImage());
+            
                     new FileSaver(Copia1).saveAsPng(rutaDNI);
-	                if (dni == "") dni = ""+ numero;	             
+	                
+                    
+                    
+                    if (dni == "") dni = ""+ numero;	             
 	                else dni=dni + numero;    
 
 	              }
@@ -137,32 +144,41 @@ public static List<BufferedImage> listaBImage = new ArrayList<BufferedImage>()  
                 File file = new File(rutaAlmacenar);  file.mkdirs();
                 File file2 = new File(rutaAlmacenar2);  file2.mkdirs();
 
-            //Cropeamos el Apellido
+                //Cropeamos el Apellido
+                yApellido     = valorOriginalApellido;
                 for (int contApellido = 0; contApellido < apellidoEspacios; contApellido ++){
                     ImagePlus Copi41 = IJ.openImage(ruta2);
                     String rutaNombre = workingDir + "/src/Recorte/Resultado/Persona"
                     + String.valueOf(n+1+(8*contPadrones)) + "/Apellido/" + contApellido + ".jpg";
-                    if (n<3)Copi41.setRoi(yApellido + contApellido*espacioLetras, (alturaX + 1) + alturaLetras*n, widthSquare  , heightSquare-3);
-                    else Copi41.setRoi(yApellido + 2 + contApellido*espacioLetras, (alturaX + 5) + alturaLetras*n, widthSquare  , heightSquare-3);
-                    IJ.run(Copi41, "Crop", ""); 
+                    int valor = rf.getAnchoDNI(yApellido+1, (alturaX+5) + alturaLetras * n);
+                    if (valor == 0 || valor == 1) valor = 13;
+                    Copi41.setRoi(yApellido+1 , (alturaX + 6) + alturaLetras*n,  valor-1  , heightSquare-7);
+                    if (contApellido != 24 ) yApellido = rf.obtenerSiguienteEspacioDNI(yApellido,alturaX+5);
+                    IJ.run(Copi41, "Crop", "");
+                 
                     new FileSaver(Copi41).saveAsPng(rutaNombre);
                     //Prefs.blackBackground = false;
                 }
-                
+               
+                /*     
             //Cropeamos el Nombre
-    
+        
+                yNombre = valorOriginalNombre;
                 for (int contNombre = 0; contNombre < nombreEspacios; contNombre ++){
                     ImagePlus Copi41 = IJ.openImage(ruta2);
                     String rutaNombre = workingDir + "/src/Recorte/Resultado/Persona"
                     + String.valueOf(n+1+(8*contPadrones)) + "/Nombre/" + contNombre + ".jpg";
-                    if (n<3)Copi41.setRoi(yNombre + contNombre*espacioLetras, (alturaX + 1) + alturaLetras*n, widthSquare - 6 , heightSquare-3);
-                    else Copi41.setRoi(yNombre+ 2 + contNombre*espacioLetras, (alturaX + 5) + alturaLetras*n, widthSquare - 6 , heightSquare-3);
-                    IJ.run(Copi41, "Crop", ""); 
+                   
+                    int valor2 = rf.getAnchoDNI(yNombre+1, (alturaX+5) + alturaLetras * n);
+                    if (valor2 == 0 || valor2 == 1) valor2 = 13;
+                    Copi41.setRoi(yNombre + contNombre*espacioLetras, (alturaX + 6) + alturaLetras*n, valor2-1 , heightSquare-7);
+                    if (contNombre != 22 ) yNombre = rf.obtenerSiguienteEspacioDNI(yNombre,alturaX+6);
+                    IJ.run(Copi41, "Crop", "");
                     new FileSaver(Copi41).saveAsPng(rutaNombre);
                     //Prefs.blackBackground = false;
                 }
+              */
             }
-
       
             //Cropeamos las firmas y las huellas para cada persona
         //    List<ImagePlus>usuariosFirma = new ArrayList<ImagePlus>();
@@ -183,7 +199,7 @@ public static List<BufferedImage> listaBImage = new ArrayList<BufferedImage>()  
             }    
             
              distanceBetweenSquares = 86; widthSquare = 150;  heightSquare = 75;        
-            //para cada imagen leída de la carpeta de imagenes realizar lo de abajo. 
+            //para cada imagen leï¿½da de la carpeta de imagenes realizar lo de abajo. 
 
             int alturaFirma =  alturaX + 4;
             int alturaFirma2 = alturaX + 4;

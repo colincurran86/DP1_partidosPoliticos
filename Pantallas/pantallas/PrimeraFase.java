@@ -150,8 +150,8 @@ public class PrimeraFase extends JPanel implements ActionListener {
 //
 //			}
 
-			Procesando p1;
-			try {
+				Procesando p1;
+		
 				p1 = new Procesando();
 				p1.setVisible(true);
 				
@@ -159,13 +159,7 @@ public class PrimeraFase extends JPanel implements ActionListener {
 				Principal.getFrame().setContentPane(p1);
 				
 				//p1.llamarRecortes();
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			
-			
-			
+	
 			
 			
 		}
