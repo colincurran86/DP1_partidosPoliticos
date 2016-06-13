@@ -167,7 +167,11 @@ llenarBDReniec("C:\\Users\\lenovo\\git\\DP1_partidosPoliticos\\src" + "/registro
 
 				PersonaReniec pr = new PersonaReniec();
 				pr.setApellidos(apellido.getStringCellValue());
-				pr.setDni((int) dni.getNumericCellValue());
+				int valor=(int) dni.getNumericCellValue();
+				String val=""+valor;
+				if(val.length()!=8)
+					for(int i=0;i<8-val.length();i++) val="0"+val;
+				pr.setDni(val);
 				pr.setIdFirma(idFirma.getStringCellValue());
 				pr.setIdHuella((int) idHuella.getNumericCellValue());
 				pr.setNombre(nombre.getStringCellValue());
@@ -187,10 +191,10 @@ llenarBDReniec("C:\\Users\\lenovo\\git\\DP1_partidosPoliticos\\src" + "/registro
 	public List<List<PersonaReniec>> ocrMasReniec() {
 		//List<PersonaReniec> pr = new ArrayList<PersonaReniec>();
 		List<List<PersonaReniec>> candidatos = new ArrayList<List<PersonaReniec>>();
-		for (int i =0 ; i<Main.lista.size(); i++){
+		/*for (int i =0 ; i<Main.lista.size(); i++){
 			List <PersonaReniec> xd = new ArrayList<PersonaReniec>();
-			candidatos.add(xd)			;
-		}
+			candidatos.add(xd);
+		}*/
 		boolean entro = false;
 		
 		List<PersonaReniec> a= new ArrayList<PersonaReniec>();
@@ -202,13 +206,13 @@ llenarBDReniec("C:\\Users\\lenovo\\git\\DP1_partidosPoliticos\\src" + "/registro
 			//mensajeFinal = mensajeFinal + "DNI RECONOCIDO DE LAS IMAGENES: " + dni + "\n";
 			for (int j = 0; j < ReniecBD.lista.size(); j++)
 				if (dni != null || dni.length() != 0) {
-					if (ReniecBD.lista.get(j).getDni() == Integer.parseInt(dni)) {
+					if(ReniecBD.lista.get(j).getDni().equals(dni)){
 						entro = true;
-						a=sacaListaCandidatos(Integer.parseInt(dni));
+						a=sacaListaCandidatos(dni);
 						a.add(ReniecBD.lista.get(j));
-					}
+					}					
 				}
-			if (!entro) a=sacaListaCandidatos(Integer.parseInt(dni));
+			if (!entro) a=sacaListaCandidatos(dni);
 			candidatos.add(a);
 		}
 		
@@ -220,9 +224,9 @@ llenarBDReniec("C:\\Users\\lenovo\\git\\DP1_partidosPoliticos\\src" + "/registro
 
 
 	
-	public List<PersonaReniec> sacaListaCandidatos(int dni){
+	public List<PersonaReniec> sacaListaCandidatos(String dni){
 		List<PersonaReniec> candidatos=new ArrayList<PersonaReniec>();		
-		String dniCad="" + dni;
+		//String dniCad="" + dni;
 								
 		int posCad1=0,posCad2=0,posCad3=0;
 		String cad1="",cad2="",cad3="";
@@ -241,34 +245,34 @@ llenarBDReniec("C:\\Users\\lenovo\\git\\DP1_partidosPoliticos\\src" + "/registro
 				if(i==0) cad1="";
 				else
 					for(int m=posCad1;m<i;m++)
-						cad1+=dniCad.charAt(m);	
+						cad1+=dni.charAt(m);	
 				
 				if(i==6 || ( j-1== 1)) cad2="";
 				else
 					for(int m=posCad2;m<j;m++)
-						cad2+=dniCad.charAt(m);
+						cad2+=dni.charAt(m);
 				
 				if(j==7) cad3="";
 				else
 					for(int m=posCad3;m<8;m++)
-						cad3+=dniCad.charAt(m);
+						cad3+=dni.charAt(m);
 				
 				for(int k=0;k<ReniecBD.lista.size();k++){
 					String reniecDni=""+ReniecBD.lista.get(k).getDni();
 					if(cad1!="")
 						for(int m=posCad1;m<cad1.length()+posCad1;m++)
-							if(dniCad.charAt(m)!=reniecDni.charAt(m))break;
+							if(dni.charAt(m)!=reniecDni.charAt(m))break;
 											
 					if(cad2!="")
 						for(int m=posCad2;m<cad2.length()+posCad2;m++)
-							if(dniCad.charAt(m)!=reniecDni.charAt(m))break;
+							if(dni.charAt(m)!=reniecDni.charAt(m))break;
 					
 					if(cad3!="")
 						for(int m=posCad3;m<cad3.length()+posCad3;m++){
 							System.out.println("valor de m " + m);
-							System.out.println("valor dniCad " + dniCad);
+							System.out.println("valor dniCad " + dni);
 							System.out.println("valor reniecDNI " + reniecDni);
-							if(dniCad.charAt(m)!=reniecDni.charAt(m))break;
+							if(dni.charAt(m)!=reniecDni.charAt(m))break;
 						}
 					//si no llego a ningun break, anhade
 					for(int m=0;m<candidatos.size();m++)//para que no se repita 

@@ -3,7 +3,7 @@ package models;
 public class PersonaReniec {
 	private String nombre;
 	private String apellidos;
-	private int dni;
+	private String dni;
 	private int ubigeo;
 	private int idHuella;
 	private String idFirma;
@@ -20,10 +20,10 @@ public class PersonaReniec {
 	public void setApellidos(String apellidos) {
 		this.apellidos = apellidos;
 	}
-	public int getDni() {
+	public String getDni() {
 		return dni;
 	}
-	public void setDni(int dni) {
+	public void setDni(String dni) {
 		this.dni = dni;
 	}
 	public int getUbigeo() {
