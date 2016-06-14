@@ -113,15 +113,42 @@ public class Minutiae {
 	public static int rutovitz(int y, int x, int[][] givenImage) {
 
 		int acum = 0;
+		int valor1 = 0 ,valor2 = 0 ,valor3 = 0,valor4 = 0,valor5 = 0 ,valor6 = 0,valor7 = 0 ,valor8 = 0 ,valor9 = 0;
+		
+		 valor1 = givenImage[y][x + 1] ;
+		 valor7 = givenImage[y + 1][x];
+		 valor8 = givenImage[y + 1][x + 1] ;
+		 valor9 = givenImage[y][x + 1];
+ 		 if (x==0 || y == 0){
+			 if (x == 0 && y == 0) valor4 =  givenImage[0][0];			
+			 else if (x == 0) {
+				 valor5 =  givenImage[y][0];
+				 valor6 =  givenImage[y + 1][0];
+			 } 
+			 else if (y == 0){
+				 valor2 =  givenImage[0][x + 1];
+				 valor3 =  givenImage[0][x];
+			 }
+			 else{
+				 valor2 =  givenImage[y - 1][x + 1];
+				 valor3 =  givenImage[y - 1][x];
+				 valor4 =  givenImage[y - 1][x - 1];	
+				 valor5 =  givenImage[y][x - 1];
+				 valor6 =  givenImage[y + 1][x - 1];
+			 }
 
-		acum = acum + Math.abs(givenImage[y][x + 1] - givenImage[y - 1][x + 1]);
-		acum = acum + Math.abs(givenImage[y - 1][x + 1] - givenImage[y - 1][x]);
-		acum = acum + Math.abs(givenImage[y - 1][x] - givenImage[y - 1][x - 1]);
-		acum = acum + Math.abs(givenImage[y - 1][x - 1] - givenImage[y][x - 1]);
-		acum = acum + Math.abs(givenImage[y][x - 1] - givenImage[y + 1][x - 1]);
-		acum = acum + Math.abs(givenImage[y + 1][x - 1] - givenImage[y + 1][x]);
-		acum = acum + Math.abs(givenImage[y + 1][x] - givenImage[y + 1][x + 1]);
-		acum = acum + Math.abs(givenImage[y + 1][x + 1] - givenImage[y][x + 1]);
+			 
+		 }
+	
+		
+		acum = acum + Math.abs(valor1 - valor2);
+		acum = acum + Math.abs(valor2 - valor3);
+		acum = acum + Math.abs(valor3 - valor4);
+		acum = acum + Math.abs(valor4 - valor5);
+		acum = acum + Math.abs(valor5 - valor6);
+		acum = acum + Math.abs(valor6 - valor7);
+		acum = acum + Math.abs(valor7 - valor8);
+		acum = acum + Math.abs(valor8 - valor9);
 		acum = (int) (acum * 0.5);
 
 		return acum;
@@ -134,7 +161,6 @@ public class Minutiae {
 		for (int i = 0; i < minutiaeFound.size(); i++) {
 			List<Double> bestDistances = new ArrayList<Double>();
 			List<Integer> bestIndexes = new ArrayList<Integer>();
-
 			// saca solo las distancias con todos los demás puntos
 			for (int j = 0; j < minutiaeFound.size(); j++) {
 				if (i != j) {

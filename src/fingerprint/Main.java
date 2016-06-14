@@ -14,17 +14,17 @@ import javax.imageio.ImageIO;
  */
 public class Main {
 
-	/**
-	 * @param args
-	 *            the command line arguments
-	 */
+
+	public static double porcentaje;
+	
 	public static void main(String[] args) throws IOException {
 
-		BufferedImage imageBase = ImageIO.read(new File("C:/Users/Administrador/Desktop/Christian/9no/DP1/GIT GIT GIT GIT/adb-installer.log/src/fingerprint/aa.png"));
-		BufferedImage imageInput = ImageIO.read(new File("C:/Users/Administrador/Desktop/Christian/9no/DP1/GIT GIT GIT GIT/adb-installer.log/src/fingerprint/input.png"));
+		BufferedImage imageBase = ImageIO.read(new File("C:/Users/alulab14.INF.000/git/DP1_partidosPoliticos/src/fingerprint/1.jpg"));
+		BufferedImage imageInput = ImageIO.read(new File("C:/Users/alulab14.INF.000/git/DP1_partidosPoliticos/src/fingerprint/2.jpg"));
 
 		int[][] imageDataBase = new int[imageBase.getHeight()][imageBase.getWidth()];
 		int[][] imageDataInput = new int[imageInput.getHeight()][imageInput.getWidth()];
+
 
 		Color c;
 		//binarización hecha a la mala
@@ -55,6 +55,8 @@ public class Main {
 				}
 			}
 		}
+		
+		
 
 		//ImageIO.write(image, "png", new File("C:/Users/lenovo/Desktop/PUCP/DP1/AlgoritmoChino/2XBin.png"));
 
@@ -69,7 +71,7 @@ public class Main {
 		//List<Point> minutiaeBifurcation = new ArrayList<Point>();
 
 		// Minutiae implementation basado en Rutovitz Crossing Number		
-		
+
 		 Minutiae.crossingNumber(imageDataBase, minutiaeFoundBase);//obtención de minucias
 		 Minutiae.crossingNumber(imageDataInput, minutiaeFoundInput);//obtención de minucias
 
@@ -114,8 +116,8 @@ public class Main {
 		Minutiae.removeFalseMinutiae(minutiaeFoundBase);
 		Minutiae.removeFalseMinutiae(minutiaeFoundInput);
 		
-		System.out.println("Minucias en la base " + minutiaeFoundBase.size());
-		System.out.println("Minucias en el Input " + minutiaeFoundInput.size());
+//		System.out.println("Minucias en la base " + minutiaeFoundBase.size());
+//		System.out.println("Minucias en el Input " + minutiaeFoundInput.size());
 
 
 		//ELIMINANDO LOS BORRDES
@@ -133,8 +135,8 @@ public class Main {
 		
 		//MOSTRANDO LAS MINUCIAS ENCONTRADAS
 			
-	    ImageIO.write(imageBase, "png", new File("C:/Users/Administrador/Desktop/Christian/9no/DP1/GIT GIT GIT GIT/adb-installer.log/src/fingerprint/MinuciasBase.png"));
-	    ImageIO.write(imageInput, "png", new File("C:/Users/Administrador/Desktop/Christian/9no/DP1/GIT GIT GIT GIT/adb-installer.log/src/fingerprint/MinuciasInput.png"));
+		//    ImageIO.write(imageBase, "png", new File("C:/Users/alulab14.INF.000/git/DP1_partidosPoliticos/src/fingerprint/MinuciasBase.png"));
+		//    ImageIO.write(imageInput, "png", new File("C:/Users/alulab14.INF.000/git/DP1_partidosPoliticos/src/fingerprint/MinuciasInput.png"));
 
 
 		//sacar las 10 tuplas de c/ minucia
@@ -147,28 +149,17 @@ public class Main {
 		
 		int totalMatching = Minutiae.matchingMinutiae(mTuplesIM,mTuplesBM);
 		System.out.println("Total de matcheo "  + totalMatching);
-		if (totalMatching > minutiaeFoundBase.size()/2) System.out.println("True"); // total de minucias
-		else System.out.println("False");
+		//if (totalMatching > minutiaeFoundBase.size()/2) {
+		porcentaje = ((totalMatching *1.0)  / minutiaeFoundBase.size())*100;
+		System.out.println("El porcentaje de acierto es " + porcentaje + "%");
+		//}
+		//else {
+			
+			
+		//}	
 	}
+	
 }
 
 
 
-
-/*
-//hallo la lista de minucias que serán posibles candidatos en ambas imagenes
-List<Integer> possibleCandidateIM=new ArrayList<Integer>();
-List<Integer> possibleCandidateBM=new ArrayList<Integer>();
-
-List<Integer> excludedMinutiaeIM=new ArrayList<Integer>();//se vuelve a armar la estructura con estos puntos despues
-List<Integer> excludedMinutiaeBM=new ArrayList<Integer>();
-
-Minutiae.matchingMinutiae(mTuplesIM,mTuplesBM,possibleCandidateIM,possibleCandidateBM,
-		excludedMinutiaeIM,excludedMinutiaeBM,minutiaeFound.size());
-
-Minutiae.orderTreeStructure(minutiaeFound,possibleCandidateIM);
-Minutiae.orderTreeStructure(minutiaeFound, possibleCandidateBM);
-
-Minutiae.comparisonAtTreeStructure(minutiaeFound,possibleCandidateIM,possibleCandidateBM,
-		excludedMinutiaeIM,excludedMinutiaeBM);
-*/
