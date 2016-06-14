@@ -210,10 +210,10 @@ public class Util {
 		boolean entro = false;
 
 		List<PersonaReniec> a = new ArrayList<PersonaReniec>();
-		/*for (int i = 0; i < Main.lista.size(); i++) 
-			System.out.println(Main.lista.get(i));*/
+		for (int i = 0; i < Main.lista.size(); i++) 
+			System.out.println(Main.lista.get(i));
 		
-		
+		//System.out.println(Main.lista.size());
 		for (int i = 0; i < Main.lista.size(); i++) {
 			String dni = Main.lista.get(i);
 			entro = false;
@@ -223,8 +223,8 @@ public class Util {
 			
 			for (int j = 0; j < ReniecBD.lista.size(); j++)
 				if (dni != null || dni.length() != 0) {
-					if (ReniecBD.lista.get(j).getDni().equals(dni)) {
-						
+					if (ReniecBD.lista.get(j).getDni().compareTo(dni)==0) {
+						System.out.println(ReniecBD.lista.size());
 						entro = true;
 						a = sacaListaCandidatos(dni);
 						//System.out.println(a.size());
