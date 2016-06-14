@@ -38,11 +38,11 @@ public class Util {
 		Main m = new Main();
 		// txtFieldPlan.setText("D:\\Users\\jemarroquin\\git\\DP1_partidosPoliticos\\src\\Recorte\\Padrones");
 		// String formatearRutaPlan = u.formatearRuta(txtFieldPlan.getText());
-		m.main("C:\\Users\\Administrador\\Desktop\\Christian\\9no\\DP1\\GIT GIT GIT GIT\\src\\Recorte\\Padrones");
+		m.main("C:\\Users\\User\\Desktop\\9no\\DP1\\DP1_partidosPoliticos\\src\\Recorte\\Padrones");
 
 		// txtFieldBDRNV.setText("D:\\Users\\jemarroquin\\git\\DP1_partidosPoliticos\\src");
 		// String formatearRutaBD = u.formatearRuta(txtFieldBDRNV.getText());
-		llenarBDReniec("C:\\Users\\Administrador\\Desktop\\Christian\\9no\\DP1\\Entrega de padrones"
+		llenarBDReniec("C:\\Users\\User\\Desktop\\9no\\DP1\\Entrega de padrones"
 				+ "/registro.nacional.v.1.xlsx");
 
 		// escribirTextArea("****************************");
@@ -209,7 +209,11 @@ public class Util {
 
 		boolean entro = false;
 
-		List<PersonaReniec> a = new ArrayList<PersonaReniec>();		
+		List<PersonaReniec> a = new ArrayList<PersonaReniec>();
+		/*for (int i = 0; i < Main.lista.size(); i++) 
+			System.out.println(Main.lista.get(i));*/
+		
+		
 		for (int i = 0; i < Main.lista.size(); i++) {
 			String dni = Main.lista.get(i);
 			entro = false;
@@ -223,7 +227,7 @@ public class Util {
 						
 						entro = true;
 						a = sacaListaCandidatos(dni);
-						System.out.println(a.size());
+						//System.out.println(a.size());
 						a.add(ReniecBD.lista.get(j));
 					}
 				}
@@ -275,25 +279,25 @@ public class Util {
 
 				for (int k = 0; k < ReniecBD.lista.size(); k++) {
 					String reniecDni = "" + ReniecBD.lista.get(k).getDni();
-					if (cad1 != "")
+					if (cad1.compareTo("")!=0)
 						for (int m = posCad1; m < cad1.length() + posCad1; m++)
 							if (dni.charAt(m) != reniecDni.charAt(m))
 								break;
 
-					if (cad2 != "")
+					if (cad2.compareTo("")!=0)
 						for (int m = posCad2; m < cad2.length() + posCad2; m++)
 							if (dni.charAt(m) != reniecDni.charAt(m))
 								break;
 
-					if (cad3 != "")
+					if (cad3.compareTo("")!=0)
 						for (int m = posCad3; m < cad3.length() + posCad3; m++) {							
 							if (dni.charAt(m) != reniecDni.charAt(m))
 								break;
 						}
 					// si no llego a ningun break, anhade
 					for (int m = 0; m < candidatos.size(); m++)// para que no se
-																// repita
-						if (!candidatos.get(m).getDni().equals(ReniecBD.lista.get(k).getDni()))
+																// repita						
+						if (candidatos.get(m).getDni().compareTo(ReniecBD.lista.get(k).getDni())!=0)
 							candidatos.add(ReniecBD.lista.get(k));
 				}
 			}
