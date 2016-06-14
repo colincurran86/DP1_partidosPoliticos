@@ -23,9 +23,9 @@ import ij.io.FileSaver;
 
 public class Main {
 
-public static List<String> lista = new ArrayList<String>()  ; 
-public static List<BufferedImage> listaBImage = new ArrayList<BufferedImage>()  ; 
-
+	public static List<String> lista = new ArrayList<String>()  ; 
+	public static List<BufferedImage> listaBImage = new ArrayList<BufferedImage>()  ; 
+	public static int totalPadrones;
 
     public  void  main(String args) {
         // TODO Auto-generated method stub
@@ -39,7 +39,7 @@ public static List<BufferedImage> listaBImage = new ArrayList<BufferedImage>()  
         recogChar.init();
 
         //verificamos cuantos padrones existen	
-        int totalPadrones = rf.contarPadrones();    
+        totalPadrones = rf.contarPadrones();    
         rf.tamanhoEstandar(args, totalPadrones);
         
         for (int contPadrones = 0; contPadrones<totalPadrones; contPadrones++){
@@ -113,7 +113,7 @@ public static List<BufferedImage> listaBImage = new ArrayList<BufferedImage>()  
                     int valor = rf.getAnchoDNI(yDNI+1, (alturaX+5) + distanceBetweenSquaresH * n);
                     if (valor == 0) valor = 13;
            
-                    Copia1.setRoi(yDNI+2, (alturaX+5)  + distanceBetweenSquaresH * n  , valor , 70);
+                    Copia1.setRoi(yDNI+2, (alturaX+5)  + distanceBetweenSquaresH * n  , valor-1 , 70);
                     IJ.run(Copia1, "Crop", ""); int k = h+1;
                     String rutaDNI = workingDir + "/src/Recorte/Resultado/Persona" + String.valueOf(n+1+(8*contPadrones))     + "/DNI/" + k + ".jpg";
                     if (h != 7 ) yDNI = rf.obtenerSiguienteEspacioDNI(yDNI,alturaX+5);
