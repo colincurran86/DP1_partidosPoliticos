@@ -166,9 +166,6 @@ public static List<BufferedImage> listaBImage = new ArrayList<BufferedImage>()  
             }
 
       
-            //Cropeamos las firmas y las huellas para cada persona
-        //    List<ImagePlus>usuariosFirma = new ArrayList<ImagePlus>();
-        //   List<ImagePlus>usuariosHuella = new ArrayList<ImagePlus>();
     
             for (int n  = 0; n < personasxPadron; n++){
               //  ImagePlus firmaUser,huellasUser = new ImagePlus();
