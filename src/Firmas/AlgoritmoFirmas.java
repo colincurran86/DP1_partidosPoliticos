@@ -3571,12 +3571,15 @@ public class AlgoritmoFirmas {
 		int altos = 0;
 		int indiceFinal = 0;
 		ArrayList<FirmaRecortada> listaFirmasCortadas = new ArrayList<FirmaRecortada>();
+
+			
 		
-		// Cantidad de planillones, más automatizado
+		
+		// Cantidad de planillones, cargar
 		for (int i = 1; i < 3; i++) {
 			ArrayList<FirmaRecortada> listaTemporal = new ArrayList<FirmaRecortada>();
 			System.out.println("Planillon: " + i);
-			FastBitmap imagenPlanillon = new FastBitmap(urlPlanillonesOriginales + i + ".jpg");
+			FastBitmap imagenPlanillon = new FastBitmap(urlPlanillonesOriginales +"\\"+ i + ".jpg");
 			Crop cortadorImagenes;
 			int factorPixel = 0;
 			int multiplicarFactor = 0;
@@ -3615,7 +3618,283 @@ public class AlgoritmoFirmas {
 			}
 
 			cortadorImagenes.ApplyInPlace(imagenPlanillon);
-			imagenPlanillon.saveAsJPG("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\Otras_Resoluciones\\objs\\planillon" + i
+			anchos = imagenPlanillon.getWidth() - 1;
+			altos = imagenPlanillon.getHeight() - 1;
+
+
+			//Factor Pixel
+			if (altos >= 0 && altos <= 900)
+				factorPixel = 5;
+			else {
+				multiplicarFactor = altos / 900;
+				factorPixel = 5 * multiplicarFactor;
+			}
+
+
+
+			int mitadPlanillon = imagenPlanillon.getWidth() / 2;
+			int indiceNegro = 0;
+			int indiceBlanco = 0;
+			
+			//Negro
+			for (int j = 0; j < imagenPlanillon.getHeight() - 1; j++) {
+				if (imagenPlanillon.getGray(j, mitadPlanillon) == 0) {
+					indiceNegro = j;
+					break;
+				}
+			}
+			
+			//Blanco
+			for (int r = imagenPlanillon.getWidth() / 2; r < imagenPlanillon.getWidth() - 1; r++) {
+				if (imagenPlanillon.getGray(indiceNegro, r) == 255) {
+					indiceBlanco = r;
+					break;
+				}
+			}
+			
+			
+
+			int ind = imagenPlanillon.getWidth() - 1;
+			ind = indiceBlanco;
+
+			List<List<Resultado>> a3 = new ArrayList<List<Resultado>>();
+			Resultado d;
+			int cont = 0;
+			int c = 0;
+			int llego = 0;
+			int dos = 0;
+
+			int j;
+			int tmp1 = 0;
+			int tmp2 = 0;
+			int nollego = 0;
+			int pasoPrimerNegro = 0;
+
+			//Busca la primera linea negra
+			while (true) {
+				c = 0;
+				llego = 0;
+				nollego = 0;
+				pasoPrimerNegro = 0;
+				
+				for (j = imagenPlanillon.getHeight() - 1; j > 0; j--) {
+					if (imagenPlanillon.getGray(j, ind) == 0) {
+						c++;
+						pasoPrimerNegro = j;
+
+					}
+					if (c > imagenPlanillon.getHeight() / 2) {
+						llego = 1;
+						tmp1 = ind;
+						break;
+					}
+				}
+				if (llego == 1)
+					break;
+				ind--;
+			}
+
+			
+
+			
+			j = 0;
+			llego = 0;
+			ind = ind - 50;
+			//Segunda line negra
+			while (true) {
+				c = 0;
+				llego = 0;
+				pasoPrimerNegro = 0;
+				// for (j = inn+10; j > 0 ; j--) {
+				for (j = imagenPlanillon.getHeight() - 1; j > 0; j--) {
+		
+					if (imagenPlanillon.getGray(j, ind) == 0) { 
+						c++;
+					}
+	
+
+					if (c > imagenPlanillon.getHeight() / 2) {
+						llego = 1;
+						tmp2 = ind;
+						break;
+					}
+				}
+		
+				if (llego == 1)
+					break;
+				ind--;
+
+			}
+
+			
+			int ultimoYLineaNegra1 = 0;
+			int ultimoYLineaNegra2 = 0;
+
+			for (int k = imagenPlanillon.getHeight() - 1; k > 0; k--) {
+				if (imagenPlanillon.getGray(k, tmp1) == 0) {
+					ultimoYLineaNegra1 = k;
+					break;
+				}
+
+			}
+
+			for (int k = imagenPlanillon.getHeight() - 1; k > 0; k--) {
+				if (imagenPlanillon.getGray(k, tmp2) == 0) {
+					ultimoYLineaNegra2 = k;
+					break;
+				}
+
+			}
+
+
+			int veces = 0;
+			int ancho = tmp1 - tmp2;
+			int contador = 0;
+			int hizobreak = 0;
+			int malbreak = 0;
+			ArrayList<Integer> listaLineas = new ArrayList<Integer>();
+			int band1 = 0;
+
+	
+			for (int k = ultimoYLineaNegra2 - factorPixel; k > 0; k--) {
+				contador = 0;
+				hizobreak = 0;
+				malbreak = 0;
+
+				if (veces == 8)
+					break;
+				for (int h = tmp2; h < tmp1; h++) {
+					if (imagenPlanillon.getGray(k, h) == 0)
+						contador++;
+					else {
+						malbreak = 1;
+						break;
+					}
+					if (contador >= ancho / 2) {
+						hizobreak = 1;
+						break;
+					}
+
+				}
+
+				if (malbreak != 1) {
+					k = k - factorPixel;
+					veces++;
+					listaLineas.add(k);
+				}
+			}
+
+			int alto;
+			for (int k = 0; k < 8; k++) {
+				System.out.println("Linea actual ..........." + k);
+				if (k == 0) {
+					alto = ultimoYLineaNegra2 - listaLineas.get(k);
+					cortadorImagenes = new Crop(listaLineas.get(k), tmp2, ancho, alto);
+				} else if (k == 7) {
+					alto = listaLineas.get(k - 1) - listaLineas.get(k);
+					cortadorImagenes = new Crop(listaLineas.get(k), tmp2, ancho, alto);
+
+				} else {
+					alto = listaLineas.get(k) - listaLineas.get(k + 1);
+					cortadorImagenes = new Crop(listaLineas.get(k), tmp2, ancho, alto);
+				}
+				FastBitmap i3 = new FastBitmap(imagenPlanillon.toBufferedImage());
+				/*
+				imagenPlanillon.saveAsJPG(
+				"C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\Otras_Resoluciones\\objs\\planillon\\"
+								+ i + "rr.jpg");
+				FastBitmap i3 = new FastBitmap(
+				"C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\Otras_Resoluciones\\objs\\planillon\\"
+								+ i + "rr.jpg");
+				*/
+				cortadorImagenes.ApplyInPlace(i3);
+				//JOptionPane.showMessageDialog(null, i3.toIcon(), "Result"+i+" ", JOptionPane.PLAIN_MESSAGE);
+
+				FirmaRecortada fr = new FirmaRecortada();
+				fr.img = i3.toBufferedImage();
+				fr.ancho = anchos;
+				fr.alto = altos;
+				listaTemporal.add(fr);
+
+			}
+
+
+			int indiceListaTemporal = 7;
+			while (indiceListaTemporal >= 0) {
+				listaFirmasCortadas.add(listaTemporal.get(indiceListaTemporal));
+				indiceListaTemporal--;
+			}
+
+		}
+
+		return listaFirmasCortadas;
+	}
+
+	
+	
+	
+	public ArrayList<FirmaRecortada> cortarFirmas2(String urlPlanillonesOriginales) {
+
+		int anchos = 0;
+		int altos = 0;
+		int indiceFinal = 0;
+		ArrayList<FirmaRecortada> listaFirmasCortadas = new ArrayList<FirmaRecortada>();
+
+			
+	      
+		File f = new File(urlPlanillonesOriginales);
+		//	if (f.exists()){ // Directorio existe 
+		File[] ficheros = f.listFiles();
+		//	}
+		
+		
+		// Cantidad de planillones, cargar
+		for (int i = 1; i < ficheros.length; i++) {
+			String cadenaTemporal = ficheros[i].getName();
+			if(cadenaTemporal.contains(".jpg")==true){
+			ArrayList<FirmaRecortada> listaTemporal = new ArrayList<FirmaRecortada>();
+			System.out.println("Planillon: " + ficheros[i].getName());
+			FastBitmap imagenPlanillon = new FastBitmap(urlPlanillonesOriginales+"\\"+ficheros[i].getName());
+			
+			Crop cortadorImagenes;
+			int factorPixel = 0;
+			int multiplicarFactor = 0;
+			
+			// Comprueba horizontal o vertical
+			if (imagenPlanillon.getWidth() < imagenPlanillon.getHeight()) {
+				Rotate rotarImage = new Rotate(90.0, Rotate.Algorithm.BICUBIC);
+				int despejarLineasNegras = 0;
+				
+				rotarImage.applyInPlace(imagenPlanillon);
+				rotarImage.applyInPlace(imagenPlanillon);
+				rotarImage.applyInPlace(imagenPlanillon);
+
+				imagenPlanillon.toRGB();
+				imagenPlanillon.toGrayscale();
+				OtsuThreshold o = new OtsuThreshold();
+				o.applyInPlace(imagenPlanillon);
+
+				
+				for (int j = imagenPlanillon.getHeight() - 1; j > 0; j--) {
+					if (imagenPlanillon.getGray(j, imagenPlanillon.getWidth() / 2) == 255) {
+						despejarLineasNegras = j;
+						break;
+					}
+				}
+				cortadorImagenes = new Crop(0, imagenPlanillon.getWidth() / 2,
+				imagenPlanillon.getWidth() / 2 + imagenPlanillon.getWidth() / 3, despejarLineasNegras - 10);
+
+			} else {
+				cortadorImagenes = new Crop(0, imagenPlanillon.getWidth() / 2, imagenPlanillon.getWidth() / 3,
+				imagenPlanillon.getHeight());
+				imagenPlanillon.toRGB();
+				imagenPlanillon.toGrayscale();
+				OtsuThreshold o = new OtsuThreshold();
+				o.applyInPlace(imagenPlanillon);
+			}
+
+			cortadorImagenes.ApplyInPlace(imagenPlanillon);
+			imagenPlanillon.saveAsJPG("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\Otras_Resoluciones\\objs\\planillon\\probar" + i
 			+ "r.jpg");
 			anchos = imagenPlanillon.getWidth() - 1;
 			altos = imagenPlanillon.getHeight() - 1;
@@ -3808,8 +4087,7 @@ public class AlgoritmoFirmas {
 								+ i + "rr.jpg");
 				*/
 				cortadorImagenes.ApplyInPlace(i3);
-				// JOptionPane.showMessageDialog(null, i3.toIcon(), "Result
-				// "+i+" ", JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(null, i3.toIcon(), "Result"+i+" ", JOptionPane.PLAIN_MESSAGE);
 
 				FirmaRecortada fr = new FirmaRecortada();
 				fr.img = i3.toBufferedImage();
@@ -3825,12 +4103,13 @@ public class AlgoritmoFirmas {
 				listaFirmasCortadas.add(listaTemporal.get(indiceListaTemporal));
 				indiceListaTemporal--;
 			}
-
+		}
 		}
 
 		return listaFirmasCortadas;
 	}
-
+	
+	
 	
 	
 	void procesar3(ArrayList<FirmaRecortada> lbi) throws IOException { // double
@@ -5630,8 +5909,6 @@ public class AlgoritmoFirmas {
 				//Direccion base de datos
 				String url2 = new String(urlBaseDeDatos+"\\"
 				+ listaDeListaPersonas.get(indicePersonaLista1).get(indiceCandidatos).getIdFirma());
-				
-				
 				imagen2 = new FastBitmap(url2);
 
 				
@@ -6110,9 +6387,8 @@ List<List<PersonaReniec>> llenarDatosPruebaListaDeLista() {
 	}
 
 
-    List<PersonaReniec> procesar(List<List<PersonaReniec>> listaDeListasPersonasReniec,String urlPlanillonesOriginales,String urlBaseDeDatos) throws IOException
+List<PersonaReniec> procesar(List<List<PersonaReniec>> listaDeListasPersonasReniec,String urlPlanillonesOriginales,String urlBaseDeDatos) throws IOException
     {List<PersonaReniec> listaFinal;
-    
     ArrayList<FirmaRecortada> liistaFirmas;    
     liistaFirmas = cortarFirmas(urlPlanillonesOriginales);  
     listaFinal = procesarFirmas(liistaFirmas,listaDeListasPersonasReniec,urlBaseDeDatos);    

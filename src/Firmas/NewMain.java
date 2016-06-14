@@ -2,6 +2,7 @@
 package Firmas;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.nio.Buffer;
 import java.util.ArrayList;
@@ -30,8 +31,9 @@ public class NewMain {
        //Inicio
        AlgoritmoFirmas af = new AlgoritmoFirmas();
        ArrayList<FirmaRecortada>lbi = new ArrayList<FirmaRecortada>();
-       String urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\Otras_Resoluciones\\objs\\planillon\\");
-       //String urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\git\\DP1_partidosPoliticos44\\src\\Recorte\\kappa\\padron.rayas.firmado.");
+       String urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\Otras_Resoluciones\\objs\\planillon");
+       //String urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\git\\DP1_partidosPoliticos\\src\\Recorte\\kappa");
+       
        String urlBaseDeDatos = new String("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\Imagenes\\firmas.jpg");
        List<PersonaReniec> lista;
        List<List<PersonaReniec>> lper = new ArrayList<List<PersonaReniec>>();
@@ -55,6 +57,8 @@ public class NewMain {
     	   //if(lista.get(i).getDni().equals("00000000")==false)
 		System.out.println("dni :"+lista.get(i).getDni());
        }
+      
+ 
     }
     
 }
