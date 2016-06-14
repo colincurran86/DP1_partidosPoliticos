@@ -16,27 +16,25 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Procesando extends JPanel{
+public class Procesando extends JPanel {
 
 	// static JProgressBar progressBar = new JProgressBar();
 	static public JProgressBar progressBar = new JProgressBar();
 	static public TextArea textArea = new TextArea();
 
 	static int porcentaje = 0;
-	
+
 	/**
 	 * Create the panel.
 	 * 
 	 * @throws InterruptedException
 	 */
-	  
-	  public void run() 
-      {
-          aumentarPorcentaje(2);
-      } 
-	  
-	  
-	public Procesando()  {
+
+	public void run() {
+		aumentarPorcentaje(2);
+	}
+
+	public Procesando() {
 		setLayout(null);
 
 		// JProgressBar progressBar = new JProgressBar();
@@ -52,15 +50,11 @@ public class Procesando extends JPanel{
 
 		textArea.setBounds(83, 100, 380, 160);
 		add(textArea);
-		
-	
-	
-	    //gerardoRecortesWarning();
 
+		// gerardoRecortesWarning();
 
 		System.out.println("aentre hilo util hilo bar");
-	
-	
+
 		ProcesoBar hilo1 = new ProcesoBar("Hilo 1");
 		ProcesoRecorte hilo2 = new ProcesoRecorte("Hilo 2");
 		hilo1.setMensaje("Este es el mensaje del hilo 1");
@@ -68,20 +62,15 @@ public class Procesando extends JPanel{
 		hilo1.start();
 		hilo2.start();
 
-	
-	
 	}
-	
-	
-    
-	public void gerardoRecortesWarning(){
-//ir a util 
+
+	public void gerardoRecortesWarning() {
+		// ir a util
 	}
-	
 
 	static public void aumentarPorcentaje(int count) {
 
-	count = count +	progressBar.getValue() ;
+		count = count + progressBar.getValue();
 
 		progressBar.setValue(count);
 
@@ -90,12 +79,8 @@ public class Procesando extends JPanel{
 	static public void escribirTextArea(String cadena) {
 
 		textArea.append(cadena + "\n");
-		
-		
+
 	}
-	
-	
-	
 
 	public class ProcesoBar extends Thread {
 
@@ -106,25 +91,21 @@ public class Procesando extends JPanel{
 		}
 
 		public void run() {
-			
-			
-			String workingDir = System.getProperty("user.dir"); // nos evitamos el problema de las rutas :'v
-	     int num =     new File(workingDir + "/src/Recorte/padrones/").list().length;
-	        
-	        
+
+			String workingDir = System.getProperty("user.dir"); // nos evitamos
+																// el problema
+																// de las rutas
+																// :'v
+			int num = new File(workingDir + "/src/Recorte/padrones/").list().length;
+
 			new ProgressMonitorExample(num);
 		}
 
-		public void setMensaje(String msj) 	{
+		public void setMensaje(String msj) {
 			this.mensaje = msj;
 		}
 	}
 
-	
-	
-	
-	
-	
 	public class ProcesoRecorte extends Thread {
 		String mensaje;
 
@@ -134,8 +115,7 @@ public class Procesando extends JPanel{
 
 		public void run() {
 
-
-			Util u = new Util() ; 
+			Util u = new Util();
 			u.gerardoRecortesWarning();
 
 		}
@@ -146,6 +126,4 @@ public class Procesando extends JPanel{
 
 	}
 
-	
-	
 }
