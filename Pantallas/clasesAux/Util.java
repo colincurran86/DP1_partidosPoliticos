@@ -197,6 +197,30 @@ public class Util {
 			e.printStackTrace();
 		}
 	}
+	
+	public List<PersonaReniec> ocrMasReniec2(String dni){
+		List<PersonaReniec> candidatos = new ArrayList<PersonaReniec>();
+		
+		boolean entro = false;
+		
+		for (int j = 0; j < ReniecBD.lista.size(); j++)
+			if (dni != null || dni.length() != 0) {
+				if (ReniecBD.lista.get(j).getDni().compareTo(dni)==0) {
+					//System.out.println(ReniecBD.lista.size());
+					entro = true;
+					candidatos = sacaListaCandidatos(dni);
+					//System.out.println(a.size());
+					candidatos.add(ReniecBD.lista.get(j));
+				}
+			}
+		if (!entro){
+			candidatos = sacaListaCandidatos(dni);
+			//System.out.println(a.size());
+		}				
+		
+		return candidatos;
+	}
+	
 
 	public List<List<PersonaReniec>> ocrMasReniec() {
 		// List<PersonaReniec> pr = new ArrayList<PersonaReniec>();
