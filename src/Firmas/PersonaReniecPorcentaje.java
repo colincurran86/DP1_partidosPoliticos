@@ -6,4 +6,5 @@ public class PersonaReniecPorcentaje {
 
 	PersonaReniec pe;
 	double porcentaje;
+	boolean match;
 }

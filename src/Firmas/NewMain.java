@@ -1,4 +1,3 @@
-
 package Firmas;
 
 import java.awt.image.BufferedImage;
@@ -50,6 +49,7 @@ public class NewMain {
        }
        */
        
+       /*
        lper = af.llenarDatosPruebaListaDeLista(); 
        lista = af.procesar(lper, urlPlanillonesOriginales, urlBaseDeDatos);
        System.out.println("Resultados finales: ");
@@ -57,8 +57,17 @@ public class NewMain {
     	   //if(lista.get(i).getDni().equals("00000000")==false)
 		System.out.println("dni :"+lista.get(i).getDni());
        }
-      
- 
+      */
+       
+      int indice=2;
+      List<PersonaReniec> lper2 = new ArrayList<PersonaReniec>();
+      lper2 = af.llenarDatosPruebaListaDeLista2();   
+      urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\Otras_Resoluciones\\objs\\planillon\\1");
+      lista = af.procesarNuevo(lper2, indice, urlPlanillonesOriginales, urlBaseDeDatos);
+   for (int i = 0; i < lista.size(); i++) {
+	System.out.println("Indice: "+i+" DNI: "+lista.get(i).getDni());
+    }
+    
     }
     
 }
