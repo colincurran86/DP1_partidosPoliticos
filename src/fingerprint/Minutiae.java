@@ -1,4 +1,5 @@
 package fingerprint;
+
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
@@ -11,7 +12,7 @@ public class Minutiae {
 
 	static int closerPoints = 5;
 	static double angleRange = 1.5;
-	
+
 	public static void crossingNumber(final int[][] givenImage, List<Point> minutiaeFound)
 			throws FileNotFoundException, UnsupportedEncodingException {
 
@@ -22,7 +23,7 @@ public class Minutiae {
 		 * givenImage[y].length; x++) { writer.print(givenImage[y][x]); }
 		 * writer.println("\n"); } writer.close();
 		 */
-		int CN = 0 ;
+		int CN = 0;
 		int[][] newMatrix = new int[givenImage.length][givenImage[0].length];
 		for (int y = 0; y < givenImage.length; y++) {
 			for (int x = 0; x < givenImage[y].length; x++) {
@@ -30,17 +31,17 @@ public class Minutiae {
 				if (givenImage[y][x] == 1) {
 					CN = rutovitz(y, x, givenImage);
 					if (CN == 1 || CN == 3)
-					newMatrix[y][x] = CN;
+						newMatrix[y][x] = CN;
 				} else
 					newMatrix[y][x] = 0;
-				
-				if (newMatrix[y][x] != 0 && (CN == 1 || CN == 3) ) {
-						
-					Point p = new Point(x,y);
+
+				if (newMatrix[y][x] != 0 && (CN == 1 || CN == 3)) {
+
+					Point p = new Point(x, y);
 					minutiaeFound.add(p);
-					//if (CN == 1) minutiaeT.add(p);
-					//if (CN == 3) minutiaeB.add(p);
-					
+					// if (CN == 1) minutiaeT.add(p);
+					// if (CN == 3) minutiaeB.add(p);
+
 				}
 			}
 		}
@@ -54,93 +55,88 @@ public class Minutiae {
 			writer.println("\n");
 		}
 		writer.close();
-		
 
 	}
-	
 
-	public static void removeFalseMinutiae(List<Point> minutiae){
-		
+	public static void removeFalseMinutiae(List<Point> minutiae) {
+
 		int average = 0;
 		float distance = 0;
-		Point p1,p2;
-		
-		for (int i = 0; i < minutiae.size(); i ++){
+		Point p1, p2;
+
+		for (int i = 0; i < minutiae.size(); i++) {
 			p1 = minutiae.get(i);
-			for (int j = i+1; j < minutiae.size(); j++ ){
+			for (int j = i + 1; j < minutiae.size(); j++) {
 				p2 = minutiae.get(j);
 				// getting the distance between the points
-				distance = (float) Math.sqrt( (p1.getX() - p2.getX()) * (p1.getX() - p2.getX()) + (p1.getY() - p2.getY()) * (p1.getY() - p2.getY()));
-				if (distance < 18 ) {
+				distance = (float) Math.sqrt((p1.getX() - p2.getX()) * (p1.getX() - p2.getX())
+						+ (p1.getY() - p2.getY()) * (p1.getY() - p2.getY()));
+				if (distance < 18) {
 					minutiae.remove(i);
-					i=i-1;
+					i = i - 1;
 					break;
-				}				
+				}
 			}
 		}
-	} 
-	
-	public static void removeBorder(int [][] imageData, List<Point> minutiae){
-	
+	}
 
-	} 
+	public static void removeBorder(int[][] imageData, List<Point> minutiae) {
 
-	
-	public static double AverageSameMinutiae(List<Point> minutiae){
-		
-		int average = 0 , cont = 0;
+	}
+
+	public static double AverageSameMinutiae(List<Point> minutiae) {
+
+		int average = 0, cont = 0;
 		float distance = 0, a = 0;
-		Point p1,p2;
-		
-		for (int i = 0; i < minutiae.size(); i ++){
+		Point p1, p2;
+
+		for (int i = 0; i < minutiae.size(); i++) {
 			p1 = minutiae.get(i);
-			for (int j = i+1; j < minutiae.size(); j++ ){
+			for (int j = i + 1; j < minutiae.size(); j++) {
 				p2 = minutiae.get(j);
 				// getting the distance between the points
-				distance = a + (float) Math.sqrt( (p1.getX() - p2.getX()) * (p1.getX() - p2.getX()) + (p1.getY() - p2.getY()) * (p1.getY() - p2.getY()));
-				cont ++;
+				distance = a + (float) Math.sqrt((p1.getX() - p2.getX()) * (p1.getX() - p2.getX())
+						+ (p1.getY() - p2.getY()) * (p1.getY() - p2.getY()));
+				cont++;
 				System.out.println(a);
-				
+
 			}
 		}
-		
+
 		System.out.println("DISTANCE" + distance);
 		System.out.println("CONT" + cont);
 		return distance / cont;
-		
-	} 
+
+	}
 
 	public static int rutovitz(int y, int x, int[][] givenImage) {
 
 		int acum = 0;
-		int valor1 = 0 ,valor2 = 0 ,valor3 = 0,valor4 = 0,valor5 = 0 ,valor6 = 0,valor7 = 0 ,valor8 = 0 ,valor9 = 0;
-		
-		 valor1 = givenImage[y][x + 1] ;
-		 valor7 = givenImage[y + 1][x];
-		 valor8 = givenImage[y + 1][x + 1] ;
-		 valor9 = givenImage[y][x + 1];
- 		 if (x==0 || y == 0){
-			 if (x == 0 && y == 0) valor4 =  givenImage[0][0];			
-			 else if (x == 0) {
-				 valor5 =  givenImage[y][0];
-				 valor6 =  givenImage[y + 1][0];
-			 } 
-			 else if (y == 0){
-				 valor2 =  givenImage[0][x + 1];
-				 valor3 =  givenImage[0][x];
-			 }
-			 else{
-				 valor2 =  givenImage[y - 1][x + 1];
-				 valor3 =  givenImage[y - 1][x];
-				 valor4 =  givenImage[y - 1][x - 1];	
-				 valor5 =  givenImage[y][x - 1];
-				 valor6 =  givenImage[y + 1][x - 1];
-			 }
+		int valor1 = 0, valor2 = 0, valor3 = 0, valor4 = 0, valor5 = 0, valor6 = 0, valor7 = 0, valor8 = 0, valor9 = 0;
 
-			 
-		 }
-	
-		
+		valor1 = givenImage[y][x + 1];
+		valor7 = givenImage[y + 1][x];
+		valor8 = givenImage[y + 1][x + 1];
+		valor9 = givenImage[y][x + 1];
+		if (x == 0 || y == 0) {
+			if (x == 0 && y == 0)
+				valor4 = 0;
+			else if (x == 0) {
+				valor5 = 0;
+				valor6 = 0;
+			} else if (y == 0) {
+				valor2 = 0;
+				valor3 = 0;
+			} else {
+				valor2 = givenImage[y - 1][x + 1];
+				valor3 = givenImage[y - 1][x];
+				valor4 = givenImage[y - 1][x - 1];
+				valor5 = givenImage[y][x - 1];
+				valor6 = givenImage[y + 1][x - 1];
+			}
+
+		}
+
 		acum = acum + Math.abs(valor1 - valor2);
 		acum = acum + Math.abs(valor2 - valor3);
 		acum = acum + Math.abs(valor3 - valor4);
@@ -258,14 +254,14 @@ public class Minutiae {
 				int val = analizePairListTuple(tIM, tBM);
 
 				if (val > 1) {
-					
+
 					totalRelations = totalRelations + 1;
-					//mTuplesBMAux.remove(j);
+					// mTuplesBMAux.remove(j);
 					break;
 					// si ambos puntos tienen como mínimo 2 tuplas iguales, se
 					// añaden a la lista de posibles candidatos
-					//maxPairs = val;
-					//	valJ = j;
+					// maxPairs = val;
+					// valJ = j;
 					// cantRepitencia++;
 
 					/*
@@ -281,35 +277,32 @@ public class Minutiae {
 					 */
 				}
 			}
-			//if (maxPairs != 0) {
-			//	possibleCandidateIM.add(i);
-			//	possibleCandidateBM.add(valJ);
-			//	mTuplesBMAux.remove(valJ);
-			//}
+			// if (maxPairs != 0) {
+			// possibleCandidateIM.add(i);
+			// possibleCandidateBM.add(valJ);
+			// mTuplesBMAux.remove(valJ);
+			// }
 		}
-		
+
 		return totalRelations;
 		/*
-		orderList(possibleCandidateIM);
-		orderList(possibleCandidateBM);
-
-		// Se separa los indices de los candidatos y de los excluidos!
-		List<Integer> indexListIM = new ArrayList<Integer>();
-		for (int i = 0; i < minutiaeFound; i++)
-			indexListIM.add(i);
-		for (int i = 0; i < possibleCandidateIM.size(); i++)
-			indexListIM.remove(possibleCandidateIM.get(i) - i);
-
-		excludedMinutiaeIM = indexListIM;
-
-		List<Integer> indexListBM = new ArrayList<Integer>();
-		for (int i = 0; i < minutiaeFound; i++)
-			indexListBM.add(i);
-		for (int i = 0; i < possibleCandidateBM.size(); i++)
-			indexListBM.remove(possibleCandidateBM.get(i) - i);
-
-		excludedMinutiaeBM = indexListBM;
-		*/
+		 * orderList(possibleCandidateIM); orderList(possibleCandidateBM);
+		 * 
+		 * // Se separa los indices de los candidatos y de los excluidos!
+		 * List<Integer> indexListIM = new ArrayList<Integer>(); for (int i = 0;
+		 * i < minutiaeFound; i++) indexListIM.add(i); for (int i = 0; i <
+		 * possibleCandidateIM.size(); i++)
+		 * indexListIM.remove(possibleCandidateIM.get(i) - i);
+		 * 
+		 * excludedMinutiaeIM = indexListIM;
+		 * 
+		 * List<Integer> indexListBM = new ArrayList<Integer>(); for (int i = 0;
+		 * i < minutiaeFound; i++) indexListBM.add(i); for (int i = 0; i <
+		 * possibleCandidateBM.size(); i++)
+		 * indexListBM.remove(possibleCandidateBM.get(i) - i);
+		 * 
+		 * excludedMinutiaeBM = indexListBM;
+		 */
 	}
 
 	private static int analizePairListTuple(List<Tupla> tIM, List<Tupla> tBM) {
@@ -394,38 +387,48 @@ public class Minutiae {
 					if (cuadranteIM == cuadranteBM && ratioIM == ratioBM && (angleIM > angleBM - angleRange)
 							&& (angleIM < angleBM + angleRange))
 						continue;
-					else {					
-						int cuadranteIMAux = 0,cuadranteBMAux=0;
-						double ratioIMAux = 0, angleIMAux = 0, ratioBMAux=0, angleBMAux=0;						
-						
-						if ((i + 2) < possibleCandidateIMAux.size())//existe siguiente punto tras eliminar
+					else {
+						int cuadranteIMAux = 0, cuadranteBMAux = 0;
+						double ratioIMAux = 0, angleIMAux = 0, ratioBMAux = 0, angleBMAux = 0;
+
+						if ((i + 2) < possibleCandidateIMAux.size())// existe
+																	// siguiente
+																	// punto
+																	// tras
+																	// eliminar
 							sacarCaracteristicas(minutiaeFound.get(possibleCandidateIMAux.get(i - 1)),
 									minutiaeFound.get(possibleCandidateIMAux.get(i)),
 									minutiaeFound.get(possibleCandidateIMAux.get(i + 2)), cuadranteIMAux, ratioIMAux,
 									angleIMAux);
-						if ((i + 2) < possibleCandidateIMAux.size())//existe siguiente punto tras eliminar
+						if ((i + 2) < possibleCandidateIMAux.size())// existe
+																	// siguiente
+																	// punto
+																	// tras
+																	// eliminar
 							sacarCaracteristicas(minutiaeFound.get(possibleCandidateBMAux.get(i - 1)),
 									minutiaeFound.get(possibleCandidateBMAux.get(i)),
 									minutiaeFound.get(possibleCandidateBMAux.get(i + 2)), cuadranteBMAux, ratioBMAux,
 									angleBMAux);
-						
-						if(cuadranteIMAux!=0)//elimina en IM
+
+						if (cuadranteIMAux != 0)// elimina en IM
 							if (cuadranteIMAux == cuadranteBM && ratioIMAux == ratioBM
 									&& (angleIMAux > angleBM - angleRange) && (angleIMAux < angleBM + angleRange)) {
 								possibleCandidateIMAux.remove(i + 1);
 								continue;
 							}
-						if(cuadranteBMAux!=0)//elimina en BM
+						if (cuadranteBMAux != 0)// elimina en BM
 							if (cuadranteIM == cuadranteBMAux && ratioIM == ratioBMAux
-								&& (angleIM > angleBMAux - angleRange) && (angleIM < angleBMAux + angleRange)) {
+									&& (angleIM > angleBMAux - angleRange) && (angleIM < angleBMAux + angleRange)) {
 								possibleCandidateBMAux.remove(i + 1);
 								continue;
 							}
-						if(cuadranteIMAux!=0 && cuadranteBMAux!=0){ //elimina en ambos
+						if (cuadranteIMAux != 0 && cuadranteBMAux != 0) { // elimina
+																			// en
+																			// ambos
 							possibleCandidateIMAux.remove(i + 1);
 							possibleCandidateBMAux.remove(i + 1);
 							continue;
-						}												
+						}
 					}
 				} else
 					break;
