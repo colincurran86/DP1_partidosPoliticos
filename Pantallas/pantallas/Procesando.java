@@ -107,6 +107,7 @@ public class Procesando extends JPanel {
 	}
 
 	public class ProcesoRecorte extends Thread {
+		
 		String mensaje;
 
 		public ProcesoRecorte(String msg) {
@@ -114,16 +115,13 @@ public class Procesando extends JPanel {
 		}
 
 		public void run() {
-
 			Util u = new Util();
 			u.gerardoRecortesWarning();
-
 		}
 
 		public void setMensaje(String msj) {
 			this.mensaje = msj;
 		}
-
 	}
 
 }

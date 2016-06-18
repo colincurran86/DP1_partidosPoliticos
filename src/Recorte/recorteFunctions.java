@@ -25,7 +25,7 @@ public class recorteFunctions {
     private int PX1, PY1, PX2, PY2, PX3, PY3;
     private ImagePlus padronJ = new ImagePlus();
     
-    public int contarPadrones(){
+    public int contarPadrones(String rutaPadrones){
         String workingDir = System.getProperty("user.dir"); // nos evitamos el problema de las rutas :'v
         return new File(workingDir + "/src/Recorte/padrones/").list().length;
     }

@@ -12,9 +12,9 @@ public class LecturaFolder {
 		for (final File fileEntry : folder.listFiles()) {
 	        if (fileEntry.isDirectory()) {
 	        	System.out.println("Directorio:" + fileEntry.getName());
-	        } else {
-	            System.out.println(fileEntry.getName());
-	        }
+	        } 
+	        else System.out.println(fileEntry.getName());
+	        
 	    }
 	}
 

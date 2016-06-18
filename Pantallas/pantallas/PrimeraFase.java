@@ -28,6 +28,7 @@ import clasesAux.Util;
 import models.PersonaReniec;
 
 public class PrimeraFase extends JPanel implements ActionListener {
+	
 	private JTextField txtFieldPlan;
 	private JTextField txtFieldBDRNV;
 	private JTextField txtFieldBDHuellas;
@@ -43,6 +44,8 @@ public class PrimeraFase extends JPanel implements ActionListener {
 	public static int porc = -1;
 	public static int choiceCM = 0;
 	public static int choiceCI = 0;
+	public static String rutaPadrones = new String();
+	public static String rutaExcel = new String();
 
 	/**
 	 * Create the panel.
@@ -130,34 +133,13 @@ public class PrimeraFase extends JPanel implements ActionListener {
 		}
 		if (e.getSource() == btnProcesar) {
 
-			// res = camposNull();
-			// if (res.equals("")) {// if (!res.equals("")) {
-			// JOptionPane.showMessageDialog(null, "Escoja las rutas de:\n"
-			// + res);
-			// } else {
-			//
-			// Procesando p1;
-			// p1 = new Procesando();
-			// p1.setVisible(true);
-			//
-			// // Principal.getFrame().getContentPane().setVisible(false);
-			// Principal.getFrame().setContentPane(p1);
-			//
-			//
-			//
-			// // p1.llamarNecesario();
-			//
-			// }
-
 			Procesando p1;
-
 			p1 = new Procesando();
 			p1.setVisible(true);
-
+			rutaPadrones = txtFieldPlan.getText();
+			rutaExcel = txtFieldBDRNV.getText();
 			Principal.getFrame().getContentPane().setVisible(false);
 			Principal.getFrame().setContentPane(p1);
-
-			// p1.llamarRecortes();
 
 		}
 

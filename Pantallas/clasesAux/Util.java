@@ -12,6 +12,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import pantallas.PrimeraFase;
 import Recorte.Main;
 import models.PersonaReniec;
 import models.ReniecBD;
@@ -36,14 +37,15 @@ public class Util {
 
 		Util u = new Util();
 		Main m = new Main();
+		PrimeraFase primeraFase = new PrimeraFase();
+
 		// txtFieldPlan.setText("D:\\Users\\jemarroquin\\git\\DP1_partidosPoliticos\\src\\Recorte\\Padrones");
-		// String formatearRutaPlan = u.formatearRuta(txtFieldPlan.getText());
-		m.main("C:\\Users\\User\\Desktop\\9no\\DP1\\DP1_partidosPoliticos\\src\\Recorte\\Padrones");
+		String formatearRutaPlan = u.formatearRuta(primeraFase.rutaPadrones);
+		m.main(formatearRutaPlan);
 
 		// txtFieldBDRNV.setText("D:\\Users\\jemarroquin\\git\\DP1_partidosPoliticos\\src");
-		// String formatearRutaBD = u.formatearRuta(txtFieldBDRNV.getText());
-		llenarBDReniec("C:\\Users\\User\\Desktop\\9no\\DP1\\Entrega de padrones"
-				+ "/registro.nacional.v.1.xlsx");
+		String formatearRutaBD = u.formatearRuta(primeraFase.rutaExcel);
+		llenarBDReniec(formatearRutaBD);
 
 		// escribirTextArea("****************************");
 		// System.out.println("**************************************************");

@@ -27,20 +27,17 @@ public class Main {
 	public static List<BufferedImage> listaBImage = new ArrayList<BufferedImage>()  ; 
 	public static int totalPadrones;
 
-    public  void  main(String args) {
-        // TODO Auto-generated method stub
-        String workingDir = System.getProperty("user.dir"); // nos evitamos el problema de las rutas :'v
-       //System.out.println(workingDir);
-       // System.out.println(args);
+    public  void  main(String rutaPadrones) {
+
+    	String workingDir = System.getProperty("user.dir"); // nos evitamos el problema de las rutas :'v
         int personasxPadron = 8;
         recorteFunctions rf = new recorteFunctions();
         RecogChar recogChar = new RecogChar();
-     //   recogChar.setVisible(false);
         recogChar.init();
 
         //verificamos cuantos padrones existen	
-        totalPadrones = rf.contarPadrones();    
-        rf.tamanhoEstandar(args, totalPadrones);
+        totalPadrones = rf.contarPadrones(rutaPadrones);    
+        rf.tamanhoEstandar(rutaPadrones, totalPadrones);
         
         for (int contPadrones = 0; contPadrones<totalPadrones; contPadrones++){
         
@@ -49,7 +46,7 @@ public class Main {
            // String ruta2 = workingDir + "/src/Recorte/Auxiliar/recorteCostado.jpg";
             //String ruta3 = workingDir + "/src/Recorte/Auxiliar/recorteBN.jpg";
 
-        	String ruta1 = args + "/padron.rayas.firmado." + (contPadrones+1) +".jpg";
+        	String ruta1 = rutaPadrones + "/padron.rayas.firmado." + (contPadrones+1) +".jpg";
         //	String rutaAlfa =  workingDir + "/src/Recorte/padrones/padron.rayas.firmado." + (contPadrones+1) +".jpg";
         	String ruta2 =  workingDir + "/src/Recorte/Auxiliar/recorteCostado.jpg";
         	String ruta3 = workingDir + "/src/Recorte/Auxiliar/recorteBN.jpg";
