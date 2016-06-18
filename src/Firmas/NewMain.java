@@ -63,9 +63,12 @@ public class NewMain {
       List<PersonaReniec> lper2 = new ArrayList<PersonaReniec>();
       lper2 = af.llenarDatosPruebaListaDeLista2();   
       urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\Otras_Resoluciones\\objs\\planillon\\1");
-      lista = af.procesarNuevo(lper2, indice, urlPlanillonesOriginales, urlBaseDeDatos);
-   for (int i = 0; i < lista.size(); i++) {
-	System.out.println("Indice: "+i+" DNI: "+lista.get(i).getDni());
+     // lista = af.procesarNuevo(lper2, indice, urlPlanillonesOriginales, urlBaseDeDatos);
+     List<Double>  resupuesta = af.procesarNuevo(lper2, indice, urlPlanillonesOriginales, urlBaseDeDatos);
+  // for (int i = 0; i < lista.size(); i++) {
+     for (int i = 0; i < resupuesta.size(); i++) {
+	//System.out.println("Indice: "+i+" DNI: "+lista.get(i).getDni());
+	   System.out.println("Indice: "+i+" DNI: "+resupuesta.get(i));
     }
     
     }

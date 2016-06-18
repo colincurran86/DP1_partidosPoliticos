@@ -6931,7 +6931,7 @@ public FirmaRecortada cortarFirma(String urlPlanillonesOriginales, int indice) {
 
 
 
-List<PersonaReniec> procesarFirmasNuevo(FirmaRecortada listaFirmas, List<PersonaReniec> listaDeListaPersonas, String urlBaseDeDatos)
+List<Double> procesarFirmasNuevo(FirmaRecortada listaFirmas, List<PersonaReniec> listaDeListaPersonas, String urlBaseDeDatos)
 		throws IOException {
 
 	double umbral = 5;
@@ -7136,11 +7136,12 @@ List<PersonaReniec> procesarFirmasNuevo(FirmaRecortada listaFirmas, List<Persona
 		if(listaPorcentajesCandidato.get(i).match==true){
 		
 		lrestorno.add(listaPorcentajesCandidato.get(i).pe);
-		porcentajeFinales.add(listaPorcentajesCandidato.get(i).porcentaje);
+		//porcentajeFinales.add(listaPorcentajesCandidato.get(i).porcentaje);
 		System.out.println("Similar; indice: "+i+" Porcentaje:"+listaPorcentajesCandidato.get(i).porcentaje+" porcetaje lista:");
 		}else
 			System.out.println(" indice: "+i+" Porcentaje:"+listaPorcentajesCandidato.get(i).porcentaje);	
 	
+		porcentajeFinales.add(listaPorcentajesCandidato.get(i).porcentaje);
 	}
 	
 	/*
@@ -7180,20 +7181,23 @@ List<PersonaReniec> procesarFirmasNuevo(FirmaRecortada listaFirmas, List<Persona
 */
 	
 	
-	return lrestorno;
+//	return lrestorno;
+	return porcentajeFinales;
 }
 
 
 
 
-List<PersonaReniec> procesarNuevo(List<PersonaReniec> listaDeListasPersonasReniec,int indice,String urlPlanillonesOriginales,String urlBaseDeDatos) throws IOException
+List<Double> procesarNuevo(List<PersonaReniec> listaDeListasPersonasReniec,int indice,String urlPlanillonesOriginales,String urlBaseDeDatos) throws IOException
 {	List<PersonaReniec> listaFinal = null;
     FirmaRecortada liistaFirmas;    
+    List<Double> resultados;
     liistaFirmas = cortarFirma(urlPlanillonesOriginales,indice); 
 	//JOptionPane.showMessageDialog(null, liistaFirmas.toIcon(), "Result ", JOptionPane.PLAIN_MESSAGE);
- listaFinal = procesarFirmasNuevo(liistaFirmas,listaDeListasPersonasReniec,urlBaseDeDatos);       
-    return listaFinal;
-    
+    //listaFinal = procesarFirmasNuevo(liistaFirmas,listaDeListasPersonasReniec,urlBaseDeDatos);       
+    resultados = procesarFirmasNuevo(liistaFirmas,listaDeListasPersonasReniec,urlBaseDeDatos);          
+    //return listaFinal;
+    return resultados;
 }
 
     
