@@ -53,14 +53,14 @@ public class Procesando extends JPanel {
 
 		// gerardoRecortesWarning();
 
-		System.out.println("aentre hilo util hilo bar");
+		System.out.println("Procesando . . .");
 
-		ProcesoBar hilo1 = new ProcesoBar("Hilo 1");
-		ProcesoRecorte hilo2 = new ProcesoRecorte("Hilo 2");
-		hilo1.setMensaje("Este es el mensaje del hilo 1");
-		hilo2.setMensaje("Mensaje hilo 2");
-		hilo1.start();
-		hilo2.start();
+		ProcesoBar hilo1 = new ProcesoBar("Hilo 1"); // Proceso de la barrera 
+		ProcesoRecorte hilo2 = new ProcesoRecorte("Hilo 2"); // Proceso Principal de recorte
+	//	hilo1.setMensaje("Este es el mensaje del hilo 1"); //
+	//	hilo2.setMensaje("Mensaje hilo 2"); //
+		hilo1.start(); // Proceso de la barrera 
+		hilo2.start(); // Proceso Principal de recorte
 
 	}
 
@@ -79,7 +79,6 @@ public class Procesando extends JPanel {
 	static public void escribirTextArea(String cadena) {
 
 		textArea.append(cadena + "\n");
-
 	}
 
 	public class ProcesoBar extends Thread {

@@ -3,22 +3,37 @@ package Recorte;
 import java.awt.FlowLayout;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import models.PersonaReniec;
+import models.ReniecBD;
+
+import org.apache.poi.hsmf.examples.Msg2txt;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import clasesAux.Util;
+import pantallas.Procesando;
 import pantallas.ProgressMonitorExample;
 import Catalano.Imaging.FastBitmap;
 import Catalano.Imaging.Filters.Resize;
-
+import Firmas.AlgoritmoFirmas;
 import OCR.RecogChar;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.Prefs;
+import ij.gui.MessageDialog;
 import ij.io.FileSaver;
 
 public class Main {
@@ -26,9 +41,15 @@ public class Main {
 	public static List<String> lista = new ArrayList<String>()  ; 
 	public static List<BufferedImage> listaBImage = new ArrayList<BufferedImage>()  ; 
 	public static int totalPadrones;
-
+	public static String rutaPlanillonEjecutandose ; 
+	
     public  void  main(String rutaPadrones) {
 
+		String formatearRutaBD = "D:\\Users\\jemarroquin\\git\\DP1_partidosPoliticos\\src\\registro.nacional.v.1.xlsx" ;
+	//	String formatearRutaBD = u.formatearRuta(primeraFase.rutaExcel);
+		llenarBDReniec(formatearRutaBD);
+		
+		
     	String workingDir = System.getProperty("user.dir"); // nos evitamos el problema de las rutas :'v
         int personasxPadron = 8;
         recorteFunctions rf = new recorteFunctions();
@@ -41,13 +62,15 @@ public class Main {
 		File folder = new File(rutaPadrones);
 		int contPadrones = 0;
 
-		for (final File fileEntry : folder.listFiles()) {
+		for (final File fileEntry : folder.listFiles()) { // abre cada planillon
 
 			String ruta1 = rutaPadrones + "/" + fileEntry.getName();
         	String ruta2 =  workingDir + "/src/Recorte/Auxiliar/recorteCostado.jpg";
         	String ruta3 = workingDir + "/src/Recorte/Auxiliar/recorteBN.jpg";
         	
-        
+        	System.out.println( ruta1);
+         rutaPlanillonEjecutandose = ruta1 ;
+         
             rf.recortarCostadosProcesarPadron(ruta1,ruta2,ruta3);
             
             
@@ -66,7 +89,7 @@ public class Main {
             int numero, valorOriginal = yDNI,   valorOriginalFirma = yFirmas, valorOriginalApellido = yApellido, valorOriginalNombre = yNombre;
             int distanceBetweenSquaresH = 87 ,distanceBetweenSquares = 14, widthSquare = 14, heightSquare = 84;
 
-            for (int n  = 0; n < 8; n++){    
+            for (int n  = 0; n < 8; n++){ // iterando en las filas     
             	
                 ImagePlus Copia1;
                 String rutaAlmacenar = workingDir + "/src/Recorte/Resultado/Persona"
@@ -101,7 +124,26 @@ public class Main {
 
 	              }
 	
-	               lista.add(dni);
+	            //   lista.add(dni);
+                Procesando.escribirTextArea("============================================");
+                Procesando.escribirTextArea("Se esta procesando el dni :"  + dni );
+                List<PersonaReniec>  listaPersonasReniec =  Util.ocrMasReniec2(dni); 
+	               
+                for (int i = 0 ; i < listaPersonasReniec.size()  ; i++ )
+                Procesando.escribirTextArea("La lista de candidatos es la siguente: "  + listaPersonasReniec.get(i).getDni() );
+                
+                if(listaPersonasReniec.size() != 0 ) 
+                {
+               try {
+				AlgoritmoFirmas.procesarNuevo(listaPersonasReniec, n , rutaPlanillonEjecutandose, "D:\\Users\\jemarroquin\\Desktop\\Nueva carpeta\\firmas.jpg");                      
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+                
+                }
+                
+	               
             }    
             
             int apellidoEspacios = 25, nombreEspacios = 23, espacioLetras = 15, alturaLetras = 85;
@@ -209,5 +251,64 @@ public class Main {
     }
     
     
+    public void llenarBDReniec(String rutaBD) {
+		try {
+			InputStream file = new FileInputStream(new File(rutaBD));
+
+			// Get the workbook instance for XLS file
+			XSSFWorkbook wb = new XSSFWorkbook(file); // (2)
+
+			// Get third(numbering starts from 0) sheet from the workbook
+			XSSFSheet sheet = wb.getSheetAt(0);
+
+			// Get iterator to all the rows in current sheet
+			Iterator<Row> rowIterator = sheet.iterator();
+
+			Row row = rowIterator.next();
+			// CABECERAS!
+			Cell nombre = row.getCell(0);
+			Cell apellido = row.getCell(1);
+			Cell dni = row.getCell(2);
+			Cell ubigeo = row.getCell(3);
+			Cell idHuella = row.getCell(4);
+			Cell idFirma = row.getCell(5);
+
+			ReniecBD.lista = null;
+			ReniecBD.lista = new ArrayList<PersonaReniec>();
+
+			// Iterate through rows
+			while (rowIterator.hasNext()) {
+				row = rowIterator.next();
+				// Index of column D is 3 (A->0, B->1, etc)
+				nombre = row.getCell(0);
+				apellido = row.getCell(1);
+				dni = row.getCell(2);
+				ubigeo = row.getCell(3);
+				idHuella = row.getCell(4);
+				idFirma = row.getCell(5);
+
+				PersonaReniec pr = new PersonaReniec();
+				pr.setApellidos(apellido.getStringCellValue());
+				int valor = (int) dni.getNumericCellValue();
+				String val = "" + valor;
+				if (val.length() != 8)
+					for (int i = 0; i < 8 - val.length(); i++)
+						val = "0" + val;
+				pr.setDni(val);
+				pr.setIdFirma(idFirma.getStringCellValue());
+				pr.setIdHuella((int) idHuella.getNumericCellValue());
+				pr.setNombre(nombre.getStringCellValue());
+				pr.setUbigeo((int) ubigeo.getNumericCellValue());
+
+				ReniecBD.lista.add(pr);
+				// System.out.println(cellA.getStringCellValue());
+				// System.out.println(cellB.getStringCellValue());
+
+				// Your business logic continues....
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 }

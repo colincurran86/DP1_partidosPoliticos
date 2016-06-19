@@ -13,6 +13,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import pantallas.PrimeraFase;
+import pantallas.Procesando;
 import Recorte.Main;
 import models.PersonaReniec;
 import models.ReniecBD;
@@ -38,29 +39,21 @@ public class Util {
 		Util u = new Util();
 		Main m = new Main();
 		PrimeraFase primeraFase = new PrimeraFase();
-
-		// txtFieldPlan.setText("D:\\Users\\jemarroquin\\git\\DP1_partidosPoliticos\\src\\Recorte\\Padrones");
-		String formatearRutaPlan = u.formatearRuta(primeraFase.rutaPadrones);
+		String formatearRutaPlan = "D:\\Users\\jemarroquin\\git\\DP1_partidosPoliticos\\src\\Recorte\\Padrones";
+	
+	//	String formatearRutaPlan = u.formatearRuta(primeraFase.rutaPadrones);
 		m.main(formatearRutaPlan);
 
-		// txtFieldBDRNV.setText("D:\\Users\\jemarroquin\\git\\DP1_partidosPoliticos\\src");
-		String formatearRutaBD = u.formatearRuta(primeraFase.rutaExcel);
-		llenarBDReniec(formatearRutaBD);
-
-		// escribirTextArea("****************************");
-		// System.out.println("**************************************************");
-		// System.out.println("DNIasdasdsd");
-		// System.out.println("**************************************************");
-
-		// escribirTextArea("DNI");
-
-		// escribirTextArea("******************************************");
-
-		// List<PersonaReniec> pr1 = u.ocrMasReniec();
+	
+		
+		
+		
+		/*
+		
 		List<List<PersonaReniec>> pr1 = u.ocrMasReniec();
 		String cadenaFinal = new String();
 
-		//System.out.println(pr1.size());
+	
 		for (int i = 0; i < pr1.size(); i++) {
 			cadenaFinal = "DNI Reconocido es el siguiente: ";
 			for (int j = 0; j < pr1.get(i).size(); j++){
@@ -77,38 +70,6 @@ public class Util {
 		System.out.println("FIRMAS Reconocidas : ");
 		System.out.println("**************************************************");
 
-		// Firmas
-
-		// Main mainRecorte = new Main();
-
-		/*
-		 * descomentar aquiii2222 List<String> idFirmasLst = new
-		 * ArrayList<String>(); List<Integer> idRegistroLst = new
-		 * ArrayList<Integer>();
-		 * 
-		 * // si no encuentra el dni, no considera la firma :v for (int i = 0; i
-		 * < pr1.size(); i++) { if (pr1.get(i) != null) {
-		 * idFirmasLst.add(pr1.get(i).getIdFirma()); idRegistroLst.add(i + 1); }
-		 * else { idFirmasLst.add("-1"); idRegistroLst.add(i + 1); } }
-		 * 
-		 * List<Resultado> listaTemporalPersona = null; System.out.println(
-		 * "Inicio firmas:"); AlgoritmoFirmas algoritmoFrimas = new
-		 * AlgoritmoFirmas();
-		 * 
-		 * try { listaTemporalPersona =
-		 * algoritmoFrimas.verificarFirmas6(idRegistroLst, idFirmasLst,
-		 * Main.listaBImage, u.formatearRuta2(formatearRutaBD +
-		 * "/firmas.jpg/")); System.out.println("Porcentaje de Firmas "); for
-		 * (int i = 0; i < listaTemporalPersona.size(); i++) {
-		 * System.out.println("% " + listaTemporalPersona.get(i).porcentaje +
-		 * " IDPersona:  " + listaTemporalPersona.get(i).idPersona); }
-		 * 
-		 * System.out.println("Fin firmas:"); System.out.println(
-		 * "**************************************************");
-		 * 
-		 * } catch (IOException e1) { // TODO Auto-generated catch block
-		 * e1.printStackTrace(); }
-		 */ // descomentar aquiii222
 		
 		long endTime = System.currentTimeMillis();
 		double totalTime = (endTime - startTime) / 1000.0;
@@ -117,17 +78,8 @@ public class Util {
 				+ " segundos \n";
 		this.mensajeFinal = this.mensajeFinal + almacenarMensaje;
 		
-		//System.out.println(this.mensajeFinal);
-		
-		// System.out.println("Finalizado");
-		// System.out.println("El tiempo total de ejecucion del programa fue " +
-		// totalTime + " segundos");
-
-		// System.out.println("El tiempo total de ejecucion del programa fue " +
-		// totalTime + " segundos");
-
-		// aumentarPorcentaje(100);
-
+	
+*/
 	}
 
 	public String formatearRuta2(String ruta) {
@@ -140,67 +92,8 @@ public class Util {
 		return nuevaRuta;
 	}
 
-	public void llenarBDReniec(String rutaBD) {
-		try {
-			InputStream file = new FileInputStream(new File(rutaBD));
-
-			// Get the workbook instance for XLS file
-			XSSFWorkbook wb = new XSSFWorkbook(file); // (2)
-
-			// Get third(numbering starts from 0) sheet from the workbook
-			XSSFSheet sheet = wb.getSheetAt(0);
-
-			// Get iterator to all the rows in current sheet
-			Iterator<Row> rowIterator = sheet.iterator();
-
-			Row row = rowIterator.next();
-			// CABECERAS!
-			Cell nombre = row.getCell(0);
-			Cell apellido = row.getCell(1);
-			Cell dni = row.getCell(2);
-			Cell ubigeo = row.getCell(3);
-			Cell idHuella = row.getCell(4);
-			Cell idFirma = row.getCell(5);
-
-			ReniecBD.lista = null;
-			ReniecBD.lista = new ArrayList<PersonaReniec>();
-
-			// Iterate through rows
-			while (rowIterator.hasNext()) {
-				row = rowIterator.next();
-				// Index of column D is 3 (A->0, B->1, etc)
-				nombre = row.getCell(0);
-				apellido = row.getCell(1);
-				dni = row.getCell(2);
-				ubigeo = row.getCell(3);
-				idHuella = row.getCell(4);
-				idFirma = row.getCell(5);
-
-				PersonaReniec pr = new PersonaReniec();
-				pr.setApellidos(apellido.getStringCellValue());
-				int valor = (int) dni.getNumericCellValue();
-				String val = "" + valor;
-				if (val.length() != 8)
-					for (int i = 0; i < 8 - val.length(); i++)
-						val = "0" + val;
-				pr.setDni(val);
-				pr.setIdFirma(idFirma.getStringCellValue());
-				pr.setIdHuella((int) idHuella.getNumericCellValue());
-				pr.setNombre(nombre.getStringCellValue());
-				pr.setUbigeo((int) ubigeo.getNumericCellValue());
-
-				ReniecBD.lista.add(pr);
-				// System.out.println(cellA.getStringCellValue());
-				// System.out.println(cellB.getStringCellValue());
-
-				// Your business logic continues....
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public List<PersonaReniec> ocrMasReniec2(String dni){
+		
+	public static List<PersonaReniec> ocrMasReniec2(String dni){
 		List<PersonaReniec> candidatos = new ArrayList<PersonaReniec>();
 		
 		boolean entro = false;
@@ -223,51 +116,7 @@ public class Util {
 		return candidatos;
 	}
 	
-
-	public List<List<PersonaReniec>> ocrMasReniec() {
-		// List<PersonaReniec> pr = new ArrayList<PersonaReniec>();
-		List<List<PersonaReniec>> candidatos = new ArrayList<List<PersonaReniec>>();
-		/*
-		for (int i = 0; i < Main.lista.size(); i++) {
-			List<PersonaReniec> xd = new ArrayList<PersonaReniec>();
-			candidatos.add(xd);
-		}*/
-
-		boolean entro = false;
-
-		List<PersonaReniec> a = new ArrayList<PersonaReniec>();
-		for (int i = 0; i < Main.lista.size(); i++) 
-			System.out.println(Main.lista.get(i));
-		
-		//System.out.println(Main.lista.size());
-		for (int i = 0; i < Main.lista.size(); i++) {
-			String dni = Main.lista.get(i);
-			entro = false;
-			// System.out.println("DNI RECONOCIDO DE LAS IMAGENES: " + dni);
-			// mensajeFinal = mensajeFinal + "DNI RECONOCIDO DE LAS IMAGENES: "
-			// + dni + "\n";
-			
-			for (int j = 0; j < ReniecBD.lista.size(); j++)
-				if (dni != null || dni.length() != 0) {
-					if (ReniecBD.lista.get(j).getDni().compareTo(dni)==0) {
-						System.out.println(ReniecBD.lista.size());
-						entro = true;
-						a = sacaListaCandidatos(dni);
-						//System.out.println(a.size());
-						a.add(ReniecBD.lista.get(j));
-					}
-				}
-			if (!entro){
-				a = sacaListaCandidatos(dni);
-				//System.out.println(a.size());
-			}
-			candidatos.add(a);
-		}
-
-		return candidatos;
-	}
-
-	public List<PersonaReniec> sacaListaCandidatos(String dni) {
+	public static List<PersonaReniec> sacaListaCandidatos(String dni) {
 		List<PersonaReniec> candidatos = new ArrayList<PersonaReniec>();
 		// String dniCad="" + dni;
 
