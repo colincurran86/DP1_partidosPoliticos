@@ -191,7 +191,7 @@ public class Util {
 				idFirma = row.getCell(5);
 
 				PersonaReniec pr = new PersonaReniec();
-				pr.setApellidos(apellido.getStringCellValue());
+				pr.setApellidos(apellido.getStringCellValue());				
 				int valor = (int) dni.getNumericCellValue();
 				String val = "" + valor;
 				if (val.length() != 8)
@@ -365,28 +365,37 @@ public class Util {
 									//System.out.println("DNI: "+pr.getDni());
 								}									
 								else{
-									for(int m=0;m<candidatos.size();m++)										
-										if(candidatos.get(m).getDni().compareTo(ReniecBD.lista.get(k).getDni())!=0){											
+									boolean entre=false;
+									for(int m=0;m<candidatos.size();m++){
+										String dniCan=candidatos.get(m).getDni();
+										//System.out.println(dniCan);
+										//if(dniCan.length()!=0) System.out.println(dniCan);
+										if(dniCan.compareTo(ReniecBD.lista.get(k).getDni())==0){										
 											//System.out.println("ENTRE");
-											PersonaReniec pr=new PersonaReniec();
+											entre=true;
+											break;
+											/*PersonaReniec pr=new PersonaReniec();
 											pr.setApellidos(ReniecBD.lista.get(k).getApellidos());
 											pr.setDni(ReniecBD.lista.get(k).getDni());
 											pr.setIdFirma(ReniecBD.lista.get(k).getIdFirma());
 											pr.setIdHuella(ReniecBD.lista.get(k).getIdHuella());
 											pr.setNombre(ReniecBD.lista.get(k).getNombre());
 											pr.setUbigeo(ReniecBD.lista.get(k).getUbigeo());
-											candidatos.add(pr);
+											candidatos.add(pr);*/
+											//System.out.println("tamanho: "+candidatos.size());
 											//System.out.println(candidatos.get(candidatos.size()-1).getDni());
 											//System.out.println("DNI: "+pr.getDni());
-										}			
-									
-								}															
+										}														
+									}
+									if(!entre)candidatos.add(ReniecBD.lista.get(k));
+								}		
 							}							
 						}
 					}
 				}
 			}
 		}
+		//for(int i=0;i<candidatos.size();i++) System.out.println("dni: "+candidatos.get(i).getDni());
 		return candidatos;
 		/*
 		 * String dniRecortado=""; int size;

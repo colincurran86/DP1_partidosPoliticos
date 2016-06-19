@@ -22,10 +22,10 @@ public class MaixAux2 {
        
     	Util u = new Util();
     	u.llenarBDReniec("C:\\Users\\Administrador\\Desktop\\Christian\\9no\\DP1\\Entrega de padrones\\registro.nacional.v.1.xlsx");
-    	List<PersonaReniec> l=u.sacaListaCandidatos("10132272");
+    	List<PersonaReniec> l=u.sacaListaCandidatos("40896757");
     	System.out.println("LISTA CANDIDATOS: "+l.size());
     	for(int i=0;i<l.size();i++)
-    		l.get(i).getDni();
+    		System.out.println(l.get(i).getDni());
     }
 
 }
