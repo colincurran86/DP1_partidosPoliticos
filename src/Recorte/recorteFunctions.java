@@ -47,7 +47,6 @@ public class recorteFunctions {
     }
 
      
-    
     public void eliminarLineasNegras(){
         
         int width=padronJ.getWidth();
