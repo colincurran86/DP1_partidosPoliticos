@@ -162,10 +162,10 @@ public class mainHuellas {
 
 			// MOSTRANDO LAS MINUCIAS ENCONTRADAS
 
-			ImageIO.write(imageBase, "png", new File(
-					"C:/Users/Administrador/Desktop/Christian/9no/DP1/GIT GIT GIT GIT/adb-installer.log/src/fingerprint/MinuciasBase.png"));
-			ImageIO.write(imageInput, "png", new File(
-					"C:/Users/Administrador/Desktop/Christian/9no/DP1/GIT GIT GIT GIT/adb-installer.log/src/fingerprint/MinuciasInput.png"));
+			//ImageIO.write(imageBase, "png", new File(
+			//		"C:/Users/Administrador/Desktop/Christian/9no/DP1/GIT GIT GIT GIT/adb-installer.log/src/fingerprint/MinuciasBase.png"));
+			//ImageIO.write(imageInput, "png", new File(
+			//		"C:/Users/Administrador/Desktop/Christian/9no/DP1/GIT GIT GIT GIT/adb-installer.log/src/fingerprint/MinuciasInput.png"));
 
 			// sacar las 10 tuplas de c/ minucia
 
@@ -187,22 +187,3 @@ public class mainHuellas {
 	}
 }
 
-/*
- * //hallo la lista de minucias que serán posibles candidatos en ambas imagenes
- * List<Integer> possibleCandidateIM=new ArrayList<Integer>(); List<Integer>
- * possibleCandidateBM=new ArrayList<Integer>();
- * 
- * List<Integer> excludedMinutiaeIM=new ArrayList<Integer>();//se vuelve a armar
- * la estructura con estos puntos despues List<Integer> excludedMinutiaeBM=new
- * ArrayList<Integer>();
- * 
- * Minutiae.matchingMinutiae(mTuplesIM,mTuplesBM,possibleCandidateIM,
- * possibleCandidateBM,
- * excludedMinutiaeIM,excludedMinutiaeBM,minutiaeFound.size());
- * 
- * Minutiae.orderTreeStructure(minutiaeFound,possibleCandidateIM);
- * Minutiae.orderTreeStructure(minutiaeFound, possibleCandidateBM);
- * 
- * Minutiae.comparisonAtTreeStructure(minutiaeFound,possibleCandidateIM,
- * possibleCandidateBM, excludedMinutiaeIM,excludedMinutiaeBM);
- */

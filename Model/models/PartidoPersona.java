@@ -5,7 +5,7 @@ public class PartidoPersona
 	private PersonaReniec persona = new PersonaReniec();
 	private PartidoPolitico partido = new PartidoPolitico();
 	private String observacion = new String();
-	private int condicionRepetido ;
+	private int condicionRepetido = 0 ;
 	
 	public PersonaReniec getPersonaReniec() {
 		return persona;
@@ -27,7 +27,7 @@ public class PartidoPersona
 		return condicionRepetido;
 	}
 	
-	public void setCondicion(){
+	public void setCondicion(int condicionRepetido){
 		this.condicionRepetido = condicionRepetido;
 	}
 	

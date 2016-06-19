@@ -136,7 +136,7 @@ public class Main {
                             Copia2.setRoi(yHuellas+2, alturaFirma2+2 , widthSquare , heightSquare+2);
                             if (n != 7 ) alturaFirma2 = rf.obtenerSiguienteEspacioFirmas(yFirmas+5, alturaFirma2+2);
                             IJ.run(Copia2, "Crop", ""); 
-                            //AlgoritmoHuellas.procesarNuevo(listaPersonasReniec,Copia2,rutaHuella);
+                           //AlgoritmoHuellas.procesarNuevo(listaPersonasReniec,Copia2,rutaHuella);
                     	
                     	} catch (IOException e) {
                     		// TODO Auto-generated catch block

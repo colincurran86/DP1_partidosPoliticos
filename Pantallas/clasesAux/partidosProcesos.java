@@ -64,16 +64,24 @@ public class partidosProcesos {
 	}
 	
 	
-	public static void verificarDuplicados(List<PartidoPersona>personaReniec){
+	public static List<PartidoPersona> verificarDuplicados(List<PartidoPersona>partidoPersona){
 		
-		for (int i = 0; i<personaReniec.size(); i++){
-			
-			
-			
+		
+		List<PartidoPersona> nuevaLista = new ArrayList<PartidoPersona>();
+		//Verificamos los duplicados para cada partido politico
+		for (int i = 0; i<partidoPersona.size(); i++){
+				if (partidoPersona.get(i).getCondicion() == 0){
+					for (int j = i+1; j<partidoPersona.size();j++){
+						if (partidoPersona.get(i).getPersonaReniec().getDni().compareTo(partidoPersona.get(j).getPersonaReniec().getDni()) == 0){
+							nuevaLista.add(partidoPersona.get(j));
+							partidoPersona.get(j).setCondicion(1);
+							break;
+						}
+					}
+				}
 		}
 		
-		
-		
+		return nuevaLista;
 		
 	}
 	
