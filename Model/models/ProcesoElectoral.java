@@ -11,8 +11,15 @@ public class ProcesoElectoral {
 	private Date fechaIni;
 	private Date fechaFin;
 	private int idCalendario;
+	private int totalPersonas;
 	
 	
+	public int getTotalPersonas() {
+		return totalPersonas;
+	}
+	public void setTotalPersonas(int totalPersonas) {
+		this.totalPersonas = totalPersonas;
+	}
 	public String getNombre() {		
 		return nombre;
 	}

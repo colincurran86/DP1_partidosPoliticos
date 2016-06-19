@@ -33,8 +33,7 @@ public class CheckListPartPol extends JFrame {
   public CheckListPartPol(  String[] strs ) {
     super("CheckList Example");
     
-    //String[] strs = { "swing", "home", "basic", "metal", "JList" };
-
+    //String[] strs = { "swing", "home", "basic", "metal", "JList" };    
     final JList list = new JList(createData(strs));
 
     list.setCellRenderer(new CheckListRenderer());
@@ -60,8 +59,9 @@ public class CheckListPartPol extends JFrame {
         for (int i = 0; i < n; i++) {
           CheckableItem item = (CheckableItem) model.getElementAt(i);
           if (item.isSelected()) {
-        	    Carga.ppEscogidos.add(  Configuracion.listaPP.get(i)     ) ; 
+        	    Carga.ppEscogidos.add(  Configuracion.listaPP.get(i)     ) ;
         	    
+        	    //System.exit(0);
         	  //  System.out.println(i);
         	   // System.out.println(  Configuracion.listaPP.get(i).getNombre()     );
         	  //aquiii es 
