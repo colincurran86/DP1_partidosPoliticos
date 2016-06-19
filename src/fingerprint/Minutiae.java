@@ -119,10 +119,10 @@ public class Minutiae {
 		valor8 = givenImage[y + 1][x + 1];
 		valor9 = givenImage[y][x + 1];
 		System.out.println("x: " + x + " y:" + y);
-		if (x == 0 || y == 0) {
-			if (x == 0 && y == 0)
+		if ( (x == 0 || x == 77) || y == 0) {
+			if ((x == 0 || x == 77) && y == 0)
 				valor4 = 0;
-			else if (x == 0) {
+			else if (x == 0 || x == 77) {
 				valor5 = 0;
 				valor6 = 0;
 			} else if (y == 0) {

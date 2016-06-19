@@ -1,3 +1,4 @@
+
 package fingerprint;
 
 import java.awt.Color;
@@ -21,7 +22,7 @@ public class mainHuellas {
 	 */
 
 
-	public void principal(BufferedImage imageInput, BufferedImage imageBase) throws IOException {
+	public static double principal(BufferedImage imageInput, BufferedImage imageBase) throws IOException {
 
 		int totalMatching;
 		// BufferedImage imageBase = buscarimageBase(dni);
@@ -99,8 +100,9 @@ public class mainHuellas {
 		
 		if (minutiaeFoundBase.size() < 6 || minutiaeFoundInput.size() < 6) {
 			//VALIDACION SI NO SE LOGRA TENER LOS PUNTOS SUFICIENTES
-			totalMatching = -1;
-						
+			//totalMatching = -1;
+			return -1;
+			
 		} else {
 			// System.out.println(minutiaeFound.size()); // total de minucias
 
@@ -176,13 +178,17 @@ public class mainHuellas {
 			List<MinutiaeTuples> mTuplesBM = Minutiae.getTuplesFeatures(minutiaeFoundBase);
 			// = Minutiae.getTuplesFeatures(minutiaeFound);
 
+
 			totalMatching = Minutiae.matchingMinutiae(mTuplesIM, mTuplesBM);
-			System.out.println("Total de matcheo " + totalMatching);
-			if (totalMatching > minutiaeFoundBase.size() / 2)
-				System.out.println("True"); // total de minucias
-			else
-				System.out.println("False");
-		}
+			double porcentaje = (totalMatching * (1.0)) / minutiaeFoundBase.size();
+			return porcentaje * 100;
+			
+			//System.out.println("Total de matcheo " + totalMatching);
+			//if (totalMatching > minutiaeFoundBase.size() / 2)
+			//	System.out.println("True"); // total de minucias
+			//else
+			//	System.out.println("False");
+		}	
 
 	}
 }

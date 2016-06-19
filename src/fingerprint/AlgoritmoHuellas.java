@@ -1,3 +1,4 @@
+
 package fingerprint;
 
 import ij.ImagePlus;
@@ -23,7 +24,11 @@ public class AlgoritmoHuellas {
 			try {		
 				
 				BufferedImage imageBase = buscarImageBase(idHuella, rutaHuella);
-				mhuellas.principal(imageInput.getBufferedImage(), imageBase);
+				double Porcentaje = mhuellas.principal(imageInput.getBufferedImage(), imageBase);
+				if (Porcentaje == -1){
+					System.out.println("No se pudo obtener un resultado por la calidad de la imagen");
+				}
+				else System.out.println("El porcentaje es " + Porcentaje + "%");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
