@@ -13,6 +13,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import pantallas.PrimeraFase;
+import pantallas.Procesando;
 import Recorte.Main;
 import models.PersonaReniec;
 import models.ReniecBD;
@@ -38,10 +39,10 @@ public class Util {
 		Util u = new Util();
 		Main m = new Main();
 		PrimeraFase primeraFase = new PrimeraFase();
-
-		// txtFieldPlan.setText("D:\\Users\\jemarroquin\\git\\DP1_partidosPoliticos\\src\\Recorte\\Padrones");
+		//String formatearRutaPlan = "D:\\Users\\jemarroquin\\git\\DP1_partidosPoliticos\\src\\Recorte\\Padrones";
 		String formatearRutaPlan = u.formatearRuta(primeraFase.rutaPadrones);
-		m.main(formatearRutaPlan);
+		String formatearRutaFima = u.formatearRuta(primeraFase.rutaFirma);
+		String formatearRutaHuella = u.formatearRuta(primeraFase.rutaHuella);
 
 		// txtFieldBDRNV.setText("D:\\Users\\jemarroquin\\git\\DP1_partidosPoliticos\\src");
 		String formatearRutaBD = u.formatearRuta(primeraFase.rutaExcel);
@@ -69,8 +70,13 @@ public class Util {
 			}
 			cadenaFinal = cadenaFinal + "\n";
 		}
+	
 
-		this.mensajeFinal = cadenaFinal;
+	   for ( int i = 0 ; i < PrimeraFase.ppescogidos.size()  ; i++ ) {
+		   Procesando.escribirTextArea("Partido Político: " + PrimeraFase.ppescogidos.get(i).getNombre());
+		   
+		   	m.main(formatearRutaPlan + "/"+ PrimeraFase.ppescogidos.get(i).getNombre() , PrimeraFase.ppescogidos.get(i), formatearRutaFima, formatearRutaHuella);
+	   }
 
 		System.out.println("**************************************************");
 		System.out.println("FIRMAS Reconocidas : ");
@@ -127,6 +133,15 @@ public class Util {
 
 		// aumentarPorcentaje(100);
 
+	//	String formatearRutaPlan = u.formatearRuta(primeraFase.rutaPadrones);
+	   
+	   
+	   
+	   
+	   
+	   Procesando.escribirTextArea("Total del tiempo consumido: " + totalTime);
+	   
+	   
 	}
 
 	public String formatearRuta2(String ruta) {
@@ -199,7 +214,9 @@ public class Util {
 		}
 	}
 
-	public List<PersonaReniec> ocrMasReniec2(String dni) {
+	public static List<PersonaReniec> ocrMasReniec2(String dni) {
+		
+		
 		List<PersonaReniec> candidatos = new ArrayList<PersonaReniec>();
 
 		boolean entro = false;
@@ -264,7 +281,8 @@ public class Util {
 		return candidatos;
 	}
 
-	public List<PersonaReniec> sacaListaCandidatos(String dni) {
+	
+	public static List<PersonaReniec> sacaListaCandidatos(String dni) {
 		List<PersonaReniec> candidatos = new ArrayList<PersonaReniec>();
 		// String dniCad="" + dni;
 

@@ -12,69 +12,78 @@ import javax.swing.UIManager;
 
 import clasesAux.Util;
 
-public class ProgressMonitorExample implements ActionListener {
+public class ProgressMonitorExample  implements ActionListener {
 
-	static ProgressMonitor pbar;
-	static int porcentaje = 0;
-	public static int counter = 0;
-	Timer timer = new Timer(1000, this);
+  static ProgressMonitor pbar;
+  static int porcentaje = 0 ;
+  public static int counter = 0;
+  Timer timer = new Timer(1000, this);
+  
+  public ProgressMonitorExample() {
+   // super("Progress Monitor Demo");
+	  
+	  // UIManager.put("ProgressMonitor.progressText", "Cargando");
+	   // UIManager.put("OptionPane.cancelButtonText", "Go Away");
+	    //UIManager.
+	    
+	    
+    //setSize(250, 1000);
+    //this.setVisible(false);
+   // setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-	public ProgressMonitorExample(int num) {
-		// super("Progress Monitor Demo");
+  //  pbar = new ProgressMonitor(null, "Monitoring Progress",  "Initializing . . .", 0, 100);
+    
 
-		// UIManager.put("ProgressMonitor.progressText", "Cargando");
-		// UIManager.put("OptionPane.cancelButtonText", "Go Away");
-		// UIManager.
+    // Fire a timer every once in a while to update the progress.
+  //  System.out.println("nummmm " + num);
+  
+    
+    porcentaje = 10 ;
+    timer.start();
+  //  setVisible(false);
+    
+  }
 
-		// setSize(250, 1000);
-		// this.setVisible(false);
-		// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+  public static void main(String args[]) {
+ //   UIManager.put("ProgressMonitor.progressText", "Cargando");
+  //  UIManager.put("OptionPane.cancelButtonText", "Go Away");
+  //  new ProgressMonitorExample();
+  }
 
-		// pbar = new ProgressMonitor(null, "Monitoring Progress", "Initializing
-		// . . .", 0, 100);
+  public void actionPerformed(ActionEvent e) {
+    // Invoked by the timer every half second. Simply place
+    // the progress monitor update on the event queue.
+    SwingUtilities.invokeLater(new Update());
+  }
 
-		// Fire a timer every once in a while to update the progress.
-		// System.out.println("nummmm " + num);
+  class Update implements Runnable {
+    public void run() {
+    /*
+      if (pbar.isCanceled()) {
+          pbar.close();
+        System.exit(1);
+      }
+      pbar.setProgress(counter);
+      pbar.setNote("Operation is " + counter + "% complete");
+      */
+     counter += porcentaje;
+//     int contador2 = 1;
+     
+  	Procesando.escribirTextArea( "" + counter );
+  	
+	Procesando.aumentarPorcentaje( counter);
+	
+	
+    if (counter >= 500 + porcentaje){
+    	
 
-		porcentaje = 10;
-		timer.start();
-		// setVisible(false);
+    	
+    	Procesando.escribirTextArea( Util.mensajeFinal );
+    	
+ 
+ timer.stop();
+   }
 
-	}
-
-	public static void main(String args[]) {
-		// UIManager.put("ProgressMonitor.progressText", "Cargando");
-		// UIManager.put("OptionPane.cancelButtonText", "Go Away");
-		// new ProgressMonitorExample();
-	}
-
-	public void actionPerformed(ActionEvent e) {
-		// Invoked by the timer every half second. Simply place
-		// the progress monitor update on the event queue.
-		SwingUtilities.invokeLater(new Update());
-	}
-
-	class Update implements Runnable {
-		public void run() {
-			/*
-			 * if (pbar.isCanceled()) { pbar.close(); System.exit(1); }
-			 * pbar.setProgress(counter); pbar.setNote("Operation is " + counter
-			 * + "% complete");
-			 */
-			counter += porcentaje;
-			// int contador2 = 1;
-
-			Procesando.escribirTextArea("" + counter);
-
-			Procesando.aumentarPorcentaje(counter);
-
-			if (counter >= 100 + porcentaje) {
-
-				Procesando.escribirTextArea(Util.mensajeFinal);
-
-				timer.stop();
-			}
-
-		}
-	}
+    }
+  }
 }

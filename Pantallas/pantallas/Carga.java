@@ -4,12 +4,14 @@ import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.UIManager;
 
+import models.PartidoPolitico;
 import models.TipoProceso;
 
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -28,6 +30,9 @@ public class Carga extends JPanel implements ActionListener{
 	public static int porc=-1;
 	public static int choiceCM=0;
 	public static int choiceCI=0;
+
+	public static List<PartidoPolitico> ppEscogidos = new ArrayList<PartidoPolitico>() ;
+	
 	
 	/**
 	 * Create the panel.
@@ -93,6 +98,7 @@ public class Carga extends JPanel implements ActionListener{
 				pf.porc=porc;
 				pf.choiceCI=choiceCI;
 				pf.choiceCM=choiceCM;
+				pf.ppescogidos = ppEscogidos;
 				pf.setVisible(true);
 				
 				Principal.getFrame().getContentPane().setVisible(false);

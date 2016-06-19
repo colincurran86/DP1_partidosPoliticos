@@ -4,11 +4,16 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.Timer;
 
 import java.awt.Container;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -19,13 +24,19 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
+import javax.swing.table.AbstractTableModel;
 
+import bModel.ProcessManager;
+import pantallas.TipoProcesoPanel.MyTableModel;
 import Firmas.AlgoritmoFirmas;
 import Firmas.Resultado;
 import Recorte.Main;
 import clasesAux.Testing;
 import clasesAux.Util;
+import models.PartidoPolitico;
 import models.PersonaReniec;
+import models.TipoProceso;
 
 public class PrimeraFase extends JPanel implements ActionListener {
 	
@@ -39,16 +50,18 @@ public class PrimeraFase extends JPanel implements ActionListener {
 	private JButton btnBuscarPlan;
 	private JButton btnBuscarBDHuellas;
 	private JButton btnBuscarBDFirmas;
+	private JTable tblPP;
+	MyTableModel ppModel;
 	public static int idPE = 0;
 	public static int idPP = 0;
 	public static int porc = -1;
 	public static int choiceCM = 0;
 	public static int choiceCI = 0;
+	public static List <PartidoPolitico> ppescogidos = new ArrayList < PartidoPolitico> ();
 	public static String rutaPadrones = new String();
 	public static String rutaExcel = new String();
-	private JTextField txtFieldRecortes;
-	private JButton btnBuscarRecortes;
-	private JLabel lblRutaDondeSe;
+	public static String rutaFirma = new String();
+	public static String rutaHuella = new String();
 
 	/**
 	 * Create the panel.
@@ -115,22 +128,24 @@ public class PrimeraFase extends JPanel implements ActionListener {
 		btnBuscarBDFirmas = new JButton("Buscar");
 		btnBuscarBDFirmas.setBounds(432, 243, 89, 23);
 		add(btnBuscarBDFirmas);
+		
+		
+		JPanel panel = new JPanel();
+		panel.setBorder(new TitledBorder(null, "Partidos politicos escogidos", TitledBorder.LEADING, TitledBorder.TOP,
+				null, null));
+		panel.setBounds(28, 307, 579, 151);
+		add(panel);
+		panel.setLayout(new GridLayout(1, 1, 0, 0));
 
-		
-		
-		txtFieldRecortes = new JTextField();
-		txtFieldRecortes.setBounds(90, 338, 339, 20);
-		add(txtFieldRecortes);
-		txtFieldRecortes.setColumns(10);
-		
-		btnBuscarRecortes = new JButton("Buscar");
-		btnBuscarRecortes.setBounds(432, 337, 89, 23);
-		add(btnBuscarRecortes);
-		
-		lblRutaDondeSe = new JLabel("Ruta donde se almacenar\u00E1n los recortes");
-		lblRutaDondeSe.setBounds(90, 313, 317, 14);
-		add(lblRutaDondeSe);
-		
+		JScrollPane scrollPane = new JScrollPane();
+		panel.add(scrollPane);
+
+		tblPP = new JTable();
+		scrollPane.setViewportView(tblPP);
+
+		ppModel = new MyTableModel();
+		tblPP.setModel(ppModel);
+			
 		
 		btnProcesar.addActionListener(this);
 		btnCancelar.addActionListener(this);
@@ -138,7 +153,6 @@ public class PrimeraFase extends JPanel implements ActionListener {
 		btnBuscarPlan.addActionListener(this);
 		btnBuscarBDHuellas.addActionListener(this);
 		btnBuscarBDFirmas.addActionListener(this);
-		btnBuscarRecortes.addActionListener(this);
 	}
 
 	@Override
@@ -153,11 +167,14 @@ public class PrimeraFase extends JPanel implements ActionListener {
 		}
 		if (e.getSource() == btnProcesar) {
 
+			
 			Procesando p1;
 			p1 = new Procesando();
 			p1.setVisible(true);
 			rutaPadrones = txtFieldPlan.getText();
 			rutaExcel = txtFieldBDRNV.getText();
+			rutaFirma = txtFieldBDFirmas.getText();
+			rutaHuella = txtFieldBDHuellas.getText();
 			Principal.getFrame().getContentPane().setVisible(false);
 			Principal.getFrame().setContentPane(p1);
 
@@ -228,23 +245,6 @@ public class PrimeraFase extends JPanel implements ActionListener {
 				txtFieldBDFirmas.setText(file.getAbsolutePath());
 			}
 		}
-		if(e.getSource()==btnBuscarRecortes){
-			JFileChooser jFileChooser = new JFileChooser();
-			jFileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-			jFileChooser.setAcceptAllFileFilterUsed(false);
-
-			int result = jFileChooser.showOpenDialog(this);
-			StringBuffer buffer = new StringBuffer();
-
-			if (result == JFileChooser.APPROVE_OPTION) {// abrir
-				File file = jFileChooser.getSelectedFile();
-				/*
-				 * if (!file.isDirectory()) file = file.getParentFile(); file=
-				 * file.getCurrentDirectory();
-				 */
-				txtFieldRecortes.setText(file.getAbsolutePath());
-			}
-		}
 	}
 
 	private String camposNull() {
@@ -271,5 +271,43 @@ public class PrimeraFase extends JPanel implements ActionListener {
 		}
 
 		return resultado;
+	}
+	
+	class MyTableModel extends AbstractTableModel {
+		//ArrayList<TipoProceso> tProcLst = ProcessManager.queryAllTProc();
+		String[] titles = { "Código", "Nombre" };
+
+		@Override
+		public int getColumnCount() {
+			// TODO Auto-generated method stub
+			return 2;
+		}
+
+		@Override
+		public int getRowCount() {
+			// TODO Auto-generated method stub
+			return ppescogidos.size();
+		}
+
+		@Override
+		public Object getValueAt(int row, int col) {
+			String value = "";
+			switch (col) {
+			case 0:
+				value = "" + ppescogidos.get(row).getId();
+				break;
+			case 1:
+				value = ppescogidos.get(row).getNombre();
+
+				break;
+			
+
+			}
+			return value;
+		}
+
+		public String getColumnName(int col) {
+			return titles[col];
+		}
 	}
 }

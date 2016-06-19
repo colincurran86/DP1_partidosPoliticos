@@ -20,18 +20,14 @@ public class mainHuellas {
 	 *            the command line arguments
 	 */
 
-	public BufferedImage buscarImageBase(int dni) {
 
-		return null;
-	}
-
-	public void principal(int dni, BufferedImage imageInput) throws IOException {
+	public void principal(BufferedImage imageInput, BufferedImage imageBase) throws IOException {
 
 		int totalMatching;
 		// BufferedImage imageBase = buscarimageBase(dni);
 
-		BufferedImage imageBase = ImageIO.read(new File(
-				"C:/Users/Administrador/Desktop/Christian/9no/DP1/GIT GIT GIT GIT/adb-installer.log/src/fingerprint/aa.png"));
+		//BufferedImage imageBase = ImageIO.read(new File(
+			//	"C:/Users/Administrador/Desktop/Christian/9no/DP1/GIT GIT GIT GIT/adb-installer.log/src/fingerprint/aa.png"));
 		// BufferedImage imageInput = ImageIO.read(new
 		// File("C:/Users/Administrador/Desktop/Christian/9no/DP1/GIT GIT GIT
 		// GIT/adb-installer.log/src/fingerprint/input.png"));

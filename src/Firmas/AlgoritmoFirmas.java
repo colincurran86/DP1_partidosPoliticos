@@ -18,11 +18,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.JOptionPane;
 
 import org.imgscalr.Scalr;
 import org.imgscalr.Scalr.Method;
 
+import pantallas.Procesando;
 import Catalano.Imaging.Filters.Crop;
 import Catalano.Imaging.Filters.OtsuThreshold;
 import Catalano.Imaging.Filters.Rotate;
@@ -6649,7 +6651,7 @@ List<PersonaReniec> procesar(List<List<PersonaReniec>> listaDeListasPersonasReni
 
 
 
-public FirmaRecortada cortarFirma(String urlPlanillonesOriginales, int indice) {
+public static FirmaRecortada cortarFirma(String urlPlanillonesOriginales, int indice) {
 
 	int anchos = 0;
 	int altos = 0;
@@ -6659,7 +6661,7 @@ public FirmaRecortada cortarFirma(String urlPlanillonesOriginales, int indice) {
 
 		ArrayList<FirmaRecortada> listaTemporal = new ArrayList<FirmaRecortada>();
 		System.out.println("Planillon: " + urlPlanillonesOriginales);
-		FastBitmap imagenPlanillon = new FastBitmap(urlPlanillonesOriginales +".jpg");
+		FastBitmap imagenPlanillon = new FastBitmap(urlPlanillonesOriginales );
 		Crop cortadorImagenes;
 		int factorPixel = 0;
 		int multiplicarFactor = 0;
@@ -6907,7 +6909,7 @@ public FirmaRecortada cortarFirma(String urlPlanillonesOriginales, int indice) {
 							+ i + "rr.jpg");
 			*/
 			cortadorImagenes.ApplyInPlace(i3);
-			JOptionPane.showMessageDialog(null, i3.toIcon(), "Result , indice", JOptionPane.PLAIN_MESSAGE);
+			//JOptionPane.showMessageDialog(null, i3.toIcon(), "Result , indice", JOptionPane.PLAIN_MESSAGE); Mostrar imagen cortada
 
 			FirmaRecortada fr = new FirmaRecortada();
 			fr.img = i3.toBufferedImage();
@@ -6931,7 +6933,7 @@ public FirmaRecortada cortarFirma(String urlPlanillonesOriginales, int indice) {
 
 
 
-List<Double> procesarFirmasNuevo(FirmaRecortada listaFirmas, List<PersonaReniec> listaDeListaPersonas, String urlBaseDeDatos)
+public static List<Double> procesarFirmasNuevo(FirmaRecortada listaFirmas, List<PersonaReniec> listaDeListaPersonas, String urlBaseDeDatos)
 		throws IOException {
 
 	double umbral = 5;
@@ -6995,6 +6997,9 @@ List<Double> procesarFirmasNuevo(FirmaRecortada listaFirmas, List<PersonaReniec>
 			//Direccion base de datos
 			String url2 = new String(urlBaseDeDatos+"\\"
 			+ listaDeListaPersonas.get(indicePersonaLista1).getIdFirma());
+			
+			url2 = url2 +".jpg" ;
+			System.out.println("firma q abrira" + url2);
 			imagen2 = new FastBitmap(url2);
 
 			
@@ -7089,18 +7094,20 @@ List<Double> procesarFirmasNuevo(FirmaRecortada listaFirmas, List<PersonaReniec>
 				listaPorcentajesCandidato.add(personaReniecPorcentajeTemporal);
 				System.out.println("id: "+indicePersonaLista1);
 				System.out.println("url: "+url2);
-				System.out.println("porcentaje: "+porcentaje);
+				System.out.println("Porcentaje: "+porcentaje);
+			
 			} else {
 				
 				//Porcentaje 0
 				PersonaReniecPorcentaje personaReniecPorcentajeTemporal;
 				personaReniecPorcentajeTemporal = new PersonaReniecPorcentaje();
 				personaReniecPorcentajeTemporal.pe = listaDeListaPersonas.get(indicePersonaLista1);
-				personaReniecPorcentajeTemporal.porcentaje = porcentaje;
+				personaReniecPorcentajeTemporal.porcentaje = 0;
 				personaReniecPorcentajeTemporal.match=false;
 				listaPorcentajesCandidato.add(personaReniecPorcentajeTemporal);
 			}
 
+			Procesando.escribirTextArea( "porcentaje de similitud en la firma : "+porcentaje + "%" ); 
 			//Limpian sus descriptores de 1
 			for (int i = 0; i < descriptores1.size(); i++) {
 				if (descriptores1.get(i).getIndexMatch() != -1)
@@ -7188,7 +7195,7 @@ List<Double> procesarFirmasNuevo(FirmaRecortada listaFirmas, List<PersonaReniec>
 
 
 
-List<Double> procesarNuevo(List<PersonaReniec> listaDeListasPersonasReniec,int indice,String urlPlanillonesOriginales,String urlBaseDeDatos) throws IOException
+ public static List<Double> procesarNuevo(List<PersonaReniec> listaDeListasPersonasReniec,int indice,String urlPlanillonesOriginales,String urlBaseDeDatos) throws IOException
 {	List<PersonaReniec> listaFinal = null;
     FirmaRecortada liistaFirmas;    
     List<Double> resultados;
