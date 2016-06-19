@@ -46,6 +46,9 @@ public class PrimeraFase extends JPanel implements ActionListener {
 	public static int choiceCI = 0;
 	public static String rutaPadrones = new String();
 	public static String rutaExcel = new String();
+	private JTextField txtFieldRecortes;
+	private JButton btnBuscarRecortes;
+	private JLabel lblRutaDondeSe;
 
 	/**
 	 * Create the panel.
@@ -113,12 +116,29 @@ public class PrimeraFase extends JPanel implements ActionListener {
 		btnBuscarBDFirmas.setBounds(432, 243, 89, 23);
 		add(btnBuscarBDFirmas);
 
+		
+		
+		txtFieldRecortes = new JTextField();
+		txtFieldRecortes.setBounds(90, 338, 339, 20);
+		add(txtFieldRecortes);
+		txtFieldRecortes.setColumns(10);
+		
+		btnBuscarRecortes = new JButton("Buscar");
+		btnBuscarRecortes.setBounds(432, 337, 89, 23);
+		add(btnBuscarRecortes);
+		
+		lblRutaDondeSe = new JLabel("Ruta donde se almacenar\u00E1n los recortes");
+		lblRutaDondeSe.setBounds(90, 313, 317, 14);
+		add(lblRutaDondeSe);
+		
+		
 		btnProcesar.addActionListener(this);
 		btnCancelar.addActionListener(this);
 		btnBuscarBDRNV.addActionListener(this);
 		btnBuscarPlan.addActionListener(this);
 		btnBuscarBDHuellas.addActionListener(this);
 		btnBuscarBDFirmas.addActionListener(this);
+		btnBuscarRecortes.addActionListener(this);
 	}
 
 	@Override
@@ -206,6 +226,23 @@ public class PrimeraFase extends JPanel implements ActionListener {
 				 * file.getCurrentDirectory();
 				 */
 				txtFieldBDFirmas.setText(file.getAbsolutePath());
+			}
+		}
+		if(e.getSource()==btnBuscarRecortes){
+			JFileChooser jFileChooser = new JFileChooser();
+			jFileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+			jFileChooser.setAcceptAllFileFilterUsed(false);
+
+			int result = jFileChooser.showOpenDialog(this);
+			StringBuffer buffer = new StringBuffer();
+
+			if (result == JFileChooser.APPROVE_OPTION) {// abrir
+				File file = jFileChooser.getSelectedFile();
+				/*
+				 * if (!file.isDirectory()) file = file.getParentFile(); file=
+				 * file.getCurrentDirectory();
+				 */
+				txtFieldRecortes.setText(file.getAbsolutePath());
 			}
 		}
 	}
