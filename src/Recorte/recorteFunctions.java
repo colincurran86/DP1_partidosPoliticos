@@ -45,7 +45,7 @@ public class recorteFunctions {
     
     }
 
-    
+     
     
     public void eliminarLineasNegras(){
         

@@ -37,22 +37,17 @@ public class Main {
 
         //verificamos cuantos padrones existen	
         totalPadrones = rf.contarPadrones(rutaPadrones);    
-        rf.tamanhoEstandar(rutaPadrones, totalPadrones);
-        
-        for (int contPadrones = 0; contPadrones<totalPadrones; contPadrones++){
-        
-            //String ruta1 = workingDir + "/src/Recorte/padrones/padron.rayas.firmado." + (contPadrones+1) +".jpg";
-        //    String ruta1 = workingDir + "/src/Recorte/padrones/xd.jpg";
-           // String ruta2 = workingDir + "/src/Recorte/Auxiliar/recorteCostado.jpg";
-            //String ruta3 = workingDir + "/src/Recorte/Auxiliar/recorteBN.jpg";
+       // rf.tamanhoEstandar(rutaPadrones, totalPadrones);
+		File folder = new File(rutaPadrones);
+		int contPadrones = 0;
 
-        	String ruta1 = rutaPadrones + "/padron.rayas.firmado." + (contPadrones+1) +".jpg";
-        //	String rutaAlfa =  workingDir + "/src/Recorte/padrones/padron.rayas.firmado." + (contPadrones+1) +".jpg";
+		for (final File fileEntry : folder.listFiles()) {
+
+			String ruta1 = rutaPadrones + "/" + fileEntry.getName();
         	String ruta2 =  workingDir + "/src/Recorte/Auxiliar/recorteCostado.jpg";
         	String ruta3 = workingDir + "/src/Recorte/Auxiliar/recorteBN.jpg";
         	
         
-            
             rf.recortarCostadosProcesarPadron(ruta1,ruta2,ruta3);
             
             
@@ -61,23 +56,10 @@ public class Main {
             int height1=padronJ.getHeight();
             int cont = 0, alturaX = 0 , yHuellas = 0, yFirmas = 0, yDNI = 0, yNombre = 0, yApellido =0;
             
-
-
             rf.coordenadasHuella(padronJ);  alturaX = rf.getX(); yHuellas = rf.getYHuellas();
             rf.coordenadasFirma(padronJ);  yFirmas = rf.getYFirmas();
             rf.coordenadaDNIyNombre(padronJ);
             yDNI = rf.getYDNI(); yApellido = rf.getYApellido(); yNombre = rf.getYNombre();
-            
-            /*
-            System.out.println(yDNI);
-            System.out.println(yApellido);
-            System.out.println(yNombre);
-            System.out.println(yFirmas);
-            System.out.println(yHuellas);
-			*/
-          // System.out.println("AlturaX " + alturaX);             
-          //  System.out.println("yFirma " + yFirmas);
-            
             
             //cropeamos los digitos del DNI    
             List <String> dniLista  = new ArrayList <String>() ;
@@ -85,10 +67,6 @@ public class Main {
             int distanceBetweenSquaresH = 87 ,distanceBetweenSquares = 14, widthSquare = 14, heightSquare = 84;
 
             for (int n  = 0; n < 8; n++){    
-                
-           // 	ProgressMonitorExample p1 = new ProgressMonitorExample() ;
-            	
-            //	p1.counter += 23 ; 
             	
                 ImagePlus Copia1;
                 String rutaAlmacenar = workingDir + "/src/Recorte/Resultado/Persona"
@@ -96,10 +74,6 @@ public class Main {
             
                 File file2 = new File(rutaAlmacenar);      file2.mkdirs();
                 String dni = "";    yDNI = valorOriginal;
-              
-                
-                
-                
                 
                 
                 for (int h = 0; h<8 ; h++) {
@@ -157,30 +131,9 @@ public class Main {
                     //Prefs.blackBackground = false;
                 }
                
-                /*     
-            //Cropeamos el Nombre
-        
-                yNombre = valorOriginalNombre;
-                for (int contNombre = 0; contNombre < nombreEspacios; contNombre ++){
-                    ImagePlus Copi41 = IJ.openImage(ruta2);
-                    String rutaNombre = workingDir + "/src/Recorte/Resultado/Persona"
-                    + String.valueOf(n+1+(8*contPadrones)) + "/Nombre/" + contNombre + ".jpg";
-                   
-                    int valor2 = rf.getAnchoDNI(yNombre+1, (alturaX+5) + alturaLetras * n);
-                    if (valor2 == 0 || valor2 == 1) valor2 = 13;
-                    Copi41.setRoi(yNombre + contNombre*espacioLetras, (alturaX + 6) + alturaLetras*n, valor2-1 , heightSquare-7);
-                    if (contNombre != 22 ) yNombre = rf.obtenerSiguienteEspacioDNI(yNombre,alturaX+6);
-                    IJ.run(Copi41, "Crop", "");
-                    new FileSaver(Copi41).saveAsPng(rutaNombre);
-                    //Prefs.blackBackground = false;
-                }
-              */
+                
             }
-      
-            //Cropeamos las firmas y las huellas para cada persona
-        //    List<ImagePlus>usuariosFirma = new ArrayList<ImagePlus>();
-        //   List<ImagePlus>usuariosHuella = new ArrayList<ImagePlus>();
-    
+
             for (int n  = 0; n < personasxPadron; n++){
               //  ImagePlus firmaUser,huellasUser = new ImagePlus();
                 String rutaAlmacenar = workingDir + "/src/Recorte/Resultado/Persona"
@@ -247,7 +200,7 @@ public class Main {
             System.out.println("Padron numero " + (contPadrones+1) + " Procesado");
             System.out.println("yDNI " + (contPadrones+1) + " " +  yDNI);  
             System.out.println("alturaX " + (contPadrones+1) + " " +	 alturaX);  
-
+            contPadrones++;
             
         }
             

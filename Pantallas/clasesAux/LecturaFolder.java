@@ -7,11 +7,11 @@ public class LecturaFolder {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		File folder = new File("C:/Users/Administrador/Desktop");
+		File folder = new File("C:/Users/lenovo/git/DP1_partidosPoliticos/src/Recorte/Padrones");
 		
 		for (final File fileEntry : folder.listFiles()) {
 	        if (fileEntry.isDirectory()) {
-	        	System.out.println("Directorio:" + fileEntry.getName());
+	        	System.out.println(fileEntry.getName());
 	        } 
 	        else System.out.println(fileEntry.getName());
 	        
