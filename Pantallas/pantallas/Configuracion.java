@@ -33,16 +33,14 @@ import javax.swing.JRadioButton;
 
 public class Configuracion extends JDialog implements ActionListener{
 	private JComboBox cmbBoxPE;
-	private JComboBox cmbBoxPP;
 	private JButton okButton;
 	private JButton cancelButton;
 	private JSpinner spinner;
 	private JRadioButton rdbtnCMasiva;
-	private JRadioButton rdbtnCIndividual;
 	private ButtonGroup group;
 	private List<ProcesoElectoral> listaPE=ProcessManager.queryAllProc();
 	public static List<PartidoPolitico> listaPP= ProcessManager.queryAllPartPol();
-	
+	public static String [] listaStrPP;
 	
 	
 	private final JPanel contentPanel = new JPanel();
@@ -65,7 +63,7 @@ public class Configuracion extends JDialog implements ActionListener{
 	 */
 	public Configuracion() {
 		this.setTitle("Configuracion");
-	//	setModal(true);
+		setModal(true);
 		setBounds(100, 100, 599, 407);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -79,8 +77,8 @@ public class Configuracion extends JDialog implements ActionListener{
 		lblProcesoElectoral.setBounds(51, 65, 167, 14);
 		contentPanel.add(lblProcesoElectoral);
 		
-		JLabel lblNewLabel = new JLabel("Partido Politico");
-		lblNewLabel.setBounds(51, 240, 154, 14);
+		JLabel lblNewLabel = new JLabel("Escoger Partido(s) Politico(s)");
+		lblNewLabel.setBounds(51, 240, 251, 14);
 		contentPanel.add(lblNewLabel);
 		
 		JLabel lblPorcentajeDeAceptacin = new JLabel("Porcentaje de aceptaci\u00F3n");
@@ -105,27 +103,22 @@ public class Configuracion extends JDialog implements ActionListener{
 			for(i=0;i<listaPE.size();i++)
 				if(listaPE.get(i).getId()==Carga.idPE) break;
 			cmbBoxPE.setSelectedIndex(i);
-		}	
+		}
 		
-		cmbBoxPP = new JComboBox();
-		cmbBoxPP.setBounds(309, 237, 191, 20);
-		contentPanel.add(cmbBoxPP);
-		cmbBoxPP.addActionListener(this);		
-		
-		for (int i = 0; i < listaPP.size(); i++)
-			cmbBoxPP.addItem(listaPP.get(i).getNombre());
+		/*for (int i = 0; i < listaPP.size(); i++)
+			cmbBoxPP.addItem(listaPP.get(i).getNombre());*/
 	//	cmbBoxPP.disable();
 		
 		
 		
 		
 		
-		if(Carga.idPP!=0){
+		/*if(Carga.idPP!=0){
 			int i;
 			for(i=0;i<listaPP.size();i++)
 				if(listaPP.get(i).getId()==Carga.idPP) break;
 			cmbBoxPP.setSelectedIndex(i);
-		}	
+		}*/	
 		
 		SpinnerModel sm = new SpinnerNumberModel(0, 0, 100, 1); //default value,lower bound,upper bound,increment by 
 		spinner = new JSpinner(sm);
@@ -142,11 +135,7 @@ public class Configuracion extends JDialog implements ActionListener{
 		rdbtnCMasiva.setBounds(109, 183, 147, 23);		
 		contentPanel.add(rdbtnCMasiva);
 		
-		rdbtnCIndividual = new JRadioButton("Carga individual");
-		rdbtnCIndividual.setBounds(358, 183, 142, 23);
-		contentPanel.add(rdbtnCIndividual);
-		
-		if(Carga.choiceCI==0 && Carga.choiceCI==0){
+		/*if(Carga.choiceCI==0 && Carga.choiceCI==0){
 			rdbtnCMasiva.setSelected(true);
 			cmbBoxPP.disable();
 		}
@@ -158,20 +147,19 @@ public class Configuracion extends JDialog implements ActionListener{
 			else {
 				rdbtnCMasiva.setSelected(true);
 				cmbBoxPP.disable();
-			}		
+			}		*/
 		
 		group=new ButtonGroup();
 		group.add(rdbtnCMasiva);
-		group.add(rdbtnCIndividual);
 		
-		JButton btnCheckListPartidos = new JButton("MultiplesPartidos");
+		JButton btnCheckListPartidos = new JButton("Multiples Partidos");
 		btnCheckListPartidos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				
 				
 				
-				String [] listaStrPP = new String  [ listaPP.size() ]  ; // listaPP.get(i).getNombre());
+				listaStrPP = new String  [ listaPP.size() ]  ; // listaPP.get(i).getNombre());
 				
 				for ( int i = 0 ;  i < listaPP.size()  ; i++ ) {
 					listaStrPP[i] = new String();
@@ -181,15 +169,15 @@ public class Configuracion extends JDialog implements ActionListener{
 				
 				
 				
-				 CheckListPartPol frame = new CheckListPartPol( listaStrPP);
-				
+				 //CheckListPartPol frame = new CheckListPartPol( listaStrPP);
+				CheckListPP frame = new CheckListPP( listaStrPP);
 				 
 				    frame.setSize(300, 200);
 				    frame.setVisible(true);
 				    
 			}
 		});
-		btnCheckListPartidos.setBounds(141, 236, 134, 23);
+		btnCheckListPartidos.setBounds(247, 236, 134, 23);
 		contentPanel.add(btnCheckListPartidos);
 				
 		{
@@ -212,7 +200,6 @@ public class Configuracion extends JDialog implements ActionListener{
 		okButton.addActionListener(this);
 		cancelButton.addActionListener(this);
 		rdbtnCMasiva.addActionListener(this);
-		rdbtnCIndividual.addActionListener(this);
 		cmbBoxPE.addActionListener(this);
 	}
 
@@ -227,7 +214,7 @@ public class Configuracion extends JDialog implements ActionListener{
 			ProcesoElectoral pe=null;
 			PartidoPolitico pp=null;
 			if(listaPE.size()!=0)  pe=listaPE.get(cmbBoxPE.getSelectedIndex());
-			if(listaPP.size()!=0) pp=listaPP.get(cmbBoxPP.getSelectedIndex());
+			//if(listaPP.size()!=0) pp=listaPP.get(cmbBoxPP.getSelectedIndex());
 			int porcentaje=(int)spinner.getValue();
 			
 			if (pe!=null) {
@@ -249,10 +236,8 @@ public class Configuracion extends JDialog implements ActionListener{
 		if(e.getSource()==cmbBoxPE)
 			if(listaPE.size()!=0)	spinner.setValue(listaPE.get(cmbBoxPE.getSelectedIndex()).getPorcentaje());
 		
-		if(e.getSource()==rdbtnCMasiva)
-			cmbBoxPP.disable();
-		if(e.getSource()==rdbtnCIndividual)
-			cmbBoxPP.enable();
+		//if(e.getSource()==rdbtnCMasiva)
+			//cmbBoxPP.disable();
 		
 			
 	}

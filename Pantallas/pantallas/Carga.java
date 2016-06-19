@@ -20,6 +20,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import javax.swing.JLabel;
 
 public class Carga extends JPanel implements ActionListener{
 	private JButton btnPrimCarga;
@@ -32,6 +33,7 @@ public class Carga extends JPanel implements ActionListener{
 	public static int choiceCI=0;
 
 	public static List<PartidoPolitico> ppEscogidos = new ArrayList<PartidoPolitico>() ;
+	private JLabel lblNfiguracion;
 	
 	
 	/**
@@ -71,6 +73,10 @@ public class Carga extends JPanel implements ActionListener{
 		btnConf.addActionListener(this);
 		btnPrimCarga.addActionListener(this);
 		btnSegCarga.addActionListener(this);
+		
+		lblNfiguracion = new JLabel("CONFIGURACION");
+		lblNfiguracion.setBounds(44, 187, 136, 14);
+		add(lblNfiguracion);
 	}
 	
 	@Override
