@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.imageio.ImageIO;
-
+	
 import models.PersonaReniec;
 
 public class AlgoritmoHuellas {
