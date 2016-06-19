@@ -49,8 +49,9 @@ public class Main {
     public  void  main(String rutaPadrones  , PartidoPolitico pp, String rutaFirma, String rutaHuella) {
 
     	Util u = new Util(); PrimeraFase primeraFase = new PrimeraFase();
-    	//	String formatearRutaBD = "D:\\Users\\jemarroquin\\git\\DP1_partidosPoliticos\\src\\registro.nacional.v.1.xlsx" ;
-    		String formatearRutaBD = u.formatearRuta(primeraFase.rutaExcel);
+    		String formatearRutaBD = "D:\\Users\\jemarroquin\\git\\DP1_partidosPoliticos\\src\\registro.nacional.v.1.xlsx" ;
+ 
+    	//	String formatearRutaBD = u.formatearRuta(primeraFase.rutaExcel);
     		llenarBDReniec(formatearRutaBD);
     		
     		
@@ -112,24 +113,69 @@ public class Main {
                         numero =  recogChar.recognize_actionPerformed(Copia1.getImage());
                         if (dni == "") dni = ""+ numero;	             
     	                else dni=dni + numero;    
-
     	              }
     	
     	            //   lista.add(dni);
+     
+                    int cuenta = 0;
+                    if (dni.length() == 9){
+                    	for (int i = 0; i<9 ; i++){
+                    		if (dni.charAt(i) == '-'){
+                    			cuenta = i;
+                    			break;
+                    		}
+                    	}
+                    	dni = dni.replaceFirst(String.valueOf(dni.charAt(cuenta)), "");
+                    }
+                    
                     Procesando.escribirTextArea("============================================");
                     Procesando.escribirTextArea("Se esta procesando el dni :"  + dni );
                     
-                    List<PersonaReniec>  listaPersonasReniec =  Util.ocrMasReniec2(dni); 
-    	               
-                    for (int i = 0 ; i < listaPersonasReniec.size()  ; i++ )
-                    Procesando.escribirTextArea("La lista de candidatos es la siguente: "  + listaPersonasReniec.get(i).getDni() );
                     
+                    
+                    
+                    
+                    
+                    
+                    List<PersonaReniec>  listaPersonasReniec = new ArrayList<PersonaReniec>();
+                     int indice = encontrarDNI(dni);
+                     List<Double> listaPorcentaje = new ArrayList<Double>();
+                     
+                     
+                     if (indice != -1 ) {
+                    	 Procesando.escribirTextArea("lo encontre al dni !!" + dni + " - " +  ReniecBD.lista.get(indice).getDni() );
+                    	 listaPersonasReniec.add(  ReniecBD.lista.get(indice));
+                     }                    
+
+                     else {
+                    	 
+                   listaPersonasReniec =  Util.ocrMasReniec2(dni);
+                    
+                     };
+           
+                     
+                     Procesando.escribirTextArea("Cantidad de candidatos: " + listaPersonasReniec.size() );
+                     for (int i = 0 ; i < listaPersonasReniec.size()  ; i++ )
+                         Procesando.escribirTextArea("La lista de candidatos es la siguente: "  + listaPersonasReniec.get(i).getDni() );
+                  
+                   
                     if(listaPersonasReniec.size() != 0 ) 
                     {
                     	try {
                            
                     		//firmas
-                    		AlgoritmoFirmas.procesarNuevo(listaPersonasReniec, n , rutaPlanillonEjecutandose, rutaFirma);  
+                    	listaPorcentaje= 	AlgoritmoFirmas.procesarNuevo(listaPersonasReniec, n , rutaPlanillonEjecutandose, rutaFirma); 
+                    		
+                    	
+                    	
+                    	  int indiceCandidatoFirmas = candidatoFirmas(listaPorcentaje);
+                    		
+
+for ( int i = 0 ; i < listaPersonasReniec.size() ; i++) Procesando.escribirTextArea("Para el candiato: " + listaPersonasReniec.get(i).getDni() + " Porcentaje de firmas es: "+ listaPorcentaje.get(i) );     
+Procesando.escribirTextArea( "De todos los candidatos el mejor según firmas es: " + listaPersonasReniec.get(indiceCandidatoFirmas).getDni());
+
+
+
                     		//huellas
                     		distanceBetweenSquares = 86; widthSquare = 150;  heightSquare = 75;        
                     		ImagePlus Copia2 = IJ.openImage(ruta3);
@@ -208,6 +254,8 @@ public class Main {
     
     public void llenarBDReniec(String rutaBD) {
 		try {
+			
+			System.out.println("ESTA ES UNA MIERDA XDD JAJA " + rutaBD);
 			InputStream file = new FileInputStream(new File(rutaBD));
 
 			// Get the workbook instance for XLS file
@@ -266,4 +314,49 @@ public class Main {
 		}
 	}
 
+
+public int encontrarDNI( String dni ){
+	
+	int indice = -1 ; 
+	
+	for (int j = 0; j < ReniecBD.lista.size(); j++)
+		if (dni != null || dni.length() != 0) {
+			if (ReniecBD.lista.get(j).getDni().compareTo(dni) == 0) {
+				// System.out.println(ReniecBD.lista.size());
+		
+				indice = j ; 
+			return indice ;  
+				// System.out.println(a.size());
+				
+			}
+		}
+	return indice   ; 
 }
+
+
+public int candidatoFirmas ( List<Double > lista)  {
+	
+	int indice = -1 ; 
+	Double mayor = 0.0;
+	
+	for (int i = 0 ; i < lista.size() ; i++){
+		
+		if (lista.get(i) >= mayor) {
+			indice= i ;
+			mayor = lista.get(i);
+			
+			
+		}
+		
+	}
+	
+	
+	return indice ;
+	
+	
+}
+
+
+}
+
+

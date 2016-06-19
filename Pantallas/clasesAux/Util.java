@@ -39,14 +39,17 @@ public class Util {
 		Util u = new Util();
 		Main m = new Main();
 		PrimeraFase primeraFase = new PrimeraFase();
-		//String formatearRutaPlan = "D:\\Users\\jemarroquin\\git\\DP1_partidosPoliticos\\src\\Recorte\\Padrones";
-		String formatearRutaPlan = u.formatearRuta(primeraFase.rutaPadrones);
-		String formatearRutaFima = u.formatearRuta(primeraFase.rutaFirma);
+		String formatearRutaPlan = "D:\\Users\\jemarroquin\\Desktop\\padrones";
+		//String formatearRutaPlan = u.formatearRuta(primeraFase.rutaPadrones);
+		String formatearRutaFima = "D:\\Users\\jemarroquin\\Desktop\\_firmas.jpg (1)\\firmas.jpg";
+		//String formatearRutaFima = u.formatearRuta(primeraFase.rutaFirma);
 		String formatearRutaHuella = u.formatearRuta(primeraFase.rutaHuella);
 
 		// txtFieldBDRNV.setText("D:\\Users\\jemarroquin\\git\\DP1_partidosPoliticos\\src");
-		String formatearRutaBD = u.formatearRuta(primeraFase.rutaExcel);
-		llenarBDReniec(formatearRutaBD);
+	//	String formatearRutaBD = u.formatearRuta(primeraFase.rutaExcel);
+	//	System.out.println("FORMATEAR RUTA: " + formatearRutaBD );
+
+	//	m.llenarBDReniec(formatearRutaBD);
 
 		// escribirTextArea("****************************");
 		// System.out.println("**************************************************");
@@ -73,15 +76,15 @@ public class Util {
 	
 
 	   for ( int i = 0 ; i < PrimeraFase.ppescogidos.size()  ; i++ ) {
+		   
+		   Procesando.escribirTextArea("**************************************************");
 		   Procesando.escribirTextArea("Partido Político: " + PrimeraFase.ppescogidos.get(i).getNombre());
 		   
 		   	m.main(formatearRutaPlan + "/"+ PrimeraFase.ppescogidos.get(i).getNombre() , PrimeraFase.ppescogidos.get(i), formatearRutaFima, formatearRutaHuella);
 	   }
 
-		System.out.println("**************************************************");
-		System.out.println("FIRMAS Reconocidas : ");
-		System.out.println("**************************************************");
 
+	
 		// Firmas
 
 		// Main mainRecorte = new Main();
@@ -149,8 +152,9 @@ public class Util {
 		return nuevaRuta;
 	}
 
-	public void llenarBDReniec(String rutaBD) {
+	public void KAKA(String rutaBD) {
 		try {
+			System.out.println("JAJAJAJAJAJJAJAJA NOOB " + rutaBD);;
 			InputStream file = new FileInputStream(new File(rutaBD));
 
 			// Get the workbook instance for XLS file

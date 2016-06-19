@@ -69,12 +69,11 @@ public class ProgressMonitorExample  implements ActionListener {
      counter += porcentaje;
 //     int contador2 = 1;
      
-  	Procesando.escribirTextArea( "" + counter );
-  	
+    	
 	Procesando.aumentarPorcentaje( counter);
 	
 	
-    if (counter >= 500 + porcentaje){
+    if (counter >= 100 + porcentaje){
     	
 
     	

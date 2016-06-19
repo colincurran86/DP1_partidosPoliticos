@@ -7102,7 +7102,7 @@ public static List<Double> procesarFirmasNuevo(FirmaRecortada listaFirmas, List<
 				PersonaReniecPorcentaje personaReniecPorcentajeTemporal;
 				personaReniecPorcentajeTemporal = new PersonaReniecPorcentaje();
 				personaReniecPorcentajeTemporal.pe = listaDeListaPersonas.get(indicePersonaLista1);
-				personaReniecPorcentajeTemporal.porcentaje = 0;
+				personaReniecPorcentajeTemporal.porcentaje = porcentaje;
 				personaReniecPorcentajeTemporal.match=false;
 				listaPorcentajesCandidato.add(personaReniecPorcentajeTemporal);
 			}
