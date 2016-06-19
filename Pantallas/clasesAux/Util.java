@@ -60,18 +60,17 @@ public class Util {
 		List<List<PersonaReniec>> pr1 = u.ocrMasReniec();
 		String cadenaFinal = new String();
 
-		//System.out.println(pr1.size());
+		// System.out.println(pr1.size());
 		for (int i = 0; i < pr1.size(); i++) {
 			cadenaFinal = "DNI Reconocido es el siguiente: ";
-			for (int j = 0; j < pr1.get(i).size(); j++){
-				//System.out.println(pr1.get(i).size());
+			for (int j = 0; j < pr1.get(i).size(); j++) {
+				// System.out.println(pr1.get(i).size());
 				cadenaFinal = cadenaFinal + pr1.get(i).get(j).getDni() + "  ";
 			}
 			cadenaFinal = cadenaFinal + "\n";
 		}
-		
+
 		this.mensajeFinal = cadenaFinal;
-		
 
 		System.out.println("**************************************************");
 		System.out.println("FIRMAS Reconocidas : ");
@@ -109,16 +108,16 @@ public class Util {
 		 * } catch (IOException e1) { // TODO Auto-generated catch block
 		 * e1.printStackTrace(); }
 		 */ // descomentar aquiii222
-		
+
 		long endTime = System.currentTimeMillis();
 		double totalTime = (endTime - startTime) / 1000.0;
 		String almacenarMensaje = new String();
 		almacenarMensaje = "Finalizado \n" + "El tiempo total de ejecucion del programa fue " + totalTime
 				+ " segundos \n";
 		this.mensajeFinal = this.mensajeFinal + almacenarMensaje;
-		
-		//System.out.println(this.mensajeFinal);
-		
+
+		// System.out.println(this.mensajeFinal);
+
 		// System.out.println("Finalizado");
 		// System.out.println("El tiempo total de ejecucion del programa fue " +
 		// totalTime + " segundos");
@@ -199,67 +198,65 @@ public class Util {
 			e.printStackTrace();
 		}
 	}
-	
-	public List<PersonaReniec> ocrMasReniec2(String dni){
+
+	public List<PersonaReniec> ocrMasReniec2(String dni) {
 		List<PersonaReniec> candidatos = new ArrayList<PersonaReniec>();
-		
+
 		boolean entro = false;
-		
+
 		for (int j = 0; j < ReniecBD.lista.size(); j++)
 			if (dni != null || dni.length() != 0) {
-				if (ReniecBD.lista.get(j).getDni().compareTo(dni)==0) {
-					//System.out.println(ReniecBD.lista.size());
+				if (ReniecBD.lista.get(j).getDni().compareTo(dni) == 0) {
+					// System.out.println(ReniecBD.lista.size());
 					entro = true;
 					candidatos = sacaListaCandidatos(dni);
-					//System.out.println(a.size());
+					// System.out.println(a.size());
 					candidatos.add(ReniecBD.lista.get(j));
 				}
 			}
-		if (!entro){
+		if (!entro) {
 			candidatos = sacaListaCandidatos(dni);
-			//System.out.println(a.size());
-		}				
-		
+			// System.out.println(a.size());
+		}
+
 		return candidatos;
 	}
-	
 
 	public List<List<PersonaReniec>> ocrMasReniec() {
 		// List<PersonaReniec> pr = new ArrayList<PersonaReniec>();
 		List<List<PersonaReniec>> candidatos = new ArrayList<List<PersonaReniec>>();
 		/*
-		for (int i = 0; i < Main.lista.size(); i++) {
-			List<PersonaReniec> xd = new ArrayList<PersonaReniec>();
-			candidatos.add(xd);
-		}*/
+		 * for (int i = 0; i < Main.lista.size(); i++) { List<PersonaReniec> xd
+		 * = new ArrayList<PersonaReniec>(); candidatos.add(xd); }
+		 */
 
 		boolean entro = false;
 
 		List<PersonaReniec> a = new ArrayList<PersonaReniec>();
-		for (int i = 0; i < Main.lista.size(); i++) 
+		for (int i = 0; i < Main.lista.size(); i++)
 			System.out.println(Main.lista.get(i));
-		
-		//System.out.println(Main.lista.size());
+
+		// System.out.println(Main.lista.size());
 		for (int i = 0; i < Main.lista.size(); i++) {
 			String dni = Main.lista.get(i);
 			entro = false;
 			// System.out.println("DNI RECONOCIDO DE LAS IMAGENES: " + dni);
 			// mensajeFinal = mensajeFinal + "DNI RECONOCIDO DE LAS IMAGENES: "
 			// + dni + "\n";
-			
+
 			for (int j = 0; j < ReniecBD.lista.size(); j++)
 				if (dni != null || dni.length() != 0) {
-					if (ReniecBD.lista.get(j).getDni().compareTo(dni)==0) {
+					if (ReniecBD.lista.get(j).getDni().compareTo(dni) == 0) {
 						System.out.println(ReniecBD.lista.size());
 						entro = true;
 						a = sacaListaCandidatos(dni);
-						//System.out.println(a.size());
+						// System.out.println(a.size());
 						a.add(ReniecBD.lista.get(j));
 					}
 				}
-			if (!entro){
+			if (!entro) {
 				a = sacaListaCandidatos(dni);
-				//System.out.println(a.size());
+				// System.out.println(a.size());
 			}
 			candidatos.add(a);
 		}
@@ -291,7 +288,7 @@ public class Util {
 					for (int m = posCad1; m < i; m++)
 						cad1 += dni.charAt(m);
 
-				if (i == 6 || (j - 1 == 1))
+				if (i == 6 || (j - i == 1))
 					cad2 = "";
 				else
 					for (int m = posCad2; m < j; m++)
@@ -303,31 +300,76 @@ public class Util {
 					for (int m = posCad3; m < 8; m++)
 						cad3 += dni.charAt(m);
 
+				boolean salir;
 				for (int k = 0; k < ReniecBD.lista.size(); k++) {
-					String reniecDni = "" + ReniecBD.lista.get(k).getDni();
-					if (cad1.compareTo("")!=0)
+					salir = false;
+					String reniecDni = ReniecBD.lista.get(k).getDni();
+					if (cad1.compareTo("") != 0) {
+						//System.out.println("cad1: "+cad1);
 						for (int m = posCad1; m < cad1.length() + posCad1; m++)
-							if (dni.charAt(m) != reniecDni.charAt(m))
+							if (dni.charAt(m) != reniecDni.charAt(m)) {
+								salir = true;
 								break;
-
-					if (cad2.compareTo("")!=0)
-						for (int m = posCad2; m < cad2.length() + posCad2; m++)
-							if (dni.charAt(m) != reniecDni.charAt(m))
-								break;
-
-					if (cad3.compareTo("")!=0)
-						for (int m = posCad3; m < cad3.length() + posCad3; m++) {							
-							if (dni.charAt(m) != reniecDni.charAt(m))
-								break;
+							}
+					}
+					if (!salir){
+						if (cad2.compareTo("") != 0) {
+							//System.out.println("cad2: "+cad2);
+							for (int m = posCad2; m < cad2.length() + posCad2; m++)
+								if (dni.charAt(m) != reniecDni.charAt(m)) {
+									salir = true;
+									break;
+								}
 						}
-					// si no llego a ningun break, anhade
-					for (int m = 0; m < candidatos.size(); m++)// para que no se
-																// repita						
-						if (candidatos.get(m).getDni().compareTo(ReniecBD.lista.get(k).getDni())!=0)
-							candidatos.add(ReniecBD.lista.get(k));
+						if (!salir) {
+							if (cad3.compareTo("") != 0) {
+								//System.out.println("cad3: "+cad3);
+								for (int m = posCad3; m < cad3.length() + posCad3; m++)
+									if (dni.charAt(m) != reniecDni.charAt(m)) {
+										salir = true;
+										break;
+									}
+							}
+							if (!salir) {
+								//System.out.println("tamanho: "+candidatos.size());
+								// si no llego a ningun break, anhade
+								if(candidatos.size()==0){
+									//System.out.println("ENTRE");
+									PersonaReniec pr=new PersonaReniec();
+									pr.setApellidos(ReniecBD.lista.get(k).getApellidos());
+									pr.setDni(ReniecBD.lista.get(k).getDni());
+									pr.setIdFirma(ReniecBD.lista.get(k).getIdFirma());
+									pr.setIdHuella(ReniecBD.lista.get(k).getIdHuella());
+									pr.setNombre(ReniecBD.lista.get(k).getNombre());
+									pr.setUbigeo(ReniecBD.lista.get(k).getUbigeo());
+									candidatos.add(pr);		
+									//System.out.println(candidatos.get(candidatos.size()-1).getDni());
+									//System.out.println("DNI: "+pr.getDni());
+								}									
+								else{
+									for(int m=0;m<candidatos.size();m++)										
+										if(candidatos.get(m).getDni().compareTo(ReniecBD.lista.get(k).getDni())!=0){											
+											//System.out.println("ENTRE");
+											PersonaReniec pr=new PersonaReniec();
+											pr.setApellidos(ReniecBD.lista.get(k).getApellidos());
+											pr.setDni(ReniecBD.lista.get(k).getDni());
+											pr.setIdFirma(ReniecBD.lista.get(k).getIdFirma());
+											pr.setIdHuella(ReniecBD.lista.get(k).getIdHuella());
+											pr.setNombre(ReniecBD.lista.get(k).getNombre());
+											pr.setUbigeo(ReniecBD.lista.get(k).getUbigeo());
+											candidatos.add(pr);
+											//System.out.println(candidatos.get(candidatos.size()-1).getDni());
+											//System.out.println("DNI: "+pr.getDni());
+										}			
+									
+								}															
+							}							
+						}
+					}
 				}
 			}
 		}
+		return candidatos;
 		/*
 		 * String dniRecortado=""; int size;
 		 * 
@@ -345,8 +387,8 @@ public class Util {
 		 * if(candidatos.get(m).getDni()!=ReniecBD.lista.get(k).getDni())
 		 * candidatos.add(ReniecBD.lista.get(k)); } } } }
 		 */
-
-		return candidatos;
+		
+		
 	}
 
 }
