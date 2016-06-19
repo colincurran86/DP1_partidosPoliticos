@@ -118,6 +118,7 @@ public class Minutiae {
 		valor7 = givenImage[y + 1][x];
 		valor8 = givenImage[y + 1][x + 1];
 		valor9 = givenImage[y][x + 1];
+		System.out.println("x: " + x + " y:" + y);
 		if (x == 0 || y == 0) {
 			if (x == 0 && y == 0)
 				valor4 = 0;
@@ -136,7 +137,18 @@ public class Minutiae {
 			}
 
 		}
-
+		/*
+		valor1 = givenImage[y][x + 1];
+		valor2 = givenImage[y - 1][x + 1];
+		valor3 = givenImage[y - 1][x];
+		valor4 = givenImage[y - 1][x - 1];
+		valor5 = givenImage[y][x - 1];
+		valor6 = givenImage[y + 1][x - 1];
+		valor7 = givenImage[y + 1][x];
+		valor8 = givenImage[y + 1][x + 1];
+		valor9 = givenImage[y][x + 1];
+		 
+		*/
 		acum = acum + Math.abs(valor1 - valor2);
 		acum = acum + Math.abs(valor2 - valor3);
 		acum = acum + Math.abs(valor3 - valor4);
