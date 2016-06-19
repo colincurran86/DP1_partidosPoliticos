@@ -41,45 +41,24 @@ public class Util {
 		PrimeraFase primeraFase = new PrimeraFase();
 		String formatearRutaPlan = "D:\\Users\\jemarroquin\\git\\DP1_partidosPoliticos\\src\\Recorte\\Padrones";
 	
+	
+		
+	   for ( int i = 0 ; i < PrimeraFase.ppescogidos.size()  ; i++ ) 
+		
 	//	String formatearRutaPlan = u.formatearRuta(primeraFase.rutaPadrones);
-		m.main(formatearRutaPlan);
-
-	
-		
-		
-		
-		/*
-		
-		List<List<PersonaReniec>> pr1 = u.ocrMasReniec();
-		String cadenaFinal = new String();
-
-	
-		for (int i = 0; i < pr1.size(); i++) {
-			cadenaFinal = "DNI Reconocido es el siguiente: ";
-			for (int j = 0; j < pr1.get(i).size(); j++){
-				//System.out.println(pr1.get(i).size());
-				cadenaFinal = cadenaFinal + pr1.get(i).get(j).getDni() + "  ";
-			}
-			cadenaFinal = cadenaFinal + "\n";
-		}
-		
-		this.mensajeFinal = cadenaFinal;
-		
-
-		System.out.println("**************************************************");
-		System.out.println("FIRMAS Reconocidas : ");
-		System.out.println("**************************************************");
-
-		
-		long endTime = System.currentTimeMillis();
-		double totalTime = (endTime - startTime) / 1000.0;
-		String almacenarMensaje = new String();
-		almacenarMensaje = "Finalizado \n" + "El tiempo total de ejecucion del programa fue " + totalTime
-				+ " segundos \n";
-		this.mensajeFinal = this.mensajeFinal + almacenarMensaje;
-		
-	
-*/
+	   {
+		   Procesando.escribirTextArea("Partido Político: " + PrimeraFase.ppescogidos.get(i).getNombre());
+		   
+		   	m.main(  formatearRutaPlan + "/"+ PrimeraFase.ppescogidos.get(i).getNombre()      , PrimeraFase.ppescogidos.get(i));
+	   }
+	   
+	   
+	   long endTime = System.currentTimeMillis();
+	   double totalTime = (endTime - startTime) / 1000.0;
+	   
+	   Procesando.escribirTextArea("Total del tiempo consumido: " + totalTime);
+	   
+	   
 	}
 
 	public String formatearRuta2(String ruta) {

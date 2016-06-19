@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.DefaultFormatter;
 
@@ -39,7 +41,7 @@ public class Configuracion extends JDialog implements ActionListener{
 	private JRadioButton rdbtnCIndividual;
 	private ButtonGroup group;
 	private List<ProcesoElectoral> listaPE=ProcessManager.queryAllProc();
-	private List<PartidoPolitico> listaPP= ProcessManager.queryAllPartPol();
+	public static List<PartidoPolitico> listaPP= ProcessManager.queryAllPartPol();
 	
 	
 	
@@ -63,7 +65,7 @@ public class Configuracion extends JDialog implements ActionListener{
 	 */
 	public Configuracion() {
 		this.setTitle("Configuracion");
-		setModal(true);
+	//	setModal(true);
 		setBounds(100, 100, 599, 407);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -92,6 +94,12 @@ public class Configuracion extends JDialog implements ActionListener{
 		for (int i = 0; i < listaPE.size(); i++)
 			cmbBoxPE.addItem(listaPE.get(i).getNombre());
 		
+		
+		
+		
+		
+		
+		
 		if(Carga.idPE!=0){
 			int i;
 			for(i=0;i<listaPE.size();i++)
@@ -100,13 +108,17 @@ public class Configuracion extends JDialog implements ActionListener{
 		}	
 		
 		cmbBoxPP = new JComboBox();
-		cmbBoxPP.setBounds(247, 237, 253, 20);
+		cmbBoxPP.setBounds(309, 237, 191, 20);
 		contentPanel.add(cmbBoxPP);
 		cmbBoxPP.addActionListener(this);		
 		
 		for (int i = 0; i < listaPP.size(); i++)
 			cmbBoxPP.addItem(listaPP.get(i).getNombre());
-		cmbBoxPP.disable();
+	//	cmbBoxPP.disable();
+		
+		
+		
+		
 		
 		if(Carga.idPP!=0){
 			int i;
@@ -151,6 +163,34 @@ public class Configuracion extends JDialog implements ActionListener{
 		group=new ButtonGroup();
 		group.add(rdbtnCMasiva);
 		group.add(rdbtnCIndividual);
+		
+		JButton btnCheckListPartidos = new JButton("MultiplesPartidos");
+		btnCheckListPartidos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				
+				
+				
+				String [] listaStrPP = new String  [ listaPP.size() ]  ; // listaPP.get(i).getNombre());
+				
+				for ( int i = 0 ;  i < listaPP.size()  ; i++ ) {
+					listaStrPP[i] = new String();
+					listaStrPP[i] = listaPP.get(i).getNombre() ;
+					
+				}
+				
+				
+				
+				 CheckListPartPol frame = new CheckListPartPol( listaStrPP);
+				
+				 
+				    frame.setSize(300, 200);
+				    frame.setVisible(true);
+				    
+			}
+		});
+		btnCheckListPartidos.setBounds(141, 236, 134, 23);
+		contentPanel.add(btnCheckListPartidos);
 				
 		{
 			JPanel buttonPane = new JPanel();

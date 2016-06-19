@@ -14,6 +14,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import models.PartidoPolitico;
 import models.PersonaReniec;
 import models.ReniecBD;
 
@@ -43,7 +44,7 @@ public class Main {
 	public static int totalPadrones;
 	public static String rutaPlanillonEjecutandose ; 
 	
-    public  void  main(String rutaPadrones) {
+    public  void  main(String rutaPadrones  , PartidoPolitico pp) {
 
 		String formatearRutaBD = "D:\\Users\\jemarroquin\\git\\DP1_partidosPoliticos\\src\\registro.nacional.v.1.xlsx" ;
 	//	String formatearRutaBD = u.formatearRuta(primeraFase.rutaExcel);
@@ -69,9 +70,13 @@ public class Main {
         	String ruta3 = workingDir + "/src/Recorte/Auxiliar/recorteBN.jpg";
         	
         	System.out.println( ruta1);
-         rutaPlanillonEjecutandose = ruta1 ;
-         
-            rf.recortarCostadosProcesarPadron(ruta1,ruta2,ruta3);
+        	
+        	
+        	
+        	
+        	
+         rutaPlanillonEjecutandose = ruta1 ;         
+         rf.recortarCostadosProcesarPadron(ruta1,ruta2,ruta3);
             
             
             ImagePlus padronJ =  rf.getPadron();

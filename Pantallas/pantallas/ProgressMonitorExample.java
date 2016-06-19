@@ -19,7 +19,7 @@ public class ProgressMonitorExample  implements ActionListener {
   public static int counter = 0;
   Timer timer = new Timer(1000, this);
   
-  public ProgressMonitorExample(int num) {
+  public ProgressMonitorExample() {
    // super("Progress Monitor Demo");
 	  
 	  // UIManager.put("ProgressMonitor.progressText", "Cargando");
@@ -74,7 +74,7 @@ public class ProgressMonitorExample  implements ActionListener {
 	Procesando.aumentarPorcentaje( counter);
 	
 	
-    if (counter >= 100 + porcentaje){
+    if (counter >= 500 + porcentaje){
     	
 
     	

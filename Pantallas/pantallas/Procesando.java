@@ -6,6 +6,7 @@ import javax.swing.JProgressBar;
 
 import org.apache.poi.hssf.record.chart.BarRecord;
 
+import models.PartidoPolitico;
 import models.PersonaReniec;
 import Recorte.Main;
 import clasesAux.Util;
@@ -34,7 +35,7 @@ public class Procesando extends JPanel {
 		aumentarPorcentaje(2);
 	}
 
-	public Procesando() {
+	public Procesando( ) {
 		setLayout(null);
 
 		// JProgressBar progressBar = new JProgressBar();
@@ -53,7 +54,7 @@ public class Procesando extends JPanel {
 
 		// gerardoRecortesWarning();
 
-		System.out.println("Procesando . . .");
+		System.out.println("------Inicio del proceso de calculo-----");
 
 		ProcesoBar hilo1 = new ProcesoBar("Hilo 1"); // Proceso de la barrera 
 		ProcesoRecorte hilo2 = new ProcesoRecorte("Hilo 2"); // Proceso Principal de recorte
@@ -64,9 +65,7 @@ public class Procesando extends JPanel {
 
 	}
 
-	public void gerardoRecortesWarning() {
-		// ir a util
-	}
+
 
 	static public void aumentarPorcentaje(int count) {
 
@@ -91,13 +90,13 @@ public class Procesando extends JPanel {
 
 		public void run() {
 
-			String workingDir = System.getProperty("user.dir"); // nos evitamos
-																// el problema
-																// de las rutas
-																// :'v
-			int num = new File(workingDir + "/src/Recorte/padrones/").list().length;
+//			String workingDir = System.getProperty("user.dir"); // nos evitamos
+//																// el problema
+//																// de las rutas
+//																// :'v
+//			int num = new File(workingDir + "/src/Recorte/padrones/").list().length;
 
-			new ProgressMonitorExample(num);
+			new ProgressMonitorExample();
 		}
 
 		public void setMensaje(String msj) {
