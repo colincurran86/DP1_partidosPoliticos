@@ -108,7 +108,7 @@ public class recorteFunctions {
     
 
     
-    public void recortarCostadosProcesarPadron(String ruta1, String ruta2, String ruta3){
+    public void recortarCostadosProcesarPadron(String ruta1, String ruta2, String ruta3,String rutaPadrones){
         
         int widthPar=2073;
         int heightPar=972;
@@ -201,10 +201,17 @@ public class recorteFunctions {
         IJ.run(padronJ, "Crop", "");
         
         //padronJ.show();
-        new FileSaver(padronJ).saveAsPng(ruta3);
-        IJ.run(padronJ, "Skeletonize", "");
-        new FileSaver(padronJ).saveAsPng(ruta2);
         
+
+        
+        String rutaAlmacenar = rutaPadrones+ "/Auxiliar";
+        File file = new File(rutaAlmacenar);  
+        file.mkdirs();
+
+        new FileSaver(padronJ).saveAsPng(rutaAlmacenar + "/recorteCostado.jpg");
+        IJ.run(padronJ, "Skeletonize", "");
+        new FileSaver(padronJ).saveAsPng(rutaAlmacenar + "/recorteBN.jpg");
+        System.out.println(rutaAlmacenar);
     //    Prefs.blackBackground = false;
         this.padronJ = padronJ;
     //    padronJ.show();

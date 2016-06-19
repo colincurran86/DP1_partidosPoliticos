@@ -134,13 +134,8 @@ public class Util {
 		// aumentarPorcentaje(100);
 
 	//	String formatearRutaPlan = u.formatearRuta(primeraFase.rutaPadrones);
-	   
-	   
-	   
-	   
-	   
-	   Procesando.escribirTextArea("Total del tiempo consumido: " + totalTime);
-	   
+	   	   
+	   Procesando.escribirTextArea("Total del tiempo consumido: " + totalTime);	   
 	   
 	}
 

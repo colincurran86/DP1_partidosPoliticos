@@ -61,7 +61,7 @@ public class Main {
             recogChar.init();
 
             //verificamos cuantos padrones existen	
-            totalPadrones = rf.contarPadrones(rutaPadrones);    
+            //totalPadrones = rf.contarPadrones(rutaPadrones);    
            // rf.tamanhoEstandar(rutaPadrones, totalPadrones);
     		File folder = new File(rutaPadrones);
     		int contPadrones = 0;
@@ -69,13 +69,13 @@ public class Main {
     		for (final File fileEntry : folder.listFiles()) { // abre cada planillon
 
     			String ruta1 = rutaPadrones + "/" + fileEntry.getName();
-            	String ruta2 =  workingDir + "/src/Recorte/Auxiliar/recorteCostado.jpg";
-            	String ruta3 = workingDir + "/src/Recorte/Auxiliar/recorteBN.jpg";
+            	String ruta2 =  workingDir + "/Auxiliar/recorteCostado.jpg";
+            	String ruta3 = workingDir + "/Auxiliar/recorteBN.jpg";
             	
             	System.out.println( ruta1);
           	    rutaPlanillonEjecutandose = ruta1 ;
              
-                rf.recortarCostadosProcesarPadron(ruta1,ruta2,ruta3);
+                rf.recortarCostadosProcesarPadron(ruta1,ruta2,ruta3,workingDir);
                 
                 
                 ImagePlus padronJ =  rf.getPadron();
@@ -106,7 +106,7 @@ public class Main {
                         Copia1 = IJ.openImage(ruta2);  
                         int valor = rf.getAnchoDNI(yDNI+1, (alturaX+5) + distanceBetweenSquaresH * n);
                         if (valor == 0) valor = 13;          
-                        Copia1.setRoi(yDNI+2, (alturaX+5)  + distanceBetweenSquaresH * n  , valor-1 , 70);
+	                        Copia1.setRoi(yDNI+2, (alturaX+5)  + distanceBetweenSquaresH * n  , valor-1 , 70);
                         IJ.run(Copia1, "Crop", ""); int k = h+1;
                         if (h != 7 ) yDNI = rf.obtenerSiguienteEspacioDNI(yDNI,alturaX+5);
                         numero =  recogChar.recognize_actionPerformed(Copia1.getImage());
