@@ -43,9 +43,9 @@ public class MySQLDAOProceso implements DAOProceso{
 					DBConnection.password);
 			statement = connect.createStatement();
 			numero =statement.executeUpdate("INSERT INTO Proceso "
-					+ "(Nombre , PorcentajeAceptado , idTipoProceso) " 
+					+ "(Nombre , PorcentajeAceptado , idTipoProceso , TotalPersonas) " 
 					+ "VALUES ('" + p.getNombre() + "', " + p.getPorcentaje() 
-					+ ", " + p.getIdTipoProceso() + ")",Statement.RETURN_GENERATED_KEYS);
+					+ ", " + p.getIdTipoProceso() + " , " + p.getTotalPersonas() +  ")",Statement.RETURN_GENERATED_KEYS);
 			
 			ResultSet rs = statement.getGeneratedKeys();
 	        if (rs.next()){
@@ -104,7 +104,7 @@ public class MySQLDAOProceso implements DAOProceso{
 				int porc = Integer.parseInt(resultSet.getString("PorcentajeAceptado"));
 				int idTP = Integer.parseInt(resultSet.getString("idTipoProceso"));
 				int idCal=Integer.parseInt(resultSet.getString("idCalendario"));
-				
+				int cantP=Integer.parseInt(resultSet.getString("TotalPersonas"));		
 				
 				ProcesoElectoral p = new ProcesoElectoral();
 				p.setId(id);
@@ -112,6 +112,7 @@ public class MySQLDAOProceso implements DAOProceso{
 				p.setPorcentaje(porc);
 				p.setIdTipoProceso(idTP);
 				p.setIdCalendario(idCal);
+				p.setTotalPersonas(cantP);
 				
 				Calendario c=ProcessManager.queryCalById(idCal);
 				p.setFechaIni(c.getFechaIni());
@@ -152,7 +153,7 @@ public class MySQLDAOProceso implements DAOProceso{
 			statement = connect.createStatement();			
 			statement.executeUpdate("UPDATE Proceso " + 
 					"SET Nombre= '" + p.getNombre() + "', PorcentajeAceptado= "
-					+ p.getPorcentaje() + ", IdTipoProceso= " + p.getIdTipoProceso() 
+					+ p.getPorcentaje() + ", IdTipoProceso= " + p.getIdTipoProceso() + ", TotalPersonas= " + p.getTotalPersonas() 
 					+ " WHERE IdProceso= " + p.getId());
 			
 			resultSet = statement.executeQuery("SELECT * FROM Proceso " + "WHERE idProceso= " + p.getId());
