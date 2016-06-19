@@ -6936,6 +6936,7 @@ public static FirmaRecortada cortarFirma(String urlPlanillonesOriginales, int in
 public static List<Double> procesarFirmasNuevo(FirmaRecortada listaFirmas, List<PersonaReniec> listaDeListaPersonas, String urlBaseDeDatos)
 		throws IOException {
 
+	Procesando.setearImagenFirma( listaFirmas.img );
 	double umbral = 5;
 	int d1 = 0, d2 = 0;
 	int porcentajeMinimo = 38; // 35 16
@@ -6988,7 +6989,7 @@ public static List<Double> procesarFirmasNuevo(FirmaRecortada listaFirmas, List<
 		//JOptionPane.PLAIN_MESSAGE);
 
 		int indiceCandidatos;
-		System.out.println("Registro persona: " + indicePersonaLista1);
+		//System.out.println("Registro persona: " + indicePersonaLista1);
 
 		
 		
@@ -6999,7 +7000,7 @@ public static List<Double> procesarFirmasNuevo(FirmaRecortada listaFirmas, List<
 			+ listaDeListaPersonas.get(indicePersonaLista1).getIdFirma());
 			
 			url2 = url2 +".jpg" ;
-			System.out.println("firma q abrira" + url2);
+			//System.out.println("firma q abrira" + url2);
 			imagen2 = new FastBitmap(url2);
 
 			

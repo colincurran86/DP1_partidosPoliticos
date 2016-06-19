@@ -104,7 +104,7 @@ public class MySQLDAOProceso implements DAOProceso{
 				int porc = Integer.parseInt(resultSet.getString("PorcentajeAceptado"));
 				int idTP = Integer.parseInt(resultSet.getString("idTipoProceso"));
 				int idCal=Integer.parseInt(resultSet.getString("idCalendario"));
-				int cantP=Integer.parseInt(resultSet.getString("TotalPersonas"));		
+			//	int cantP=Integer.parseInt(resultSet.getString("TotalPersonas"));		
 				
 				ProcesoElectoral p = new ProcesoElectoral();
 				p.setId(id);
@@ -112,7 +112,7 @@ public class MySQLDAOProceso implements DAOProceso{
 				p.setPorcentaje(porc);
 				p.setIdTipoProceso(idTP);
 				p.setIdCalendario(idCal);
-				p.setTotalPersonas(cantP);
+			//	p.setTotalPersonas(cantP);
 				
 				Calendario c=ProcessManager.queryCalById(idCal);
 				p.setFechaIni(c.getFechaIni());

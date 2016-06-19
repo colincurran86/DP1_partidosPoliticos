@@ -130,12 +130,7 @@ public class Main {
                     
                     Procesando.escribirTextArea("============================================");
                     Procesando.escribirTextArea("Se esta procesando el dni :"  + dni );
-                    
-                    
-                    
-                    
-                    
-                    
+                         
                     
                     List<PersonaReniec>  listaPersonasReniec = new ArrayList<PersonaReniec>();
                      int indice = encontrarDNI(dni);

@@ -1,17 +1,24 @@
 package pantallas;
 
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
 import org.apache.poi.hssf.record.chart.BarRecord;
+import org.imgscalr.Scalr;
+import org.imgscalr.Scalr.Method;
 
 import models.PartidoPolitico;
 import models.PersonaReniec;
+import Firmas.FastBitmap;
 import Recorte.Main;
 import clasesAux.Util;
 
+import java.awt.Image;
 import java.awt.TextArea;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.List;
 import java.util.Timer;
@@ -22,7 +29,7 @@ public class Procesando extends JPanel {
 	// static JProgressBar progressBar = new JProgressBar();
 	static public JProgressBar progressBar = new JProgressBar();
 	static public TextArea textArea = new TextArea();
-
+static public JLabel labelImage = new JLabel();
 	static int porcentaje = 0;
 
 	/**
@@ -41,6 +48,14 @@ public class Procesando extends JPanel {
 		// JProgressBar progressBar = new JProgressBar();
 		progressBar.setBounds(118, 46, 296, 26);
 		add(progressBar);
+		
+	
+	//	JLabel labelImage = new JLabel();
+//		labelImage.setIcon( ii);
+		labelImage.setBounds(340, 309, 203, 202);
+		add(labelImage);
+		
+		
 
 		// JFrame f = new JFrame("JProgressBar Sample");
 		// f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -51,6 +66,10 @@ public class Procesando extends JPanel {
 
 		textArea.setBounds(83, 100, 380, 160);
 		add(textArea);
+		
+		JLabel lblHuella = new JLabel("Firma procesada: ");
+		lblHuella.setBounds(330, 284, 122, 14);
+		add(lblHuella);
 
 		// gerardoRecortesWarning();
 
@@ -78,6 +97,23 @@ public class Procesando extends JPanel {
 	static public void escribirTextArea(String cadena) {
 
 		textArea.append(cadena + "\n");
+	}
+	
+	static public void setearImagenFirma ( BufferedImage imgA  ) {
+		
+				
+		
+		//FastBitmap imagenPlanillon = new FastBitmap("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\bd\\firmas.jpg\\f001.jpg");
+	//	BufferedImage imgA = imagenPlanillon.toBufferedImage(); 
+		BufferedImage scaledImg = Scalr.resize(imgA, Method.AUTOMATIC, 203,202, Scalr.OP_BRIGHTER);
+		FastBitmap imagenPlanillon = new FastBitmap(scaledImg); 
+		ImageIcon ii = new ImageIcon ();
+		ii = imagenPlanillon.toIcon(); 
+		labelImage.setIcon( ii);
+		
+
+		
+		
 	}
 
 	public class ProcesoBar extends Thread {
@@ -121,5 +157,4 @@ public class Procesando extends JPanel {
 			this.mensaje = msj;
 		}
 	}
-
 }
