@@ -1,3 +1,4 @@
+
 package Recorte;
 
 import java.awt.Graphics2D;
@@ -267,8 +268,6 @@ public class recorteFunctions {
         for (int i = yDNI; ;i++){
              int r = padronJ.getPixel(i, alturaX)[0];
              if (r != 0){
-                // System.out.println("holas" + r);
-                // System.out.println(i);
                  for (int m = i; ; m++){
                      int h = padronJ.getPixel(m, alturaX)[0];
                      if (h == 0){

@@ -39,8 +39,11 @@ public class Util {
 		Util u = new Util();
 		Main m = new Main();
 		PrimeraFase primeraFase = new PrimeraFase();
-		String formatearRutaPlan = "D:\\Users\\jemarroquin\\git\\DP1_partidosPoliticos\\src\\Recorte\\Padrones";
-	
+		//String formatearRutaPlan = "D:\\Users\\jemarroquin\\git\\DP1_partidosPoliticos\\src\\Recorte\\Padrones";
+		String formatearRutaPlan = u.formatearRuta(primeraFase.rutaPadrones);
+		String formatearRutaFima = u.formatearRuta(primeraFase.rutaFirma);
+		String formatearRutaHuella = u.formatearRuta(primeraFase.rutaHuella);
+
 	
 		
 	   for ( int i = 0 ; i < PrimeraFase.ppescogidos.size()  ; i++ ) 
@@ -49,7 +52,7 @@ public class Util {
 	   {
 		   Procesando.escribirTextArea("Partido Político: " + PrimeraFase.ppescogidos.get(i).getNombre());
 		   
-		   	m.main(  formatearRutaPlan + "/"+ PrimeraFase.ppescogidos.get(i).getNombre()      , PrimeraFase.ppescogidos.get(i));
+		   	m.main(formatearRutaPlan + "/"+ PrimeraFase.ppescogidos.get(i).getNombre() , PrimeraFase.ppescogidos.get(i), formatearRutaFima, formatearRutaHuella);
 	   }
 	   
 	   
@@ -72,7 +75,7 @@ public class Util {
 	}
 
 		
-	public static List<PersonaReniec> ocrMasReniec2(String dni){
+		public static List<PersonaReniec> ocrMasReniec2(String dni){
 		List<PersonaReniec> candidatos = new ArrayList<PersonaReniec>();
 		
 		boolean entro = false;

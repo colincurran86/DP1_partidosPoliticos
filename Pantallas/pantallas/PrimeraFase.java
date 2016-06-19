@@ -60,6 +60,8 @@ public class PrimeraFase extends JPanel implements ActionListener {
 	public static List <PartidoPolitico> ppescogidos = new ArrayList < PartidoPolitico> ();
 	public static String rutaPadrones = new String();
 	public static String rutaExcel = new String();
+	public static String rutaFirma = new String();
+	public static String rutaHuella = new String();
 
 	/**
 	 * Create the panel.
@@ -165,11 +167,14 @@ public class PrimeraFase extends JPanel implements ActionListener {
 		}
 		if (e.getSource() == btnProcesar) {
 
+			
 			Procesando p1;
 			p1 = new Procesando();
 			p1.setVisible(true);
 			rutaPadrones = txtFieldPlan.getText();
 			rutaExcel = txtFieldBDRNV.getText();
+			rutaFirma = txtFieldBDFirmas.getText();
+			rutaHuella = txtFieldBDHuellas.getText();
 			Principal.getFrame().getContentPane().setVisible(false);
 			Principal.getFrame().setContentPane(p1);
 
