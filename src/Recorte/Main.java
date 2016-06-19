@@ -118,6 +118,7 @@ public class Main {
     	            //   lista.add(dni);
                     Procesando.escribirTextArea("============================================");
                     Procesando.escribirTextArea("Se esta procesando el dni :"  + dni );
+                    
                     List<PersonaReniec>  listaPersonasReniec =  Util.ocrMasReniec2(dni); 
     	               
                     for (int i = 0 ; i < listaPersonasReniec.size()  ; i++ )

@@ -87,6 +87,3 @@ public class ProgressMonitorExample  implements ActionListener {
     }
   }
 }
-           
-         
-    
