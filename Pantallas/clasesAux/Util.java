@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.sql.Date;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -72,27 +73,41 @@ public class Util {
 		}
 	
 	   List<ProcesoXFase> procesoListFase = new ArrayList <ProcesoXFase>();
-	   java.sql.Date fechaActual = new java.sql.Date(Calendar.getInstance().getTime().getTime());
-		
+
+		java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+
+		String startDateString = formatter.format(date);
+		Date d;
+		try {
+			d = new Date(formatter.parse(startDateString).getTime());
+			startDateString = formatter.format(date);
+			d = new Date(formatter.parse(startDateString).getTime());
 	
-	   for ( int i = 0 ; i < PrimeraFase.ppescogidos.size()  ; i++ ) {
+	    for ( int i = 0 ; i < PrimeraFase.ppescogidos.size()  ; i++ ) {
 		   
 		   ProcesoXFase procesoFase = new ProcesoXFase();
-		   procesoFase.setFechaInicioProc(fechaActual);
+		   procesoFase.setFechaInicioProc(d);
 		   procesoFase.setIdPartPol(PrimeraFase.ppescogidos.get(i).getId());
 		   procesoFase.setIdFase(1);
 		   procesoFase.setIdProceso(PrimeraFase.idPE);
 		   procesoFase.setResultado("Resultado Prueba");
 		   procesoFase.setObservacion("Observacion Prueba");
-		   //partidosProcesos.almacenarBD(procesoFase);
+		   partidosProcesos.almacenarBD(procesoFase);
 		   
 		   
 		   Procesando.escribirTextArea("*******************	*******************************");
 		   Procesando.escribirTextArea("Partido Político: " + PrimeraFase.ppescogidos.get(i).getNombre());
 		   m.main(formatearRutaPlan + "/"+ PrimeraFase.ppescogidos.get(i).getNombre() , PrimeraFase.ppescogidos.get(i), formatearRutaFima, formatearRutaHuella);
 	 
+    }
 	   
-	   }
+
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 	   
 	   //Almacenar Base de Datos

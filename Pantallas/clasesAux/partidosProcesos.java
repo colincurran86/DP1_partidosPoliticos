@@ -21,9 +21,8 @@ public class partidosProcesos {
 	public static ResultSet resultSet = null;
 	public static List<String> values =  new ArrayList<String>();
 	
-	public static void almacenarBD(ProcesoXFase resultados){
+	public static void almacenarBD(ProcesoXFase p){
 		
-			ProcesoXFase p = new ProcesoXFase();
 
 			// TODO Auto-generated method stub
 			int numero=0;
@@ -33,12 +32,12 @@ public class partidosProcesos {
 				connect = DriverManager.getConnection(DBConnection.URL_JDBC_MySQL, DBConnection.user,
 						DBConnection.password);
 				statement = connect.createStatement();
-				numero =statement.executeUpdate("INSERT INTO ProcesoxFasexPartidoPolitico "
-						+ "(IdPartidosPoliticos , idFase, Resultado, Observacion, IdProceso, FechaInicioProceso) " 
-						+ "VALUES ('" + p.getIdPartPol() + "', " + p.getIdFase() + " '," + p.getResultado() + "', "  + p.getObservacion() 
-						+ "', " + p.getIdProceso() + ", " + p.getFechaInicioProc() + ")",Statement.RETURN_GENERATED_KEYS);
+	
+				System.out.println("FECHAAA :" +  p.getFechaInicioProc());
+				statement.executeUpdate("INSERT INTO ProcesoxFasexPartidoPolitico " + "(IdPartidosPoliticos , idFase, Resultado, Observacion, IdProceso, FechaInicioProceso)" 
+				+ "VALUES ('"
+						+ p.getIdPartPol() + "', '" +  p.getIdFase() + "' , '" + p.getResultado() + "' , '" + p.getObservacion() + "' , '" + p.getIdProceso() +  "' , '" + p.getFechaInicioProc() +  "'   )" );
 				
-				ResultSet rs = statement.getGeneratedKeys();
 				connect.close();
 
 				

@@ -108,7 +108,7 @@ public class Main {
                         Copia1 = IJ.openImage(ruta2);  
                         int valor = rf.getAnchoDNI(yDNI+1, (alturaX+5) + distanceBetweenSquaresH * n);
                         if (valor == 0) valor = 10;          
-	                        Copia1.setRoi(yDNI+2, (alturaX+5)  + distanceBetweenSquaresH * n  , 10 , 70);
+	                        Copia1.setRoi(yDNI+2, (alturaX+5)  + distanceBetweenSquaresH * n  , valor , 70);
                         IJ.run(Copia1, "Crop", ""); int k = h+1;
                         //new FileSaver(Copia1).saveAsPng("D:\\Users\\jemarroquin\\Desktop\\Nueva carpeta\\" + contador + ".jpg");
                         contador++;
