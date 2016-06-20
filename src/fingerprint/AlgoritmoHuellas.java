@@ -22,13 +22,15 @@ public class AlgoritmoHuellas {
 			
 			int idHuella = listaPersonasReniec.get(i).getIdHuella();
 			try {		
-				
+				System.out.println("CHICA BUENA O CHICA MALA");
 				BufferedImage imageBase = buscarImageBase(idHuella, rutaHuella);
 				double Porcentaje = mhuellas.principal(imageInput.getBufferedImage(), imageBase);
 				if (Porcentaje == -1){
 					System.out.println("No se pudo obtener un resultado por la calidad de la imagen");
 				}
 				else System.out.println("El porcentaje es " + Porcentaje + "%");
+				System.out.println("KAPPAPRIDE");
+
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

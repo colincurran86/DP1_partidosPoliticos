@@ -13,8 +13,9 @@ public class Minutiae {
 	static int closerPoints = 5;
 	static double angleRange = 1.5;
 
-	public static void crossingNumber(final int[][] givenImage, List<Point> minutiaeFound)
-			throws FileNotFoundException, UnsupportedEncodingException {
+	public static void crossingNumber(final int[][] givenImage,
+			List<Point> minutiaeFound) throws FileNotFoundException,
+			UnsupportedEncodingException {
 
 		/*
 		 * PrintWriter writer = new PrintWriter("bandolero.txt", "UTF-8");
@@ -69,9 +70,10 @@ public class Minutiae {
 			for (int j = i + 1; j < minutiae.size(); j++) {
 				p2 = minutiae.get(j);
 				// getting the distance between the points
-				distance = (float) Math.sqrt((p1.getX() - p2.getX()) * (p1.getX() - p2.getX())
-						+ (p1.getY() - p2.getY()) * (p1.getY() - p2.getY()));
-				if (distance < 18) {
+				distance = (float) Math.sqrt((p1.getX() - p2.getX())
+						* (p1.getX() - p2.getX()) + (p1.getY() - p2.getY())
+						* (p1.getY() - p2.getY()));
+				if (distance < 6) {
 					minutiae.remove(i);
 					i = i - 1;
 					break;
@@ -95,8 +97,11 @@ public class Minutiae {
 			for (int j = i + 1; j < minutiae.size(); j++) {
 				p2 = minutiae.get(j);
 				// getting the distance between the points
-				distance = a + (float) Math.sqrt((p1.getX() - p2.getX()) * (p1.getX() - p2.getX())
-						+ (p1.getY() - p2.getY()) * (p1.getY() - p2.getY()));
+				distance = a
+						+ (float) Math.sqrt((p1.getX() - p2.getX())
+								* (p1.getX() - p2.getX())
+								+ (p1.getY() - p2.getY())
+								* (p1.getY() - p2.getY()));
 				cont++;
 				System.out.println(a);
 
@@ -114,18 +119,29 @@ public class Minutiae {
 		int acum = 0;
 		int valor1 = 0, valor2 = 0, valor3 = 0, valor4 = 0, valor5 = 0, valor6 = 0, valor7 = 0, valor8 = 0, valor9 = 0;
 
-		valor1 = givenImage[y][x + 1];
-		valor7 = givenImage[y + 1][x];
-		valor8 = givenImage[y + 1][x + 1];
-		valor9 = givenImage[y][x + 1];
-		System.out.println("x: " + x + " y:" + y);
-		if ( (x == 0 || x == 77) || y == 0) {
-			if ((x == 0 || x == 77) && y == 0)
+		if (x == 149) {
+			valor7 = 0;
+			valor8 = 0;
+		} else {
+			valor1 = givenImage[y][x + 1];
+			valor9 = givenImage[y][x + 1];
+		}
+
+		if (y == 76) {
+			valor7 = 0;
+			valor8 = 0;
+		} else {
+			valor7 = givenImage[y + 1][x];
+			valor8 = givenImage[y + 1][x + 1];
+		}
+
+		if (x == 0 || (y == 0 || y == 76)) {
+			if (x == 0 && (y == 0 || y == 76))
 				valor4 = 0;
-			else if (x == 0 || x == 77) {
+			else if (x == 0) {
 				valor5 = 0;
 				valor6 = 0;
-			} else if (y == 0) {
+			} else if (y == 0 || y == 76) {
 				valor2 = 0;
 				valor3 = 0;
 			} else {
@@ -138,17 +154,12 @@ public class Minutiae {
 
 		}
 		/*
-		valor1 = givenImage[y][x + 1];
-		valor2 = givenImage[y - 1][x + 1];
-		valor3 = givenImage[y - 1][x];
-		valor4 = givenImage[y - 1][x - 1];
-		valor5 = givenImage[y][x - 1];
-		valor6 = givenImage[y + 1][x - 1];
-		valor7 = givenImage[y + 1][x];
-		valor8 = givenImage[y + 1][x + 1];
-		valor9 = givenImage[y][x + 1];
-		 
-		*/
+		 * valor1 = givenImage[y][x + 1]; valor2 = givenImage[y - 1][x + 1];
+		 * valor3 = givenImage[y - 1][x]; valor4 = givenImage[y - 1][x - 1];
+		 * valor5 = givenImage[y][x - 1]; valor6 = givenImage[y + 1][x - 1];
+		 * valor7 = givenImage[y + 1][x]; valor8 = givenImage[y + 1][x + 1];
+		 * valor9 = givenImage[y][x + 1];
+		 */
 		acum = acum + Math.abs(valor1 - valor2);
 		acum = acum + Math.abs(valor2 - valor3);
 		acum = acum + Math.abs(valor3 - valor4);
@@ -163,7 +174,8 @@ public class Minutiae {
 
 	}
 
-	public static List<MinutiaeTuples> getTuplesFeatures(List<Point> minutiaeFound) {
+	public static List<MinutiaeTuples> getTuplesFeatures(
+			List<Point> minutiaeFound) {
 		List<MinutiaeTuples> lista = new ArrayList<MinutiaeTuples>();
 
 		for (int i = 0; i < minutiaeFound.size(); i++) {
@@ -172,9 +184,11 @@ public class Minutiae {
 			// saca solo las distancias con todos los demás puntos
 			for (int j = 0; j < minutiaeFound.size(); j++) {
 				if (i != j) {
-					int dif = minutiaeFound.get(i).getX() - minutiaeFound.get(j).getX();
+					int dif = minutiaeFound.get(i).getX()
+							- minutiaeFound.get(j).getX();
 					int valX = dif * dif;
-					dif = minutiaeFound.get(i).getY() - minutiaeFound.get(j).getY();
+					dif = minutiaeFound.get(i).getY()
+							- minutiaeFound.get(j).getY();
 					int valY = dif * dif;
 					double distance = Math.sqrt(valX + valY);
 					bestDistances.add(distance);
@@ -201,13 +215,17 @@ public class Minutiae {
 					// - center.y)-
 					// Math.atan2(previous.x- center.x,previous.y- center.y));
 
-					int curCenX = minutiaeFound.get(bestIndexes.get(j)).getX() - minutiaeFound.get(i).getX();
-					int curCenY = minutiaeFound.get(bestIndexes.get(j)).getY() - minutiaeFound.get(i).getY();
-					int preCenX = minutiaeFound.get(bestIndexes.get(k)).getX() - minutiaeFound.get(i).getX();
-					int preCenY = minutiaeFound.get(bestIndexes.get(k)).getY() - minutiaeFound.get(i).getY();
+					int curCenX = minutiaeFound.get(bestIndexes.get(j)).getX()
+							- minutiaeFound.get(i).getX();
+					int curCenY = minutiaeFound.get(bestIndexes.get(j)).getY()
+							- minutiaeFound.get(i).getY();
+					int preCenX = minutiaeFound.get(bestIndexes.get(k)).getX()
+							- minutiaeFound.get(i).getX();
+					int preCenY = minutiaeFound.get(bestIndexes.get(k)).getY()
+							- minutiaeFound.get(i).getY();
 
-					double angle = Math
-							.abs(Math.toDegrees(Math.atan2(curCenX, curCenY) - Math.atan2(preCenX, preCenY)));
+					double angle = Math.abs(Math.toDegrees(Math.atan2(curCenX,
+							curCenY) - Math.atan2(preCenX, preCenY)));
 					bd = new BigDecimal(Double.toString(angle));
 					bd = bd.setScale(1, BigDecimal.ROUND_HALF_UP);
 					t.setAngle(bd.doubleValue());
@@ -223,7 +241,8 @@ public class Minutiae {
 		return lista;
 	}
 
-	private static void ordenar(List<Double> bestDistances, List<Integer> bestIndexes) {
+	private static void ordenar(List<Double> bestDistances,
+			List<Integer> bestIndexes) {
 		for (int i = 0; i < bestDistances.size() - 1; i++)
 			for (int j = i + 1; j < bestDistances.size(); j++)
 				if (bestDistances.get(i) > bestDistances.get(j)) {
@@ -249,53 +268,81 @@ public class Minutiae {
 
 	}
 
-	public static int matchingMinutiae(List<MinutiaeTuples> mTuplesIM, List<MinutiaeTuples> mTuplesBM) {
+	public static int matchingMinutiae(List<MinutiaeTuples> mTuplesIM,
+			List<MinutiaeTuples> mTuplesBM) {
 
 		List<MinutiaeTuples> mTuplesBMAux = mTuplesBM;
 		int totalRelations = 0;
 
-		for (int i = 0; i < mTuplesIM.size(); i++) {
-			// int cantRepitencia=0;
-			int maxPairs = 0;
-			int valJ = -1;
+		if (mTuplesBM.size() > mTuplesIM.size()) {
 
-			for (int j = 0; j < mTuplesBMAux.size(); j++) {
-				List<Tupla> tIM = mTuplesIM.get(i).getFeatures();
-				List<Tupla> tBM = mTuplesBMAux.get(j).getFeatures();
+			for (int i = 0; i < mTuplesIM.size(); i++) {
+				// int cantRepitencia=0;
+				int maxPairs = 0;
+				int valJ = -1;
 
-				int val = analizePairListTuple(tIM, tBM);
+				for (int j = 0; j < mTuplesBMAux.size(); j++) {
+					List<Tupla> tIM = mTuplesIM.get(i).getFeatures();
+					List<Tupla> tBM = mTuplesBMAux.get(j).getFeatures();
 
-				if (val > 1) {
+					int val = analizePairListTuple(tIM, tBM);
 
-					totalRelations = totalRelations + 1;
-					// mTuplesBMAux.remove(j);
-					break;
-					// si ambos puntos tienen como mínimo 2 tuplas iguales, se
-					// añaden a la lista de posibles candidatos
-					// maxPairs = val;
-					// valJ = j;
-					// cantRepitencia++;
+					if (val > 1) {
 
-					/*
-					 * if(cantRepitencia==1) possibleCandidateIM.add(i); //añade
-					 * el punto i una sola vez
-					 * 
-					 * if(i==0) possibleCandidateBM.add(j);//añade el indice
-					 * else{ //buscar, si esta = pasa, si no esta = añade
-					 * boolean found=false; for (int
-					 * k=0;k<possibleCandidateBM.size();k++)
-					 * if(possibleCandidateBM.get(k)==j) found=true; if(!found)
-					 * possibleCandidateBM.add(j); }
-					 */
+						totalRelations = totalRelations + 1;
+						// mTuplesBMAux.remove(j);
+						break;
+						// si ambos puntos tienen como mínimo 2 tuplas iguales,
+						// se
+						// añaden a la lista de posibles candidatos
+						// maxPairs = val;
+						// valJ = j;
+						// cantRepitencia++;
+
+						/*
+						 * if(cantRepitencia==1) possibleCandidateIM.add(i);
+						 * //añade el punto i una sola vez
+						 * 
+						 * if(i==0) possibleCandidateBM.add(j);//añade el indice
+						 * else{ //buscar, si esta = pasa, si no esta = añade
+						 * boolean found=false; for (int
+						 * k=0;k<possibleCandidateBM.size();k++)
+						 * if(possibleCandidateBM.get(k)==j) found=true;
+						 * if(!found) possibleCandidateBM.add(j); }
+						 */
+					}
 				}
+				// if (maxPairs != 0) {
+				// possibleCandidateIM.add(i);
+				// possibleCandidateBM.add(valJ);
+				// mTuplesBMAux.remove(valJ);
+				// }
 			}
-			// if (maxPairs != 0) {
-			// possibleCandidateIM.add(i);
-			// possibleCandidateBM.add(valJ);
-			// mTuplesBMAux.remove(valJ);
-			// }
-		}
 
+		} else {
+			for (int i = 0; i < mTuplesBMAux.size(); i++) {
+				// int cantRepitencia=0;
+				int maxPairs = 0;
+				int valJ = -1;
+				
+				
+				for (int j = 0; j < mTuplesIM.size(); j++) {
+					List<Tupla> tIM = mTuplesIM.get(j).getFeatures();
+					List<Tupla> tBM = mTuplesBMAux.get(i).getFeatures();
+
+					int val = analizePairListTuple(tIM, tBM);
+
+					if (val > 1) {
+
+						totalRelations = totalRelations + 1;
+						// mTuplesBMAux.remove(j);
+						break;
+						
+					}
+				}
+				
+			}
+		}
 		return totalRelations;
 		/*
 		 * orderList(possibleCandidateIM); orderList(possibleCandidateBM);
@@ -327,15 +374,16 @@ public class Minutiae {
 				Tupla im = tIM.get(i);
 				Tupla bm = tBM.get(j);
 
-				if ((im.getRatio() == bm.getRatio()) && (im.getAngle() > (bm.getAngle() - angleRange) && // el
-																											// rango
-																											// aceptable
-																											// en
-																											// el
-																											// que
-																											// es
-																											// posible
-																											// aceptar
+				if ((im.getRatio() == bm.getRatio())
+						&& (im.getAngle() > (bm.getAngle() - angleRange) && // el
+																			// rango
+																			// aceptable
+																			// en
+																			// el
+																			// que
+																			// es
+																			// posible
+																			// aceptar
 						(im.getAngle() < (bm.getAngle() + angleRange)))) {// como
 																			// un
 																			// candidato
@@ -353,7 +401,8 @@ public class Minutiae {
 			return 0;
 	}
 
-	public static void orderTreeStructure(List<Point> minutiaeFound, List<Integer> possibleCandidate) {
+	public static void orderTreeStructure(List<Point> minutiaeFound,
+			List<Integer> possibleCandidate) {
 
 		for (int i = 0; i < possibleCandidate.size() - 1; i++)
 			for (int j = i + 1; j < possibleCandidate.size(); j++) {
@@ -376,8 +425,10 @@ public class Minutiae {
 			}
 	}
 
-	public static void comparisonAtTreeStructure(List<Point> minutiaeFound, List<Integer> possibleCandidateIM,
-			List<Integer> possibleCandidateBM, List<Integer> excludedMinutiaeIM, List<Integer> excludedMinutiaeBM) {
+	public static void comparisonAtTreeStructure(List<Point> minutiaeFound,
+			List<Integer> possibleCandidateIM,
+			List<Integer> possibleCandidateBM,
+			List<Integer> excludedMinutiaeIM, List<Integer> excludedMinutiaeBM) {
 
 		List<Integer> possibleCandidateIMAux = possibleCandidateIM;
 		List<Integer> possibleCandidateBMAux = possibleCandidateBM;
@@ -386,17 +437,25 @@ public class Minutiae {
 			int tam = possibleCandidateIM.size();
 			for (int i = 1; i < tam - 1; i++) {
 				// Que halla un siguiente punto
-				if ((i + 1) < possibleCandidateIMAux.size() && (i + 1) < possibleCandidateBMAux.size()) {
+				if ((i + 1) < possibleCandidateIMAux.size()
+						&& (i + 1) < possibleCandidateBMAux.size()) {
 					int cuadranteIM = 0, cuadranteBM = 0;
 					double ratioIM = 0, ratioBM = 0, angleIM = 0, angleBM = 0;
 
-					sacarCaracteristicas(minutiaeFound.get(possibleCandidateIMAux.get(i - 1)),
+					sacarCaracteristicas(
+							minutiaeFound
+									.get(possibleCandidateIMAux.get(i - 1)),
 							minutiaeFound.get(possibleCandidateIMAux.get(i)),
-							minutiaeFound.get(possibleCandidateIMAux.get(i + 1)), cuadranteIM, ratioIM, angleIM);
-					sacarCaracteristicas(minutiaeFound.get(possibleCandidateBMAux.get(i - 1)),
+							minutiaeFound.get(possibleCandidateIMAux.get(i + 1)),
+							cuadranteIM, ratioIM, angleIM);
+					sacarCaracteristicas(
+							minutiaeFound
+									.get(possibleCandidateBMAux.get(i - 1)),
 							minutiaeFound.get(possibleCandidateBMAux.get(i)),
-							minutiaeFound.get(possibleCandidateBMAux.get(i + 1)), cuadranteBM, ratioBM, angleBM);
-					if (cuadranteIM == cuadranteBM && ratioIM == ratioBM && (angleIM > angleBM - angleRange)
+							minutiaeFound.get(possibleCandidateBMAux.get(i + 1)),
+							cuadranteBM, ratioBM, angleBM);
+					if (cuadranteIM == cuadranteBM && ratioIM == ratioBM
+							&& (angleIM > angleBM - angleRange)
 							&& (angleIM < angleBM + angleRange))
 						continue;
 					else {
@@ -408,29 +467,41 @@ public class Minutiae {
 																	// punto
 																	// tras
 																	// eliminar
-							sacarCaracteristicas(minutiaeFound.get(possibleCandidateIMAux.get(i - 1)),
-									minutiaeFound.get(possibleCandidateIMAux.get(i)),
-									minutiaeFound.get(possibleCandidateIMAux.get(i + 2)), cuadranteIMAux, ratioIMAux,
-									angleIMAux);
+							sacarCaracteristicas(
+									minutiaeFound.get(possibleCandidateIMAux
+											.get(i - 1)),
+									minutiaeFound.get(possibleCandidateIMAux
+											.get(i)),
+									minutiaeFound.get(possibleCandidateIMAux
+											.get(i + 2)), cuadranteIMAux,
+									ratioIMAux, angleIMAux);
 						if ((i + 2) < possibleCandidateIMAux.size())// existe
 																	// siguiente
 																	// punto
 																	// tras
 																	// eliminar
-							sacarCaracteristicas(minutiaeFound.get(possibleCandidateBMAux.get(i - 1)),
-									minutiaeFound.get(possibleCandidateBMAux.get(i)),
-									minutiaeFound.get(possibleCandidateBMAux.get(i + 2)), cuadranteBMAux, ratioBMAux,
-									angleBMAux);
+							sacarCaracteristicas(
+									minutiaeFound.get(possibleCandidateBMAux
+											.get(i - 1)),
+									minutiaeFound.get(possibleCandidateBMAux
+											.get(i)),
+									minutiaeFound.get(possibleCandidateBMAux
+											.get(i + 2)), cuadranteBMAux,
+									ratioBMAux, angleBMAux);
 
 						if (cuadranteIMAux != 0)// elimina en IM
-							if (cuadranteIMAux == cuadranteBM && ratioIMAux == ratioBM
-									&& (angleIMAux > angleBM - angleRange) && (angleIMAux < angleBM + angleRange)) {
+							if (cuadranteIMAux == cuadranteBM
+									&& ratioIMAux == ratioBM
+									&& (angleIMAux > angleBM - angleRange)
+									&& (angleIMAux < angleBM + angleRange)) {
 								possibleCandidateIMAux.remove(i + 1);
 								continue;
 							}
 						if (cuadranteBMAux != 0)// elimina en BM
-							if (cuadranteIM == cuadranteBMAux && ratioIM == ratioBMAux
-									&& (angleIM > angleBMAux - angleRange) && (angleIM < angleBMAux + angleRange)) {
+							if (cuadranteIM == cuadranteBMAux
+									&& ratioIM == ratioBMAux
+									&& (angleIM > angleBMAux - angleRange)
+									&& (angleIM < angleBMAux + angleRange)) {
 								possibleCandidateBMAux.remove(i + 1);
 								continue;
 							}
@@ -449,15 +520,15 @@ public class Minutiae {
 		}
 	}
 
-	private static void sacarCaracteristicas(Point anterior, Point actual, Point siguiente, int cuadrante, double ratio,
-			double angle) {
+	private static void sacarCaracteristicas(Point anterior, Point actual,
+			Point siguiente, int cuadrante, double ratio, double angle) {
 		// CUADRANTE
 		if (siguiente.getX() > actual.getX())// 1 o 4
 			if (siguiente.getY() > actual.getY())
 				cuadrante = 4;
 			else
 				cuadrante = 1;
-		else// 2 o 3
+		else // 2 o 3
 		if (siguiente.getY() > actual.getY())
 			cuadrante = 3;
 		else
@@ -471,7 +542,8 @@ public class Minutiae {
 		int preCenX = anterior.getX() - actual.getX();
 		int preCenY = anterior.getY() - actual.getY();
 
-		double a = Math.abs(Math.toDegrees(Math.atan2(curCenX, curCenY) - Math.atan2(preCenX, preCenY)));
+		double a = Math.abs(Math.toDegrees(Math.atan2(curCenX, curCenY)
+				- Math.atan2(preCenX, preCenY)));
 		BigDecimal bd = new BigDecimal(Double.toString(a));
 		bd = bd.setScale(1, BigDecimal.ROUND_HALF_UP);
 		angle = bd.doubleValue();

@@ -43,8 +43,8 @@ public class Util {
 		//String formatearRutaPlan = u.formatearRuta(primeraFase.rutaPadrones);
 		String formatearRutaFima = "D:\\Users\\jemarroquin\\Desktop\\_firmas.jpg (1)\\firmas.jpg";
 		//String formatearRutaFima = u.formatearRuta(primeraFase.rutaFirma);
-		String formatearRutaHuella = u.formatearRuta(primeraFase.rutaHuella);
-
+		//String formatearRutaHuella = u.formatearRuta(primeraFase.rutaHuella);
+		String formatearRutaHuella = "D:\\Users\\jemarroquin\\Desktop\\_huellas.jpg\\huellas.jpg";
 		// txtFieldBDRNV.setText("D:\\Users\\jemarroquin\\git\\DP1_partidosPoliticos\\src");
 	//	String formatearRutaBD = u.formatearRuta(primeraFase.rutaExcel);
 	//	System.out.println("FORMATEAR RUTA: " + formatearRutaBD );

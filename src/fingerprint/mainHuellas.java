@@ -98,12 +98,8 @@ public class mainHuellas {
 																	// minucias
 		
 		
-		if (minutiaeFoundBase.size() < 6 || minutiaeFoundInput.size() < 6) {
-			//VALIDACION SI NO SE LOGRA TENER LOS PUNTOS SUFICIENTES
-			//totalMatching = -1;
-			return -1;
-			
-		} else {
+
+		
 			// System.out.println(minutiaeFound.size()); // total de minucias
 
 			// System.out.println("Total de terminaciones: " +
@@ -146,7 +142,14 @@ public class mainHuellas {
 
 			// ELIMINANDO LAS FALSAS MINUCIAS USANDO
 			Minutiae.removeFalseMinutiae(minutiaeFoundBase);
-			Minutiae.removeFalseMinutiae(minutiaeFoundInput);
+			//Minutiae.removeFalseMinutiae(minutiaeFoundInput);
+			
+			if (minutiaeFoundInput.size() < 6) {
+				//VALIDACION SI NO SE LOGRA TENER LOS PUNTOS SUFICIENTES
+				//totalMatching = -1;
+				return -1;
+			}
+			else {
 
 			System.out.println("Minucias en la base " + minutiaeFoundBase.size());
 			System.out.println("Minucias en el Input " + minutiaeFoundInput.size());
@@ -162,33 +165,28 @@ public class mainHuellas {
 			for (int i = 0; i < minutiaeFoundInput.size(); i++)
 				imageInput.setRGB(minutiaeFoundInput.get(i).getX(), minutiaeFoundInput.get(i).getY(), 0xFF00FF00);
 
-			// MOSTRANDO LAS MINUCIAS ENCONTRADAS
-
-			//ImageIO.write(imageBase, "png", new File(
-			//		"C:/Users/Administrador/Desktop/Christian/9no/DP1/GIT GIT GIT GIT/adb-installer.log/src/fingerprint/MinuciasBase.png"));
-			//ImageIO.write(imageInput, "png", new File(
-			//		"C:/Users/Administrador/Desktop/Christian/9no/DP1/GIT GIT GIT GIT/adb-installer.log/src/fingerprint/MinuciasInput.png"));
-
-			// sacar las 10 tuplas de c/ minucia
-
-			// IM: Input Image -> Planillon
-			List<MinutiaeTuples> mTuplesIM = Minutiae.getTuplesFeatures(minutiaeFoundInput);
+			
 
 			// BM: Base Image -> Reniec
 			List<MinutiaeTuples> mTuplesBM = Minutiae.getTuplesFeatures(minutiaeFoundBase);
+
+			// IM: Input Image -> Planillon
+			List<MinutiaeTuples> mTuplesIM = Minutiae.getTuplesFeatures(minutiaeFoundInput);
+			
+
 			// = Minutiae.getTuplesFeatures(minutiaeFound);
 
 
 			totalMatching = Minutiae.matchingMinutiae(mTuplesIM, mTuplesBM);
-			double porcentaje = (totalMatching * (1.0)) / minutiaeFoundBase.size();
+			System.out.println("colooooooooooo" + totalMatching);
+			int menor = 0;
+			if (minutiaeFoundInput.size()< minutiaeFoundBase.size()) menor = minutiaeFoundInput.size();
+			else menor = minutiaeFoundBase.size();
+			double porcentaje = (totalMatching * (1.0)) /  menor;
 			return porcentaje * 100;
+
 			
-			//System.out.println("Total de matcheo " + totalMatching);
-			//if (totalMatching > minutiaeFoundBase.size() / 2)
-			//	System.out.println("True"); // total de minucias
-			//else
-			//	System.out.println("False");
-		}	
+			}
 
 	}
 }

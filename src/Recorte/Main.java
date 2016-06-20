@@ -63,7 +63,7 @@ public class Main {
 
             //verificamos cuantos padrones existen	
             //totalPadrones = rf.contarPadrones(rutaPadrones);    
-           // rf.tamanhoEstandar(rutaPadrones, totalPadrones);
+            rf.tamanhoEstandar(rutaPadrones, totalPadrones);
     		File folder = new File(rutaPadrones);
     		int contPadrones = 0;
 
@@ -95,6 +95,7 @@ public class Main {
                 int distanceBetweenSquaresH = 87 ,distanceBetweenSquares = 14, widthSquare = 14, heightSquare = 84;
                 int alturaFirma2 = alturaX + 4;
 
+                int contador = 0;
                 for (int n  = 0; n < 8; n++){ // iterando en las filas     
                 	
                     ImagePlus Copia1;
@@ -102,13 +103,16 @@ public class Main {
                     
                     
                     for (int h = 0; h<8 ; h++) {
-                        
+                
                         //Detectamos el proximo espacio en blanco
                         Copia1 = IJ.openImage(ruta2);  
                         int valor = rf.getAnchoDNI(yDNI+1, (alturaX+5) + distanceBetweenSquaresH * n);
-                        if (valor == 0) valor = 13;          
-	                        Copia1.setRoi(yDNI+2, (alturaX+5)  + distanceBetweenSquaresH * n  , valor-1 , 70);
+                        if (valor == 0) valor = 10;          
+	                        Copia1.setRoi(yDNI+2, (alturaX+5)  + distanceBetweenSquaresH * n  , 10 , 70);
                         IJ.run(Copia1, "Crop", ""); int k = h+1;
+                        new FileSaver(Copia1).saveAsPng("D:\\Users\\jemarroquin\\Desktop\\Nueva carpeta\\" + contador + ".jpg");
+                        contador++;
+                        //Prefs.blackBackground = false;
                         if (h != 7 ) yDNI = rf.obtenerSiguienteEspacioDNI(yDNI,alturaX+5);
                         numero =  recogChar.recognize_actionPerformed(Copia1.getImage());
                         if (dni == "") dni = ""+ numero;	             
@@ -174,10 +178,10 @@ Procesando.escribirTextArea( "De todos los candidatos el mejor según firmas es:
                     		//huellas
                     		distanceBetweenSquares = 86; widthSquare = 150;  heightSquare = 75;        
                     		ImagePlus Copia2 = IJ.openImage(ruta3);
-                            Copia2.setRoi(yHuellas+2, alturaFirma2+2 , widthSquare , heightSquare+2);
+                            Copia2.setRoi(yHuellas+2, alturaFirma2+2 , 150 , 77);
                             if (n != 7 ) alturaFirma2 = rf.obtenerSiguienteEspacioFirmas(yFirmas+5, alturaFirma2+2);
                             IJ.run(Copia2, "Crop", ""); 
-                           //AlgoritmoHuellas.procesarNuevo(listaPersonasReniec,Copia2,rutaHuella);
+                            AlgoritmoHuellas.procesarNuevo(listaPersonasReniec,Copia2,rutaHuella);
                     	
                     	} catch (IOException e) {
                     		// TODO Auto-generated catch block
