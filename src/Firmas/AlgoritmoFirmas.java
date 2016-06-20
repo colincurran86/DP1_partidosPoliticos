@@ -6667,6 +6667,7 @@ public static FirmaRecortada cortarFirma(String urlPlanillonesOriginales, int in
 		int multiplicarFactor = 0;
 		
 		// Comprueba horizontal o vertical
+		/*
 		if (imagenPlanillon.getWidth() < imagenPlanillon.getHeight()) {
 			Rotate rotarImage = new Rotate(90.0, Rotate.Algorithm.BICUBIC);
 			int despejarLineasNegras = 0;
@@ -6691,14 +6692,18 @@ public static FirmaRecortada cortarFirma(String urlPlanillonesOriginales, int in
 			imagenPlanillon.getWidth() / 2 + imagenPlanillon.getWidth() / 3, despejarLineasNegras - 10);
 
 		} else {
-			cortadorImagenes = new Crop(0, imagenPlanillon.getWidth() / 2, imagenPlanillon.getWidth() / 3,
-			imagenPlanillon.getHeight());
-			imagenPlanillon.toRGB();
-			imagenPlanillon.toGrayscale();
-			OtsuThreshold o = new OtsuThreshold();
-			o.applyInPlace(imagenPlanillon);
+		
 		}
-
+		 */
+		
+		cortadorImagenes = new Crop(0, imagenPlanillon.getWidth() / 2, imagenPlanillon.getWidth() / 3,
+				imagenPlanillon.getHeight());
+				imagenPlanillon.toRGB();
+				imagenPlanillon.toGrayscale();
+				OtsuThreshold o = new OtsuThreshold();
+				o.applyInPlace(imagenPlanillon);
+				
+				
 		cortadorImagenes.ApplyInPlace(imagenPlanillon);
 		anchos = imagenPlanillon.getWidth() - 1;
 		altos = imagenPlanillon.getHeight() - 1;

@@ -49,9 +49,9 @@ public class Main {
     public  void  main(String rutaPadrones  , PartidoPolitico pp, String rutaFirma, String rutaHuella) {
 
     	Util u = new Util(); PrimeraFase primeraFase = new PrimeraFase();
-    		String formatearRutaBD = "D:\\Users\\jemarroquin\\git\\DP1_partidosPoliticos\\src\\registro.nacional.v.1.xlsx" ;
+    	//	String formatearRutaBD = "D:\\Users\\jemarroquin\\git\\DP1_partidosPoliticos\\src\\registro.nacional.v.1.xlsx" ;
  
-    	//	String formatearRutaBD = u.formatearRuta(primeraFase.rutaExcel);
+    		String formatearRutaBD = u.formatearRuta(primeraFase.rutaExcel);
     		llenarBDReniec(formatearRutaBD);
     		
     		
@@ -110,7 +110,7 @@ public class Main {
                         if (valor == 0) valor = 10;          
 	                        Copia1.setRoi(yDNI+2, (alturaX+5)  + distanceBetweenSquaresH * n  , 10 , 70);
                         IJ.run(Copia1, "Crop", ""); int k = h+1;
-                        new FileSaver(Copia1).saveAsPng("D:\\Users\\jemarroquin\\Desktop\\Nueva carpeta\\" + contador + ".jpg");
+                        //new FileSaver(Copia1).saveAsPng("D:\\Users\\jemarroquin\\Desktop\\Nueva carpeta\\" + contador + ".jpg");
                         contador++;
                         //Prefs.blackBackground = false;
                         if (h != 7 ) yDNI = rf.obtenerSiguienteEspacioDNI(yDNI,alturaX+5);
@@ -186,57 +186,7 @@ Procesando.escribirTextArea( "De todos los candidatos el mejor según firmas es:
                     	} 
                     }  
                 }    
-                /*
-                
-                int apellidoEspacios = 25, nombreEspacios = 23, espacioLetras = 15, alturaLetras = 85;
-                
-                for (int n = 0; n < personasxPadron; n++){
-                    ImagePlus Copia1;  
-                    String rutaAlmacenar = workingDir + "/src/Recorte/Resultado/Persona"
-                            + String.valueOf(n+1+(8*contPadrones))  + "/Apellido/";
-                    String rutaAlmacenar2 = workingDir + "/src/Recorte/Resultado/Persona"
-                            + String.valueOf(n+1+(8*contPadrones))  + "/Nombre/";
-                    File file = new File(rutaAlmacenar);  file.mkdirs();
-                    File file2 = new File(rutaAlmacenar2);  file2.mkdirs();
 
-                    //Cropeamos el Apellido
-                    yApellido     = valorOriginalApellido;
-                    for (int contApellido = 0; contApellido < apellidoEspacios; contApellido ++){
-                        ImagePlus Copi41 = IJ.openImage(ruta2);
-                        String rutaNombre = workingDir + "/src/Recorte/Resultado/Persona"
-                        + String.valueOf(n+1+(8*contPadrones)) + "/Apellido/" + contApellido + ".jpg";
-                        int valor = rf.getAnchoDNI(yApellido+1, (alturaX+5) + alturaLetras * n);
-                        if (valor == 0 || valor == 1) valor = 13;
-                        Copi41.setRoi(yApellido+1 , (alturaX + 6) + alturaLetras*n,  valor-1  , heightSquare-7);
-                        if (contApellido != 24 ) yApellido = rf.obtenerSiguienteEspacioDNI(yApellido,alturaX+5);
-                        IJ.run(Copi41, "Crop", "");
-                     
-                        new FileSaver(Copi41).saveAsPng(rutaNombre);
-                        //Prefs.blackBackground = false;
-                    }
-                   
-                    
-                }
-                */
-                
-               
-
-                 distanceBetweenSquares = 86; widthSquare = 150;  heightSquare = 75;        
-                //para cada imagen le�da de la carpeta de imagenes realizar lo de abajo. 
-
-                 /*
-                int alturaFirma =  alturaX + 4;
-                int alturaFirma2 = alturaX + 4;
-                for (int n = 0; n< 8; n++){
-                    
-                    ImagePlus Copia2 = IJ.openImage(ruta3);
-                    Copia2.setRoi(yHuellas+2, alturaFirma2+2 , widthSquare , heightSquare+2);
-                    if (n != 7 ) alturaFirma2 = rf.obtenerSiguienteEspacioFirmas(yFirmas+5, alturaFirma2+2);
-                    IJ.run(Copia2, "Crop", ""); 
-              
-                }    
-                  */
-    			
                 System.out.println("Padron numero " + (contPadrones+1) + " Procesado");
                 contPadrones++;
                 

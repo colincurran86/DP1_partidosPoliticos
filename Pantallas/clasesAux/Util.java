@@ -3,7 +3,11 @@ package clasesAux;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
@@ -16,6 +20,7 @@ import pantallas.PrimeraFase;
 import pantallas.Procesando;
 import Recorte.Main;
 import models.PersonaReniec;
+import models.ProcesoXFase;
 import models.ReniecBD;
 
 public class Util {
@@ -39,26 +44,18 @@ public class Util {
 		Util u = new Util();
 		Main m = new Main();
 		PrimeraFase primeraFase = new PrimeraFase();
-		String formatearRutaPlan = "D:\\Users\\jemarroquin\\Desktop\\padronesOld";
-		//String formatearRutaPlan = u.formatearRuta(primeraFase.rutaPadrones);
-		String formatearRutaFima = "D:\\Users\\jemarroquin\\Desktop\\_firmas.jpg (1)\\firmas.jpg";
-		//String formatearRutaFima = u.formatearRuta(primeraFase.rutaFirma);
-		//String formatearRutaHuella = u.formatearRuta(primeraFase.rutaHuella);
-		String formatearRutaHuella = "D:\\Users\\jemarroquin\\Desktop\\_huellas.jpg\\huellas.jpg";
+		//String formatearRutaPlan = "D:\\Users\\jemarroquin\\Desktop\\padronesOld";
+		String formatearRutaPlan = u.formatearRuta(primeraFase.rutaPadrones);
+		//String formatearRutaFima = "D:\\Users\\jemarroquin\\Desktop\\_firmas.jpg (1)\\firmas.jpg";
+		String formatearRutaFima = u.formatearRuta(primeraFase.rutaFirma);
+		String formatearRutaHuella = u.formatearRuta(primeraFase.rutaHuella);
+		//String formatearRutaHuella = "D:\\Users\\jemarroquin\\Desktop\\_huellas.jpg\\huellas.jpg";
 		// txtFieldBDRNV.setText("D:\\Users\\jemarroquin\\git\\DP1_partidosPoliticos\\src");
-	//	String formatearRutaBD = u.formatearRuta(primeraFase.rutaExcel);
-	//	System.out.println("FORMATEAR RUTA: " + formatearRutaBD );
+	   //	String formatearRutaBD = u.formatearRuta(primeraFase.rutaExcel);
+    	//	System.out.println("FORMATEAR RUTA: " + formatearRutaBD );
 
-	//	m.llenarBDReniec(formatearRutaBD);
+     	//	m.llenarBDReniec(formatearRutaBD);
 
-		// escribirTextArea("****************************");
-		// System.out.println("**************************************************");
-		// System.out.println("DNIasdasdsd");
-		// System.out.println("**************************************************");
-
-		// escribirTextArea("DNI");
-
-		// escribirTextArea("******************************************");
 
 		// List<PersonaReniec> pr1 = u.ocrMasReniec();
 		List<List<PersonaReniec>> pr1 = u.ocrMasReniec();
@@ -74,50 +71,32 @@ public class Util {
 			cadenaFinal = cadenaFinal + "\n";
 		}
 	
-
+	   List<ProcesoXFase> procesoListFase = new ArrayList <ProcesoXFase>();
+	   java.sql.Date fechaActual = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+		
+	
 	   for ( int i = 0 ; i < PrimeraFase.ppescogidos.size()  ; i++ ) {
 		   
-		   Procesando.escribirTextArea("**************************************************");
-		   Procesando.escribirTextArea("Partido Político: " + PrimeraFase.ppescogidos.get(i).getNombre());
+		   ProcesoXFase procesoFase = new ProcesoXFase();
+		   procesoFase.setFechaInicioProc(fechaActual);
+		   procesoFase.setIdPartPol(PrimeraFase.ppescogidos.get(i).getId());
+		   procesoFase.setIdFase(1);
+		   procesoFase.setIdProceso(PrimeraFase.idPE);
+		   procesoFase.setResultado("Resultado Prueba");
+		   procesoFase.setObservacion("Observacion Prueba");
+		   //partidosProcesos.almacenarBD(procesoFase);
 		   
-		   	m.main(formatearRutaPlan + "/"+ PrimeraFase.ppescogidos.get(i).getNombre() , PrimeraFase.ppescogidos.get(i), formatearRutaFima, formatearRutaHuella);
+		   
+		   Procesando.escribirTextArea("*******************	*******************************");
+		   Procesando.escribirTextArea("Partido Político: " + PrimeraFase.ppescogidos.get(i).getNombre());
+		   m.main(formatearRutaPlan + "/"+ PrimeraFase.ppescogidos.get(i).getNombre() , PrimeraFase.ppescogidos.get(i), formatearRutaFima, formatearRutaHuella);
+	 
+	   
 	   }
 
-
-	
-		// Firmas
-
-		// Main mainRecorte = new Main();
-
-		/*
-		 * descomentar aquiii2222 List<String> idFirmasLst = new
-		 * ArrayList<String>(); List<Integer> idRegistroLst = new
-		 * ArrayList<Integer>();
-		 * 
-		 * // si no encuentra el dni, no considera la firma :v for (int i = 0; i
-		 * < pr1.size(); i++) { if (pr1.get(i) != null) {
-		 * idFirmasLst.add(pr1.get(i).getIdFirma()); idRegistroLst.add(i + 1); }
-		 * else { idFirmasLst.add("-1"); idRegistroLst.add(i + 1); } }
-		 * 
-		 * List<Resultado> listaTemporalPersona = null; System.out.println(
-		 * "Inicio firmas:"); AlgoritmoFirmas algoritmoFrimas = new
-		 * AlgoritmoFirmas();
-		 * 
-		 * try { listaTemporalPersona =
-		 * algoritmoFrimas.verificarFirmas6(idRegistroLst, idFirmasLst,
-		 * Main.listaBImage, u.formatearRuta2(formatearRutaBD +
-		 * "/firmas.jpg/")); System.out.println("Porcentaje de Firmas "); for
-		 * (int i = 0; i < listaTemporalPersona.size(); i++) {
-		 * System.out.println("% " + listaTemporalPersona.get(i).porcentaje +
-		 * " IDPersona:  " + listaTemporalPersona.get(i).idPersona); }
-		 * 
-		 * System.out.println("Fin firmas:"); System.out.println(
-		 * "**************************************************");
-		 * 
-		 * } catch (IOException e1) { // TODO Auto-generated catch block
-		 * e1.printStackTrace(); }
-		 */ // descomentar aquiii222
-
+	   
+	   //Almacenar Base de Datos
+	   
 		long endTime = System.currentTimeMillis();
 		double totalTime = (endTime - startTime) / 1000.0;
 		String almacenarMensaje = new String();

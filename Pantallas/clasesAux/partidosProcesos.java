@@ -21,12 +21,10 @@ public class partidosProcesos {
 	public static ResultSet resultSet = null;
 	public static List<String> values =  new ArrayList<String>();
 	
-	public static void almacenarBD(List<ProcesoXFase>resultados){
+	public static void almacenarBD(ProcesoXFase resultados){
 		
-		ProcesoXFase p = new ProcesoXFase();
+			ProcesoXFase p = new ProcesoXFase();
 
-		for (int i = 0; i < resultados.size(); i++ ){
-			
 			// TODO Auto-generated method stub
 			int numero=0;
 			try {
@@ -58,7 +56,7 @@ public class partidosProcesos {
 				e.printStackTrace();
 			}
 				
-		}
+		
 		
 		
 	}
