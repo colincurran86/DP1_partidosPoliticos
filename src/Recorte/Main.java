@@ -138,21 +138,17 @@ public class Main {
                     
                     List<PersonaReniec>  listaPersonasReniec = new ArrayList<PersonaReniec>();
                      int indice = encontrarDNI(dni);
-                     List<Double> listaPorcentaje = new ArrayList<Double>();
-                     
+                     List<Double> listaPorcentajeFirma = new ArrayList<Double>();
+                     List<Double> listaPorcentajeHuella = new ArrayList<Double>();
                      
                      if (indice != -1 ) {
                     	 Procesando.escribirTextArea("lo encontre al dni !!" + dni + " - " +  ReniecBD.lista.get(indice).getDni() );
                     	 listaPersonasReniec.add(  ReniecBD.lista.get(indice));
                      }                    
-
-                     else {
-                    	 
+                     else {                    	 
                    listaPersonasReniec =  Util.ocrMasReniec2(dni);
-                    
-                     };
-           
-                     
+                                         };
+                                
                      Procesando.escribirTextArea("Cantidad de candidatos: " + listaPersonasReniec.size() );
                      for (int i = 0 ; i < listaPersonasReniec.size()  ; i++ )
                          Procesando.escribirTextArea("La lista de candidatos es la siguente: "  + listaPersonasReniec.get(i).getDni() );
@@ -160,17 +156,11 @@ public class Main {
                    
                     if(listaPersonasReniec.size() != 0 ) 
                     {
-                    	try {
-                           
+                    	try {                           
                     		//firmas
-                    	listaPorcentaje= 	AlgoritmoFirmas.procesarNuevo(listaPersonasReniec, n , rutaPlanillonEjecutandose, rutaFirma); 
-                    		
-                    	
-                    	
-                    	  int indiceCandidatoFirmas = candidatoFirmas(listaPorcentaje);
-                    		
-
-for ( int i = 0 ; i < listaPersonasReniec.size() ; i++) Procesando.escribirTextArea("Para el candiato: " + listaPersonasReniec.get(i).getDni() + " Porcentaje de firmas es: "+ listaPorcentaje.get(i) );     
+                    	listaPorcentajeFirma= 	AlgoritmoFirmas.procesarNuevo(listaPersonasReniec, n , rutaPlanillonEjecutandose, rutaFirma); 
+                     	  int indiceCandidatoFirmas = candidatoFirmas(listaPorcentajeFirma);
+                    	for ( int i = 0 ; i < listaPersonasReniec.size() ; i++) Procesando.escribirTextArea("Para el candiato: " + listaPersonasReniec.get(i).getDni() + " Porcentaje de firmas es: "+ listaPorcentajeFirma.get(i) );     
 Procesando.escribirTextArea( "De todos los candidatos el mejor según firmas es: " + listaPersonasReniec.get(indiceCandidatoFirmas).getDni());
 
 
@@ -181,7 +171,14 @@ Procesando.escribirTextArea( "De todos los candidatos el mejor según firmas es:
                             Copia2.setRoi(yHuellas+2, alturaFirma2+2 , 150 , 77);
                             if (n != 7 ) alturaFirma2 = rf.obtenerSiguienteEspacioFirmas(yFirmas+5, alturaFirma2+2);
                             IJ.run(Copia2, "Crop", ""); 
-                            AlgoritmoHuellas.procesarNuevo(listaPersonasReniec,Copia2,rutaHuella);
+                        	listaPorcentajeHuella = 	 AlgoritmoHuellas.procesarNuevo(listaPersonasReniec,Copia2,rutaHuella); 
+                       	  int indiceCandidatoHuellas = candidatoFirmas(listaPorcentajeHuella);
+                      	for ( int i = 0 ; i < listaPersonasReniec.size() ; i++) Procesando.escribirTextArea("Para el candiato: " + listaPersonasReniec.get(i).getDni() + " Porcentaje de huellas es: "+ listaPorcentajeHuella.get(i) );     
+  Procesando.escribirTextArea( "De todos los candidatos el mejor según Huellas es: " + listaPersonasReniec.get(indiceCandidatoHuellas).getDni());
+
+
+  
+  
                     	
                     	} catch (IOException e) {
                     		// TODO Auto-generated catch block

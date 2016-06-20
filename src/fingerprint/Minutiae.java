@@ -130,6 +130,9 @@ public class Minutiae {
 		if (y == 76) {
 			valor7 = 0;
 			valor8 = 0;
+		} else if(x == 149) {
+			valor7 = givenImage[y + 1][x];
+			valor8 = 0;
 		} else {
 			valor7 = givenImage[y + 1][x];
 			valor8 = givenImage[y + 1][x + 1];

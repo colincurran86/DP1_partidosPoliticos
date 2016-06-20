@@ -142,7 +142,7 @@ public class mainHuellas {
 
 			// ELIMINANDO LAS FALSAS MINUCIAS USANDO
 			Minutiae.removeFalseMinutiae(minutiaeFoundBase);
-			//Minutiae.removeFalseMinutiae(minutiaeFoundInput);
+			Minutiae.removeFalseMinutiae(minutiaeFoundInput);
 			
 			if (minutiaeFoundInput.size() < 6) {
 				//VALIDACION SI NO SE LOGRA TENER LOS PUNTOS SUFICIENTES

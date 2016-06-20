@@ -39,7 +39,7 @@ public class Util {
 		Util u = new Util();
 		Main m = new Main();
 		PrimeraFase primeraFase = new PrimeraFase();
-		String formatearRutaPlan = "D:\\Users\\jemarroquin\\Desktop\\padrones";
+		String formatearRutaPlan = "D:\\Users\\jemarroquin\\Desktop\\padronesOld";
 		//String formatearRutaPlan = u.formatearRuta(primeraFase.rutaPadrones);
 		String formatearRutaFima = "D:\\Users\\jemarroquin\\Desktop\\_firmas.jpg (1)\\firmas.jpg";
 		//String formatearRutaFima = u.formatearRuta(primeraFase.rutaFirma);
