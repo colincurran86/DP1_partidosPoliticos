@@ -50,6 +50,7 @@ public class CheckListPP extends JDialog {
 		getContentPane().setLayout(new BorderLayout());
 	}*/
 	public CheckListPP(  String[] strs ) {
+		setTitle("Seleccionar Partidos Pol\u00EDticos");
 	    //super("CheckList Example");
 	    setModal(true);
 	    //String[] strs = { "swing", "home", "basic", "metal", "JList" };    

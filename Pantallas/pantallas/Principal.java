@@ -15,6 +15,7 @@ import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Toolkit;
 
 public class Principal {
@@ -61,9 +62,20 @@ public class Principal {
 		frame.setIconImage(img.getImage());
 		
 		JLabel lblBienvenido = new JLabel("BIENVENIDO!");
-		lblBienvenido.setBounds(124, 218, 386, 156);
+		lblBienvenido.setBounds(126, 380, 386, 156);
 		lblBienvenido.setFont(new Font("Tahoma", Font.PLAIN, 60));
 		frame.getContentPane().add(lblBienvenido);
+		
+		JLabel label = new JLabel("");
+		//Image image = new ImageIcon (this.getClass().getResource("echeck2.png")).getImage();
+		
+
+		ImageIcon img2 = new ImageIcon("lib/echeck2.png");
+		label.setIcon(img2);
+		label.setBounds(73, 41, 518, 328);
+		frame.getContentPane().add(label);
+		
+
 		
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
@@ -129,6 +141,9 @@ public class Principal {
 		
 		JMenu mnReportes = new JMenu("Reportes");
 		menuBar.add(mnReportes);
+		
+		
+
 	}
 	
 	public static JFrame getFrame(){

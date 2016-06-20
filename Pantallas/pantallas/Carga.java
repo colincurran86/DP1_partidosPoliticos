@@ -4,12 +4,17 @@ import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.UIManager;
 
+import org.imgscalr.Scalr;
+import org.imgscalr.Scalr.Method;
+
+import Firmas.FastBitmap;
 import models.PartidoPolitico;
 import models.TipoProceso;
 
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +26,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 public class Carga extends JPanel implements ActionListener{
 	private JButton btnPrimCarga;
@@ -42,16 +48,16 @@ public class Carga extends JPanel implements ActionListener{
 	public Carga() {
 		setLayout(null);
 
-		btnPrimCarga = new JButton("Primera fase");		
-		btnPrimCarga.setBounds(235, 187, 162, 57);
+		btnPrimCarga = new JButton("Realizar Primera Fase");		
+		btnPrimCarga.setBounds(188, 210, 237, 115);
 		add(btnPrimCarga);
 
-		btnSegCarga = new JButton("Segunda fase");
-		btnSegCarga.setBounds(235, 379, 162, 57);
+		btnSegCarga = new JButton("Realizar Segunda Fase");
+		btnSegCarga.setBounds(188, 385, 237, 115);
 		add(btnSegCarga);
 
 		btnConf = new JButton("");
-		btnConf.setBounds(62, 127, 50, 49);
+		btnConf.setBounds(68, 77, 75, 60);
 		/*btnConf.setIcon(new ImageIcon(getClass().getResource("/Pantallas/pantallas/conf.png")));
 		try {
 			Image img = ImageIO.read(getClass().getResource("/Pantallas/pantallas/conf.png"));
@@ -74,10 +80,30 @@ public class Carga extends JPanel implements ActionListener{
 		btnPrimCarga.addActionListener(this);
 		btnSegCarga.addActionListener(this);
 		
-		lblNfiguracion = new JLabel("CONFIGURACION");
-		lblNfiguracion.setBounds(44, 187, 136, 14);
+		lblNfiguracion = new JLabel("PARAMETROS DE \r\nCONFIGURACI\u00D3N");
+		lblNfiguracion.setBounds(23, 32, 255, 34);
 		add(lblNfiguracion);
+		
+		
+		
+	//	BufferedImage scaledImg = Scalr.resize(imgA, Method.AUTOMATIC, 203,202, Scalr.OP_BRIGHTER);
+	//	FastBitmap imagenPlanillon = new FastBitmap(scaledImg); 
+	//	ImageIcon ii = new ImageIcon ();
+	//	ii = imagenPlanillon.toIcon(); 
+	//	labelImage.setIcon( ii);
+		
+		
+		JLabel lblImage = new JLabel("");
+		ImageIcon img2 = new ImageIcon("lib/echeck.png");
+		lblImage.setBounds(385, 11, 249, 170);
+		lblImage.setIcon(img2);
+		add(lblImage);
+		
+		
+		
+		
 	}
+	
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {

@@ -77,11 +77,11 @@ public class Configuracion extends JDialog implements ActionListener{
 		contentPanel.add(lblProcesoElectoral);
 		
 		JLabel lblNewLabel = new JLabel("Escoger Partido(s) Politico(s)");
-		lblNewLabel.setBounds(51, 240, 251, 14);
+		lblNewLabel.setBounds(51, 235, 251, 14);
 		contentPanel.add(lblNewLabel);
 		
 		JLabel lblPorcentajeDeAceptacin = new JLabel("Porcentaje de aceptaci\u00F3n");
-		lblPorcentajeDeAceptacin.setBounds(51, 131, 167, 14);
+		lblPorcentajeDeAceptacin.setBounds(51, 143, 167, 14);
 		contentPanel.add(lblPorcentajeDeAceptacin);
 		
 		cmbBoxPE = new JComboBox();
@@ -121,7 +121,7 @@ public class Configuracion extends JDialog implements ActionListener{
 		
 		SpinnerModel sm = new SpinnerNumberModel(0, 0, 100, 1); //default value,lower bound,upper bound,increment by 
 		spinner = new JSpinner(sm);
-		spinner.setBounds(247, 128, 55, 20);
+		spinner.setBounds(247, 140, 55, 20);
 		JSpinner.NumberEditor jsEditor = (JSpinner.NumberEditor)spinner.getEditor();
 		DefaultFormatter formatter = (DefaultFormatter) jsEditor.getTextField().getFormatter();
 		formatter.setAllowsInvalid(false);
@@ -166,7 +166,7 @@ public class Configuracion extends JDialog implements ActionListener{
 				    
 			}
 		});
-		btnCheckListPartidos.setBounds(247, 236, 167, 23);
+		btnCheckListPartidos.setBounds(247, 231, 167, 23);
 		contentPanel.add(btnCheckListPartidos);
 				
 		{

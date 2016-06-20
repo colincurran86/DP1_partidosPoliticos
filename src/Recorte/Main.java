@@ -107,10 +107,10 @@ public class Main {
                         //Detectamos el proximo espacio en blanco
                         Copia1 = IJ.openImage(ruta2);  
                         int valor = rf.getAnchoDNI(yDNI+1, (alturaX+5) + distanceBetweenSquaresH * n);
-                        if (valor == 0) valor = 10;          
-	                        Copia1.setRoi(yDNI+2, (alturaX+5)  + distanceBetweenSquaresH * n  , valor , 70);
+                        if (valor == 0) valor = 11;          
+	                        Copia1.setRoi(yDNI+2, (alturaX+5)  + distanceBetweenSquaresH * n  , valor-2 , 70);
                         IJ.run(Copia1, "Crop", ""); int k = h+1;
-                        //new FileSaver(Copia1).saveAsPng("D:\\Users\\jemarroquin\\Desktop\\Nueva carpeta\\" + contador + ".jpg");
+                        new FileSaver(Copia1).saveAsPng("C:\\Users\\inf250\\Desktop\\DP1\\alcohol\\" + contador + ".jpg");
                         contador++;
                         //Prefs.blackBackground = false;
                         if (h != 7 ) yDNI = rf.obtenerSiguienteEspacioDNI(yDNI,alturaX+5);
@@ -147,6 +147,9 @@ public class Main {
                      }                    
                      else {                    	 
                    listaPersonasReniec =  Util.ocrMasReniec2(dni);
+                   
+                   
+                   
                                          };
                                 
                      Procesando.escribirTextArea("Cantidad de candidatos: " + listaPersonasReniec.size() );

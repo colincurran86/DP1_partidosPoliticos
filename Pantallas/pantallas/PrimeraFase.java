@@ -37,6 +37,7 @@ import clasesAux.Util;
 import models.PartidoPolitico;
 import models.PersonaReniec;
 import models.TipoProceso;
+import javax.swing.JInternalFrame;
 
 public class PrimeraFase extends JPanel implements ActionListener {
 	
