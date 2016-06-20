@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -22,8 +23,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
-import pantallas.CheckListPartPol.CheckListRenderer;
-import pantallas.CheckListPartPol.CheckableItem;
+import models.PartidoPolitico;
+
 
 public class CheckListPP extends JDialog {
 
@@ -37,6 +38,7 @@ public class CheckListPP extends JDialog {
 			dialog.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
+			
 		}
 	}
 
@@ -75,8 +77,17 @@ public class CheckListPP extends JDialog {
 	        int n = model.getSize();
 	        for (int i = 0; i < n; i++) {
 	          CheckableItem item = (CheckableItem) model.getElementAt(i);
+	          
+	          boolean entro;
 	          if (item.isSelected()) {
-	        	    Carga.ppEscogidos.add(  Configuracion.listaPP.get(i)     ) ;
+	        	  entro=false;
+	        	  for(int j=0;j<Carga.ppEscogidos.size();j++){
+	        		  if(Carga.ppEscogidos.get(j).getNombre().compareTo(Configuracion.listaPP.get(i).getNombre())==0){
+	        			  entro=true;
+	        			  break;
+	        		  }
+	        	  }
+	        	  if(!entro) Carga.ppEscogidos.add( Configuracion.listaPP.get(i));
 	        	    
 	        	    //System.exit(0);
 	        	  //  System.out.println(i);
@@ -88,6 +99,7 @@ public class CheckListPP extends JDialog {
 	           // textArea.append(System.getProperty("line.separator"));
 	          }
 	        }
+	        setVisible(false);
 	      }
 	    });
 	    JPanel panel = new JPanel(new GridLayout(2, 1));
@@ -103,6 +115,12 @@ public class CheckListPP extends JDialog {
 	    CheckableItem[] items = new CheckableItem[n];
 	    for (int i = 0; i < n; i++) {
 	      items[i] = new CheckableItem(strs[i]);
+	      List<PartidoPolitico> pp=Carga.ppEscogidos;
+	      for(int j=0;j<pp.size();j++)//si es que ya esta escogido o no
+	    	  if(pp.get(j).getNombre().compareTo(strs[i])==0){
+	    		  items[i].setSelected(true);
+	    		  break;
+	    	  }	      
 	    }
 	    return items;
 	  }

@@ -36,7 +36,6 @@ public class Configuracion extends JDialog implements ActionListener{
 	private JButton okButton;
 	private JButton cancelButton;
 	private JSpinner spinner;
-	private JRadioButton rdbtnCMasiva;
 	private ButtonGroup group;
 	private List<ProcesoElectoral> listaPE=ProcessManager.queryAllProc();
 	public static List<PartidoPolitico> listaPP= ProcessManager.queryAllPartPol();
@@ -131,10 +130,6 @@ public class Configuracion extends JDialog implements ActionListener{
 		
 		contentPanel.add(spinner);
 		
-		rdbtnCMasiva = new JRadioButton("Carga Masiva");
-		rdbtnCMasiva.setBounds(109, 183, 147, 23);		
-		contentPanel.add(rdbtnCMasiva);
-		
 		/*if(Carga.choiceCI==0 && Carga.choiceCI==0){
 			rdbtnCMasiva.setSelected(true);
 			cmbBoxPP.disable();
@@ -150,15 +145,11 @@ public class Configuracion extends JDialog implements ActionListener{
 			}		*/
 		
 		group=new ButtonGroup();
-		group.add(rdbtnCMasiva);
 		
 		JButton btnCheckListPartidos = new JButton("Multiples Partidos");
 		btnCheckListPartidos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				
-				
-				
+																
 				listaStrPP = new String  [ listaPP.size() ]  ; // listaPP.get(i).getNombre());
 				
 				for ( int i = 0 ;  i < listaPP.size()  ; i++ ) {
@@ -166,9 +157,7 @@ public class Configuracion extends JDialog implements ActionListener{
 					listaStrPP[i] = listaPP.get(i).getNombre() ;
 					
 				}
-				
-				
-				
+												
 				 //CheckListPartPol frame = new CheckListPartPol( listaStrPP);
 				CheckListPP frame = new CheckListPP( listaStrPP);
 				 
@@ -177,7 +166,7 @@ public class Configuracion extends JDialog implements ActionListener{
 				    
 			}
 		});
-		btnCheckListPartidos.setBounds(247, 236, 134, 23);
+		btnCheckListPartidos.setBounds(247, 236, 167, 23);
 		contentPanel.add(btnCheckListPartidos);
 				
 		{
@@ -199,7 +188,6 @@ public class Configuracion extends JDialog implements ActionListener{
 		
 		okButton.addActionListener(this);
 		cancelButton.addActionListener(this);
-		rdbtnCMasiva.addActionListener(this);
 		cmbBoxPE.addActionListener(this);
 	}
 
@@ -222,14 +210,14 @@ public class Configuracion extends JDialog implements ActionListener{
 				Carga.porc=porcentaje;
 			}
 			if (pp!=null) Carga.idPP=pp.getId();
-			if(rdbtnCMasiva.isSelected()){ 
+			/*if(rdbtnCMasiva.isSelected()){ 
 				Carga.choiceCM=1;
 				Carga.choiceCI=0;
 			}
 			else{ 
 				Carga.choiceCI=1;
 				Carga.choiceCM=0;
-			}
+			}*/
 			this.dispose();
 		}
 		
