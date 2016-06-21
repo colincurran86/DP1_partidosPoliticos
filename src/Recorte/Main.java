@@ -14,6 +14,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import models.Participante;
+import models.PartidoPersona;
 import models.PartidoPolitico;
 import models.PersonaReniec;
 import models.ReniecBD;
@@ -45,6 +47,8 @@ public class Main {
 	public static List<BufferedImage> listaBImage = new ArrayList<BufferedImage>()  ; 
 	public static int totalPadrones;
 	public static String rutaPlanillonEjecutandose ; 
+	public static List <PartidoPersona> participantesPreDuplicidad = new ArrayList<PartidoPersona> ();
+		
 	
     public  void  main(String rutaPadrones  , PartidoPolitico pp, String rutaFirma, String rutaHuella) {
 
@@ -140,14 +144,22 @@ public class Main {
                      int indice = encontrarDNI(dni);
                      List<Double> listaPorcentajeFirma = new ArrayList<Double>();
                      List<Double> listaPorcentajeHuella = new ArrayList<Double>();
+                   
+                     PersonaReniec elElegidoSegunOCR = new PersonaReniec();
+                     PersonaReniec elElegidoSegunFirma = new PersonaReniec();
+                     PersonaReniec elElegidoFinal = null;
                      
                      if (indice != -1 ) {
                     	 Procesando.escribirTextArea("lo encontre al dni !!" + dni + " - " +  ReniecBD.lista.get(indice).getDni() );
                     	 listaPersonasReniec.add(  ReniecBD.lista.get(indice));
+                    	 elElegidoFinal =  ReniecBD.lista.get(indice) ; 
+                    	 
+                    	 
                      }                    
                      else {                    	 
                    listaPersonasReniec =  Util.ocrMasReniec2(dni);
-                   
+                    
+               //    if (listaPersonasReniec.size() == 0 ) continue ;
                    
                    
                                          };
@@ -163,10 +175,21 @@ public class Main {
                     		//firmas
                     	listaPorcentajeFirma= 	AlgoritmoFirmas.procesarNuevo(listaPersonasReniec, n , rutaPlanillonEjecutandose, rutaFirma); 
                      	  int indiceCandidatoFirmas = candidatoFirmas(listaPorcentajeFirma);
-                    	for ( int i = 0 ; i < listaPersonasReniec.size() ; i++) Procesando.escribirTextArea("Para el candiato: " + listaPersonasReniec.get(i).getDni() + " Porcentaje de firmas es: "+ listaPorcentajeFirma.get(i) );     
+                   
+                     	  
+                     	  for ( int i = 0 ; i < listaPersonasReniec.size() ; i++) Procesando.escribirTextArea("Para el candiato: " + listaPersonasReniec.get(i).getDni() + " Porcentaje de firmas es: "+ listaPorcentajeFirma.get(i) );     
 Procesando.escribirTextArea( "De todos los candidatos el mejor según firmas es: " + listaPersonasReniec.get(indiceCandidatoFirmas).getDni());
 
 
+if(  listaPorcentajeFirma.get(  indiceCandidatoFirmas )    >   listaPorcentajeFirma.get(  listaPorcentajeFirma.size()-1  )    )   {
+//if(  elElegidoFinal ==null     )   {
+								elElegidoFinal = listaPersonasReniec.get(indiceCandidatoFirmas) ;
+							}  
+							
+							
+				
+			
+					
 
                     		//huellas
                     		distanceBetweenSquares = 86; widthSquare = 150;  heightSquare = 75;        
@@ -175,12 +198,46 @@ Procesando.escribirTextArea( "De todos los candidatos el mejor según firmas es:
                             if (n != 7 ) alturaFirma2 = rf.obtenerSiguienteEspacioFirmas(yFirmas+5, alturaFirma2+2);
                             IJ.run(Copia2, "Crop", ""); 
                         	listaPorcentajeHuella = 	 AlgoritmoHuellas.procesarNuevo(listaPersonasReniec,Copia2,rutaHuella); 
-                       	  int indiceCandidatoHuellas = candidatoFirmas(listaPorcentajeHuella);
+                       	  int indiceCandidatoHuellas = candidatoHuellas(listaPorcentajeHuella);
                       	for ( int i = 0 ; i < listaPersonasReniec.size() ; i++) Procesando.escribirTextArea("Para el candiato: " + listaPersonasReniec.get(i).getDni() + " Porcentaje de huellas es: "+ listaPorcentajeHuella.get(i) );     
   Procesando.escribirTextArea( "De todos los candidatos el mejor según Huellas es: " + listaPersonasReniec.get(indiceCandidatoHuellas).getDni());
 
 
   
+  if (elElegidoFinal != null ) {
+	  
+		//voy a llenar partido persona   
+		PartidoPersona   auxElegidoPartidoPersona  = new PartidoPersona() ; 
+		
+		auxElegidoPartidoPersona.setPersona(elElegidoFinal);
+		auxElegidoPartidoPersona.setPartido(pp);
+	Participante par = new Participante () ;
+	par.setApellidos(     elElegidoFinal.getApellidos()   );
+	par.setDni(       elElegidoFinal.getDni()                  );
+
+
+	par.setIdFirma( elElegidoFinal.getIdFirma());
+	par.setIdHuella(   "" +  elElegidoFinal.getIdHuella()       );
+
+	par.setNombres(   elElegidoFinal.getNombre()    );
+	//  aca ira duplicidad par.setObservacion(                                                                          );
+	par.setObservacion(  "Falta procesar duplicidad"                                                                         );
+	par.setPorcentajeFirma(               listaPorcentajeFirma.get(  indiceCandidatoFirmas )                     );
+
+	par.setPorcentajeHuella(  listaPorcentajeHuella.get(indiceCandidatoHuellas) );
+
+	auxElegidoPartidoPersona.setParticipando(  par );
+
+
+
+	participantesPreDuplicidad.add( auxElegidoPartidoPersona) ; 
+
+	  
+	  
+  }
+  
+  
+
   
                     	
                     	} catch (IOException e) {
@@ -195,8 +252,7 @@ Procesando.escribirTextArea( "De todos los candidatos el mejor según firmas es:
                 
             }
                
-        
-     
+ 
         
     }
     
@@ -288,7 +344,31 @@ public int candidatoFirmas ( List<Double > lista)  {
 	int indice = -1 ; 
 	Double mayor = 0.0;
 	
-	for (int i = 0 ; i < lista.size() ; i++){
+	for (int i = 0 ; i < lista.size() -1  ; i++){
+		
+		if (lista.get(i) >= mayor) {
+			indice= i ;
+			mayor = lista.get(i);
+			
+			
+		}
+		
+	}
+	
+	
+	return indice ;
+	
+	
+	
+}
+
+
+public int candidatoHuellas ( List<Double > lista)  {
+	
+	int indice = -1 ; 
+	Double mayor = 0.0;
+	
+	for (int i = 0 ; i < lista.size()  ; i++){
 		
 		if (lista.get(i) >= mayor) {
 			indice= i ;
@@ -304,6 +384,7 @@ public int candidatoFirmas ( List<Double > lista)  {
 	
 	
 }
+
 
 
 }

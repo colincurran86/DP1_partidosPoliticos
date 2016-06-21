@@ -43,8 +43,8 @@ public class Participante {
 	public String getIdHuella() {
 		return idHuella;
 	}
-	public void setIdHuella(String idHuella) {
-		this.idHuella = idHuella;
+	public void setIdHuella(String i) {
+		this.idHuella = i;
 	}
 	public double getPorcentajeFirma() {
 		return porcentajeFirma;

@@ -20,6 +20,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import pantallas.PrimeraFase;
 import pantallas.Procesando;
 import Recorte.Main;
+import models.PartidoPersona;
 import models.PersonaReniec;
 import models.ProcesoXFase;
 import models.ReniecBD;
@@ -99,11 +100,59 @@ public class Util {
 		   
 		   Procesando.escribirTextArea("*******************	*******************************");
 		   Procesando.escribirTextArea("Partido Político: " + PrimeraFase.ppescogidos.get(i).getNombre());
-		   m.main(formatearRutaPlan + "/"+ PrimeraFase.ppescogidos.get(i).getNombre() , PrimeraFase.ppescogidos.get(i), formatearRutaFima, formatearRutaHuella);
-	 
+	  m.main(formatearRutaPlan + "/"+ PrimeraFase.ppescogidos.get(i).getNombre() , PrimeraFase.ppescogidos.get(i), formatearRutaFima, formatearRutaHuella);
+		 	
+
+		 
+		 
+		 
     }
 	   
 
+	    
+	    System.out.println(" cantidad de duplicidad"  +  Main.participantesPreDuplicidad.size() );
+	    
+	    for(int i = 0 ; i <       Main.participantesPreDuplicidad.size()  ; i++ ) {
+	    	
+	    	System.out.println("lista dni" +  (i+1)+ " ahora el dni: "  + Main.participantesPreDuplicidad.get(i).getPersona().getDni()  );
+	    	
+	    }
+	    
+	    
+		 List<PartidoPersona > particantesDuplicados=  partidosProcesos.verificarDuplicados(  Main.participantesPreDuplicidad  );  
+		 
+		 
+		 
+		 for (int i = 0 ; i < particantesDuplicados.size() ; i++ ) {
+			 
+			 System.out.println( particantesDuplicados.get(i).getPersona().getNombre()  + "dni: " +  particantesDuplicados.get(i).getPersona().getDni()   + " observacion: "  +  particantesDuplicados.get(i).getObservacion()    );
+			 
+			 
+		 }
+		 
+		 
+		 
+		 //ACA REGISTRAS A LA BASE DE DATOOOOOOOO !!!!!!!!!!!!!!!!
+		 
+		 
+		 
+		 // PERO PRIMERO SACAS A LOS DUPLICADOS !!
+		 
+		 //
+		 
+		 //
+		 
+		 //
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
