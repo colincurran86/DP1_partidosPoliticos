@@ -62,7 +62,7 @@ public class NewMain {
       int indice=2;
       List<PersonaReniec> lper2 = new ArrayList<PersonaReniec>();
       lper2 = af.llenarDatosPruebaListaDeLista2();   
-      urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\Otras_Resoluciones\\objs\\planillon\\1");
+      urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\Otras_Resoluciones\\objs\\planillon\\1.jpg");
      // lista = af.procesarNuevo(lper2, indice, urlPlanillonesOriginales, urlBaseDeDatos);
      List<Double>  resupuesta = af.procesarNuevo(lper2, indice, urlPlanillonesOriginales, urlBaseDeDatos);
   // for (int i = 0; i < lista.size(); i++) {

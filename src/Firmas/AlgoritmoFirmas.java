@@ -6667,7 +6667,7 @@ public static FirmaRecortada cortarFirma(String urlPlanillonesOriginales, int in
 		int multiplicarFactor = 0;
 		
 		// Comprueba horizontal o vertical
-		/*
+		
 		if (imagenPlanillon.getWidth() < imagenPlanillon.getHeight()) {
 			Rotate rotarImage = new Rotate(90.0, Rotate.Algorithm.BICUBIC);
 			int despejarLineasNegras = 0;
@@ -6692,17 +6692,18 @@ public static FirmaRecortada cortarFirma(String urlPlanillonesOriginales, int in
 			imagenPlanillon.getWidth() / 2 + imagenPlanillon.getWidth() / 3, despejarLineasNegras - 10);
 
 		} else {
-		
-		}
-		 */
-		
-		cortadorImagenes = new Crop(0, imagenPlanillon.getWidth() / 2, imagenPlanillon.getWidth() / 3,
+			cortadorImagenes = new Crop(0, imagenPlanillon.getWidth() / 2, imagenPlanillon.getWidth() / 3,
 				imagenPlanillon.getHeight());
 				imagenPlanillon.toRGB();
 				imagenPlanillon.toGrayscale();
 				OtsuThreshold o = new OtsuThreshold();
 				o.applyInPlace(imagenPlanillon);
 				
+		
+		}
+		 
+		
+	
 				
 		cortadorImagenes.ApplyInPlace(imagenPlanillon);
 		anchos = imagenPlanillon.getWidth() - 1;
@@ -6944,7 +6945,7 @@ public static List<Double> procesarFirmasNuevo(FirmaRecortada listaFirmas, List<
 	Procesando.setearImagenFirma( listaFirmas.img );
 	double umbral = 5;
 	int d1 = 0, d2 = 0;
-	int porcentajeMinimo = 38; // 35 16
+	int porcentajeMinimo = 26; // 35 16
 	Resize redimensionar = new Resize(260, 116);
 	FastCornersDetector fast = new FastCornersDetector(); // Inicio del algoritmo Fast
 	
@@ -7195,7 +7196,10 @@ public static List<Double> procesarFirmasNuevo(FirmaRecortada listaFirmas, List<
 	
 	
 //	return lrestorno;
+	double p = porcentajeMinimo;
+	porcentajeFinales.add(p);
 	return porcentajeFinales;
+	
 }
 
 
