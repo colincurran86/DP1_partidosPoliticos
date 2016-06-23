@@ -304,7 +304,7 @@ if(  listaPorcentajeFirma.get(  indiceCandidatoFirmas )    >   listaPorcentajeFi
 						val = "0" + val;
 				pr.setDni(val);
 				pr.setIdFirma(idFirma.getStringCellValue());
-				pr.setIdHuella((int) idHuella.getNumericCellValue());
+				pr.setIdHuella( idHuella.getStringCellValue());
 				pr.setNombre(nombre.getStringCellValue());
 				pr.setUbigeo((int) ubigeo.getNumericCellValue());
 

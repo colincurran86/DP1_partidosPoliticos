@@ -23,7 +23,8 @@ public class AlgoritmoHuellas {
 		mainHuellas mhuellas = new mainHuellas();
 		for (int i = 0; i < listaPersonasReniec.size(); i ++){
 			
-			int idHuella = listaPersonasReniec.get(i).getIdHuella();
+			//int idHuella = listaPersonasReniec.get(i).getIdHuella();
+			String idHuella = listaPersonasReniec.get(i).getIdHuella();
 			try {		
 				
 				BufferedImage imageBase = buscarImageBase(idHuella, rutaHuella);
@@ -45,14 +46,14 @@ public class AlgoritmoHuellas {
 	}
 	
 	
-	public static BufferedImage buscarImageBase (int idHuella, String rutaHuella) throws IOException{
+	public static BufferedImage buscarImageBase (String idHuella, String rutaHuella) throws IOException{
 
-		String strI = Integer.toString(idHuella);
+		/*String strI = Integer.toString(idHuella);
 		String numeroFinal = "";
 		if (strI.length() == 1)  numeroFinal = "00" + strI;
 		else if (strI.length() == 2)  numeroFinal = "0" + strI;
-		else numeroFinal = strI;
-		String rutaFinal = rutaHuella  + "/" + numeroFinal + ".jpg";
+		else numeroFinal = strI;*/
+		String rutaFinal = rutaHuella  + "/" + idHuella + ".jpg";
 		System.out.println(rutaFinal);
 		BufferedImage imageBase = ImageIO.read(new File(rutaFinal));
 		return imageBase;
