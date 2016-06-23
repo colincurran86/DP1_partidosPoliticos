@@ -59,19 +59,51 @@ public class NewMain {
        }
       */
        
+  
       int indice=2;
       List<PersonaReniec> lper2 = new ArrayList<PersonaReniec>();
       lper2 = af.llenarDatosPruebaListaDeLista2();   
-      urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\Otras_Resoluciones\\objs\\planillon\\1.jpg");
+
      // lista = af.procesarNuevo(lper2, indice, urlPlanillonesOriginales, urlBaseDeDatos);
-     List<Double>  resupuesta = af.procesarNuevo(lper2, indice, urlPlanillonesOriginales, urlBaseDeDatos);
+//     List<Double>  resupuesta = af.procesarNuevo(lper2, indice, urlPlanillonesOriginales, urlBaseDeDatos);
   // for (int i = 0; i < lista.size(); i++) {
+     
+      //urlBaseDeDatos = new String("C:\\Users\\LUIS S\\Desktop\\bd");
+    /*
+      urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\Otras_Resoluciones\\objs\\planillon\\11.jpg");
+      List<Double>  resupuesta = af.procesarNuevo(lper2, indice, urlPlanillonesOriginales, urlBaseDeDatos);
      for (int i = 0; i < resupuesta.size(); i++) {
 	//System.out.println("Indice: "+i+" DNI: "+lista.get(i).getDni());
 	   System.out.println("Indice: "+i+" DNI: "+resupuesta.get(i));
     }
+    */
+     
+      
+      
+       /*
+     FastBitmap i3 = new FastBitmap("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\Imagenes\\5.jpg");
+     urlBaseDeDatos = new String("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\Imagenes\\1otsu.png");
+     FirmaRecortada ne = new FirmaRecortada();
+     ne.alto = i3.getHeight();
+     ne.ancho = i3.getHeight();
+     ne.img  = i3.toBufferedImage();
+     System.out.println("Alto: "+ne.alto);
+     System.out.println("Ancho: "+ne.ancho);
+     
+     af.procesarFirmasNuevoNuevo(ne,urlBaseDeDatos);
+   */
     
+      
+      urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\bdd\\part.d.original2.png");
+      urlBaseDeDatos = new String("C:\\Users\\LUIS S\\Desktop\\bdd\\firmas planillon1.1\\png\\dfi009.png");
+      //urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\1.jpg");
+      FirmaRecortada ne = new FirmaRecortada(); 
+      ne = af.cortarFirma(urlPlanillonesOriginales,0);
+      af.procesarFirmasNuevoNuevo(ne,urlBaseDeDatos);
+      
+      
     }
     
 }
+
 
