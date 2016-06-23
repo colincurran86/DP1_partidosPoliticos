@@ -67,7 +67,7 @@ public class Main {
 
             //verificamos cuantos padrones existen	
             //totalPadrones = rf.contarPadrones(rutaPadrones);    
-            rf.tamanhoEstandar(rutaPadrones, totalPadrones);
+            rf.tamanhoEstandar(rutaPadrones);
     		File folder = new File(rutaPadrones);
     		int contPadrones = 0;
 
