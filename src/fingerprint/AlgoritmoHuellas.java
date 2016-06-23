@@ -29,8 +29,7 @@ public class AlgoritmoHuellas {
 				
 				BufferedImage imageBase = buscarImageBase(idHuella, rutaHuella);
 				double Porcentaje = mhuellas.principal(imageInput.getBufferedImage(), imageBase);
-			
-
+				if (Porcentaje == -1) Porcentaje = 0;
 				resultado.add(Porcentaje);
 				
 				
