@@ -97,24 +97,29 @@ public class Main {
                 List <String> dniLista  = new ArrayList <String>() ;
                 int numero, valorOriginal = yDNI,   valorOriginalFirma = yFirmas, valorOriginalApellido = yApellido, valorOriginalNombre = yNombre;
                 int distanceBetweenSquaresH = 87 ,distanceBetweenSquares = 14, widthSquare = 14, heightSquare = 84;
-                int alturaFirma2 = alturaX + 4;
+                int alturaFirma2 = alturaX + 4;	
 
                 int contador = 0;
                 for (int n  = 0; n < 8; n++){ // iterando en las filas     
                 	
                     ImagePlus Copia1;
                     String dni = "";    yDNI = valorOriginal;
-                    
-                    
+                    System.out.println("ALTURA X " + alturaX);
+                    System.out.println("YDNI  " + yDNI);
+                    //alturaX = alturaX + 80;
                     for (int h = 0; h<8 ; h++) {
                 
                         //Detectamos el proximo espacio en blanco
                         Copia1 = IJ.openImage(ruta2);  
                         int valor = rf.getAnchoDNI(yDNI+1, (alturaX+5) + distanceBetweenSquaresH * n);
-                        if (valor == 0) valor = 11;          
-	                        Copia1.setRoi(yDNI+2, (alturaX+5)  + distanceBetweenSquaresH * n  , valor-2 , 70);
+                        System.out.println("EL VALRO ES " + valor);
+                        if (valor < 10 ) valor = 11;          
+	                    Copia1.setRoi(yDNI+2, (alturaX+5)  + distanceBetweenSquaresH * n  , valor-3 , 55);
+	                    System.out.println("ALTURA X DENTRO DEL BUCLE " + alturaX);
+	                    System.out.println("YDNI  DENTRO DEL BUCLE " + yDNI);
+
                         IJ.run(Copia1, "Crop", ""); int k = h+1;
-                        //new FileSaver(Copia1).saveAsPng("C:\\Users\\inf250\\Desktop\\DP1\\alcohol\\" + contador + ".jpg");
+                        new FileSaver(Copia1).saveAsPng("C:\\Users\\lenovo\\Desktop\\PUCP\\IMAGENEXXX\\" + contador + ".jpg");
                         contador++;
                         //Prefs.blackBackground = false;
                         if (h != 7 ) yDNI = rf.obtenerSiguienteEspacioDNI(yDNI,alturaX+5);
@@ -122,8 +127,7 @@ public class Main {
                         if (dni == "") dni = ""+ numero;	             
     	                else dni=dni + numero;    
     	              }
-    	
-    	            //   lista.add(dni);
+                    
      
                     int cuenta = 0;
                     if (dni.length() == 9){
@@ -181,8 +185,8 @@ public class Main {
 Procesando.escribirTextArea( "De todos los candidatos el mejor según firmas es: " + listaPersonasReniec.get(indiceCandidatoFirmas).getDni());
 
 
-if(  listaPorcentajeFirma.get(  indiceCandidatoFirmas )    >   listaPorcentajeFirma.get(  listaPorcentajeFirma.size()-1  )    )   {
-//if(  elElegidoFinal ==null     )   {
+//if(  listaPorcentajeFirma.get(  indiceCandidatoFirmas )    >   listaPorcentajeFirma.get(  listaPorcentajeFirma.size()-1  )    )   {
+if(  elElegidoFinal ==null     )   {
 								elElegidoFinal = listaPersonasReniec.get(indiceCandidatoFirmas) ;
 							}  
 							
@@ -253,6 +257,7 @@ if(  listaPorcentajeFirma.get(  indiceCandidatoFirmas )    >   listaPorcentajeFi
             }
                
  
+    		
         
     }
     
@@ -260,7 +265,6 @@ if(  listaPorcentajeFirma.get(  indiceCandidatoFirmas )    >   listaPorcentajeFi
     public void llenarBDReniec(String rutaBD) {
 		try {
 			
-			System.out.println("ESTA ES UNA MIERDA XDD JAJA " + rutaBD);
 			InputStream file = new FileInputStream(new File(rutaBD));
 
 			// Get the workbook instance for XLS file
@@ -291,7 +295,7 @@ if(  listaPorcentajeFirma.get(  indiceCandidatoFirmas )    >   listaPorcentajeFi
 				// Index of column D is 3 (A->0, B->1, etc)
 				
 				nombre = row.getCell(0);
-				if(nombre==null)break;
+				if(nombre==null || nombre.getCellType() == Cell.CELL_TYPE_BLANK )break;
 				apellido = row.getCell(1);
 				dni = row.getCell(2);
 				ubigeo = row.getCell(3);
@@ -302,7 +306,7 @@ if(  listaPorcentajeFirma.get(  indiceCandidatoFirmas )    >   listaPorcentajeFi
 				pr.setApellidos(apellido.getStringCellValue());	
 				
 				int valor = (int) dni.getNumericCellValue();
-				System.out.println("VALOOR SOY " + valor);
+
 				String val = "" + valor;
 				if (val.length() != 8)
 					for (int i = 0; i < 8 - val.length(); i++)
@@ -319,7 +323,6 @@ if(  listaPorcentajeFirma.get(  indiceCandidatoFirmas )    >   listaPorcentajeFi
 
 				// Your business logic continues....
 			}
-			System.out.println("SALIR DEL BUCLE ");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

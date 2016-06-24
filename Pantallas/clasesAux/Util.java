@@ -86,8 +86,8 @@ public class Util {
 			startDateString = formatter.format(date);
 			d = new Date(formatter.parse(startDateString).getTime());
 	
-	    for ( int i = 0 ; i < PrimeraFase.ppescogidos.size()  ; i++ ) {
-		   
+		  for ( int i = 0 ; i < PrimeraFase.ppescogidos.size()  ; i++ ) {
+
 		   ProcesoXFase procesoFase = new ProcesoXFase();
 		   procesoFase.setFechaInicioProc(d);
 		   procesoFase.setIdPartPol(PrimeraFase.ppescogidos.get(i).getId());
@@ -95,18 +95,18 @@ public class Util {
 		   procesoFase.setIdProceso(PrimeraFase.idPE);
 		   procesoFase.setResultado("Resultado Prueba");
 		   procesoFase.setObservacion("Observacion Prueba");
-		   partidosProcesos.almacenarBD(procesoFase);
+		 //  partidosProcesos.almacenarBD(procesoFase); DESCOMENTAR
 		   
 		   
 		   Procesando.escribirTextArea("*******************	*******************************");
 		   Procesando.escribirTextArea("Partido Político: " + PrimeraFase.ppescogidos.get(i).getNombre());
-	  m.main(formatearRutaPlan + "/"+ PrimeraFase.ppescogidos.get(i).getNombre() , PrimeraFase.ppescogidos.get(i), formatearRutaFima, formatearRutaHuella);
+		   m.main(formatearRutaPlan + "/"+ PrimeraFase.ppescogidos.get(i).getNombre() , PrimeraFase.ppescogidos.get(i), formatearRutaFima, formatearRutaHuella);
 		 	
 
 		 
 		 
 		 
-    }
+			}
 	   
 
 	    

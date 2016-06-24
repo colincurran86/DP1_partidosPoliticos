@@ -36,7 +36,7 @@ public class Principal {
 				}
 			}
 		});
-	}
+	}	
 
 	/**
 	 * Create the application.

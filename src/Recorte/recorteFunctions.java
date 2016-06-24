@@ -57,10 +57,8 @@ public class recorteFunctions {
         for (int i = 0; i< width; i++ ){
             int R = padronJ.getPixel(i, height/2)[0];
             if ( R == 0 ){
-                //System.out.println("entre aka xd");
                 if (i != 0){
                    padronJ.setRoi(i,0,width-i-1,height-1);
-                    System.out.println(i);
                     IJ.run(padronJ, "Crop", "");    
                     //padronJ.show();
                 }
@@ -142,10 +140,7 @@ public class recorteFunctions {
              r = padronJ.getPixel(i, height/2)[0];
              g = padronJ.getPixel(i, height/2)[1];
              b = padronJ.getPixel(i, height/2)[2];
-            //System.out.println(i);
-            //System.out.println(r + " "+ g + " " + b);
             if(r!=0)//r=255 , g=0 , b=0 
-                //System.out.println(r + " "+ g + " " + b);
                 break;                                            
         }
 
@@ -162,7 +157,6 @@ public class recorteFunctions {
         int pixels=10;
         for(i=height;i>0;i--){
              r = padronJ.getPixel(width/2, i)[0];
-            //System.out.println(r + " "+ g + " " + b);
             if(r!=0)//r=255 , g=0 , b=0 
                 //System.out.println(r + " "+ g + " " + b);
                 break;        
@@ -181,9 +175,7 @@ public class recorteFunctions {
         height=padronJ.getHeight();
         for(i=0;i<height;i++){
              r = padronJ.getPixel(pixels, i)[0];
-            //System.out.println(r + " "+ g + " " + b);
             if(r!=0)//r=255 , g=0 , b=0 
-                //System.out.println(r + " "+ g + " " + b);
                 break;        
         }
                 
@@ -191,9 +183,7 @@ public class recorteFunctions {
         int j;
         for(j=width;j>0;j--){
              r = padronJ.getPixel(j, height/2)[0];
-            //System.out.println(r + " "+ g + " " + b);
             if(r!=0)//r=255 , g=0 , b=0 
-                //System.out.println(r + " "+ g + " " + b);
                 break;    
         }
         
@@ -211,13 +201,8 @@ public class recorteFunctions {
         new FileSaver(padronJ).saveAsPng(rutaAlmacenar + "/recorteCostado.jpg");
         IJ.run(padronJ, "Skeletonize", "");
         new FileSaver(padronJ).saveAsPng(rutaAlmacenar + "/recorteBN.jpg");
-        System.out.println(rutaAlmacenar);
-    //    Prefs.blackBackground = false;
         this.padronJ = padronJ;
-    //    padronJ.show();
-       
-            
-   
+          
     }
     
 
@@ -230,7 +215,6 @@ public class recorteFunctions {
         int height=padronJ.getHeight();
         int i,r = 0,g = 0,b = 0 , m = 0;
         
-        //System.out.println(height);
         for(i=0;i<width;i++){
             r = padronJ.getPixel(i, height/2)[0];
             if(r!=0){//r=255 , g=0 , b=0 
