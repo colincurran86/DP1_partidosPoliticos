@@ -3537,7 +3537,7 @@ public static FirmaRecortada cortarFirma(String urlPlanillonesOriginales, int in
 		altos = imagenPlanillon.getHeight() - 1;
 		//	imagenPlanillon.saveAsJPG("C:\\Users\\LUIS S\\Desktop\\p1Cortado.jpg");
 
-		imagenPlanillon.saveAsJPG("C:\\Users\\LUIS S\\Desktop\\333.jpg");
+		//imagenPlanillon.saveAsJPG("C:\\Users\\LUIS S\\Desktop\\333.jpg");
 		//Factor Pixel
 		if (altos >= 0 && altos <= 900)
 			factorPixel = 5;
@@ -3569,7 +3569,7 @@ public static FirmaRecortada cortarFirma(String urlPlanillonesOriginales, int in
 			veces2++;
 		}
 		
-		System.out.println("Veces: "+veces2);
+	//	System.out.println("Veces: "+veces2);
 
 		indiceNegro = indiceNegro+(veces2/2);
 		//Blanco
@@ -3594,8 +3594,8 @@ public static FirmaRecortada cortarFirma(String urlPlanillonesOriginales, int in
 		System.out.println("Veces 3: "+veces3);
 		*/
 		
-		System.out.println("Negro: "+indiceNegro);
-		System.out.println("Blanco: "+indiceBlanco);
+		//System.out.println("Negro: "+indiceNegro);
+		//System.out.println("Blanco: "+indiceBlanco);
 
 		/*
 		Firmas.FastBitmap dibujar = new Firmas.FastBitmap(urlPlanillonesOriginales);
@@ -3655,7 +3655,7 @@ public static FirmaRecortada cortarFirma(String urlPlanillonesOriginales, int in
 		llego = 0;
 		//ind = ind - (veces2+factorPixel);
 		ind = ind - 50;
-		System.out.println("factor "+(veces2+factorPixel));
+		//System.out.println("factor "+(veces2+factorPixel));
 		
 		//Segunda line negra
 		while (true) {
@@ -3721,9 +3721,9 @@ public static FirmaRecortada cortarFirma(String urlPlanillonesOriginales, int in
 		int band1 = 0;
 	
 		
-		System.out.println("ultimo y1 : "+ultimoYLineaNegra1);
-		System.out.println("ultimo y2 : "+ultimoYLineaNegra2);
-		System.out.println("Ancho: "+ancho);
+		//System.out.println("ultimo y1 : "+ultimoYLineaNegra1);
+		//System.out.println("ultimo y2 : "+ultimoYLineaNegra2);
+		//System.out.println("Ancho: "+ancho);
 		
 		
 		for (int k = ultimoYLineaNegra2 - (factorPixel); k > 0; k--) {
@@ -3799,7 +3799,7 @@ public static FirmaRecortada cortarFirma(String urlPlanillonesOriginales, int in
 							+ i + "rr.jpg");
 			*/
 			cortadorImagenes.ApplyInPlace(i3);
-			JOptionPane.showMessageDialog(null, i3.toIcon(), "Result , indice", JOptionPane.PLAIN_MESSAGE); 
+			//JOptionPane.showMessageDialog(null, i3.toIcon(), "Result , indice", JOptionPane.PLAIN_MESSAGE); 
 
 			FirmaRecortada fr = new FirmaRecortada();
 			fr.img = i3.toBufferedImage();
@@ -3867,22 +3867,75 @@ public static List<Double> procesarFirmasNuevo(FirmaRecortada listaFirmas, List<
 		int ancho = listaFirmas.ancho;
 		int alto = listaFirmas.alto;
 		descriptores1 = new ArrayList<FastRetinaKeypoint>();
-		if (alto <= 1300 && ancho <= 1300) {
-			freak1.scale = escalaActual;
-			// freak1.scale=16;
-			porcentajeMinimo = 16;
-			distanciaMinima = 60;
-			distanciaFiltro = 4;
-			System.out.println("1");
-		} else if(alto <= 5100 && ancho <= 7014) {
-			freak1.scale = 18.0f;
-			porcentajeMinimo = 42;
-			System.out.println("2");
+		int entroNuevoSize=0;
+
+		String url2 = urlBaseDeDatos;
+		url2 = url2 +".jpg" ;
+		//url2 = url2 +".jpg" ;
+		
+		//System.out.println("firma q abrira" + url2);
+		imagen2 = new FastBitmap(url2);
+		//System.out.println("Alto i1 "+imagen1.getHeight()+" Ancho: "+imagen1.getWidth());
+		//System.out.println("Alto i2 "+imagen2.getHeight()+" Ancho: "+imagen2.getWidth());
+		if(imagen1.getHeight()>(imagen2.getHeight()+100))
+		{		BufferedImage img = imagen1.toBufferedImage(); 
+				BufferedImage scaledImg = Scalr.resize(img, Method.AUTOMATIC, imagen2.getWidth(),
+				imagen2.getHeight(), Scalr.OP_BRIGHTER);
+				imagen1 = new FastBitmap(scaledImg);
+				entroNuevoSize=1;
+				//System.out.println("Nuevo size");
 		}
-		else {
-			freak1.scale = 18.0f;
-			System.out.println("3");
+		
+		
+		if(entroNuevoSize==0){
+			if (alto <= 1300 && ancho <= 1300) {
+				freak1.scale = escalaActual;
+				// freak1.scale=16;
+				porcentajeMinimo = 16;
+				distanciaMinima = 60;
+				distanciaFiltro = 4;
+				//System.out.println("1");
+			} else if(alto >= 5000 && ancho >= 2000) {
+				freak1.scale = 24.0f;
+				porcentajeMinimo = 45;
+				distanciaMinima = 42;
+				distanciaFiltro = 12;
+				//System.out.println("2");
+				
+			}
+			
+			
+		/*	
+		 * 	else if(alto >= 4000 && ancho >= 2000) {
+				freak1.scale = 15.0f;
+				porcentajeMinimo = 8;
+				distanciaMinima = 30;
+				distanciaFiltro = 25;
+				System.out.println("2");
+				
 		}
+		*/	
+			else {
+				freak1.scale = 18.0f;
+				porcentajeMinimo = 30; //26
+			}
+			}
+			else
+			{
+				if(alto >= 4000 && ancho >= 2000) {
+					freak1.scale = 15;
+					porcentajeMinimo = 10;
+					distanciaMinima = 57;
+					distanciaFiltro = 3;
+					//System.out.println("2 nuevo");
+					
+				}
+				
+			}
+			//System.out.println("4"+" alto:"+alto+" ancho:"+ancho);
+			
+			
+		
 		descriptores1 = freak1.ProcessImage(imagen1);
 		//JOptionPane.showMessageDialog(null, imagen1.toIcon(), "Result " + indiceFirmas + " ",
 		//JOptionPane.PLAIN_MESSAGE);
@@ -3895,14 +3948,20 @@ public static List<Double> procesarFirmasNuevo(FirmaRecortada listaFirmas, List<
 			arr = new ArrayList<Resultado>();
 			
 			//Direccion base de datos
-			String url2 = new String(urlBaseDeDatos+"\\"
-			+ listaDeListaPersonas.get(indicePersonaLista1).getIdFirma());
+			//String url2 = new String(urlBaseDeDatos+"\\"
+	//		+ listaDeListaPersonas.get(indicePersonaLista1).getIdFirma());
 			
-			url2 = url2 +".jpg" ;
+			
+			
+			
+			//url2 = url2 +".jpg" ;
+			//DESCOMENTAR LUEGO
+			
+			
 			//System.out.println("firma q abrira" + url2);
 			imagen2 = new FastBitmap(url2);
 
-			
+			/*
 			String cadena = new String(listaDeListaPersonas.get(indicePersonaLista1).getIdFirma());
 			if (cadena.equals("f036.jpg") || cadena.equals("f037.jpg") || cadena.equals("f038.jpg")
 					|| cadena.equals("f039.jpg") || cadena.equals("f040.jpg") || cadena.equals("f041.jpg")
@@ -3928,21 +3987,50 @@ public static List<Double> procesarFirmasNuevo(FirmaRecortada listaFirmas, List<
 						imagen1.getHeight(), Scalr.OP_BRIGHTER);
 				imagen2 = new FastBitmap(scaledImg);
 			}
+			 */
 
 
+			if(entroNuevoSize==0){
+			//System.out.println("Antiguo size");
+			BufferedImage img = imagen2.toBufferedImage(); 
+			BufferedImage scaledImg = Scalr.resize(img, Method.AUTOMATIC, imagen1.getWidth(),
+			imagen1.getHeight(), Scalr.OP_BRIGHTER);
+			imagen2 = new FastBitmap(scaledImg);
+			}
+				
+			
 			imagen2.toRGB();
 			imagen2.toGrayscale();
 			o.applyInPlace(imagen2);
 			
 			descriptores2 = new ArrayList<FastRetinaKeypoint>();
-			if (alto <= 1300 && ancho <= 1300) {
-				freak2.scale = escalaActual;
-				porcentajeMinimo = 16;
-				distanciaMinima = 60;
-				distanciaFiltro = 4;
-			} else {
-				freak2.scale = 18.0f;
-			}
+			
+			if(entroNuevoSize==0){
+				if (alto <= 1300 && ancho <= 1300) {
+					freak2.scale = escalaActual;
+					
+				} else if(alto >= 5000 && ancho >= 2000) {
+					freak2.scale = 24.0f;
+					
+				}
+				/*
+				else if(alto >= 4000 && ancho >= 2000) {
+					freak2.scale = 15.0f;
+					
+				}
+				*/
+				else {
+					freak2.scale = 18.0f;
+				}
+				}
+				else
+				{
+					if(alto >= 4000 && ancho >= 2000) {
+						freak2.scale = 15;
+						//System.out.println("nuevo sise siese");
+						
+					}
+				}
 
 			descriptores2 = freak2.ProcessImage(imagen2);
 			int contadorMatching = 0;
@@ -4140,25 +4228,78 @@ public static List<Double> procesarFirmasNuevoNuevo(FirmaRecortada listaFirmas, 
 		int ancho = listaFirmas.ancho;
 		int alto = listaFirmas.alto;
 		descriptores1 = new ArrayList<FastRetinaKeypoint>();
+		int entroNuevoSize=0;
+		//Direccion base de datos
+		//String url2 = new String(urlBaseDeDatos+"\\"
+		//+ listaDeListaPersonas.get(indicePersonaLista1).getIdFirma());
+		String url2 = urlBaseDeDatos;
+//		url2 = url2 +".jpg" ;
+		//System.out.println("firma q abrira" + url2);
+		imagen2 = new FastBitmap(url2);
+		System.out.println("Alto i1 "+imagen1.getHeight()+" Ancho: "+imagen1.getWidth());
+		System.out.println("Alto i2 "+imagen2.getHeight()+" Ancho: "+imagen2.getWidth());
+		if(imagen1.getHeight()>(imagen2.getHeight()+100))
+		{		BufferedImage img = imagen1.toBufferedImage(); 
+				BufferedImage scaledImg = Scalr.resize(img, Method.AUTOMATIC, imagen2.getWidth(),
+				imagen2.getHeight(), Scalr.OP_BRIGHTER);
+				imagen1 = new FastBitmap(scaledImg);
+				entroNuevoSize=1;
+				System.out.println("Nuevo size");
+		}
+		
+
+		//JOptionPane.showMessageDialog(null, imagen1.toIcon(), "Result " + indiceFirmas + " ",
+		//		JOptionPane.PLAIN_MESSAGE);
+		
+		if(entroNuevoSize==0){
 		if (alto <= 1300 && ancho <= 1300) {
 			freak1.scale = escalaActual;
 			// freak1.scale=16;
 			porcentajeMinimo = 16;
 			distanciaMinima = 60;
 			distanciaFiltro = 4;
-			
-		} else if(alto >= 5000 && ancho >= 7000) {
-			freak1.scale = 18.0f;
-			porcentajeMinimo = 42;
+			System.out.println("1");
+		} else if(alto >= 5000 && ancho >= 2000) {
+			freak1.scale = 24.0f;
+			porcentajeMinimo = 45;
+			distanciaMinima = 42;
+			distanciaFiltro = 12;
+			System.out.println("2");
 			
 		}
+		
+		
+	/*	
+	 * 	else if(alto >= 4000 && ancho >= 2000) {
+			freak1.scale = 15.0f;
+			porcentajeMinimo = 8;
+			distanciaMinima = 30;
+			distanciaFiltro = 25;
+			System.out.println("2");
+			
+	}
+	*/	
 		else {
 			freak1.scale = 18.0f;
-		
+			porcentajeMinimo = 30; //26
 		}
+		}
+		else
+		{
+			if(alto >= 4000 && ancho >= 2000) {
+				freak1.scale = 15;
+				porcentajeMinimo = 10;
+				distanciaMinima = 57;
+				distanciaFiltro = 3;
+				System.out.println("2 nuevo");
+				
+			}
+			
+		}
+		System.out.println("4"+" alto:"+alto+" ancho:"+ancho);
+		
 		descriptores1 = freak1.ProcessImage(imagen1);
-		//JOptionPane.showMessageDialog(null, imagen1.toIcon(), "Result " + indiceFirmas + " ",
-		//JOptionPane.PLAIN_MESSAGE);
+
 
 		int indiceCandidatos;
 		//System.out.println("Registro persona: " + indicePersonaLista1);
@@ -4167,13 +4308,7 @@ public static List<Double> procesarFirmasNuevoNuevo(FirmaRecortada listaFirmas, 
 		
 			arr = new ArrayList<Resultado>();
 			
-			//Direccion base de datos
-			//String url2 = new String(urlBaseDeDatos+"\\"
-			//+ listaDeListaPersonas.get(indicePersonaLista1).getIdFirma());
-			String url2 = urlBaseDeDatos;
-	//		url2 = url2 +".jpg" ;
-			//System.out.println("firma q abrira" + url2);
-			imagen2 = new FastBitmap(url2);
+		
 
 			
 			//String cadena = new String(listaDeListaPersonas.get(indicePersonaLista1).getIdFirma());
@@ -4201,26 +4336,60 @@ public static List<Double> procesarFirmasNuevoNuevo(FirmaRecortada listaFirmas, 
 			*/
 			
 	//		else {
-				BufferedImage img = imagen2.toBufferedImage(); 
+			
+			
+		/*		BufferedImage img = imagen2.toBufferedImage(); 
 				BufferedImage scaledImg = Scalr.resize(img, Method.AUTOMATIC, imagen1.getWidth(),
 						imagen1.getHeight(), Scalr.OP_BRIGHTER);
-				imagen2 = new FastBitmap(scaledImg);
+			imagen2 = new FastBitmap(scaledImg);
+			*/	
+			
+			
 //			}
 
 
+			if(entroNuevoSize==0){
+				System.out.println("Antiguo size");
+			BufferedImage img = imagen2.toBufferedImage(); 
+			BufferedImage scaledImg = Scalr.resize(img, Method.AUTOMATIC, imagen1.getWidth(),
+			imagen1.getHeight(), Scalr.OP_BRIGHTER);
+			imagen2 = new FastBitmap(scaledImg);
+			}
+				
 			imagen2.toRGB();
 			imagen2.toGrayscale();
 			o.applyInPlace(imagen2);
+		
+			JOptionPane.showMessageDialog(null, imagen2.toIcon(), "Result " + indiceFirmas + " ",
+					JOptionPane.PLAIN_MESSAGE);
 			
 			descriptores2 = new ArrayList<FastRetinaKeypoint>();
+		
+			if(entroNuevoSize==0){
 			if (alto <= 1300 && ancho <= 1300) {
 				freak2.scale = escalaActual;
-				porcentajeMinimo = 16;
-				distanciaMinima = 60;
-				distanciaFiltro = 4;
-			} else {
-				//System.out.println("porcentaje :"+porcentajeMinimo);
+				
+			} else if(alto >= 5000 && ancho >= 2000) {
+				freak2.scale = 24.0f;
+				
+			}
+			/*
+			else if(alto >= 4000 && ancho >= 2000) {
+				freak2.scale = 15.0f;
+				
+			}
+			*/
+			else {
 				freak2.scale = 18.0f;
+			}
+			}
+			else
+			{
+				if(alto >= 4000 && ancho >= 2000) {
+					freak2.scale = 15;
+					System.out.println("nuevo sise siese");
+					
+				}
 			}
 
 			descriptores2 = freak2.ProcessImage(imagen2);
@@ -4394,3 +4563,4 @@ public static List<Double> procesarFirmasNuevoNuevo(FirmaRecortada listaFirmas, 
     
 	
 }
+
