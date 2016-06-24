@@ -3530,13 +3530,14 @@ public static FirmaRecortada cortarFirma(String urlPlanillonesOriginales, int in
 		}
 		 
 		
-//imagenPlanillon.saveAsJPG("C:\\Users\\LUIS S\\Desktop\\p1Rotados.jpg");
+		//imagenPlanillon.saveAsJPG("C:\\Users\\LUIS S\\Desktop\\333.jpg");
 				
 		cortadorImagenes.ApplyInPlace(imagenPlanillon);
 		anchos = imagenPlanillon.getWidth() - 1;
 		altos = imagenPlanillon.getHeight() - 1;
-	//	imagenPlanillon.saveAsJPG("C:\\Users\\LUIS S\\Desktop\\p1Cortado.jpg");
+		//	imagenPlanillon.saveAsJPG("C:\\Users\\LUIS S\\Desktop\\p1Cortado.jpg");
 
+		imagenPlanillon.saveAsJPG("C:\\Users\\LUIS S\\Desktop\\333.jpg");
 		//Factor Pixel
 		if (altos >= 0 && altos <= 900)
 			factorPixel = 5;
@@ -3569,6 +3570,7 @@ public static FirmaRecortada cortarFirma(String urlPlanillonesOriginales, int in
 		}
 		
 		System.out.println("Veces: "+veces2);
+
 		indiceNegro = indiceNegro+(veces2/2);
 		//Blanco
 		for (int r = imagenPlanillon.getWidth() / 2; r < imagenPlanillon.getWidth() - 1; r++) {
@@ -3607,8 +3609,8 @@ public static FirmaRecortada cortarFirma(String urlPlanillonesOriginales, int in
 		
 		
 		int ind = imagenPlanillon.getWidth() - 1;
-		ind = indiceBlanco;
-
+		ind = indiceBlanco+veces2;
+		System.out.println("Veces 2:"+veces2);
 		List<List<Resultado>> a3 = new ArrayList<List<Resultado>>();
 		Resultado d;
 		int cont = 0;
@@ -3651,7 +3653,10 @@ public static FirmaRecortada cortarFirma(String urlPlanillonesOriginales, int in
 		
 		j = 0;
 		llego = 0;
+		//ind = ind - (veces2+factorPixel);
 		ind = ind - 50;
+		System.out.println("factor "+(veces2+factorPixel));
+		
 		//Segunda line negra
 		while (true) {
 			c = 0;
@@ -3683,7 +3688,7 @@ public static FirmaRecortada cortarFirma(String urlPlanillonesOriginales, int in
 		int ultimoYLineaNegra2 = 0;
 
 		
-			for (int k = imagenPlanillon.getHeight() - 1; k > 0; k--) {
+			for (int k = imagenPlanillon.getHeight() -(veces2+factorPixel); k > 0; k--) {
 				if (imagenPlanillon.getGray(k, tmp1) == 0) {
 					ultimoYLineaNegra1 = k;
 					break;
@@ -3716,11 +3721,12 @@ public static FirmaRecortada cortarFirma(String urlPlanillonesOriginales, int in
 		int band1 = 0;
 	
 		
-		//System.out.println("ultimo y1 : "+ultimoYLineaNegra1);
-	//	System.out.println("ultimo y2 : "+ultimoYLineaNegra2);
+		System.out.println("ultimo y1 : "+ultimoYLineaNegra1);
+		System.out.println("ultimo y2 : "+ultimoYLineaNegra2);
+		System.out.println("Ancho: "+ancho);
 		
 		
-		for (int k = ultimoYLineaNegra2 - factorPixel; k > 0; k--) {
+		for (int k = ultimoYLineaNegra2 - (factorPixel); k > 0; k--) {
 			contador = 0;
 			hizobreak = 0;
 			malbreak = 0;
@@ -3742,7 +3748,7 @@ public static FirmaRecortada cortarFirma(String urlPlanillonesOriginales, int in
 			}
 
 			if (malbreak != 1) {
-				k = k - factorPixel;
+				k = k - (factorPixel);
 				veces++;
 				//System.out.println("Lineas: "+k+" factor: " +factorPixel);
 				listaLineas.add(k);
@@ -3867,8 +3873,15 @@ public static List<Double> procesarFirmasNuevo(FirmaRecortada listaFirmas, List<
 			porcentajeMinimo = 16;
 			distanciaMinima = 60;
 			distanciaFiltro = 4;
-		} else {
+			System.out.println("1");
+		} else if(alto <= 5100 && ancho <= 7014) {
 			freak1.scale = 18.0f;
+			porcentajeMinimo = 42;
+			System.out.println("2");
+		}
+		else {
+			freak1.scale = 18.0f;
+			System.out.println("3");
 		}
 		descriptores1 = freak1.ProcessImage(imagen1);
 		//JOptionPane.showMessageDialog(null, imagen1.toIcon(), "Result " + indiceFirmas + " ",
@@ -4133,8 +4146,15 @@ public static List<Double> procesarFirmasNuevoNuevo(FirmaRecortada listaFirmas, 
 			porcentajeMinimo = 16;
 			distanciaMinima = 60;
 			distanciaFiltro = 4;
-		} else {
+			
+		} else if(alto >= 5000 && ancho >= 7000) {
 			freak1.scale = 18.0f;
+			porcentajeMinimo = 42;
+			
+		}
+		else {
+			freak1.scale = 18.0f;
+		
 		}
 		descriptores1 = freak1.ProcessImage(imagen1);
 		//JOptionPane.showMessageDialog(null, imagen1.toIcon(), "Result " + indiceFirmas + " ",
@@ -4199,7 +4219,7 @@ public static List<Double> procesarFirmasNuevoNuevo(FirmaRecortada listaFirmas, 
 				distanciaMinima = 60;
 				distanciaFiltro = 4;
 			} else {
-				System.out.println("porcentaje :"+porcentajeMinimo);
+				//System.out.println("porcentaje :"+porcentajeMinimo);
 				freak2.scale = 18.0f;
 			}
 

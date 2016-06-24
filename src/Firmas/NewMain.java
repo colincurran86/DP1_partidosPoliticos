@@ -94,14 +94,14 @@ public class NewMain {
    */
     
       
-      urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\bdd\\part.d.original2.png");
-      urlBaseDeDatos = new String("C:\\Users\\LUIS S\\Desktop\\bdd\\firmas planillon1.1\\png\\dfi009.png");
+      //urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\part.d.original3.png");
+      //urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\Otras_Resoluciones\\objs\\planillon\\13.png"); 
+      urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\part.d.original3.png"); 
+      urlBaseDeDatos = new String("C:\\Users\\LUIS S\\Desktop\\Firmas.jpg\\dfi018.png");
       //urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\1.jpg");
       FirmaRecortada ne = new FirmaRecortada(); 
       ne = af.cortarFirma(urlPlanillonesOriginales,0);
       af.procesarFirmasNuevoNuevo(ne,urlBaseDeDatos);
-      
-      
       
       
     }
