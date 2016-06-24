@@ -58,7 +58,8 @@ public class Principal {
 		frame.setTitle("Sistema de verificación de planillones");
 		frame.getContentPane().setLayout(null);
 		
-		ImageIcon img = new ImageIcon("lib/system.png");
+		//ImageIcon img = new ImageIcon("lib/system.png");
+		ImageIcon img = new ImageIcon(this.getClass().getResource("/system.png"));
 		frame.setIconImage(img.getImage());
 		
 		JLabel lblBienvenido = new JLabel("BIENVENIDO!");

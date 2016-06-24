@@ -64,8 +64,8 @@ public class Carga extends JPanel implements ActionListener{
 			btnConf.setIcon(new ImageIcon(img));
 		} catch (IOException ex) {
 		}*/
-		Icon i = new ImageIcon("lib/conf.png");
-		
+		//Icon i = new ImageIcon("lib/conf.png");
+		Icon i = new ImageIcon(this.getClass().getResource("/conf.png"));
 		btnConf.setIcon(i);
 		
 
