@@ -52,7 +52,7 @@ public class AlgoritmoHuellas {
 		if (strI.length() == 1)  numeroFinal = "00" + strI;
 		else if (strI.length() == 2)  numeroFinal = "0" + strI;
 		else numeroFinal = strI;*/
-		String rutaFinal = rutaHuella  + "/" + idHuella + ".jpg";
+		String rutaFinal = rutaHuella  + "/" + idHuella + ".png";
 		System.out.println(rutaFinal);
 		BufferedImage imageBase = ImageIO.read(new File(rutaFinal));
 		return imageBase;

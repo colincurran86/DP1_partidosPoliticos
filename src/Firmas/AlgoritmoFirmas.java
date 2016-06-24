@@ -3870,10 +3870,14 @@ public static List<Double> procesarFirmasNuevo(FirmaRecortada listaFirmas, List<
 		int entroNuevoSize=0;
 
 		String url2 = urlBaseDeDatos;
-		url2 = url2 +".jpg" ;
+		url2 = url2 + "/" +listaDeListaPersonas.get(indicePersonaLista1).getIdFirma() +  ".png" ;
 		//url2 = url2 +".jpg" ;
-		
+		System.out.println(url2);
 		//System.out.println("firma q abrira" + url2);
+		
+
+		
+		
 		imagen2 = new FastBitmap(url2);
 		//System.out.println("Alto i1 "+imagen1.getHeight()+" Ancho: "+imagen1.getWidth());
 		//System.out.println("Alto i2 "+imagen2.getHeight()+" Ancho: "+imagen2.getWidth());

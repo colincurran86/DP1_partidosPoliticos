@@ -128,6 +128,7 @@ public class Main {
 	                    Copia1.setRoi(yDNI+2, (alturaX+7)  + distanceBetweenSquaresH * n  , valor-3 , 54);
                         IJ.run(Copia1, "Crop", ""); 
                         
+                        
                         for (int i = 0; i < 54 ; i++){
                  		   int r = Copia1.getPixel(0, i)[0];
                  		   if (r != 0){
@@ -139,14 +140,18 @@ public class Main {
                         
                         
                         
-                       // new FileSaver(Copia1).saveAsPng("C:\\Users\\lenovo\\Desktop\\PUCP\\IMAGENEXXX\\" + contador + ".jpg");
+                        new FileSaver(Copia1).saveAsPng("C:\\Users\\lenovo\\Desktop\\PUCP\\IMAGENEXXX\\" + contador + ".jpg");
                         contador++;
                         //Prefs.blackBackground = false;
-                        if (h != 7 ) yDNI = rf.obtenerSiguienteEspacioDNI(yDNI,alturaX+5);
+  
+                        if (h != 7 ) yDNI = rf.obtenerSiguienteEspacioDNI(yDNI+2,alturaX+5);
+                        
                         numero =  recogChar.recognize_actionPerformed(Copia1.getImage());
+                        
                         if (dni == "") dni = ""+ numero;	             
     	                else dni=dni + numero;    
     	              }
+                    
                     
      
                     int cuenta = 0;
@@ -164,7 +169,7 @@ public class Main {
                     Procesando.escribirTextArea("Se esta procesando el dni :"  + dni );
                          
                     
-                    List<PersonaReniec>  listaPersonasReniec = new ArrayList<PersonaReniec>();
+                      List<PersonaReniec>  listaPersonasReniec = new ArrayList<PersonaReniec>();
                      int indice = encontrarDNI(dni);
                      List<Double> listaPorcentajeFirma = new ArrayList<Double>();
                      List<Double> listaPorcentajeHuella = new ArrayList<Double>();

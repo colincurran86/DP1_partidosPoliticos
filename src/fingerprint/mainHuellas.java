@@ -144,7 +144,7 @@ public class mainHuellas {
 			Minutiae.removeFalseMinutiae(minutiaeFoundBase);
 			Minutiae.removeFalseMinutiae(minutiaeFoundInput);
 			
-			if (minutiaeFoundInput.size() < 6) {
+			if (minutiaeFoundInput.size() < 6 || minutiaeFoundBase.size() <6) {
 				//VALIDACION SI NO SE LOGRA TENER LOS PUNTOS SUFICIENTES
 				//totalMatching = -1;
 				return -1;
