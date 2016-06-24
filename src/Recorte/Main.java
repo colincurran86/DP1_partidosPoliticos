@@ -114,7 +114,7 @@ public class Main {
                         if (valor == 0) valor = 11;          
 	                        Copia1.setRoi(yDNI+2, (alturaX+5)  + distanceBetweenSquaresH * n  , valor-2 , 70);
                         IJ.run(Copia1, "Crop", ""); int k = h+1;
-                        new FileSaver(Copia1).saveAsPng("C:\\Users\\inf250\\Desktop\\DP1\\alcohol\\" + contador + ".jpg");
+                        //new FileSaver(Copia1).saveAsPng("C:\\Users\\inf250\\Desktop\\DP1\\alcohol\\" + contador + ".jpg");
                         contador++;
                         //Prefs.blackBackground = false;
                         if (h != 7 ) yDNI = rf.obtenerSiguienteEspacioDNI(yDNI,alturaX+5);
@@ -287,8 +287,11 @@ if(  listaPorcentajeFirma.get(  indiceCandidatoFirmas )    >   listaPorcentajeFi
 			// Iterate through rows
 			while (rowIterator.hasNext()) {
 				row = rowIterator.next();
+				//if (row == null) break;
 				// Index of column D is 3 (A->0, B->1, etc)
+				
 				nombre = row.getCell(0);
+				if(nombre==null)break;
 				apellido = row.getCell(1);
 				dni = row.getCell(2);
 				ubigeo = row.getCell(3);
@@ -296,8 +299,10 @@ if(  listaPorcentajeFirma.get(  indiceCandidatoFirmas )    >   listaPorcentajeFi
 				idFirma = row.getCell(5);
 
 				PersonaReniec pr = new PersonaReniec();
-				pr.setApellidos(apellido.getStringCellValue());
+				pr.setApellidos(apellido.getStringCellValue());	
+				
 				int valor = (int) dni.getNumericCellValue();
+				System.out.println("VALOOR SOY " + valor);
 				String val = "" + valor;
 				if (val.length() != 8)
 					for (int i = 0; i < 8 - val.length(); i++)
@@ -314,6 +319,7 @@ if(  listaPorcentajeFirma.get(  indiceCandidatoFirmas )    >   listaPorcentajeFi
 
 				// Your business logic continues....
 			}
+			System.out.println("SALIR DEL BUCLE ");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
