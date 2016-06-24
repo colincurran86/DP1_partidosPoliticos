@@ -95,17 +95,51 @@ public class NewMain {
     
       
       //urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\part.d.original3.png");
-      //urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\Otras_Resoluciones\\objs\\planillon\\13.png"); 
-      urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\part.d.original3.png"); 
-      urlBaseDeDatos = new String("C:\\Users\\LUIS S\\Desktop\\Firmas.jpg\\dfi018.png");
+     // urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\Otras_Resoluciones\\objs\\planillon\\8.jpg"); 
+     
+     //urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\part.d.original3.png"); 
+   //  urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\Padron1MenosCalidad.png"); 
+   //  urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\part.d.original22.png"); 
+      urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\e.jpg"); 
+      
+     
+    // for (int j = 0; j < 8; j++) {
+		
+	
+     
+     for (int i = 0; i < 8; i++) {
+    	 System.out.println("Nuevo proceso:------------------------------------------------ "+(i+17));
+     urlBaseDeDatos = new String("C:\\Users\\LUIS S\\Desktop\\Firmas.jpg\\dfi00"+(i+1)+".png");
+    //	 if(i==0)
+    //	  urlBaseDeDatos = new String("C:\\Users\\LUIS S\\Desktop\\Firmas.jpg\\dfi00"+(i+9)+".png");
+ //   	 else
+   // 	 	  urlBaseDeDatos = new String("C:\\Users\\LUIS S\\Desktop\\Firmas.jpg\\dfi0"+(i+9)+".png");
+     System.out.println("ULR: "+urlBaseDeDatos);
+     // urlBaseDeDatos = new String("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\1.jpg");
       //urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\1.jpg");
       FirmaRecortada ne = new FirmaRecortada(); 
+      //ne = af.cortarFirma(urlPlanillonesOriginales,j);
       ne = af.cortarFirma(urlPlanillonesOriginales,0);
       af.procesarFirmasNuevoNuevo(ne,urlBaseDeDatos);
+     } 
       
+    // }  
+      
+   
+     
+     /*
+      urlBaseDeDatos = new String("C:\\Users\\LUIS S\\Desktop\\Firmas.jpg\\dfi003.png");
+      System.out.println("ULR: "+urlBaseDeDatos);
+      // urlBaseDeDatos = new String("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\1.jpg");
+       //urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\1.jpg");
+       FirmaRecortada ne = new FirmaRecortada(); 
+       ne = af.cortarFirma(urlPlanillonesOriginales,4);
+       af.procesarFirmasNuevoNuevo(ne,urlBaseDeDatos);
+     */
       
     }
     
 }
+
 
 
