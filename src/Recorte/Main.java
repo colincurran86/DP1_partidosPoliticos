@@ -96,7 +96,22 @@ public class Main {
                 //cropeamos los digitos del DNI    
                 List <String> dniLista  = new ArrayList <String>() ;
                 int numero, valorOriginal = yDNI,   valorOriginalFirma = yFirmas, valorOriginalApellido = yApellido, valorOriginalNombre = yNombre;
-                int distanceBetweenSquaresH = 87 ,distanceBetweenSquares = 14, widthSquare = 14, heightSquare = 84;
+                
+                // Obtenemos la altura de las cuadriculas para cada DNI
+                
+                int distanceBetweenSquaresH = 0;
+                for (int i = 0; i<1000; i++){
+                	int resta = (alturaX+i) - alturaX ;
+                	int r = padronJ.getPixel(yDNI+2, alturaX+i)[0];
+                	if (resta >= 80 && resta <= 90 && r!=0){
+                		distanceBetweenSquaresH = resta + 1;
+                		break;
+                	}
+                }
+                
+                
+                
+                int distanceBetweenSquares = 14, widthSquare = 14, heightSquare = 84;
                 int alturaFirma2 = alturaX + 4;	
 
                 int contador = 0;
@@ -104,21 +119,26 @@ public class Main {
                 	
                     ImagePlus Copia1;
                     String dni = "";    yDNI = valorOriginal;
-                    System.out.println("ALTURA X " + alturaX);
-                    System.out.println("YDNI  " + yDNI);
-                    //alturaX = alturaX + 80;
                     for (int h = 0; h<8 ; h++) {
                 
                         //Detectamos el proximo espacio en blanco
                         Copia1 = IJ.openImage(ruta2);  
-                        int valor = rf.getAnchoDNI(yDNI+1, (alturaX+5) + distanceBetweenSquaresH * n);
-                        System.out.println("EL VALRO ES " + valor);
+                        int valor = rf.getAnchoDNI(yDNI+1, (alturaX+7) + distanceBetweenSquaresH * n);
                         if (valor < 10 ) valor = 11;          
-	                    Copia1.setRoi(yDNI+2, (alturaX+5)  + distanceBetweenSquaresH * n  , valor-3 , 55);
-	                    System.out.println("ALTURA X DENTRO DEL BUCLE " + alturaX);
-	                    System.out.println("YDNI  DENTRO DEL BUCLE " + yDNI);
-
-                        IJ.run(Copia1, "Crop", ""); int k = h+1;
+	                    Copia1.setRoi(yDNI+2, (alturaX+7)  + distanceBetweenSquaresH * n  , valor-3 , 54);
+                        IJ.run(Copia1, "Crop", ""); 
+                        
+                        for (int i = 0; i < 54 ; i++){
+                 		   int r = Copia1.getPixel(0, i)[0];
+                 		   if (r != 0){
+                 			   Copia1.setRoi(1, 0  , 10 , 54);
+                               IJ.run(Copia1, "Crop", ""); 
+                 			   break;
+                 		   }
+                        }	
+                        
+                        
+                        
                         new FileSaver(Copia1).saveAsPng("C:\\Users\\lenovo\\Desktop\\PUCP\\IMAGENEXXX\\" + contador + ".jpg");
                         contador++;
                         //Prefs.blackBackground = false;
