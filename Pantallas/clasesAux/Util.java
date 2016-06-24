@@ -2,6 +2,7 @@ package clasesAux;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Date;
 import java.text.DateFormat;
@@ -20,6 +21,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import pantallas.PrimeraFase;
 import pantallas.Procesando;
 import Recorte.Main;
+import Reportes.PruebaReportes;
+import Reportes.Reportes;
 import models.PartidoPersona;
 import models.PersonaReniec;
 import models.ProcesoXFase;
@@ -39,7 +42,7 @@ public class Util {
 		return nuevaRuta;
 	}
 
-	public void gerardoRecortesWarning() {
+	public void gerardoRecortesWarning() throws IOException {
 
 		long startTime = System.currentTimeMillis();
 
@@ -120,38 +123,16 @@ public class Util {
 	    
 	    
 		 List<PartidoPersona > particantesDuplicados=  partidosProcesos.verificarDuplicados(  Main.participantesPreDuplicidad  );  
+		 Reportes pruebaReport = new Reportes();
 		 
+		 //HACEMOS REPORTE AUTOMATICAMENTE FINALIZADO LA PANTALLA PARA LAS PERSONAS DUPLICADAS EN PARTDOS PLITICOS	
+		 pruebaReport.generarReporteRepetido(particantesDuplicados);
 		 
-		 
+		/* 
 		 for (int i = 0 ; i < particantesDuplicados.size() ; i++ ) {
-			 
-			 System.out.println( particantesDuplicados.get(i).getPersona().getNombre()  + "dni: " +  particantesDuplicados.get(i).getPersona().getDni()   + " observacion: "  +  particantesDuplicados.get(i).getObservacion()    );
-			 
-			 
+			 System.out.println( particantesDuplicados.get(i).getPersona().getNombre()  + "dni: " +  particantesDuplicados.get(i).getPersona().getDni()   + " observacion: "  +  particantesDuplicados.get(i).getObservacion()    );	 
 		 }
-		 
-		 
-		 
-		 //ACA REGISTRAS A LA BASE DE DATOOOOOOOO !!!!!!!!!!!!!!!!
-		 
-		 
-		 
-		 // PERO PRIMERO SACAS A LOS DUPLICADOS !!
-		 
-		 //
-		 
-		 //
-		 
-		 //
-		 
-		 
-		 
-		 
-		 
-		 
-		 
-		 
-		 
+		 */
 		 
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
@@ -197,7 +178,6 @@ public class Util {
 
 	public void KAKA(String rutaBD) {
 		try {
-			System.out.println("JAJAJAJAJAJJAJAJA NOOB " + rutaBD);;
 			InputStream file = new FileInputStream(new File(rutaBD));
 
 			// Get the workbook instance for XLS file

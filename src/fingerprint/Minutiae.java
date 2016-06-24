@@ -119,6 +119,7 @@ public class Minutiae {
 		int acum = 0;
 		int valor1 = 0, valor2 = 0, valor3 = 0, valor4 = 0, valor5 = 0, valor6 = 0, valor7 = 0, valor8 = 0, valor9 = 0;
 
+		
 		if (x == 149) {
 			valor7 = 0;
 			valor8 = 0;
@@ -156,13 +157,72 @@ public class Minutiae {
 			}
 
 		}
+		
+		
 		/*
-		 * valor1 = givenImage[y][x + 1]; valor2 = givenImage[y - 1][x + 1];
-		 * valor3 = givenImage[y - 1][x]; valor4 = givenImage[y - 1][x - 1];
-		 * valor5 = givenImage[y][x - 1]; valor6 = givenImage[y + 1][x - 1];
-		 * valor7 = givenImage[y + 1][x]; valor8 = givenImage[y + 1][x + 1];
-		 * valor9 = givenImage[y][x + 1];
-		 */
+		
+		if (y < (givenImage.length ) )
+			if ( (x + 1) < (givenImage[y].length))  valor1 = givenImage[y][x + 1]; 
+			else valor1 = 0;
+		else  valor1 = 0;
+		
+		if ( (y -1)  < (givenImage.length ) )
+			if ( (x + 1) < (givenImage[y-1].length))  valor2 =  givenImage[y - 1][x + 1];
+			else valor2 = 0;
+		else  valor2 = 0;
+		
+		if ( (y - 1)   < (givenImage.length ) )
+			if ( (x ) < (givenImage[y-1].length))  valor3 =  givenImage[y - 1][x];
+			else valor3 = 0;
+		else  valor3 = 0;
+		
+		
+		if ( (y - 1)   < (givenImage.length ) )
+			if ( (x-1) < (givenImage[y-1].length))  valor4 =  givenImage[y - 1][x-1];
+			else valor4 = 0;
+		else  valor4 = 0;
+		
+		if ( (y )   < (givenImage.length ) )
+			if ( (x-1) < (givenImage[y].length))  valor5 =  givenImage[y][x-1];
+			else valor5 = 0;
+		else  valor5 = 0;
+		
+		if ( (y + 1 )   < (givenImage.length ) )
+			if ( (x-1) < (givenImage[y+1].length))  valor6 =  givenImage[y+1][x-1];
+			else valor6 = 0;
+		else  valor6 = 0;
+
+		
+		if ( (y + 1 )   < (givenImage.length ) )
+			if ( (x) < (givenImage[y+1].length))  valor7 =  givenImage[y+1][x];
+			else valor7 = 0;
+		else  valor7 = 0;
+		
+		if ( (y + 1 )   < (givenImage.length ) )
+			if ( (x + 1 ) < (givenImage[y+1].length))  valor8 =  givenImage[y+1][x + 1];
+			else valor8 = 0;
+		else  valor8 = 0;
+		
+		if ( ( y )   < (givenImage.length ) )
+			if ( (x + 1 ) < (givenImage[y].length))  valor9 =  givenImage[y][x + 1];
+			else valor9 = 0;
+		else  valor9 = 0;
+		
+		*/
+		
+		/*
+		  valor1 = givenImage[y][x + 1]; 
+		  valor2 = givenImage[y - 1][x + 1];
+		  valor3 = givenImage[y - 1][x];
+		  valor4 = givenImage[y - 1][x - 1];
+		  valor5 = givenImage[y][x - 1]; 
+		  valor6 = givenImage[y + 1][x - 1];
+		  valor7 = givenImage[y + 1][x]; 
+		  valor8 = givenImage[y + 1][x + 1];
+		  valor9 = givenImage[y][x + 1];
+		  */
+		  
+		 
 		acum = acum + Math.abs(valor1 - valor2);
 		acum = acum + Math.abs(valor2 - valor3);
 		acum = acum + Math.abs(valor3 - valor4);

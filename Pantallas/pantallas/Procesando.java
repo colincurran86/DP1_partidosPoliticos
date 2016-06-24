@@ -20,6 +20,7 @@ import java.awt.Image;
 import java.awt.TextArea;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -150,7 +151,12 @@ static public JLabel labelImage = new JLabel();
 
 		public void run() {
 			Util u = new Util();
-			u.gerardoRecortesWarning();
+			try {
+				u.gerardoRecortesWarning();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 		public void setMensaje(String msj) {

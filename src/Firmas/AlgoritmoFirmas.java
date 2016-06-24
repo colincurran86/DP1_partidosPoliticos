@@ -3548,7 +3548,7 @@ public static FirmaRecortada cortarFirma(String urlPlanillonesOriginales, int in
 
 
 
-		int mitadPlanillon = imagenPlanillon.getWidth() / 2;
+		int mitadPlanillon = imagenPlanillon.getWidth() / 2 + (factorPixel/2);
 		int indiceNegro = 0;
 		int indiceBlanco = 0;
 		
