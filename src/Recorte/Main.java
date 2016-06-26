@@ -140,7 +140,7 @@ public class Main {
                         
                         
                         
-                        //new FileSaver(Copia1).saveAsPng("C:\\Users\\lenovo\\Desktop\\PUCP\\IMAGENEXXX\\" + contador + ".jpg");
+                        new FileSaver(Copia1).saveAsPng("C:\\Users\\lenovo\\Desktop\\PUCP\\IMAGENEXXX\\" + contador + ".jpg");
                         contador++;
                         //Prefs.blackBackground = false;
   
@@ -169,7 +169,7 @@ public class Main {
                     Procesando.escribirTextArea("Se esta procesando el dni :"  + dni );
                          
                     
-                      List<PersonaReniec>  listaPersonasReniec = new ArrayList<PersonaReniec>();
+                     List<PersonaReniec>  listaPersonasReniec = new ArrayList<PersonaReniec>();
                      int indice = encontrarDNI(dni);
                      List<Double> listaPorcentajeFirma = new ArrayList<Double>();
                      List<Double> listaPorcentajeHuella = new ArrayList<Double>();
@@ -186,12 +186,11 @@ public class Main {
                     	 
                      }                    
                      else {                    	 
-                   listaPersonasReniec =  Util.ocrMasReniec2(dni);
-                    
-               //    if (listaPersonasReniec.size() == 0 ) continue ;
+                    	 listaPersonasReniec =  Util.ocrMasReniec2(dni);
+                    	 //    if (listaPersonasReniec.size() == 0 ) continue ;
                    
                    
-                                         };
+                     };
                                 
                      Procesando.escribirTextArea("Cantidad de candidatos: " + listaPersonasReniec.size() );
                      for (int i = 0 ; i < listaPersonasReniec.size()  ; i++ )
@@ -203,72 +202,46 @@ public class Main {
                     	try {                           
                     		//firmas
                     	listaPorcentajeFirma= 	AlgoritmoFirmas.procesarNuevo(listaPersonasReniec, n , rutaPlanillonEjecutandose, rutaFirma); 
-                     	  int indiceCandidatoFirmas = candidatoFirmas(listaPorcentajeFirma);
-                   
-                     	  
-                     	  for ( int i = 0 ; i < listaPersonasReniec.size() ; i++) Procesando.escribirTextArea("Para el candiato: " + listaPersonasReniec.get(i).getDni() + " Porcentaje de firmas es: "+ listaPorcentajeFirma.get(i) );     
-Procesando.escribirTextArea( "De todos los candidatos el mejor según firmas es: " + listaPersonasReniec.get(indiceCandidatoFirmas).getDni());
-
-
-//if(  listaPorcentajeFirma.get(  indiceCandidatoFirmas )    >   listaPorcentajeFirma.get(  listaPorcentajeFirma.size()-1  )    )   {
-if(  elElegidoFinal ==null     )   {
-								elElegidoFinal = listaPersonasReniec.get(indiceCandidatoFirmas) ;
-							}  
+                        int indiceCandidatoFirmas = candidatoFirmas(listaPorcentajeFirma);  
+                     	for ( int i = 0 ; i < listaPersonasReniec.size() ; i++) 
+                     		Procesando.escribirTextArea("Para el candiato: " + listaPersonasReniec.get(i).getDni() + " Porcentaje de firmas es: "+ listaPorcentajeFirma.get(i) );     
+                     	Procesando.escribirTextArea( "De todos los candidatos el mejor según firmas es: " + listaPersonasReniec.get(indiceCandidatoFirmas).getDni());
+                     	//if(  listaPorcentajeFirma.get(  indiceCandidatoFirmas )    >   listaPorcentajeFirma.get(  listaPorcentajeFirma.size()-1  )    )   {
+                     	 if(  elElegidoFinal ==null     )   elElegidoFinal = listaPersonasReniec.get(indiceCandidatoFirmas) ;
+						  
 							
-							
-				
-			
-					
+						
+                    	//huellas
+                    	distanceBetweenSquares = 86; widthSquare = 150;  heightSquare = 75;        
+                    	ImagePlus Copia2 = IJ.openImage(ruta3);
+                        Copia2.setRoi(yHuellas+2, alturaFirma2+2 , 150 , 77);
+                        if (n != 7 ) alturaFirma2 = rf.obtenerSiguienteEspacioFirmas(yFirmas+5, alturaFirma2+2);
+                        IJ.run(Copia2, "Crop", ""); 
+                        listaPorcentajeHuella = 	 AlgoritmoHuellas.procesarNuevo(listaPersonasReniec,Copia2,rutaHuella); 
+                       	int indiceCandidatoHuellas = candidatoHuellas(listaPorcentajeHuella);
+                      	for ( int i = 0 ; i < listaPersonasReniec.size() ; i++) 
+                      		Procesando.escribirTextArea("Para el candiato: " + listaPersonasReniec.get(i).getDni() + " Porcentaje de huellas es: "+ listaPorcentajeHuella.get(i) );     
+                      	Procesando.escribirTextArea( "De todos los candidatos el mejor según Huellas es: " + listaPersonasReniec.get(indiceCandidatoHuellas).getDni());
 
-                    		//huellas
-                    		distanceBetweenSquares = 86; widthSquare = 150;  heightSquare = 75;        
-                    		ImagePlus Copia2 = IJ.openImage(ruta3);
-                            Copia2.setRoi(yHuellas+2, alturaFirma2+2 , 150 , 77);
-                            if (n != 7 ) alturaFirma2 = rf.obtenerSiguienteEspacioFirmas(yFirmas+5, alturaFirma2+2);
-                            IJ.run(Copia2, "Crop", ""); 
-                        	listaPorcentajeHuella = 	 AlgoritmoHuellas.procesarNuevo(listaPersonasReniec,Copia2,rutaHuella); 
-                       	  int indiceCandidatoHuellas = candidatoHuellas(listaPorcentajeHuella);
-                      	for ( int i = 0 ; i < listaPersonasReniec.size() ; i++) Procesando.escribirTextArea("Para el candiato: " + listaPersonasReniec.get(i).getDni() + " Porcentaje de huellas es: "+ listaPorcentajeHuella.get(i) );     
-  Procesando.escribirTextArea( "De todos los candidatos el mejor según Huellas es: " + listaPersonasReniec.get(indiceCandidatoHuellas).getDni());
-
-
-  
-  if (elElegidoFinal != null ) {
+                      	if (elElegidoFinal != null ) {
 	  
-		//voy a llenar partido persona   
-		PartidoPersona   auxElegidoPartidoPersona  = new PartidoPersona() ; 
-		
-		auxElegidoPartidoPersona.setPersona(elElegidoFinal);
-		auxElegidoPartidoPersona.setPartido(pp);
-	Participante par = new Participante () ;
-	par.setApellidos(     elElegidoFinal.getApellidos()   );
-	par.setDni(       elElegidoFinal.getDni()                  );
-
-
-	par.setIdFirma( elElegidoFinal.getIdFirma());
-	par.setIdHuella(   "" +  elElegidoFinal.getIdHuella()       );
-
-	par.setNombres(   elElegidoFinal.getNombre()    );
-	//  aca ira duplicidad par.setObservacion(                                                                          );
-	par.setObservacion(  "Falta procesar duplicidad"                                                                         );
-	par.setPorcentajeFirma(               listaPorcentajeFirma.get(  indiceCandidatoFirmas )                     );
-
-	par.setPorcentajeHuella(  listaPorcentajeHuella.get(indiceCandidatoHuellas) );
-
-	auxElegidoPartidoPersona.setParticipando(  par );
-
-
-
-	participantesPreDuplicidad.add( auxElegidoPartidoPersona) ; 
-
-	  
-	  
-  }
-  
-  
-
-  
-                    	
+                      		//voy a llenar partido persona   
+                      		PartidoPersona   auxElegidoPartidoPersona  = new PartidoPersona() ; 
+                      		auxElegidoPartidoPersona.setPersona(elElegidoFinal);
+                      		auxElegidoPartidoPersona.setPartido(pp);
+                      		Participante par = new Participante () ;
+                      		par.setApellidos( elElegidoFinal.getApellidos() );
+                      		par.setDni(elElegidoFinal.getDni());
+                      		par.setIdFirma( elElegidoFinal.getIdFirma());
+							par.setIdHuella(   "" +  elElegidoFinal.getIdHuella()       );
+							par.setNombres(   elElegidoFinal.getNombre()    );
+							//  aca ira duplicidad par.setObservacion(                                                                          );
+							par.setObservacion(  "Falta procesar duplicidad"                                                                         );
+							par.setPorcentajeFirma(listaPorcentajeFirma.get(  indiceCandidatoFirmas )          );
+							par.setPorcentajeHuella(  listaPorcentajeHuella.get(indiceCandidatoHuellas) );
+							auxElegidoPartidoPersona.setParticipando(  par );
+							participantesPreDuplicidad.add( auxElegidoPartidoPersona) ; 
+                      	}
                     	} catch (IOException e) {
                     		// TODO Auto-generated catch block
                     		e.printStackTrace();
@@ -279,11 +252,7 @@ if(  elElegidoFinal ==null     )   {
                 System.out.println("Padron numero " + (contPadrones+1) + " Procesado");
                 contPadrones++;
                 
-            }
-               
- 
-    		
-        
+            }   
     }
     
     
