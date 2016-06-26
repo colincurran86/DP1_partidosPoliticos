@@ -140,7 +140,7 @@ public class Main {
                         
                         
                         
-                        new FileSaver(Copia1).saveAsPng("C:\\Users\\lenovo\\Desktop\\PUCP\\IMAGENEXXX\\" + contador + ".jpg");
+                       // new FileSaver(Copia1).saveAsPng("C:\\Users\\lenovo\\Desktop\\PUCP\\IMAGENEXXX\\" + contador + ".jpg");
                         contador++;
                         //Prefs.blackBackground = false;
   
@@ -170,14 +170,14 @@ public class Main {
                          
                     
                      List<PersonaReniec>  listaPersonasReniec = new ArrayList<PersonaReniec>();
-                     int indice = encontrarDNI(dni);
+                     //int indice = encontrarDNI(dni);
                      List<Double> listaPorcentajeFirma = new ArrayList<Double>();
                      List<Double> listaPorcentajeHuella = new ArrayList<Double>();
                    
                      PersonaReniec elElegidoSegunOCR = new PersonaReniec();
                      PersonaReniec elElegidoSegunFirma = new PersonaReniec();
                      PersonaReniec elElegidoFinal = null;
-                     
+                     /*
                      if (indice != -1 ) {
                     	 Procesando.escribirTextArea("lo encontre al dni !!" + dni + " - " +  ReniecBD.lista.get(indice).getDni() );
                     	 listaPersonasReniec.add(  ReniecBD.lista.get(indice));
@@ -191,6 +191,8 @@ public class Main {
                    
                    
                      };
+                     */
+                	 listaPersonasReniec =  Util.ocrMasReniec2(dni);
                                 
                      Procesando.escribirTextArea("Cantidad de candidatos: " + listaPersonasReniec.size() );
                      for (int i = 0 ; i < listaPersonasReniec.size()  ; i++ )
@@ -331,7 +333,6 @@ public int encontrarDNI( String dni ){
 		if (dni != null || dni.length() != 0) {
 			if (ReniecBD.lista.get(j).getDni().compareTo(dni) == 0) {
 				// System.out.println(ReniecBD.lista.size());
-		
 				indice = j ; 
 			return indice ;  
 				// System.out.println(a.size());
