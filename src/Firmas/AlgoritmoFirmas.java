@@ -3537,7 +3537,7 @@ public static FirmaRecortada cortarFirma(String urlPlanillonesOriginales, int in
 		altos = imagenPlanillon.getHeight() - 1;
 		//	imagenPlanillon.saveAsJPG("C:\\Users\\LUIS S\\Desktop\\p1Cortado.jpg");
 
-		//imagenPlanillon.saveAsJPG("C:\\Users\\LUIS S\\Desktop\\333.jpg");
+		imagenPlanillon.saveAsJPG("C:\\Users\\LUIS S\\Desktop\\333.jpg");
 		//Factor Pixel
 		if (altos >= 0 && altos <= 900)
 			factorPixel = 5;
@@ -3548,7 +3548,7 @@ public static FirmaRecortada cortarFirma(String urlPlanillonesOriginales, int in
 
 
 
-		int mitadPlanillon = imagenPlanillon.getWidth() / 2 + (factorPixel/2);
+		int mitadPlanillon = (imagenPlanillon.getWidth() / 2) + (factorPixel/2)+2;
 		int indiceNegro = 0;
 		int indiceBlanco = 0;
 		
@@ -3570,7 +3570,7 @@ public static FirmaRecortada cortarFirma(String urlPlanillonesOriginales, int in
 		}
 		
 	//	System.out.println("Veces: "+veces2);
-
+		//System.out.println("factor pixel: "+factorPixel/2 );
 		indiceNegro = indiceNegro+(veces2/2);
 		//Blanco
 		for (int r = imagenPlanillon.getWidth() / 2; r < imagenPlanillon.getWidth() - 1; r++) {
@@ -3799,7 +3799,7 @@ public static FirmaRecortada cortarFirma(String urlPlanillonesOriginales, int in
 							+ i + "rr.jpg");
 			*/
 			cortadorImagenes.ApplyInPlace(i3);
-			//JOptionPane.showMessageDialog(null, i3.toIcon(), "Result , indice", JOptionPane.PLAIN_MESSAGE); 
+			JOptionPane.showMessageDialog(null, i3.toIcon(), "Result , indice", JOptionPane.PLAIN_MESSAGE); 
 
 			FirmaRecortada fr = new FirmaRecortada();
 			fr.img = i3.toBufferedImage();
