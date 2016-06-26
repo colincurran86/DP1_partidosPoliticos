@@ -29,8 +29,10 @@ import models.ProcesoXFase;
 import models.ReniecBD;
 
 public class Util {
-
+	
+	public static boolean mostrarReporte=false;
 	public static String mensajeFinal = new String();
+	public static List<PartidoPersona > partDup;
 
 	public String formatearRuta(String ruta) {
 		String nuevaRuta = "";
@@ -43,7 +45,7 @@ public class Util {
 	}
 
 	public void gerardoRecortesWarning() throws IOException {
-
+		
 		long startTime = System.currentTimeMillis();
 
 		Util u = new Util();
@@ -122,11 +124,12 @@ public class Util {
 	    }
 	    
 	    
-		 List<PartidoPersona > particantesDuplicados=  partidosProcesos.verificarDuplicados(  Main.participantesPreDuplicidad  );  
-		 Reportes pruebaReport = new Reportes();
+		 //List<PartidoPersona > particantesDuplicados=  partidosProcesos.verificarDuplicados(  Main.participantesPreDuplicidad  );
+		 partDup=partidosProcesos.verificarDuplicados(  Main.participantesPreDuplicidad  );
+		 //Reportes pruebaReport = new Reportes();
 		 
 		 //HACEMOS REPORTE AUTOMATICAMENTE FINALIZADO LA PANTALLA PARA LAS PERSONAS DUPLICADAS EN PARTDOS PLITICOS	
-		 pruebaReport.generarReporteRepetido(particantesDuplicados);
+		 //pruebaReport.generarReporteRepetido(particantesDuplicados);
 		 
 		/* 
 		 for (int i = 0 ; i < particantesDuplicados.size() ; i++ ) {
@@ -164,6 +167,7 @@ public class Util {
 	   	   
 	   Procesando.escribirTextArea("Total del tiempo consumido: " + totalTime);	   
 	   
+	   mostrarReporte=true;
 	}
 
 	public String formatearRuta2(String ruta) {

@@ -168,7 +168,7 @@ public class PrimeraFase extends JPanel implements ActionListener {
 		}
 		if (e.getSource() == btnProcesar) {
 
-			
+			Util.mostrarReporte=false;
 			Procesando p1;
 			p1 = new Procesando();
 			p1.setVisible(true);

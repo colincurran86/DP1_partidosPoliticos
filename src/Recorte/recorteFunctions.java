@@ -258,7 +258,7 @@ public class recorteFunctions {
         for (int i = yDNI; ;i++){
              int r = padronJ.getPixel(i, alturaX)[0];
              if (r != 0){
-                 for (int m = i; ; m++){
+                 for (int m = i; ; m++){	
                      int h = padronJ.getPixel(m, alturaX)[0];
                      if (h == 0){
                         condicion = 1;
@@ -357,8 +357,7 @@ public class recorteFunctions {
     }
     
     public int obtenerSiguienteEspacioFirmas(int yFirmas, int alturaX){
-		
-    	
+		    	
         int condicion = 0, siguientePunto = 0;
         for (int i = alturaX; ;i++){
              int r = padronJ.getPixel(yFirmas, i)[0];
@@ -373,19 +372,14 @@ public class recorteFunctions {
                  }
              }
              if (condicion == 1) break;
-        }
-        
-        return siguientePunto;
+        }        
+        return siguientePunto;    	    	
     	
-    	
-    	
-    }
-    
+    }    
     
     public ImagePlus getPadron(){
         return this.padronJ;
-    }
-    
+    }    
     
     public int getX (){
         return this.x;

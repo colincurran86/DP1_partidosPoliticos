@@ -14,6 +14,7 @@ import models.PartidoPolitico;
 import models.PersonaReniec;
 import Firmas.FastBitmap;
 import Recorte.Main;
+import Reportes.Reportes;
 import clasesAux.Util;
 
 import java.awt.Image;
@@ -24,6 +25,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Procesando extends JPanel {
 
@@ -71,6 +75,8 @@ static public JLabel labelImage = new JLabel();
 		JLabel lblHuella = new JLabel("Firma procesada: ");
 		lblHuella.setBounds(330, 284, 122, 14);
 		add(lblHuella);
+		
+		
 
 		// gerardoRecortesWarning();
 
@@ -82,7 +88,33 @@ static public JLabel labelImage = new JLabel();
 	//	hilo2.setMensaje("Mensaje hilo 2"); //
 		hilo1.start(); // Proceso de la barrera 
 		hilo2.start(); // Proceso Principal de recorte
-
+		/*
+		try {
+			hilo2.wait();
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}*/
+		
+		if(Util.mostrarReporte){
+			JButton btnGenerarReporte = new JButton("Generar Reporte");
+			
+			btnGenerarReporte.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					Reportes pruebaReport = new Reportes();
+					 
+					 //HACEMOS REPORTE AUTOMATICAMENTE FINALIZADO LA PANTALLA PARA LAS PERSONAS DUPLICADAS EN PARTDOS PLITICOS	
+					 try {
+						pruebaReport.generarReporteRepetido(Util.partDup);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			});
+			btnGenerarReporte.setBounds(270, 594, 129, 23);
+			add(btnGenerarReporte);
+		}			
 	}
 
 

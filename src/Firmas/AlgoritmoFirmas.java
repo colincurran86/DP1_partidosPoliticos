@@ -3537,7 +3537,7 @@ public static FirmaRecortada cortarFirma(String urlPlanillonesOriginales, int in
 		altos = imagenPlanillon.getHeight() - 1;
 		//	imagenPlanillon.saveAsJPG("C:\\Users\\LUIS S\\Desktop\\p1Cortado.jpg");
 
-		imagenPlanillon.saveAsJPG("C:\\Users\\LUIS S\\Desktop\\333.jpg");
+		//imagenPlanillon.saveAsJPG("C:\\Users\\LUIS S\\Desktop\\333.jpg");
 		//Factor Pixel
 		if (altos >= 0 && altos <= 900)
 			factorPixel = 5;
