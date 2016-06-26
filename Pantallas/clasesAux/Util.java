@@ -65,6 +65,10 @@ public class Util {
 
 
 		// List<PersonaReniec> pr1 = u.ocrMasReniec();
+
+		
+		//no va lista de lista
+		
 		List<List<PersonaReniec>> pr1 = u.ocrMasReniec();
 		String cadenaFinal = new String();
 
@@ -78,6 +82,9 @@ public class Util {
 			cadenaFinal = cadenaFinal + "\n";
 		}
 	
+		
+		//no va lista de lista
+		
 	   List<ProcesoXFase> procesoListFase = new ArrayList <ProcesoXFase>();
 
 		java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
