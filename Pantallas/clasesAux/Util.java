@@ -23,6 +23,7 @@ import pantallas.Procesando;
 import Recorte.Main;
 import Reportes.PruebaReportes;
 import Reportes.Reportes;
+import models.Participante;
 import models.PartidoPersona;
 import models.PersonaReniec;
 import models.ProcesoXFase;
@@ -34,6 +35,8 @@ public class Util {
 	public static String mensajeFinal = new String();
 	public static List<PartidoPersona > partDup;
 
+	public static List<PartidoPersona > adherentes;
+	
 	public String formatearRuta(String ruta) {
 		String nuevaRuta = "";
 		for (int i = 0; i < ruta.length(); i++)
@@ -123,26 +126,43 @@ public class Util {
 
 	    
 	    System.out.println(" cantidad de duplicidad"  +  Main.participantesPreDuplicidad.size() );
-	    
-	    for(int i = 0 ; i <       Main.participantesPreDuplicidad.size()  ; i++ ) {
-	    	
-	    	System.out.println("lista dni" +  (i+1)+ " ahora el dni: "  + Main.participantesPreDuplicidad.get(i).getPersona().getDni()  );
-	    	
-	    }
-	    
-	    
+	  
+	    List<PartidoPersona> listaSinDuplicados =  new ArrayList<PartidoPersona> ();
 		 //List<PartidoPersona > particantesDuplicados=  partidosProcesos.verificarDuplicados(  Main.participantesPreDuplicidad  );
-		 partDup=partidosProcesos.verificarDuplicados(  Main.participantesPreDuplicidad  );
-		 //Reportes pruebaReport = new Reportes();
+		 partDup=partidosProcesos.verificarDuplicados(  Main.participantesPreDuplicidad );
+		 adherentes =partidosProcesos.traerSinDuplicados   (  Main.participantesPreDuplicidad );
+	
+		 System.out.println(" === Adherente   == ==");
+
+
 		 
-		 //HACEMOS REPORTE AUTOMATICAMENTE FINALIZADO LA PANTALLA PARA LAS PERSONAS DUPLICADAS EN PARTDOS PLITICOS	
-		 //pruebaReport.generarReporteRepetido(particantesDuplicados);
+		 for ( int i = 0 ; i< adherentes.size() ; i ++) {
+			 
+			 System.out.println("Hola Jose " + adherentes.get(i).getPersona().getDni() + " Nombre: " +  adherentes.get(i).getPersona().getNombre());
+			 
+			 
+			 
+			 partidosProcesos.llenarParticipante( adherentes.get(i).getParticipando()  , adherentes.get(i).getPartido().getId() , 1 , PrimeraFase.idPE ) ;
+			 
+		 } 
+
 		 
-		/* 
-		 for (int i = 0 ; i < particantesDuplicados.size() ; i++ ) {
-			 System.out.println( particantesDuplicados.get(i).getPersona().getNombre()  + "dni: " +  particantesDuplicados.get(i).getPersona().getDni()   + " observacion: "  +  particantesDuplicados.get(i).getObservacion()    );	 
-		 }
-		 */
+		 
+		 
+ System.out.println( "  ====  Comienzan duplicados ===");
+		 
+ for ( int i = 0 ; i< partDup.size() ; i ++) {
+	 
+	 System.out.println("Hola Jose " + partDup.get(i).getPersona().getDni() + " Nombre: " +  partDup.get(i).getPersona().getNombre());
+	 
+	 partDup.get(i).getParticipando().setAceptado(3);
+	 partidosProcesos.llenarParticipante( partDup.get(i).getParticipando()  , partDup.get(i).getPartido().getId() , 1 , PrimeraFase.idPE ) ;
+ } 
+
+ 
+ 
+ 
+		 
 		 
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
@@ -159,22 +179,13 @@ public class Util {
 				+ " segundos \n";
 		this.mensajeFinal = this.mensajeFinal + almacenarMensaje;
 
-		// System.out.println(this.mensajeFinal);
-
-		// System.out.println("Finalizado");
-		// System.out.println("El tiempo total de ejecucion del programa fue " +
-		// totalTime + " segundos");
-
-		// System.out.println("El tiempo total de ejecucion del programa fue " +
-		// totalTime + " segundos");
-
-		// aumentarPorcentaje(100);
-
-	//	String formatearRutaPlan = u.formatearRuta(primeraFase.rutaPadrones);
+		
 	   	   
 	   Procesando.escribirTextArea("Total del tiempo consumido: " + totalTime);	   
 	   
-	   //mostrarReporte=true;
+	   
+	 //  public static void llenarParticipante(Participante p, int idPP,int idFase, int idPE);
+
 	   Procesando.mostrarBoton();
 	}
 

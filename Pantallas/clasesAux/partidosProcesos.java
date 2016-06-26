@@ -62,9 +62,7 @@ public class partidosProcesos {
 	}
 	
 	
-	public static List<PartidoPersona> verificarDuplicados(List<PartidoPersona>partidoPersona){
-		
-		
+	public static List<PartidoPersona> verificarDuplicados(List<PartidoPersona>partidoPersona ){
 		List<PartidoPersona> nuevaLista = new ArrayList<PartidoPersona>();
 		//Verificamos los duplicados para cada partido politico
 		for (int i = 0; i<partidoPersona.size() -1 ; i++){
@@ -80,6 +78,7 @@ public class partidosProcesos {
 							partidoPersona.get(j).setObservacion( "Repetido entre los partidos politicos " +  partidoPersona.get(i).getPartido().getNombre() + " - "  +    partidoPersona.get(j).getPartido().getNombre() );
 							break;
 						}
+						
 					}
 				}
 		}
@@ -87,6 +86,29 @@ public class partidosProcesos {
 		return nuevaLista;
 		
 	}
+	
+	
+	public static List<PartidoPersona>  traerSinDuplicados (List<PartidoPersona>partidoPersona ){
+		List<PartidoPersona> nuevaLista = new ArrayList<PartidoPersona>();
+		//Verificamos los duplicados para cada partido politico
+		for (int i = 0; i<partidoPersona.size() -1 ; i++){
+				if (partidoPersona.get(i).getCondicionRepetido() == 0){
+					for (int j = i+1; j<partidoPersona.size();j++){
+						if (partidoPersona.get(i).getPersona().getDni().compareTo(  
+								partidoPersona.get(j).getPersona().getDni()
+								) != 0){
+							nuevaLista.add(partidoPersona.get(j));
+								break;
+						}
+						
+					}
+				}
+		}
+		
+		return nuevaLista;
+		
+	}
+	
 	
 	public static void llenarParticipante(Participante p, int idPP,int idFase, int idPE){		
 		try {
