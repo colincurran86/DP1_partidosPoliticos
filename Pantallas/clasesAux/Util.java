@@ -167,7 +167,8 @@ public class Util {
 	   	   
 	   Procesando.escribirTextArea("Total del tiempo consumido: " + totalTime);	   
 	   
-	   mostrarReporte=true;
+	   //mostrarReporte=true;
+	   Procesando.mostrarBoton();
 	}
 
 	public String formatearRuta2(String ruta) {
