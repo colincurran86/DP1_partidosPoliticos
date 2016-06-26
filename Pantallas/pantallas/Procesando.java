@@ -36,6 +36,7 @@ public class Procesando extends JPanel {
 	static public TextArea textArea = new TextArea();
 static public JLabel labelImage = new JLabel();
 	static int porcentaje = 0;
+	private static JButton btnGenerarReporte;
 
 	/**
 	 * Create the panel.
@@ -95,29 +96,34 @@ static public JLabel labelImage = new JLabel();
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}*/
-		
-		if(Util.mostrarReporte){
-			JButton btnGenerarReporte = new JButton("Generar Reporte");
-			
-			btnGenerarReporte.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					Reportes pruebaReport = new Reportes();
-					 
-					 //HACEMOS REPORTE AUTOMATICAMENTE FINALIZADO LA PANTALLA PARA LAS PERSONAS DUPLICADAS EN PARTDOS PLITICOS	
-					 try {
-						pruebaReport.generarReporteRepetido(Util.partDup);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+		btnGenerarReporte = new JButton("Generar Reporte");
+		btnGenerarReporte.setBounds(270, 552, 129, 23);
+		add(btnGenerarReporte);
+		btnGenerarReporte.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Reportes pruebaReport = new Reportes();
+				 
+				 //HACEMOS REPORTE AUTOMATICAMENTE FINALIZADO LA PANTALLA PARA LAS PERSONAS DUPLICADAS EN PARTDOS PLITICOS	
+				 try {
+					pruebaReport.generarReporteRepetido(Util.partDup);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-			});
-			btnGenerarReporte.setBounds(270, 594, 129, 23);
-			add(btnGenerarReporte);
-		}			
+			}
+		});
+		
+		btnGenerarReporte.hide();
+		//btnGenerarReporte.disable();
+		//if(Util.mostrarReporte){
+			
+		//}			
 	}
 
-
+	static public void mostrarBoton(){
+		btnGenerarReporte.show();
+		//btnGenerarReporte.enable();
+	}
 
 	static public void aumentarPorcentaje(int count) {
 

@@ -392,5 +392,3 @@ public int candidatoHuellas ( List<Double > lista)  {
 
 
 }
-
-
