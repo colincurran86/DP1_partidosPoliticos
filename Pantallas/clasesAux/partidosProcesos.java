@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import models.Calendario;
+import models.Participante;
 import models.PartidoPersona;
 import models.ProcesoXFase;
 import bModel.ProcessManager;
@@ -69,15 +70,8 @@ public class partidosProcesos {
 		for (int i = 0; i<partidoPersona.size() -1 ; i++){
 				if (partidoPersona.get(i).getCondicionRepetido() == 0){
 					for (int j = i+1; j<partidoPersona.size();j++){
-						
-
-						
 						if (partidoPersona.get(i).getPersona().getDni().compareTo(  
-								
-								
 								partidoPersona.get(j).getPersona().getDni()
-								
-								
 								) == 0){
 							nuevaLista.add(partidoPersona.get(j));
 							partidoPersona.get(i).setCondicionRepetido(1);
@@ -92,6 +86,42 @@ public class partidosProcesos {
 		
 		return nuevaLista;
 		
+	}
+	
+	public static void llenarParticipante(Participante p, int idPP,int idFase, int idPE){		
+		try {
+
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			connect = DriverManager.getConnection(DBConnection.URL_JDBC_MySQL, DBConnection.user,
+					DBConnection.password);
+			statement = connect.createStatement();
+
+			//System.out.println("FECHAAA :" +  p.getFechaInicioProc());
+			statement.executeUpdate("INSERT INTO Participantes " + 
+						"(IdPartidosPoliticos , idFase, IdProceso, IdUbigeo, Nombres, Apellidos, Aceptado, DNI, Firma,"
+						+ " Huella, Observacion, PorcentajeFirma, PorcentajeHuella)" 
+						+ "VALUES (" + idPP + ", " +  idFase + " , " 
+						+ idPE + " , " + 1 + " , '" 
+						+ p.getNombres() +  "' , '" + p.getApellidos() +  "' , '" + p.getAceptado() + "' , '"
+						+ p.getDni() + "' , '" + p.getIdFirma() + "' , '" + p.getIdHuella() + "' , '"+ p.getObservacion() 
+						+ "' , " + p.getPorcentajeFirma() + " , " + p.getPorcentajeHuella() + " )" );
+			
+			connect.close();
+
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 }
