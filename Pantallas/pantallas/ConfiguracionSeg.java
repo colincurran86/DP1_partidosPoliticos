@@ -139,13 +139,13 @@ public class ConfiguracionSeg extends JDialog implements ActionListener{
 		btnCheckListPartidos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 																
-				listaStrPP = new String  [ listaPP.size() ]  ; // listaPP.get(i).getNombre());
+				/*listaStrPP = new String  [ listaPP.size() ]  ; // listaPP.get(i).getNombre());
 				
 				for ( int i = 0 ;  i < listaPP.size()  ; i++ ) {
 					listaStrPP[i] = new String();
 					listaStrPP[i] = listaPP.get(i).getNombre() ;
 					
-				}
+				}*/
 												
 				 //CheckListPartPol frame = new CheckListPartPol( listaStrPP);
 				CheckListPP frame = new CheckListPP( listaStrPP);

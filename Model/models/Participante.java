@@ -1,7 +1,7 @@
 package models;
 
 public class Participante {
-	private String aceptado;
+	private int aceptado;
 	private String nombres;
 	private String apellidos;
 	private String dni;
@@ -11,10 +11,10 @@ public class Participante {
 	private double porcentajeHuella;
 	private String observacion;
 	
-	public String getAceptado() {
+	public int getAceptado() {
 		return aceptado;
 	}
-	public void setAceptado(String aceptado) {
+	public void setAceptado(int aceptado) {
 		this.aceptado = aceptado;
 	}
 	public String getNombres() {
