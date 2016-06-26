@@ -313,113 +313,118 @@ public class Util {
 		List<PersonaReniec> candidatos = new ArrayList<PersonaReniec>();
 		// String dniCad="" + dni;
 
-		int posCad1 = 0, posCad2 = 0, posCad3 = 0;
-		String cad1 = "", cad2 = "", cad3 = "";
+		int posCad1 = 0, posCad2 = 0, posCad3 = 0, posCad4=0;
+		String cad1 = "", cad2 = "", cad3 = "", cad4="";
 
-		for (int i = 0; i < 7; i++) {
+		for (int i = 0; i < 6; i++) {
 
-			for (int j = i + 1; j < 8; j++) {
-				cad1 = "";
-				cad2 = "";
-				cad3 = "";
+			for (int j = i + 1; j < 7; j++) {
+				
+				for(int k=j+1;k<8;k++){
 
-				posCad1 = 0;
-				posCad2 = i + 1;
-				posCad3 = j + 1;
-
-				if (i == 0)
 					cad1 = "";
-				else
-					for (int m = posCad1; m < i; m++)
-						cad1 += dni.charAt(m);
-
-				if (i == 6 || (j - i == 1))
 					cad2 = "";
-				else
-					for (int m = posCad2; m < j; m++)
-						cad2 += dni.charAt(m);
-
-				if (j == 7)
 					cad3 = "";
-				else
-					for (int m = posCad3; m < 8; m++)
-						cad3 += dni.charAt(m);
+					cad4 = "";
 
-				boolean salir;
-				for (int k = 0; k < ReniecBD.lista.size(); k++) {
-					salir = false;
-					String reniecDni = ReniecBD.lista.get(k).getDni();
-					if (cad1.compareTo("") != 0) {
-						//System.out.println("cad1: "+cad1);
-						for (int m = posCad1; m < cad1.length() + posCad1; m++)
-							if (dni.charAt(m) != reniecDni.charAt(m)) {
-								salir = true;
-								break;
-							}
-					}
-					if (!salir){
-						if (cad2.compareTo("") != 0) {
-							//System.out.println("cad2: "+cad2);
-							for (int m = posCad2; m < cad2.length() + posCad2; m++)
+					posCad1 = 0;
+					posCad2 = i + 1;
+					posCad3 = j + 1;
+					posCad4 = k + 1;
+
+					if (i == 0)
+						cad1 = "";
+					else
+						for (int m = posCad1; m < i; m++)
+							cad1 += dni.charAt(m);
+					
+					if (i == 5 || (j - i == 1))
+						cad2 = "";
+					else
+						for (int m = posCad2; m < j; m++)
+							cad2 += dni.charAt(m);
+
+					if (j == 6 || (k-j==1))
+						cad3 = "";
+					else
+						for (int m = posCad3; m < k; m++)
+							cad3 += dni.charAt(m);
+					
+					if (k == 7 )
+						cad4 = "";
+					else
+						for (int m = posCad4; m < 8; m++)
+							cad4 += dni.charAt(m);
+					
+					boolean salir;
+					for (int p = 0; p < ReniecBD.lista.size(); p++) {
+						salir = false;
+						String reniecDni = ReniecBD.lista.get(p).getDni();
+						if (cad1.compareTo("") != 0) {
+							//System.out.println("cad1: "+cad1);
+							for (int m = posCad1; m < cad1.length() + posCad1; m++)
 								if (dni.charAt(m) != reniecDni.charAt(m)) {
 									salir = true;
 									break;
 								}
 						}
-						if (!salir) {
-							if (cad3.compareTo("") != 0) {
-								//System.out.println("cad3: "+cad3);
-								for (int m = posCad3; m < cad3.length() + posCad3; m++)
+						if (!salir){
+							if (cad2.compareTo("") != 0) {
+								//System.out.println("cad2: "+cad2);
+								for (int m = posCad2; m < cad2.length() + posCad2; m++)
 									if (dni.charAt(m) != reniecDni.charAt(m)) {
 										salir = true;
 										break;
 									}
 							}
 							if (!salir) {
-								//System.out.println("tamanho: "+candidatos.size());
-								// si no llego a ningun break, anhade
-								if(candidatos.size()==0){
-									//System.out.println("ENTRE");
-									PersonaReniec pr=new PersonaReniec();
-									pr.setApellidos(ReniecBD.lista.get(k).getApellidos());
-									pr.setDni(ReniecBD.lista.get(k).getDni());
-									pr.setIdFirma(ReniecBD.lista.get(k).getIdFirma());
-									pr.setIdHuella(ReniecBD.lista.get(k).getIdHuella());
-									pr.setNombre(ReniecBD.lista.get(k).getNombre());
-									pr.setUbigeo(ReniecBD.lista.get(k).getUbigeo());
-									candidatos.add(pr);		
-									//System.out.println(candidatos.get(candidatos.size()-1).getDni());
-									//System.out.println("DNI: "+pr.getDni());
-								}									
-								else{
-									boolean entre=false;
-									for(int m=0;m<candidatos.size();m++){
-										String dniCan=candidatos.get(m).getDni();
-										//System.out.println(dniCan);
-										//if(dniCan.length()!=0) System.out.println(dniCan);
-										if(dniCan.compareTo(ReniecBD.lista.get(k).getDni())==0){										
-											//System.out.println("ENTRE");
-											entre=true;
+								if (cad3.compareTo("") != 0) {
+									//System.out.println("cad3: "+cad3);
+									for (int m = posCad3; m < cad3.length() + posCad3; m++)
+										if (dni.charAt(m) != reniecDni.charAt(m)) {
+											salir = true;
 											break;
-											/*PersonaReniec pr=new PersonaReniec();
-											pr.setApellidos(ReniecBD.lista.get(k).getApellidos());
-											pr.setDni(ReniecBD.lista.get(k).getDni());
-											pr.setIdFirma(ReniecBD.lista.get(k).getIdFirma());
-											pr.setIdHuella(ReniecBD.lista.get(k).getIdHuella());
-											pr.setNombre(ReniecBD.lista.get(k).getNombre());
-											pr.setUbigeo(ReniecBD.lista.get(k).getUbigeo());
-											candidatos.add(pr);*/
-											//System.out.println("tamanho: "+candidatos.size());
-											//System.out.println(candidatos.get(candidatos.size()-1).getDni());
-											//System.out.println("DNI: "+pr.getDni());
-										}														
+										}
+								}
+								if (!salir) {
+									if (cad4.compareTo("") != 0) {
+										//System.out.println("cad3: "+cad3);
+										for (int m = posCad4; m < cad4.length() + posCad4; m++)
+											if (dni.charAt(m) != reniecDni.charAt(m)) {
+												salir = true;
+												break;
+											}
 									}
-									if(!entre)candidatos.add(ReniecBD.lista.get(k));
-								}		
-							}							
+									if (!salir) {
+										//System.out.println("tamanho: "+candidatos.size());
+										// si no llego a ningun break, anhade
+										if(candidatos.size()==0){																						
+											candidatos.add(ReniecBD.lista.get(p));													
+										}									
+										else{
+											boolean entre=false;
+											for(int m=0;m<candidatos.size();m++){
+												String dniCan=candidatos.get(m).getDni();												
+												if(dniCan.compareTo(ReniecBD.lista.get(p).getDni())==0){										
+													//System.out.println("ENTRE");
+													entre=true;
+													break;													
+												}														
+											}
+											if(!entre)candidatos.add(ReniecBD.lista.get(p));
+										}		
+									}
+									
+								}							
+							}
 						}
 					}
+
+					
+					
+					
 				}
+
 			}
 		}
 		//for(int i=0;i<candidatos.size();i++) System.out.println("dni: "+candidatos.get(i).getDni());
