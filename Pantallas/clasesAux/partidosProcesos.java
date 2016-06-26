@@ -19,79 +19,16 @@ import bModel.ProcessManager;
 import businessModel.Dao.DBConnection;
 
 public class partidosProcesos {
-	
+
 	public static Connection connect = null;
 	public static Statement statement = null;
 	public static ResultSet resultSet = null;
-	public static List<String> values =  new ArrayList<String>();
-	
-	public static void almacenarBD(ProcesoXFase p){
-		
+	public static List<String> values = new ArrayList<String>();
 
-			// TODO Auto-generated method stub
-			int numero=0;
-			try {
+	public static void almacenarBD(ProcesoXFase p) {
 
-				Class.forName("com.mysql.jdbc.Driver").newInstance();
-				connect = DriverManager.getConnection(DBConnection.URL_JDBC_MySQL, DBConnection.user,
-						DBConnection.password);
-				statement = connect.createStatement();
-	
-				System.out.println("FECHAAA :" +  p.getFechaInicioProc());
-				statement.executeUpdate("INSERT INTO ProcesoxFasexPartidoPolitico " + "(IdPartidosPoliticos , idFase, Resultado, Observacion, IdProceso, FechaInicioProceso)" 
-				+ "VALUES ('"
-						+ p.getIdPartPol() + "', '" +  p.getIdFase() + "' , '" + p.getResultado() + "' , '" + p.getObservacion() + "' , '" + p.getIdProceso() +  "' , '" + p.getFechaInicioProc() +  "'   )" );
-				
-				connect.close();
-
-				
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (InstantiationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-				
-		
-		
-		
-	}
-	
-	
-	public static List<PartidoPersona> verificarDuplicados(List<PartidoPersona>partidoPersona){
-		
-		
-		List<PartidoPersona> nuevaLista = new ArrayList<PartidoPersona>();
-		//Verificamos los duplicados para cada partido politico
-		for (int i = 0; i<partidoPersona.size() -1 ; i++){
-				if (partidoPersona.get(i).getCondicionRepetido() == 0){
-					for (int j = i+1; j<partidoPersona.size();j++){
-						if (partidoPersona.get(i).getPersona().getDni().compareTo(  
-								partidoPersona.get(j).getPersona().getDni()
-								) == 0){
-							nuevaLista.add(partidoPersona.get(j));
-							partidoPersona.get(i).setCondicionRepetido(1);
-							partidoPersona.get(i).setObservacion( "Repetido entre los partidos politicos " +  partidoPersona.get(i).getPartido().getNombre() + " - "  +    partidoPersona.get(j).getPartido().getNombre() );
-							partidoPersona.get(j).setCondicionRepetido(1);
-							partidoPersona.get(j).setObservacion( "Repetido entre los partidos politicos " +  partidoPersona.get(i).getPartido().getNombre() + " - "  +    partidoPersona.get(j).getPartido().getNombre() );
-							break;
-						}
-					}
-				}
-		}
-		
-		return nuevaLista;
-		
-	}
-	
-	public static void llenarParticipante(Participante p, int idPP,int idFase, int idPE){		
+		// TODO Auto-generated method stub
+		int numero = 0;
 		try {
 
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -99,19 +36,79 @@ public class partidosProcesos {
 					DBConnection.password);
 			statement = connect.createStatement();
 
-			//System.out.println("FECHAAA :" +  p.getFechaInicioProc());
-			statement.executeUpdate("INSERT INTO Participantes " + 
-						"(IdPartidosPoliticos , idFase, IdProceso, IdUbigeo, Nombres, Apellidos, Aceptado, DNI, Firma,"
-						+ " Huella, Observacion, PorcentajeFirma, PorcentajeHuella)" 
-						+ "VALUES (" + idPP + ", " +  idFase + " , " 
-						+ idPE + " , " + 1 + " , '" 
-						+ p.getNombres() +  "' , '" + p.getApellidos() +  "' , " + p.getAceptado() + " , '"
-						+ p.getDni() + "' , '" + p.getIdFirma() + "' , '" + p.getIdHuella() + "' , '"+ p.getObservacion() 
-						+ "' , " + p.getPorcentajeFirma() + " , " + p.getPorcentajeHuella() + " )" );
-			
+			System.out.println("FECHAAA :" + p.getFechaInicioProc());
+			statement.executeUpdate("INSERT INTO ProcesoxFasexPartidoPolitico "
+					+ "(IdPartidosPoliticos , idFase, Resultado, Observacion, IdProceso, FechaInicioProceso)"
+					+ "VALUES ('" + p.getIdPartPol() + "', '" + p.getIdFase() + "' , '" + p.getResultado() + "' , '"
+					+ p.getObservacion() + "' , '" + p.getIdProceso() + "' , '" + p.getFechaInicioProc() + "'   )");
+
 			connect.close();
 
-			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	public static List<PartidoPersona> verificarDuplicados(List<PartidoPersona> partidoPersona) {
+
+		List<PartidoPersona> nuevaLista = new ArrayList<PartidoPersona>();
+		// Verificamos los duplicados para cada partido politico
+		for (int i = 0; i < partidoPersona.size() - 1; i++) {
+			if (partidoPersona.get(i).getCondicionRepetido() == 0) {
+				for (int j = i + 1; j < partidoPersona.size(); j++) {
+					if (partidoPersona.get(i).getPersona().getDni()
+							.compareTo(partidoPersona.get(j).getPersona().getDni()) == 0) {
+						nuevaLista.add(partidoPersona.get(j));
+						partidoPersona.get(i).setCondicionRepetido(1);
+						partidoPersona.get(i)
+								.setObservacion("Repetido entre los partidos politicos "
+										+ partidoPersona.get(i).getPartido().getNombre() + " - "
+										+ partidoPersona.get(j).getPartido().getNombre());
+						partidoPersona.get(j).setCondicionRepetido(1);
+						partidoPersona.get(j)
+								.setObservacion("Repetido entre los partidos politicos "
+										+ partidoPersona.get(i).getPartido().getNombre() + " - "
+										+ partidoPersona.get(j).getPartido().getNombre());
+						break;
+					}
+				}
+			}
+		}
+
+		return nuevaLista;
+
+	}
+
+	public static void llenarParticipante(Participante p, int idPP, int idFase, int idPE) {
+		try {
+
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			connect = DriverManager.getConnection(DBConnection.URL_JDBC_MySQL, DBConnection.user,
+					DBConnection.password);
+			statement = connect.createStatement();
+
+			// System.out.println("FECHAAA :" + p.getFechaInicioProc());
+			statement.executeUpdate("INSERT INTO Participantes "
+					+ "(IdPartidosPoliticos , idFase, IdProceso, IdUbigeo, Nombres, Apellidos, Aceptado, DNI, Firma,"
+					+ " Huella, Observacion, PorcentajeFirma, PorcentajeHuella)" + "VALUES (" + idPP + ", " + idFase
+					+ " , " + idPE + " , " + 1 + " , '" + p.getNombres() + "' , '" + p.getApellidos() + "' , "
+					+ p.getAceptado() + " , '" + p.getDni() + "' , '" + p.getIdFirma() + "' , '" + p.getIdHuella()
+					+ "' , '" + p.getObservacion() + "' , " + p.getPorcentajeFirma() + " , " + p.getPorcentajeHuella()
+					+ " )");
+
+			connect.close();
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -126,9 +123,9 @@ public class partidosProcesos {
 			e.printStackTrace();
 		}
 	}
-	
-	public static ProcesoElectoral queryById(int id){
-		
+
+	public static ProcesoElectoral queryById(int id) {
+
 		ProcesoElectoral pe = new ProcesoElectoral();
 		// TODO Auto-generated method stub
 		try {
@@ -140,22 +137,20 @@ public class partidosProcesos {
 			resultSet = statement.executeQuery("select * from Proceso where IdProceso = " + id);
 
 			while (resultSet.next()) {
-				//int id = resultSet.getInt("IdProceso");
+				// int id = resultSet.getInt("IdProceso");
 				int idTP = resultSet.getInt("IdTipoProceso");
 				String nombre = resultSet.getString("Nombre");
 				int idCal = resultSet.getInt("idCalendario");
 				int totalP = resultSet.getInt("TotalPersonas");
 				double porc = resultSet.getDouble("PorcentajeAceptado");
-						
-				
-				
+
 				pe.setId(id);
 				pe.setNombre(nombre);
-				pe.setPorcentaje((int)porc);
+				pe.setPorcentaje((int) porc);
 				pe.setIdTipoProceso(idTP);
 				pe.setIdCalendario(idCal);
-				pe.setTotalPersonas(totalP);											
-								
+				pe.setTotalPersonas(totalP);
+
 			}
 			connect.close();
 		} catch (SQLException e) {
@@ -173,11 +168,10 @@ public class partidosProcesos {
 		}
 		return pe;
 
-		
 	}
-	
-	public static List<ProcesoElectoral> procElecRechazados(){
-		
+
+	public static List<ProcesoElectoral> procElecRechazados() {
+
 		ArrayList<ProcesoElectoral> arr = new ArrayList<ProcesoElectoral>();
 		// TODO Auto-generated method stub
 		try {
@@ -186,14 +180,15 @@ public class partidosProcesos {
 					DBConnection.password);
 
 			statement = connect.createStatement();
-			resultSet = statement.executeQuery("select * from ProcesoxFasexPartidosPolitico where Resultado= '" + "Rechazado" + "'");
-			
-			
-			List<Integer> listPE = new ArrayList<Integer>(); 
+			resultSet = statement
+					.executeQuery("select * from ProcesoxFasexPartidosPolitico where Resultado= '" + "Rechazado" + "'");
+
+			List<Integer> listPE = new ArrayList<Integer>();
 			while (resultSet.next()) {
 				int idProc = resultSet.getInt("IdProceso");
-				ProcesoElectoral pe=queryById(idProc);
-				if(pe!=null) arr.add(pe);				
+				ProcesoElectoral pe = queryById(idProc);
+				if (pe != null)
+					arr.add(pe);
 			}
 			connect.close();
 
@@ -213,4 +208,86 @@ public class partidosProcesos {
 		return arr;
 	}
 	
+	public static PartidoPolitico queryByIdPP(int id) {
+
+		PartidoPolitico pp = new PartidoPolitico();
+		// TODO Auto-generated method stub
+		try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			connect = DriverManager.getConnection(DBConnection.URL_JDBC_MySQL, DBConnection.user,
+					DBConnection.password);
+
+			statement = connect.createStatement();
+			resultSet = statement.executeQuery("select * from PartidosPoliticos where IdPartidosPoliticos = " + id);
+
+			while (resultSet.next()) {
+				// int id = resultSet.getInt("IdProceso");
+				int idPP = resultSet.getInt("IdPartidosPoliticos");
+				String nombre = resultSet.getString("Nombre");
+				String rep = resultSet.getString("Representante");
+				String telRep = resultSet.getString("TelefonoRepre");
+				String correo = resultSet.getString("Correo");
+				
+				
+				pp.setId(id);
+				pp.setNombre(nombre);
+				pp.setNombreRep(rep);
+				pp.setTelefono(telRep);
+				pp.setCorreo(correo);				
+
+			}
+			connect.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return pp;
+
+	}
+
+	public static List<PartidoPolitico> queryPPRechazado(int idPE) {
+		ArrayList<PartidoPolitico> arr = new ArrayList<PartidoPolitico>();
+		// TODO Auto-generated method stub
+		try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			connect = DriverManager.getConnection(DBConnection.URL_JDBC_MySQL, DBConnection.user,
+					DBConnection.password);
+
+			statement = connect.createStatement();
+			resultSet = statement.executeQuery("select * from ProcesoxFasexPartidosPolitico where IdProceso= " + idPE);
+
+			List<Integer> listPE = new ArrayList<Integer>();
+			while (resultSet.next()) {
+				int idPP = resultSet.getInt("IdPartidosPoliticos");
+				PartidoPolitico pp = queryByIdPP(idPP);
+				if (pp != null)
+					arr.add(pp);
+			}
+			connect.close();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return arr;
+	}
+
 }

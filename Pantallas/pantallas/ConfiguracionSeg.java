@@ -32,7 +32,7 @@ public class ConfiguracionSeg extends JDialog implements ActionListener{
 	private JSpinner spinner;
 	private ButtonGroup group;
 	private List<ProcesoElectoral> listaPE=partidosProcesos.procElecRechazados();//ProcessManager.queryAllProc();
-	//public static List<PartidoPolitico> listaPP= ProcessManager.queryAllPartPol();
+	public static List<PartidoPolitico> listaPP;//= ProcessManager.queryAllPartPol();
 	public static String [] listaStrPP;
 	
 	
@@ -133,22 +133,23 @@ public class ConfiguracionSeg extends JDialog implements ActionListener{
 				cmbBoxPP.disable();
 			}		*/
 		
-		group=new ButtonGroup();
+		//group=new ButtonGroup();
 		
 		JButton btnCheckListPartidos = new JButton("Multiples Partidos");
 		btnCheckListPartidos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-																
-				/*listaStrPP = new String  [ listaPP.size() ]  ; // listaPP.get(i).getNombre());
+				
+				listaPP=partidosProcesos.queryPPRechazado(listaPE.get(cmbBoxPE.getSelectedIndex()).getId());
+				listaStrPP = new String  [ listaPP.size() ]  ; // listaPP.get(i).getNombre());
 				
 				for ( int i = 0 ;  i < listaPP.size()  ; i++ ) {
 					listaStrPP[i] = new String();
 					listaStrPP[i] = listaPP.get(i).getNombre() ;
 					
-				}*/
+				}
 												
 				 //CheckListPartPol frame = new CheckListPartPol( listaStrPP);
-				CheckListPP frame = new CheckListPP( listaStrPP);
+				CheckListPPSeg frame = new CheckListPPSeg( listaStrPP);
 				 
 				    frame.setSize(300, 200);
 				    frame.setVisible(true);
@@ -210,8 +211,10 @@ public class ConfiguracionSeg extends JDialog implements ActionListener{
 			this.dispose();
 		}
 		
-		if(e.getSource()==cmbBoxPE)
+		if(e.getSource()==cmbBoxPE){
 			if(listaPE.size()!=0)	spinner.setValue(listaPE.get(cmbBoxPE.getSelectedIndex()).getPorcentaje());
+			Carga.ppEscogidosSeg=null;
+		}
 		
 		//if(e.getSource()==rdbtnCMasiva)
 			//cmbBoxPP.disable();					
