@@ -71,9 +71,9 @@ public class NewMain {
       //urlBaseDeDatos = new String("C:\\Users\\LUIS S\\Desktop\\bd");
     
       
-      urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\Otras_Resoluciones\\objs\\planillon\\1.jpg");
+      //urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\Otras_Resoluciones\\objs\\planillon\\1.jpg");
     
-      //urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\part.d.original1.png");
+      urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\part.d.original8.png");
       urlBaseDeDatos = new String("C:\\Users\\LUIS S\\Desktop\\Firmas Java\\1.jpg");
       //urlBaseDeDatos = new String("C:\\Users\\LUIS S\\Desktop\\Firmas.jpg\\dfi00"+(i+1)+".png");
       System.out.println("base datos: "+urlBaseDeDatos);
