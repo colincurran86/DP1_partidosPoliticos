@@ -66,11 +66,11 @@ public class ProgressMonitorExample  implements ActionListener {
       pbar.setProgress(counter);
       pbar.setNote("Operation is " + counter + "% complete");
       */
-     counter += porcentaje;
+    // counter += porcentaje;
 //     int contador2 = 1;
      
     	
-	Procesando.aumentarPorcentaje( counter);
+	//Procesando.aumentarPorcentaje( counter);
 	
 	
     if (counter >= 100 + porcentaje){

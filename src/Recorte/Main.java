@@ -51,10 +51,15 @@ public class Main {
 		
 	
     public  void  main(String rutaPadrones  , PartidoPolitico pp, String rutaFirma, String rutaHuella) {
-
-    	Util u = new Util(); PrimeraFase primeraFase = new PrimeraFase();
+    	Procesando.escribirLabelPartidoPolitico( "Iniciando recursos   :)   ");
+    	Procesando.escribirLabelPadron( "Espere por favor . . . ");
+    	Procesando.aumentarPorcentaje1(0);
+    	Util u = new Util(); 
+    	PrimeraFase primeraFase = new PrimeraFase();
     	//	String formatearRutaBD = "D:\\Users\\jemarroquin\\git\\DP1_partidosPoliticos\\src\\registro.nacional.v.1.xlsx" ;
  
+    	
+    	
     		String formatearRutaBD = u.formatearRuta(primeraFase.rutaExcel);
     		llenarBDReniec(formatearRutaBD);
     		
@@ -70,9 +75,18 @@ public class Main {
             rf.tamanhoEstandar(rutaPadrones);
     		File folder = new File(rutaPadrones);
     		int contPadrones = 0;
-
+int auxiliarBarraProgreso = 0 ;
     		for (final File fileEntry : folder.listFiles()) { // abre cada planillon
-
+    			
+    			auxiliarBarraProgreso = auxiliarBarraProgreso +1 ;
+    			
+    			
+    			Procesando.escribirLabelPartidoPolitico( "Partido politico: " + pp.getNombre());
+    			Procesando.escribirLabelPadron ("Padron #"+ auxiliarBarraProgreso + " de " +  (folder.listFiles().length   ));
+    			
+    			int auxiliarBarraProgresoPlanillon  = 100 / (folder.listFiles().length + 1 ) ;
+    			Procesando.aumentarPorcentaje1 (auxiliarBarraProgreso  * auxiliarBarraProgresoPlanillon);
+    			
     			String ruta1 = rutaPadrones + "/" + fileEntry.getName();
             	String ruta2 =  workingDir + "/Auxiliar/recorteCostado.jpg";
             	String ruta3 = workingDir + "/Auxiliar/recorteBN.jpg";
@@ -116,6 +130,10 @@ public class Main {
 
                 int contador = 0;
                 for (int n  = 0; n < 8; n++){ // iterando en las filas     
+                
+                	int auxiliarBarraProgresoPlanillonFilas  =  (n+1)*auxiliarBarraProgresoPlanillon / 8 ;
+                	
+                	Procesando.aumentarPorcentaje1( (auxiliarBarraProgreso  * auxiliarBarraProgresoPlanillon ) +auxiliarBarraProgresoPlanillonFilas  );
                 	
                     ImagePlus Copia1;
                     String dni = "";    yDNI = valorOriginal;

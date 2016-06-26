@@ -28,6 +28,8 @@ import java.util.TimerTask;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Label;
+import java.awt.Font;
 
 public class Procesando extends JPanel {
 
@@ -35,8 +37,12 @@ public class Procesando extends JPanel {
 	static public JProgressBar progressBar = new JProgressBar();
 	static public TextArea textArea = new TextArea();
 static public JLabel labelImage = new JLabel();
+//static Label ProcesandoLabel = new Label("Iniciando recursos . . . ");
+
 	static int porcentaje = 0;
 	private static JButton btnGenerarReporte;
+	static final JLabel labelPartidoPolitico = new JLabel("Iniciando . . .");
+	static final JLabel labelPadron = new JLabel("Espere por favor . . . ");
 
 	/**
 	 * Create the panel.
@@ -45,14 +51,14 @@ static public JLabel labelImage = new JLabel();
 	 */
 
 	public void run() {
-		aumentarPorcentaje(2);
+		//aumentarPorcentaje(2);
 	}
 
 	public Procesando( ) {
 		setLayout(null);
 
 		// JProgressBar progressBar = new JProgressBar();
-		progressBar.setBounds(118, 46, 296, 26);
+		progressBar.setBounds(173, 44, 296, 26);
 		add(progressBar);
 		
 	
@@ -70,7 +76,7 @@ static public JLabel labelImage = new JLabel();
 		progressBar.setValue(0);
 		progressBar.setStringPainted(true);
 
-		textArea.setBounds(83, 100, 380, 160);
+		textArea.setBounds(137, 95, 380, 160);
 		add(textArea);
 		
 		JLabel lblHuella = new JLabel("Firma procesada: ");
@@ -99,6 +105,14 @@ static public JLabel labelImage = new JLabel();
 		btnGenerarReporte = new JButton("Generar Reporte");
 		btnGenerarReporte.setBounds(270, 552, 129, 23);
 		add(btnGenerarReporte);
+		labelPartidoPolitico.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		labelPartidoPolitico.setBounds(10, 24, 234, 14);
+		
+		add(labelPartidoPolitico);
+		labelPadron.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		labelPadron.setBounds(20, 48, 146, 14);
+		
+		add(labelPadron);
 		btnGenerarReporte.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Reportes pruebaReport = new Reportes();
@@ -125,9 +139,9 @@ static public JLabel labelImage = new JLabel();
 		//btnGenerarReporte.enable();
 	}
 
-	static public void aumentarPorcentaje(int count) {
+	static public void aumentarPorcentaje1(int count) {
 
-		count = count + progressBar.getValue();
+	//	count = count + progressBar.getValue();
 
 		progressBar.setValue(count);
 
@@ -137,6 +151,18 @@ static public JLabel labelImage = new JLabel();
 
 		textArea.append(cadena + "\n");
 	}
+	
+	static public void escribirLabelPartidoPolitico ( String intro) {
+
+		labelPartidoPolitico.setText(   intro );
+	}
+	
+	
+	static public void escribirLabelPadron ( String intro) {
+
+		labelPadron.setText(   intro );
+	}
+	
 	
 	static public void setearImagenFirma ( BufferedImage imgA  ) {
 		
