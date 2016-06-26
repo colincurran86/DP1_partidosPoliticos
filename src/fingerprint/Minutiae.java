@@ -118,7 +118,7 @@ public class Minutiae {
 
 		int acum = 0;
 		int valor1 = 0, valor2 = 0, valor3 = 0, valor4 = 0, valor5 = 0, valor6 = 0, valor7 = 0, valor8 = 0, valor9 = 0;
-
+		/*
 		
 		if (x == 149) {
 			valor7 = 0;
@@ -159,7 +159,7 @@ public class Minutiae {
 		}
 		
 		
-		/*
+	
 		
 		if (y < (givenImage.length ) )
 			if ( (x + 1) < (givenImage[y].length))  valor1 = givenImage[y][x + 1]; 
@@ -210,17 +210,56 @@ public class Minutiae {
 		
 		*/
 		
-		/*
-		  valor1 = givenImage[y][x + 1]; 
-		  valor2 = givenImage[y - 1][x + 1];
-		  valor3 = givenImage[y - 1][x];
-		  valor4 = givenImage[y - 1][x - 1];
-		  valor5 = givenImage[y][x - 1]; 
-		  valor6 = givenImage[y + 1][x - 1];
-		  valor7 = givenImage[y + 1][x]; 
-		  valor8 = givenImage[y + 1][x + 1];
-		  valor9 = givenImage[y][x + 1];
-		  */
+		 try {
+			 valor1 = givenImage[y][x + 1]; 
+		 } catch (ArrayIndexOutOfBoundsException e) {
+		     valor1 = 0;
+		 }
+		 try {
+			 valor2 = givenImage[y - 1][x + 1];
+		 } catch (ArrayIndexOutOfBoundsException e) {
+		     valor2 = 0;
+		 }
+		 try {
+			 valor3 = givenImage[y - 1][x];
+		 } catch (ArrayIndexOutOfBoundsException e) {
+		     valor3 = 0;
+		 }
+		 try {
+			 valor4 = givenImage[y - 1][x - 1];
+		 } catch (ArrayIndexOutOfBoundsException e) {
+		     valor4 = 0;
+		 }
+		 try {
+			 valor5 =  givenImage[y][x - 1]; 
+		 } catch (ArrayIndexOutOfBoundsException e) {
+		     valor5 = 0;
+		 }
+		 try {
+			 valor6 =  givenImage[y + 1][x - 1];
+		 } catch (ArrayIndexOutOfBoundsException e) {
+		     valor6 = 0;
+		 }
+		 try {
+			 valor7 = givenImage[y][x + 1]; 
+		 } catch (ArrayIndexOutOfBoundsException e) {
+		     valor7 = 0;
+		 }
+		 
+		 try {
+			 valor8 =  givenImage[y + 1][x + 1];
+		 } catch (ArrayIndexOutOfBoundsException e) {
+		     valor8 = 0;
+		 }
+		 try {
+			 valor9 = givenImage[y][x + 1];
+		 } catch (ArrayIndexOutOfBoundsException e) {
+		     valor9 = 0;
+		 }
+		 
+
+		 
+
 		  
 		 
 		acum = acum + Math.abs(valor1 - valor2);

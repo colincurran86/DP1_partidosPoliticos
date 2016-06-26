@@ -40,6 +40,7 @@ public class Login {
 					Login window = new Login();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
+					
 					e.printStackTrace();
 				}
 			}
