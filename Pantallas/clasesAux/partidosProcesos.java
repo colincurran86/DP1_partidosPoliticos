@@ -60,8 +60,11 @@ public class partidosProcesos {
 
 	}
 
-	public static List<PartidoPersona> verificarDuplicados(List<PartidoPersona> partidoPersona) {
+	
 
+	
+	
+	public static List<PartidoPersona> verificarDuplicados(List<PartidoPersona>partidoPersona ){
 		List<PartidoPersona> nuevaLista = new ArrayList<PartidoPersona>();
 		// Verificamos los duplicados para cada partido politico
 		for (int i = 0; i < partidoPersona.size() - 1; i++) {
@@ -90,7 +93,10 @@ public class partidosProcesos {
 
 	}
 
-	public static void llenarParticipante(Participante p, int idPP, int idFase, int idPE) {
+	
+	
+	
+	public static void llenarParticipante(Participante p, int idPP,int idFase, int idPE){		
 		try {
 
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
