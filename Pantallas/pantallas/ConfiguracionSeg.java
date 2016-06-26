@@ -20,6 +20,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.text.DefaultFormatter;
 
 import bModel.ProcessManager;
+import clasesAux.partidosProcesos;
 import models.PartidoPolitico;
 import models.ProcesoElectoral;
 
@@ -30,8 +31,8 @@ public class ConfiguracionSeg extends JDialog implements ActionListener{
 	private JButton cancelButton;
 	private JSpinner spinner;
 	private ButtonGroup group;
-	private List<ProcesoElectoral> listaPE=ProcessManager.queryAllProc();
-	public static List<PartidoPolitico> listaPP= ProcessManager.queryAllPartPol();
+	private List<ProcesoElectoral> listaPE=partidosProcesos.procElecRechazados();//ProcessManager.queryAllProc();
+	//public static List<PartidoPolitico> listaPP= ProcessManager.queryAllPartPol();
 	public static String [] listaStrPP;
 	
 	

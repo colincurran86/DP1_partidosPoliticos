@@ -8,6 +8,7 @@ import org.imgscalr.Scalr;
 import org.imgscalr.Scalr.Method;
 
 import Firmas.FastBitmap;
+import clasesAux.SegFase;
 import models.PartidoPolitico;
 import models.TipoProceso;
 
@@ -165,13 +166,16 @@ public class Carga extends JPanel implements ActionListener{
 			
 		}
 		if(e.getSource()==btnSegCarga){
-			/*if(porcSeg==-1)
-				JOptionPane.showMessageDialog(null, "Escoja los parámetros en la tuerca de configuración");*/
+			if(porcSeg==-1)
+				JOptionPane.showMessageDialog(null, "No se puede realizar la 2da fase");
 		}
 		
 		if(e.getSource()==btnConfSeg){
-			ConfiguracionSeg c= new ConfiguracionSeg();
-			c.setVisible(true);
+			if(SegFase.validarRechazados()>0){
+				ConfiguracionSeg c= new ConfiguracionSeg();
+				c.setVisible(true);
+			}else
+				JOptionPane.showMessageDialog(null, "No existen partidos rechazados para poder realizar la 2da fase");
 		}
 	}
 }

@@ -11,7 +11,10 @@ import java.util.List;
 import models.Calendario;
 import models.Participante;
 import models.PartidoPersona;
+import models.PartidoPolitico;
+import models.ProcesoElectoral;
 import models.ProcesoXFase;
+import models.TipoProceso;
 import bModel.ProcessManager;
 import businessModel.Dao.DBConnection;
 
@@ -102,7 +105,7 @@ public class partidosProcesos {
 						+ " Huella, Observacion, PorcentajeFirma, PorcentajeHuella)" 
 						+ "VALUES (" + idPP + ", " +  idFase + " , " 
 						+ idPE + " , " + 1 + " , '" 
-						+ p.getNombres() +  "' , '" + p.getApellidos() +  "' , '" + p.getAceptado() + "' , '"
+						+ p.getNombres() +  "' , '" + p.getApellidos() +  "' , " + p.getAceptado() + " , '"
 						+ p.getDni() + "' , '" + p.getIdFirma() + "' , '" + p.getIdHuella() + "' , '"+ p.getObservacion() 
 						+ "' , " + p.getPorcentajeFirma() + " , " + p.getPorcentajeHuella() + " )" );
 			
@@ -122,6 +125,92 @@ public class partidosProcesos {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public static ProcesoElectoral queryById(int id){
+		
+		ProcesoElectoral pe = new ProcesoElectoral();
+		// TODO Auto-generated method stub
+		try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			connect = DriverManager.getConnection(DBConnection.URL_JDBC_MySQL, DBConnection.user,
+					DBConnection.password);
+
+			statement = connect.createStatement();
+			resultSet = statement.executeQuery("select * from Proceso where IdProceso = " + id);
+
+			while (resultSet.next()) {
+				//int id = resultSet.getInt("IdProceso");
+				int idTP = resultSet.getInt("IdTipoProceso");
+				String nombre = resultSet.getString("Nombre");
+				int idCal = resultSet.getInt("idCalendario");
+				int totalP = resultSet.getInt("TotalPersonas");
+				double porc = resultSet.getDouble("PorcentajeAceptado");
+						
+				
+				
+				pe.setId(id);
+				pe.setNombre(nombre);
+				pe.setPorcentaje((int)porc);
+				pe.setIdTipoProceso(idTP);
+				pe.setIdCalendario(idCal);
+				pe.setTotalPersonas(totalP);											
+								
+			}
+			connect.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return pe;
+
+		
+	}
+	
+	public static List<ProcesoElectoral> procElecRechazados(){
+		
+		ArrayList<ProcesoElectoral> arr = new ArrayList<ProcesoElectoral>();
+		// TODO Auto-generated method stub
+		try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			connect = DriverManager.getConnection(DBConnection.URL_JDBC_MySQL, DBConnection.user,
+					DBConnection.password);
+
+			statement = connect.createStatement();
+			resultSet = statement.executeQuery("select * from ProcesoxFasexPartidosPolitico where Resultado= '" + "Rechazado" + "'");
+			
+			
+			List<Integer> listPE = new ArrayList<Integer>(); 
+			while (resultSet.next()) {
+				int idProc = resultSet.getInt("IdProceso");
+				ProcesoElectoral pe=queryById(idProc);
+				if(pe!=null) arr.add(pe);				
+			}
+			connect.close();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return arr;
 	}
 	
 }
