@@ -3537,7 +3537,7 @@ public static FirmaRecortada cortarFirma(String urlPlanillonesOriginales, int in
 		altos = imagenPlanillon.getHeight() - 1;
 		//	imagenPlanillon.saveAsJPG("C:\\Users\\LUIS S\\Desktop\\p1Cortado.jpg");
 
-		//imagenPlanillon.saveAsJPG("C:\\Users\\LUIS S\\Desktop\\333.jpg");
+		imagenPlanillon.saveAsJPG("C:\\Users\\LUIS S\\Desktop\\333.jpg");
 		//Factor Pixel
 		if (altos >= 0 && altos <= 900)
 			factorPixel = 5;
@@ -3799,7 +3799,7 @@ public static FirmaRecortada cortarFirma(String urlPlanillonesOriginales, int in
 							+ i + "rr.jpg");
 			*/
 			cortadorImagenes.ApplyInPlace(i3);
-			JOptionPane.showMessageDialog(null, i3.toIcon(), "Result , indice", JOptionPane.PLAIN_MESSAGE); 
+			//JOptionPane.showMessageDialog(null, i3.toIcon(), "Result , indice", JOptionPane.PLAIN_MESSAGE); 
 
 			FirmaRecortada fr = new FirmaRecortada();
 			fr.img = i3.toBufferedImage();
@@ -3874,10 +3874,6 @@ public static List<Double> procesarFirmasNuevo(FirmaRecortada listaFirmas, List<
 		//url2 = url2 +".jpg" ;
 		System.out.println(url2);
 		//System.out.println("firma q abrira" + url2);
-		
-
-		
-		
 		imagen2 = new FastBitmap(url2);
 		//System.out.println("Alto i1 "+imagen1.getHeight()+" Ancho: "+imagen1.getWidth());
 		//System.out.println("Alto i2 "+imagen2.getHeight()+" Ancho: "+imagen2.getWidth());
