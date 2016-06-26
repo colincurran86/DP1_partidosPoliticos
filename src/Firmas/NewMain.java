@@ -73,11 +73,11 @@ public class NewMain {
       
       //urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\Otras_Resoluciones\\objs\\planillon\\1.jpg");
     
-      urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\part.d.original8.png");
+      urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\part.d.original9.png");
       urlBaseDeDatos = new String("C:\\Users\\LUIS S\\Desktop\\Firmas Java\\1.jpg");
       //urlBaseDeDatos = new String("C:\\Users\\LUIS S\\Desktop\\Firmas.jpg\\dfi00"+(i+1)+".png");
       System.out.println("base datos: "+urlBaseDeDatos);
-      indice=7;
+      indice=0;
       List<Double>  resupuesta = af.procesarNuevo(lper2, indice, urlPlanillonesOriginales, urlBaseDeDatos);     
       for (int i = 0; i < resupuesta.size(); i++) {
 	//System.out.println("Indice: "+i+" DNI: "+lista.get(i).getDni());
