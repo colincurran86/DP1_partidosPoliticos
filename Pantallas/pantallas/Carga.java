@@ -32,13 +32,21 @@ public class Carga extends JPanel implements ActionListener{
 	private JButton btnPrimCarga;
 	private JButton btnSegCarga;
 	private JButton btnConf;
+	private JButton  btnConfSeg;
 	public static int idPE=0;
 	public static int idPP=0;
 	public static int porc=-1;
 	public static int choiceCM=0;
 	public static int choiceCI=0;
-
 	public static List<PartidoPolitico> ppEscogidos = new ArrayList<PartidoPolitico>() ;
+	
+	public static int idPESeg=0;
+	public static int idPPSeg=0;
+	public static int porcSeg=-1;
+	public static int choiceCMSeg=0;
+	public static int choiceCISeg=0;
+	public static List<PartidoPolitico> ppEscogidosSeg = new ArrayList<PartidoPolitico>() ;
+	
 	private JLabel lblNfiguracion;
 	
 	
@@ -81,7 +89,7 @@ public class Carga extends JPanel implements ActionListener{
 		btnSegCarga.addActionListener(this);
 		
 		lblNfiguracion = new JLabel("PARAMETROS DE \r\nCONFIGURACI\u00D3N");
-		lblNfiguracion.setBounds(23, 32, 255, 34);
+		lblNfiguracion.setBounds(24, 22, 255, 34);
 		add(lblNfiguracion);
 		
 		
@@ -99,7 +107,25 @@ public class Carga extends JPanel implements ActionListener{
 		lblImage.setIcon(img2);
 		add(lblImage);
 		
+		JLabel lblPrimeraFase = new JLabel("Primera Fase");
+		lblPrimeraFase.setBounds(78, 148, 89, 14);
+		add(lblPrimeraFase);
 		
+		JLabel label = new JLabel("PARAMETROS DE \r\nCONFIGURACI\u00D3N");
+		label.setBounds(24, 489, 255, 34);
+		add(label);
+		
+		btnConfSeg = new JButton("");
+		btnConfSeg.setBounds(68, 544, 75, 60);
+		btnConfSeg.setIcon(i);
+		
+		add(btnConfSeg);
+		
+		JLabel lblSegundaFase = new JLabel("Segunda Fase");
+		lblSegundaFase.setBounds(78, 615, 89, 14);
+		add(lblSegundaFase);
+		
+		btnConfSeg.addActionListener(this);
 		
 		
 	}
@@ -116,10 +142,8 @@ public class Carga extends JPanel implements ActionListener{
 //				JOptionPane.showMessageDialog(null, "Hubo un error al abrir la ventana de configuracion	");
 //			}			
 //			
-			
-			
-
 		}
+		
 		if(e.getSource()==btnPrimCarga){
 			if(porc==-1)
 				JOptionPane.showMessageDialog(null, "Escoja los parámetros en la tuerca de configuración");
@@ -141,7 +165,13 @@ public class Carga extends JPanel implements ActionListener{
 			
 		}
 		if(e.getSource()==btnSegCarga){
-			
+			/*if(porcSeg==-1)
+				JOptionPane.showMessageDialog(null, "Escoja los parámetros en la tuerca de configuración");*/
+		}
+		
+		if(e.getSource()==btnConfSeg){
+			ConfiguracionSeg c= new ConfiguracionSeg();
+			c.setVisible(true);
 		}
 	}
 }

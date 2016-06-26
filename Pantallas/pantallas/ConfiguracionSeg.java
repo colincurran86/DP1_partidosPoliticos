@@ -4,34 +4,27 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.List;
 
 import javax.swing.ButtonGroup;
-import javax.swing.ButtonModel;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.UIManager;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.DefaultFormatter;
 
 import bModel.ProcessManager;
 import models.PartidoPolitico;
 import models.ProcesoElectoral;
-import models.TipoProceso;
 
-import javax.swing.JLabel;
-import javax.swing.JComboBox;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerModel;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.JRadioButton;
+public class ConfiguracionSeg extends JDialog implements ActionListener{
 
-public class Configuracion extends JDialog implements ActionListener{
 	private JComboBox cmbBoxPE;
 	private JButton okButton;
 	private JButton cancelButton;
@@ -60,7 +53,7 @@ public class Configuracion extends JDialog implements ActionListener{
 	/**
 	 * Create the dialog.
 	 */
-	public Configuracion() {
+	public ConfiguracionSeg() {
 		this.setTitle("Configuracion");
 		setModal(true);
 		setBounds(100, 100, 599, 407);
@@ -91,12 +84,7 @@ public class Configuracion extends JDialog implements ActionListener{
 		for (int i = 0; i < listaPE.size(); i++)
 			cmbBoxPE.addItem(listaPE.get(i).getNombre());
 		
-		
-		
-		
-		
-		
-		
+
 		if(Carga.idPE!=0){
 			int i;
 			for(i=0;i<listaPE.size();i++)

@@ -140,8 +140,8 @@ public class Principal {
 		});
 		mnMantenimientos.add(mntmPartidoPoltico);
 		
-		JMenu mnReportes = new JMenu("Reportes");
-		menuBar.add(mnReportes);
+		/*JMenu mnReportes = new JMenu("Reportes");
+		menuBar.add(mnReportes);*/
 		
 		
 

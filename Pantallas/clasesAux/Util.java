@@ -420,8 +420,7 @@ public class Util {
 											}
 											if(!entre)candidatos.add(ReniecBD.lista.get(p));
 										}		
-									}
-									
+									}									
 								}							
 							}
 						}

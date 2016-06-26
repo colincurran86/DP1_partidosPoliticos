@@ -6,6 +6,7 @@ public class PartidoPersona {
 	private String observacion = new String();
 	private int condicionRepetido = 0;
 	private Participante participando = new Participante();
+	
 	public PersonaReniec getPersona() {
 		return persona;
 	}
