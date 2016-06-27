@@ -221,8 +221,10 @@ public class Configuracion extends JDialog implements ActionListener{
 			this.dispose();
 		}
 		
-		if(e.getSource()==cmbBoxPE)
+		if(e.getSource()==cmbBoxPE){
 			if(listaPE.size()!=0)	spinner.setValue(listaPE.get(cmbBoxPE.getSelectedIndex()).getPorcentaje());
+			Carga.ppEscogidos=null;
+		}
 		
 		//if(e.getSource()==rdbtnCMasiva)
 			//cmbBoxPP.disable();					
