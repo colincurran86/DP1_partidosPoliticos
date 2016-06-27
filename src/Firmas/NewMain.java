@@ -25,6 +25,14 @@ public class NewMain {
      */
 	private static int[] indicePersonaFallaron = null;
 	
+    /**
+     * @param args
+     * @throws IOException
+     */
+    /**
+     * @param args
+     * @throws IOException
+     */
     public static void main(String[] args) throws IOException {
        
        //Inicio
@@ -73,6 +81,15 @@ public class NewMain {
       
       //urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\Otras_Resoluciones\\objs\\planillon\\1.jpg");
     
+      
+      
+      
+      
+      
+      
+      
+      
+      /*
       urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\part.d.original9.png");
       urlBaseDeDatos = new String("C:\\Users\\LUIS S\\Desktop\\Firmas Java\\1.jpg");
       //urlBaseDeDatos = new String("C:\\Users\\LUIS S\\Desktop\\Firmas.jpg\\dfi00"+(i+1)+".png");
@@ -83,8 +100,20 @@ public class NewMain {
 	//System.out.println("Indice: "+i+" DNI: "+lista.get(i).getDni());
 	   System.out.println("Indice: "+i+" DNI: "+resupuesta.get(i));
     }
-    
+    */
      
+      
+      
+      
+      
+      
+      //af.procesar2();
+      
+      
+      
+      
+      
+      
       
       
        /*
@@ -107,35 +136,11 @@ public class NewMain {
      //urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\part.d.original3.png"); 
    //  urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\Padron1MenosCalidad.png"); 
    //  urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\part.d.original22.png"); 
-      urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\e.jpg"); 
-      
+
+
      
-    // for (int j = 0; j < 8; j++) {
-		
-	
+     
      /*
-     for (int i = 0; i < 8; i++) {
-    	 System.out.println("Nuevo proceso:------------------------------------------------ "+(i+17));
-     urlBaseDeDatos = new String("C:\\Users\\LUIS S\\Desktop\\Firmas.jpg\\dfi00"+(i+1)+".png");
-    
-     //	 if(i==0)
-     //	  urlBaseDeDatos = new String("C:\\Users\\LUIS S\\Desktop\\Firmas.jpg\\dfi00"+(i+9)+".png");
-     //   	 else
-     // 	 	  urlBaseDeDatos = new String("C:\\Users\\LUIS S\\Desktop\\Firmas.jpg\\dfi0"+(i+9)+".png");
-     System.out.println("ULR: "+urlBaseDeDatos);
-     // urlBaseDeDatos = new String("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\1.jpg");
-      //urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\1.jpg");
-      FirmaRecortada ne = new FirmaRecortada(); 
-      //ne = af.cortarFirma(urlPlanillonesOriginales,j);
-      ne = af.cortarFirma(urlPlanillonesOriginales,0);
-      af.procesarFirmasNuevoNuevo(ne,urlBaseDeDatos);
-     } 
-      
-     // }  
-      
-   
-     
-     
       urlBaseDeDatos = new String("C:\\Users\\LUIS S\\Desktop\\Firmas.jpg\\dfi003.png");
       System.out.println("ULR: "+urlBaseDeDatos);
       // urlBaseDeDatos = new String("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\1.jpg");
@@ -145,16 +150,29 @@ public class NewMain {
        af.procesarFirmasNuevoNuevo(ne,urlBaseDeDatos);
      */
  
-      /*
-      urlBaseDeDatos = new String("C:\\Users\\LUIS S\\Desktop\\Firmas.jpg\\dfi003.png");
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      urlBaseDeDatos = new String("C:\\Users\\LUIS S\\Desktop\\Firmas.jpg\\dfi001.png");
       urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\part.d.original1.png");
       System.out.println("ULR: "+urlBaseDeDatos);
       // urlBaseDeDatos = new String("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\1.jpg");
        //urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\1.jpg");
        FirmaRecortada ne = new FirmaRecortada(); 
-       ne = af.cortarFirma(urlPlanillonesOriginales,4);
-       af.procesarFirmasNuevoNuevo(ne,urlBaseDeDatos);
-       */
+       ne = af.cortarFirma(urlPlanillonesOriginales,0);
+       List<Double> dl = af.procesarFirmasNuevoNuevo(ne,urlBaseDeDatos);
+       System.out.println("Umbral: "+dl.get(1));
+      
+      
      
     }
     
