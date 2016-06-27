@@ -197,11 +197,11 @@ public class Util {
 	  
 	  int totalPersonas =  partidosProcesos.getCantPer(PrimeraFase.idPE); 
 	  
-	  System.out.println( "TOTAL PERSONAS: " + totalPersonas);
+	  System.out.println( "TOTAL DE PERSONAS HABILES EN EL PROCESO: " + totalPersonas);
 	  System.out.println( "TOTAL ADHERENTES: " + pf.getTotalAd() +  " " +PrimeraFase.ppescogidos.get(i).getNombre() );
 	  System.out.println( "TOTAL DUPLICADOS: " + pf.getTotalDup() +  " " +PrimeraFase.ppescogidos.get(i).getNombre() );
 	  
-	  if (  contadorAdherentes >= totalPersonas*PrimeraFase.porc/100   )   pf.setResultado("Aceptado"); else pf.setResultado("Rechazado");  
+	  if (  contadorAdherentes > totalPersonas*PrimeraFase.porc*(1.0)/100   )   pf.setResultado("Aceptado"); else pf.setResultado("Rechazado");  
 	  
 	  
 	  System.out.println( "RESULTADO: " +  pf.getResultado());
