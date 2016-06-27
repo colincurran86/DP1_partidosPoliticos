@@ -354,7 +354,7 @@ public class partidosProcesos {
 					DBConnection.password);
 
 			statement = connect.createStatement();
-			resultSet = statement.executeQuery("select * from Proceso where IdProceso = " + id);
+			resultSet = statement.executeQuery("select * from Proceso where IdProceso = " + idPE);
 
 			while (resultSet.next()) {
 				// int id = resultSet.getInt("IdProceso");
