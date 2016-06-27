@@ -232,11 +232,22 @@ public class Main {
 							
 						
                     	//huellas
+                     	/*
                     	distanceBetweenSquares = 86; widthSquare = 150;  heightSquare = 75;        
                     	ImagePlus Copia2 = IJ.openImage(ruta3);
                         Copia2.setRoi(yHuellas+2, alturaFirma2+2 , 150 , 77);
                         if (n != 7 ) alturaFirma2 = rf.obtenerSiguienteEspacioFirmas(yFirmas+5, alturaFirma2+2);
                         IJ.run(Copia2, "Crop", ""); 
+                        */
+                     	rf.recortesHuellasOficial(ruta0);
+                        List<Integer>coordX = rf.coordX;
+                        List<Integer>coordY = rf.coordY;
+                     	ImagePlus Copia2 = IJ.openImage(ruta0);
+
+
+                        Copia2.setRoi(coordX.get(n), coordY.get(n) , rf.ancho , rf.alto);
+                        IJ.run(Copia2, "Crop", ""); 
+
                         listaPorcentajeHuella = 	 AlgoritmoHuellas.procesarNuevo(listaPersonasReniec,Copia2,rutaHuella); 
                        	int indiceCandidatoHuellas = candidatoHuellas(listaPorcentajeHuella);
                       	for ( int i = 0 ; i < listaPersonasReniec.size() ; i++) 

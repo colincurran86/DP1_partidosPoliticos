@@ -11,8 +11,9 @@ import java.util.List;
 public class Minutiae {
 
 	static int closerPoints = 5;
-	static double angleRange = 1.5;
-
+	static double angleRange = 3.5;
+	static double relativeDistance = 0.15;
+	
 	public static void crossingNumber(final int[][] givenImage,
 			List<Point> minutiaeFound) throws FileNotFoundException,
 			UnsupportedEncodingException {
@@ -475,8 +476,9 @@ public class Minutiae {
 
 				Tupla im = tIM.get(i);
 				Tupla bm = tBM.get(j);
-
-				if ((im.getRatio() == bm.getRatio())
+				
+				if((Math.abs(im.getRatio()-bm.getRatio())<relativeDistance)
+				//if ((im.getRatio() == bm.getRatio())
 						&& (im.getAngle() > (bm.getAngle() - angleRange) && // el
 																			// rango
 																			// aceptable

@@ -69,7 +69,7 @@ public class partidosProcesos {
 		 						if (partidoPersona.get(i).getPersona().getDni().compareTo(  
 		 								partidoPersona.get(j).getPersona().getDni()
 		 								) != 0){
-		 							nuevaLista.add(partidoPersona.get(j));
+		 								nuevaLista.add(partidoPersona.get(j));
 		 								break;
 		 						}
 		 						

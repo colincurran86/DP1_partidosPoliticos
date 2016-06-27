@@ -128,7 +128,7 @@ public class Util {
 	    
 	    System.out.println(" cantidad de duplicidad"  +  Main.participantesPreDuplicidad.size() );
 	  
-	    List<PartidoPersona> listaSinDuplicados =  new ArrayList<PartidoPersona> ();
+	     List<PartidoPersona> listaSinDuplicados =  new ArrayList<PartidoPersona> ();
 		 //List<PartidoPersona > particantesDuplicados=  partidosProcesos.verificarDuplicados(  Main.participantesPreDuplicidad  );
 		 partDup=partidosProcesos.verificarDuplicados(  Main.participantesPreDuplicidad );
 		 adherentes =partidosProcesos.traerSinDuplicados   (  Main.participantesPreDuplicidad );
