@@ -25,6 +25,7 @@ import Reportes.PruebaReportes;
 import Reportes.Reportes;
 import models.Participante;
 import models.PartidoPersona;
+import models.PartidoPolitico;
 import models.PersonaReniec;
 import models.ProcesoXFase;
 import models.ReniecBD;
@@ -137,6 +138,8 @@ public class Util {
 
 
 		 
+		 // inscribir participantes correctamente aceptados
+		 
 		 for ( int i = 0 ; i< adherentes.size() ; i ++) {
 			 
 			 System.out.println("Hola Jose " + adherentes.get(i).getPersona().getDni() + " Nombre: " +  adherentes.get(i).getPersona().getNombre());
@@ -146,18 +149,24 @@ public class Util {
 		 } 
 
 		 
-		 
-		 
- System.out.println( "  ====  Comienzan duplicados ===");
+		 // inscribir participantes duplicados 		 
+
 		 
  for ( int i = 0 ; i< partDup.size() ; i ++) {
 	 
-	 System.out.println("Hola Jose " + partDup.get(i).getPersona().getDni() + " Nombre: " +  partDup.get(i).getPersona().getNombre());
 	 
 	 partDup.get(i).getParticipando().setAceptado(2);
 	 partidosProcesos.llenarParticipante( partDup.get(i).getParticipando()  , partDup.get(i).getPartido().getId() , 1 , PrimeraFase.idPE ) ;
  } 
 
+ 
+ 
+ List<ProcesoXFase>listaProceFaseBd =new ArrayList<ProcesoXFase>();
+ 
+ 
+ 
+ 
+ 
  
   for ( int i = 0 ; i < PrimeraFase.ppescogidos.size(); i++  ) {
 	  
@@ -207,10 +216,16 @@ public class Util {
 	  System.out.println( "RESULTADO: " +  pf.getResultado());
 	  partidosProcesos.updatePFPP(pf);
 	  
+	  
+	  listaProceFaseBd.add(pf );
+	  
   }
  
  
-		 
+
+//  Reportes.generarReporte(  listaProceFaseBd  ,  PrimeraFase.ppescogidos   , "C:/temp/LP2/Prueba2.xls" );
+//Reportes.generarReporte(ArrayList<ProcesoXFase>proceFaseBd ,ArrayList<PartidoPolitico> listaPPoliticos,String rutaGuardaReporte) throws IOException
+  
 		 
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
@@ -234,6 +249,8 @@ public class Util {
 	   
 	 //  public static void llenarParticipante(Participante p, int idPP,int idFase, int idPE);
 
+	   
+	   
 	   Procesando.mostrarBoton();
 	}
 

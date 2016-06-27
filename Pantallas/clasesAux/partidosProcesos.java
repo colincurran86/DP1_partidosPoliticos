@@ -67,7 +67,7 @@ public class partidosProcesos {
 		 				if (partidoPersona.get(i).getCondicionRepetido() == 0){
 		 					for (int j = i+1; j<partidoPersona.size();j++){
 		 						if (partidoPersona.get(i).getPersona().getDni().compareTo(partidoPersona.get(j).getPersona().getDni()) == 0){
-		 							if(partidoPersona.get(i).getPartido().getId()==partidoPersona.get(i).getPartido().getId()){
+		 							if(partidoPersona.get(i).getPartido().getId()==partidoPersona.get(j).getPartido().getId()){
 		 								partidoPersona.get(j).setCondicionRepetido(1);		 								
 		 							}else{
 		 								partidoPersona.get(i).setCondicionRepetido(1);
