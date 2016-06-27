@@ -9,7 +9,21 @@ public class ProcesoXFase {
 	private String resultado;
 	private String observacion;
 	private Date fechaInicioProc;
+	private int totalAd;
+	private int totalDup;
 		
+	public int getTotalAd() {
+		return totalAd;
+	}
+	public void setTotalAd(int totalAd) {
+		this.totalAd = totalAd;
+	}
+	public int getTotalDup() {
+		return totalDup;
+	}
+	public void setTotalDup(int totalDup) {
+		this.totalDup = totalDup;
+	}
 	public int getIdPartPol() {
 		return idPartPol;
 	}

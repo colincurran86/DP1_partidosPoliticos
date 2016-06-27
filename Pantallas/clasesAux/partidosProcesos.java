@@ -314,5 +314,33 @@ public class partidosProcesos {
 		}
 		return arr;
 	}
+	
+	
+	public static void updatePFPP(ProcesoXFase pxf){
+		
+		try {
 
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			connect = DriverManager.getConnection(DBConnection.URL_JDBC_MySQL, DBConnection.user,
+					DBConnection.password);
+			statement = connect.createStatement();
+			statement.executeUpdate("UPDATE ProcesoxFasexPartidoPolitico " + "SET Resultado= '" + pxf.getResultado()
+					+ "', TotalAdherentes= " + pxf.getTotalAd() + ", TotalDuplicados= " + pxf.getTotalDup() + " WHERE IdPartidosPoliticos= " + pxf.getIdPartPol() + 
+					" AND IdProceso= "+ pxf.getIdProceso() + " AND idFase= "+ pxf.getIdFase());
+			connect.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 }
