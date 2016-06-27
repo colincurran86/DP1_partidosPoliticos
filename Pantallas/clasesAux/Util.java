@@ -110,7 +110,7 @@ public class Util {
 		   procesoFase.setIdProceso(PrimeraFase.idPE);
 		   procesoFase.setResultado("Resultado Prueba");
 		   procesoFase.setObservacion("Observacion Prueba");
-		 //  partidosProcesos.almacenarBD(procesoFase); DESCOMENTAR
+		   partidosProcesos.almacenarBD(procesoFase); 
 		   
 		   
 		   Procesando.escribirTextArea("*******************	*******************************");
