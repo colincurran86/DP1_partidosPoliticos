@@ -124,6 +124,7 @@ public class Util {
 			}
 	   
 
+		  Procesando.aumentarPorcentaje1(100);
 	    
 	    System.out.println(" cantidad de duplicidad"  +  Main.participantesPreDuplicidad.size() );
 	  
@@ -139,9 +140,7 @@ public class Util {
 		 for ( int i = 0 ; i< adherentes.size() ; i ++) {
 			 
 			 System.out.println("Hola Jose " + adherentes.get(i).getPersona().getDni() + " Nombre: " +  adherentes.get(i).getPersona().getNombre());
-			 
-			 
-			 
+			 adherentes.get(i).getParticipando().setAceptado(1);
 			 partidosProcesos.llenarParticipante( adherentes.get(i).getParticipando()  , adherentes.get(i).getPartido().getId() , 1 , PrimeraFase.idPE ) ;
 			 
 		 } 
@@ -155,11 +154,54 @@ public class Util {
 	 
 	 System.out.println("Hola Jose " + partDup.get(i).getPersona().getDni() + " Nombre: " +  partDup.get(i).getPersona().getNombre());
 	 
-	 partDup.get(i).getParticipando().setAceptado(3);
+	 partDup.get(i).getParticipando().setAceptado(2);
 	 partidosProcesos.llenarParticipante( partDup.get(i).getParticipando()  , partDup.get(i).getPartido().getId() , 1 , PrimeraFase.idPE ) ;
  } 
 
  
+  for ( int i = 0 ; i < PrimeraFase.ppescogidos.size(); i++  ) {
+	  
+	  
+	  int contadorAdherentes = 0;
+	  int contadorDuplicados = 0;
+	  
+	  for (int j = 0 ; j <   adherentes.size() ; j ++) { 
+		  
+		  if ( adherentes.get(j).getPartido().getId() == PrimeraFase.ppescogidos.get(i).getId()  ){
+			  //mismo partido politico 
+			  contadorAdherentes++ ;
+			  
+		  }
+		  
+		  
+	  }
+	  
+  for (int j = 0 ; j <   partDup.size() ; j ++) { 
+		  
+		  if ( partDup.get(j).getPartido().getId() == PrimeraFase.ppescogidos.get(i).getId()  ){
+			  //mismo partido politico 
+			  contadorDuplicados++ ;
+			  
+		  }
+		  
+		  
+	  }
+  
+	  
+	  ProcesoXFase pf = new ProcesoXFase() ;
+	  pf.setTotalAd(contadorAdherentes);
+	  pf.setTotalDup(  contadorDuplicados);
+	  pf.setIdFase(1);
+	  pf.setIdPartPol(PrimeraFase.ppescogidos.get(i).getId() );
+	  
+	  
+	  int totalPersonas = PrimeraFase.idPE  ; 
+	  
+	  if (  contadorAdherentes <= totalPersonas*PrimeraFase.porc/100   )   pf.setResultado("Aceptado"); else pf.setResultado("Rechazado");  
+	  
+	  partidosProcesos.updatePFPP(pf);
+	  
+  }
  
  
 		 
