@@ -256,7 +256,7 @@ public class Main {
 							par.setIdHuella(   "" +  elElegidoFinal.getIdHuella()       );
 							par.setNombres(   elElegidoFinal.getNombre()    );
 							//  aca ira duplicidad par.setObservacion(                                                                          );
-							par.setObservacion(  "Falta procesar duplicidad"                                                                         );
+							par.setObservacion(  "No hay observacion"                                                                         );
 							par.setPorcentajeFirma(listaPorcentajeFirma.get(  indiceCandidatoFirmas )          );
 							par.setPorcentajeHuella(  listaPorcentajeHuella.get(indiceCandidatoHuellas) );
 							auxElegidoPartidoPersona.setParticipando(  par );

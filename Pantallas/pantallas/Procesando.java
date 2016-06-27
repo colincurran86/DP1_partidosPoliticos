@@ -39,6 +39,9 @@ public class Procesando extends JPanel {
 static public JLabel labelImage = new JLabel();
 //static Label ProcesandoLabel = new Label("Iniciando recursos . . . ");
 
+static public JLabel labelHuella = new JLabel();
+
+
 	static int porcentaje = 0;
 	private static JButton btnGenerarReporte;
 	static final JLabel labelPartidoPolitico = new JLabel("Iniciando . . .");
@@ -64,7 +67,7 @@ static public JLabel labelImage = new JLabel();
 	
 	//	JLabel labelImage = new JLabel();
 //		labelImage.setIcon( ii);
-		labelImage.setBounds(340, 309, 203, 202);
+		labelImage.setBounds(88, 309, 203, 202);
 		add(labelImage);
 		
 		
@@ -80,7 +83,7 @@ static public JLabel labelImage = new JLabel();
 		add(textArea);
 		
 		JLabel lblHuella = new JLabel("Firma procesada: ");
-		lblHuella.setBounds(330, 284, 122, 14);
+		lblHuella.setBounds(78, 284, 122, 14);
 		add(lblHuella);
 		
 		
@@ -113,6 +116,14 @@ static public JLabel labelImage = new JLabel();
 		labelPadron.setBounds(20, 48, 146, 14);
 		
 		add(labelPadron);
+		
+		//JLabel labelHuella = new JLabel();
+		labelHuella.setBounds(341, 309, 203, 202);
+		add(labelHuella);
+		
+		JLabel lblHuellaProcesada = new JLabel("Huella procesada:");
+		lblHuellaProcesada.setBounds(331, 284, 122, 14);
+		add(lblHuellaProcesada);
 		btnGenerarReporte.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Reportes pruebaReport = new Reportes();
@@ -180,6 +191,24 @@ static public JLabel labelImage = new JLabel();
 		
 		
 	}
+	
+static public void setearImagenHuella ( BufferedImage imgA  ) {
+		
+				
+		
+		//FastBitmap imagenPlanillon = new FastBitmap("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\bd\\firmas.jpg\\f001.jpg");
+	//	BufferedImage imgA = imagenPlanillon.toBufferedImage(); 
+		BufferedImage scaledImg = Scalr.resize(imgA, Method.AUTOMATIC, 203,202, Scalr.OP_BRIGHTER);
+		FastBitmap imagenPlanillon = new FastBitmap(scaledImg); 
+		ImageIcon ii = new ImageIcon ();
+		ii = imagenPlanillon.toIcon(); 
+		labelHuella.setIcon( ii);
+		
+
+		
+		
+	}
+
 
 	public class ProcesoBar extends Thread {
 
