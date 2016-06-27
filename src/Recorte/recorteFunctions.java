@@ -34,9 +34,11 @@ public class recorteFunctions {
     public void tamanhoEstandar(String directorioPadrones){
     	BufferedImage image = null;
     	File folder = new File(directorioPadrones);
+        String workingDir = System.getProperty("user.dir"); // nos evitamos el problema de las rutas :'
+        String rutaAlmacenar = workingDir+ "/Copia";
 
     	for (final File fileEntry : folder.listFiles()){
-    		String ruta1 = directorioPadrones + "/" + fileEntry.getName();
+    		String ruta1 = rutaAlmacenar + "/" + fileEntry.getName();
     		ImageIcon ii = new ImageIcon(ruta1);
     		BufferedImage bi = new BufferedImage(1280, 965, BufferedImage.TYPE_INT_RGB);
     		Graphics2D g2d = (Graphics2D)bi.createGraphics();
@@ -44,6 +46,23 @@ public class recorteFunctions {
     		boolean b = g2d.drawImage(ii.getImage(), 0, 0, 1280, 965, null);
     		FastBitmap fb = new FastBitmap(bi);
     		fb.saveAsPNG(ruta1);
+    	}
+    }
+    
+    public void guardarImagenes(String directorioPadrones){
+    	BufferedImage image = null;
+    	File folder = new File(directorioPadrones);
+        String workingDir = System.getProperty("user.dir"); // nos evitamos el problema de las rutas :'
+        String rutaAlmacenar = workingDir+ "/Copia";
+        File file = new File(rutaAlmacenar);  
+        file.mkdirs();
+
+
+    	for (final File fileEntry : folder.listFiles()){
+    		String ruta1 = directorioPadrones + "/" + fileEntry.getName();
+            ImagePlus padronJ = new ImagePlus();
+            padronJ = IJ.openImage(ruta1); 
+            new FileSaver(padronJ).saveAsPng(rutaAlmacenar + "/" + fileEntry.getName() );
     	}
     }
      
@@ -328,10 +347,12 @@ public class recorteFunctions {
         int width1=padronJ.getWidth();
         int height1=padronJ.getHeight();
         int m, i, r , g , b , cont = 0 , alturaX = this.x - 3 , anchoY = this.yFirmas - 2;
+        int condVeri = 1;
         for(i=anchoY;i>0;i--){
              r = padronJ.getPixel(i, alturaX)[0];
              if (r != 0){
                  cont++;
+                 /*
                  if (cont == 1) {
                      this.yApellido = i+1;
                      this.yNombre = i-1 + (25*15);
@@ -340,6 +361,17 @@ public class recorteFunctions {
                      this.yDNI = i + 1;
                      break;     
                  }
+                 */
+                 if (condVeri == 1 && i>=128  && i<=136) {
+                     this.yApellido = i+1;
+                     this.yNombre = i-1 + (25*15);
+                     condVeri = 0;
+                 }
+                 if (i>=16  && i<=24){
+                     this.yDNI = i + 1;
+                     break;     
+                 }
+                 
              }
         }
         

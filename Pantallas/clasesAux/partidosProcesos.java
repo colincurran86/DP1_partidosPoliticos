@@ -343,4 +343,50 @@ public class partidosProcesos {
 		}
 		
 	}
+	
+	public static int getCantPer(int idPE){
+		ProcesoElectoral pe = new ProcesoElectoral();
+		int val=0;
+		// TODO Auto-generated method stub
+		try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			connect = DriverManager.getConnection(DBConnection.URL_JDBC_MySQL, DBConnection.user,
+					DBConnection.password);
+
+			statement = connect.createStatement();
+			resultSet = statement.executeQuery("select * from Proceso where IdProceso = " + idPE);
+
+			while (resultSet.next()) {
+				// int id = resultSet.getInt("IdProceso");
+				//int idTP = resultSet.getInt("IdTipoProceso");
+				//String nombre = resultSet.getString("Nombre");
+				//int idCal = resultSet.getInt("idCalendario");
+				val = resultSet.getInt("TotalPersonas");
+				//double porc = resultSet.getDouble("PorcentajeAceptado");
+
+				/*pe.setId(id);
+				pe.setNombre(nombre);
+				pe.setPorcentaje((int) porc);
+				pe.setIdTipoProceso(idTP);
+				pe.setIdCalendario(idCal);
+				pe.setTotalPersonas(totalP);*/
+
+			}
+			connect.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return val;
+
+	}
 }

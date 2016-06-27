@@ -70,12 +70,11 @@ public class Main {
             RecogChar recogChar = new RecogChar();
             recogChar.init();
 
-            //verificamos cuantos padrones existen	
-            //totalPadrones = rf.contarPadrones(rutaPadrones);    
+            rf.guardarImagenes(rutaPadrones);
             rf.tamanhoEstandar(rutaPadrones);
     		File folder = new File(rutaPadrones);
     		int contPadrones = 0;
-int auxiliarBarraProgreso = 0 ;
+    		int auxiliarBarraProgreso = 0 ;
     		for (final File fileEntry : folder.listFiles()) { // abre cada planillon
     			
     			auxiliarBarraProgreso = auxiliarBarraProgreso +1 ;
@@ -87,12 +86,13 @@ int auxiliarBarraProgreso = 0 ;
     			int auxiliarBarraProgresoPlanillon  = 100 / (folder.listFiles().length + 1 ) ;
     			Procesando.aumentarPorcentaje1 (auxiliarBarraProgreso  * auxiliarBarraProgresoPlanillon);
     			
-    			String ruta1 = rutaPadrones + "/" + fileEntry.getName();
+    			String ruta0 = rutaPadrones + "/" + fileEntry.getName();
+    			String ruta1 = workingDir + "/Copia/" + fileEntry.getName();
             	String ruta2 =  workingDir + "/Auxiliar/recorteCostado.jpg";
             	String ruta3 = workingDir + "/Auxiliar/recorteBN.jpg";
             	
             	System.out.println( ruta1);
-          	    rutaPlanillonEjecutandose = ruta1 ;
+          	    rutaPlanillonEjecutandose = ruta0 ;
              
                 rf.recortarCostadosProcesarPadron(ruta1,ruta2,ruta3,workingDir);
                 
@@ -158,7 +158,7 @@ int auxiliarBarraProgreso = 0 ;
                         
                         
                         
-                       // new FileSaver(Copia1).saveAsPng("C:\\Users\\lenovo\\Desktop\\PUCP\\IMAGENEXXX\\" + contador + ".jpg");
+                        //new FileSaver(Copia1).saveAsPng("C:\\Users\\lenovo\\Desktop\\PUCP\\IMAGENEXXX\\" + contador + ".jpg");
                         contador++;
                         //Prefs.blackBackground = false;
   

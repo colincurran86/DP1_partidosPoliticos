@@ -66,7 +66,7 @@ public class Carga extends JPanel implements ActionListener{
 		add(btnSegCarga);
 
 		btnConf = new JButton("");
-		btnConf.setBounds(68, 77, 75, 60);
+		btnConf.setBounds(34, 77, 75, 60);
 		/*btnConf.setIcon(new ImageIcon(getClass().getResource("/Pantallas/pantallas/conf.png")));
 		try {
 			Image img = ImageIO.read(getClass().getResource("/Pantallas/pantallas/conf.png"));
@@ -109,24 +109,20 @@ public class Carga extends JPanel implements ActionListener{
 		add(lblImage);
 		
 		JLabel lblPrimeraFase = new JLabel("Primera Fase");
-		lblPrimeraFase.setBounds(78, 148, 89, 14);
+		lblPrimeraFase.setBounds(34, 148, 89, 14);
 		add(lblPrimeraFase);
 		
-		JLabel label = new JLabel("PARAMETROS DE \r\nCONFIGURACI\u00D3N");
-		label.setBounds(24, 489, 255, 34);
-		add(label);
-		
 		btnConfSeg = new JButton("");
-		btnConfSeg.setBounds(68, 544, 75, 60);
+		btnConfSeg.setBounds(160, 77, 75, 60);
 		btnConfSeg.setIcon(i);
 		
 		add(btnConfSeg);
 		
-		JLabel lblSegundaFase = new JLabel("Segunda Fase");
-		lblSegundaFase.setBounds(78, 615, 89, 14);
-		add(lblSegundaFase);
-		
 		btnConfSeg.addActionListener(this);
+		
+		JLabel label = new JLabel("Segunda Fase");
+		label.setBounds(160, 148, 89, 14);
+		add(label);
 		
 		
 	}
