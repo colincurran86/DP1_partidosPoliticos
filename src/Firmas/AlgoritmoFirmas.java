@@ -471,7 +471,7 @@ public class AlgoritmoFirmas {
 		List<List<Resultado>> arre = new ArrayList<List<Resultado>>();
 		ArrayList<Resultado> arr;
 
-		for (int isuperior = 1; isuperior < 9; isuperior++) {
+		for (int isuperior = 1; isuperior < 58; isuperior++) {
 
 			FastBitmap imagen1;
 			FastBitmap imagen2;
@@ -3799,7 +3799,7 @@ public static FirmaRecortada cortarFirma(String urlPlanillonesOriginales, int in
 							+ i + "rr.jpg");
 			*/
 			cortadorImagenes.ApplyInPlace(i3);
-			//JOptionPane.showMessageDialog(null, i3.toIcon(), "Result , indice", JOptionPane.PLAIN_MESSAGE); 
+			JOptionPane.showMessageDialog(null, i3.toIcon(), "Result , indice", JOptionPane.PLAIN_MESSAGE); 
 
 			FirmaRecortada fr = new FirmaRecortada();
 			fr.img = i3.toBufferedImage();
@@ -3877,7 +3877,7 @@ public static List<Double> procesarFirmasNuevo(FirmaRecortada listaFirmas, List<
 		imagen2 = new FastBitmap(url2);
 		//System.out.println("Alto i1 "+imagen1.getHeight()+" Ancho: "+imagen1.getWidth());
 		//System.out.println("Alto i2 "+imagen2.getHeight()+" Ancho: "+imagen2.getWidth());
-		if(imagen1.getHeight()>(imagen2.getHeight()+100))
+		if(imagen1.getHeight()>(imagen2.getHeight()+200) && imagen1.getWidth()>(imagen2.getWidth()+600))		
 		{		BufferedImage img = imagen1.toBufferedImage(); 
 				BufferedImage scaledImg = Scalr.resize(img, Method.AUTOMATIC, imagen2.getWidth(),
 				imagen2.getHeight(), Scalr.OP_BRIGHTER);
@@ -3896,11 +3896,10 @@ public static List<Double> procesarFirmasNuevo(FirmaRecortada listaFirmas, List<
 				distanciaFiltro = 4;
 				//System.out.println("1");
 			} else if(alto >= 5000 && ancho >= 2000) {
-				freak1.scale = 24.0f;
-				porcentajeMinimo = 45;
+				freak1.scale = 23.0f;
+				porcentajeMinimo = 42; //45
 				distanciaMinima = 42;
-				distanciaFiltro = 12;
-				//System.out.println("2");
+				distanciaFiltro = 11;
 				
 			}
 			
@@ -3917,7 +3916,7 @@ public static List<Double> procesarFirmasNuevo(FirmaRecortada listaFirmas, List<
 		*/	
 			else {
 				freak1.scale = 18.0f;
-				porcentajeMinimo = 30; //26
+				porcentajeMinimo = 34; //26
 			}
 			}
 			else
@@ -4010,7 +4009,7 @@ public static List<Double> procesarFirmasNuevo(FirmaRecortada listaFirmas, List<
 					freak2.scale = escalaActual;
 					
 				} else if(alto >= 5000 && ancho >= 2000) {
-					freak2.scale = 24.0f;
+					freak2.scale = 23.0f;
 					
 				}
 				/*
@@ -4238,7 +4237,7 @@ public static List<Double> procesarFirmasNuevoNuevo(FirmaRecortada listaFirmas, 
 		imagen2 = new FastBitmap(url2);
 		System.out.println("Alto i1 "+imagen1.getHeight()+" Ancho: "+imagen1.getWidth());
 		System.out.println("Alto i2 "+imagen2.getHeight()+" Ancho: "+imagen2.getWidth());
-		if(imagen1.getHeight()>(imagen2.getHeight()+100))
+		if(imagen1.getHeight()>(imagen2.getHeight()+200) && imagen1.getWidth()>(imagen2.getWidth()+600))
 		{		BufferedImage img = imagen1.toBufferedImage(); 
 				BufferedImage scaledImg = Scalr.resize(img, Method.AUTOMATIC, imagen2.getWidth(),
 				imagen2.getHeight(), Scalr.OP_BRIGHTER);
@@ -4260,10 +4259,10 @@ public static List<Double> procesarFirmasNuevoNuevo(FirmaRecortada listaFirmas, 
 			distanciaFiltro = 4;
 			System.out.println("1");
 		} else if(alto >= 5000 && ancho >= 2000) {
-			freak1.scale = 24.0f;
-			porcentajeMinimo = 45;
+			freak1.scale = 23.0f;
+			porcentajeMinimo = 42; //45
 			distanciaMinima = 42;
-			distanciaFiltro = 12;
+			distanciaFiltro = 11;
 			System.out.println("2");
 			
 		}
@@ -4281,7 +4280,7 @@ public static List<Double> procesarFirmasNuevoNuevo(FirmaRecortada listaFirmas, 
 	*/	
 		else {
 			freak1.scale = 18.0f;
-			porcentajeMinimo = 30; //26
+			porcentajeMinimo = 34; //26
 		}
 		}
 		else
@@ -4370,7 +4369,7 @@ public static List<Double> procesarFirmasNuevoNuevo(FirmaRecortada listaFirmas, 
 				freak2.scale = escalaActual;
 				
 			} else if(alto >= 5000 && ancho >= 2000) {
-				freak2.scale = 24.0f;
+				freak2.scale = 23.0f;
 				
 			}
 			/*
