@@ -161,17 +161,20 @@ public class NewMain {
       
       
       
-      
-      urlBaseDeDatos = new String("C:\\Users\\LUIS S\\Desktop\\Firmas.jpg\\dfi001.png");
-      urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\part.d.original1.png");
-      System.out.println("ULR: "+urlBaseDeDatos);
+     // for (int i = 0; i < 8; i++) {
+		
+	
+      urlBaseDeDatos = new String("C:\\Users\\LUIS S\\Desktop\\Firmas.jpg\\dfi065.png");
+      urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\part.d.original9.png");
+      System.out.println("ULR turno: ---------------------------------------------------"+urlBaseDeDatos);
       // urlBaseDeDatos = new String("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\1.jpg");
        //urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\1.jpg");
        FirmaRecortada ne = new FirmaRecortada(); 
        ne = af.cortarFirma(urlPlanillonesOriginales,0);
        List<Double> dl = af.procesarFirmasNuevoNuevo(ne,urlBaseDeDatos);
-       System.out.println("Umbral: "+dl.get(1));
+       System.out.println("Umbral: "+dl.get(1)+" i: ");
       
+   //   }  
       
      
     }

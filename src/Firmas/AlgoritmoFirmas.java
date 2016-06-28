@@ -3862,7 +3862,7 @@ public static List<Double> procesarFirmasNuevo(FirmaRecortada listaFirmas, List<
 		List<FastRetinaKeypoint> descriptores2;
 		Distance distancia = new Distance();
 		OtsuThreshold o = new OtsuThreshold();
-		
+		float sc=0;
 		imagen1 = new FastBitmap(listaFirmas.img);
 		int ancho = listaFirmas.ancho;
 		int alto = listaFirmas.alto;
@@ -3877,6 +3877,7 @@ public static List<Double> procesarFirmasNuevo(FirmaRecortada listaFirmas, List<
 		imagen2 = new FastBitmap(url2);
 		//System.out.println("Alto i1 "+imagen1.getHeight()+" Ancho: "+imagen1.getWidth());
 		//System.out.println("Alto i2 "+imagen2.getHeight()+" Ancho: "+imagen2.getWidth());
+		/*
 		if(imagen1.getHeight()>(imagen2.getHeight()+200) && imagen1.getWidth()>(imagen2.getWidth()+600))		
 		{		BufferedImage img = imagen1.toBufferedImage(); 
 				BufferedImage scaledImg = Scalr.resize(img, Method.AUTOMATIC, imagen2.getWidth(),
@@ -3885,13 +3886,19 @@ public static List<Double> procesarFirmasNuevo(FirmaRecortada listaFirmas, List<
 				entroNuevoSize=1;
 				//System.out.println("Nuevo size");
 		}
+		*/
+		if(imagen1.getHeight()>(imagen2.getHeight()+200) && imagen1.getWidth()>(imagen2.getWidth()+550))		
+		{		
+				entroNuevoSize=1;
+				System.out.println("Nuevo size");
+		}
 		
 		
 		if(entroNuevoSize==0){
 			if (alto <= 1300 && ancho <= 1300) {
 				freak1.scale = escalaActual;
 				// freak1.scale=16;
-				porcentajeMinimo = 16;
+				porcentajeMinimo = 17; //16
 				distanciaMinima = 60;
 				distanciaFiltro = 4;
 				//System.out.println("1");
@@ -3922,11 +3929,15 @@ public static List<Double> procesarFirmasNuevo(FirmaRecortada listaFirmas, List<
 			else
 			{
 				if(alto >= 4000 && ancho >= 2000) {
-					freak1.scale = 15;
-					porcentajeMinimo = 10;
-					distanciaMinima = 57;
-					distanciaFiltro = 3;
-					//System.out.println("2 nuevo");
+					//	freak1.scale = 15;
+					//	porcentajeMinimo = 10;
+					//	distanciaMinima = 57;
+					//	distanciaFiltro = 3;
+					//	System.out.println("2 nuevo");
+						freak1.scale = (float) 17.4;
+						sc=(float) 17.4;
+						porcentajeMinimo = 22; //26, 21
+						distanciaFiltro = 17;
 					
 				}
 				
@@ -3989,13 +4000,13 @@ public static List<Double> procesarFirmasNuevo(FirmaRecortada listaFirmas, List<
 			 */
 
 
-			if(entroNuevoSize==0){
+		//	if(entroNuevoSize==0){
 			//System.out.println("Antiguo size");
 			BufferedImage img = imagen2.toBufferedImage(); 
 			BufferedImage scaledImg = Scalr.resize(img, Method.AUTOMATIC, imagen1.getWidth(),
 			imagen1.getHeight(), Scalr.OP_BRIGHTER);
 			imagen2 = new FastBitmap(scaledImg);
-			}
+		//	}
 				
 			
 			imagen2.toRGB();
@@ -4025,8 +4036,8 @@ public static List<Double> procesarFirmasNuevo(FirmaRecortada listaFirmas, List<
 				else
 				{
 					if(alto >= 4000 && ancho >= 2000) {
-						freak2.scale = 15;
-						//System.out.println("nuevo sise siese");
+						freak2.scale = sc;
+						//System.out.println("nuevo sise siese sc:"+sc);
 						
 					}
 				}
@@ -4222,7 +4233,7 @@ public static List<Double> procesarFirmasNuevoNuevo(FirmaRecortada listaFirmas, 
 		List<FastRetinaKeypoint> descriptores2;
 		Distance distancia = new Distance();
 		OtsuThreshold o = new OtsuThreshold();
-		
+		float sc=0;
 		imagen1 = new FastBitmap(listaFirmas.img);
 		int ancho = listaFirmas.ancho;
 		int alto = listaFirmas.alto;
@@ -4237,7 +4248,10 @@ public static List<Double> procesarFirmasNuevoNuevo(FirmaRecortada listaFirmas, 
 		imagen2 = new FastBitmap(url2);
 		System.out.println("Alto i1 "+imagen1.getHeight()+" Ancho: "+imagen1.getWidth());
 		System.out.println("Alto i2 "+imagen2.getHeight()+" Ancho: "+imagen2.getWidth());
-		if(imagen1.getHeight()>(imagen2.getHeight()+200) && imagen1.getWidth()>(imagen2.getWidth()+600))
+		//if(imagen1.getHeight()>(imagen2.getHeight()+200) && imagen1.getWidth()>(imagen2.getWidth()+50))
+		
+		/*	
+		if(imagen1.getHeight()>(imagen2.getHeight()+200) && imagen1.getWidth()>(imagen2.getWidth()+550))		
 		{		BufferedImage img = imagen1.toBufferedImage(); 
 				BufferedImage scaledImg = Scalr.resize(img, Method.AUTOMATIC, imagen2.getWidth(),
 				imagen2.getHeight(), Scalr.OP_BRIGHTER);
@@ -4245,11 +4259,16 @@ public static List<Double> procesarFirmasNuevoNuevo(FirmaRecortada listaFirmas, 
 				entroNuevoSize=1;
 				System.out.println("Nuevo size");
 		}
+		*/
 		
-
-		//JOptionPane.showMessageDialog(null, imagen1.toIcon(), "Result " + indiceFirmas + " ",
-		//		JOptionPane.PLAIN_MESSAGE);
+		if(imagen1.getHeight()>(imagen2.getHeight()+200) && imagen1.getWidth()>(imagen2.getWidth()+550))		
+		{		
+				entroNuevoSize=1;
+				System.out.println("Nuevo size");
+		}
 		
+		JOptionPane.showMessageDialog(null, imagen1.toIcon(), "Result " + indiceFirmas + " ",JOptionPane.PLAIN_MESSAGE);
+	
 		if(entroNuevoSize==0){
 		if (alto <= 1300 && ancho <= 1300) {
 			freak1.scale = escalaActual;
@@ -4286,12 +4305,15 @@ public static List<Double> procesarFirmasNuevoNuevo(FirmaRecortada listaFirmas, 
 		else
 		{
 			if(alto >= 4000 && ancho >= 2000) {
-				freak1.scale = 15;
-				porcentajeMinimo = 10;
-				distanciaMinima = 57;
-				distanciaFiltro = 3;
-				System.out.println("2 nuevo");
-				
+			//	freak1.scale = 15;
+			//	porcentajeMinimo = 10;
+			//	distanciaMinima = 57;
+			//	distanciaFiltro = 3;
+			//	System.out.println("2 nuevo");
+				freak1.scale = (float) 17.4;
+				sc=(float) 17.4;
+				porcentajeMinimo = 22; //26, 21
+				distanciaFiltro = 17;
 			}
 			
 		}
@@ -4347,13 +4369,13 @@ public static List<Double> procesarFirmasNuevoNuevo(FirmaRecortada listaFirmas, 
 //			}
 
 
-			if(entroNuevoSize==0){
+		//	if(entroNuevoSize==0){
 				System.out.println("Antiguo size");
 			BufferedImage img = imagen2.toBufferedImage(); 
 			BufferedImage scaledImg = Scalr.resize(img, Method.AUTOMATIC, imagen1.getWidth(),
 			imagen1.getHeight(), Scalr.OP_BRIGHTER);
 			imagen2 = new FastBitmap(scaledImg);
-			}
+	//		}
 				
 			imagen2.toRGB();
 			imagen2.toGrayscale();
@@ -4385,8 +4407,8 @@ public static List<Double> procesarFirmasNuevoNuevo(FirmaRecortada listaFirmas, 
 			else
 			{
 				if(alto >= 4000 && ancho >= 2000) {
-					freak2.scale = 15;
-					System.out.println("nuevo sise siese");
+					freak2.scale = sc;
+					System.out.println("nuevo sise siese sc:"+sc);
 					
 				}
 			}
