@@ -99,22 +99,7 @@ public class mainHuellas {
 		
 		
 
-		
-			// System.out.println(minutiaeFound.size()); // total de minucias
 
-			// System.out.println("Total de terminaciones: " +
-			// minutiaeTermination.size());
-			// System.out.println("Total de bifurcaciones: " +
-			// minutiaeBifurcation.size());
-			// sacar promedio de distancias entre bifurcaciones y terminaciones
-			// double DT = Minutiae.AverageSameMinutiae(minutiaeTermination);
-			// double DB = Minutiae.AverageSameMinutiae(minutiaeBifurcation);
-			// int DT =
-			// Minutiae.AverageDifferentMinutiae(minutiaeTermination,minutiaeBifurcation);
-			// System.out.println( " DT PE PAPU:" + DT + " " + DB);
-			// distance = distance + (float) Math.sqrt( (p1.getX() - p2.getX())
-			// * (p1.getX() - p2.getX()) + (p1.getY() - p2.getY()) * (p1.getY()
-			// - p2.getY()));
 
 			for (int y = 0; y < imageDataBase.length; y++) {
 
@@ -145,8 +130,9 @@ public class mainHuellas {
 			System.out.println("Minucias en la base ANTS" + minutiaeFoundBase.size());
 			System.out.println("Minucias en el Input  ANTS " + minutiaeFoundInput.size());
 			
-			
-	
+			Minutiae.removeFalseMinutiae(minutiaeFoundBase);
+			Minutiae.removeFalseMinutiae(minutiaeFoundInput);
+
 			if (minutiaeFoundInput.size() < 6 || minutiaeFoundBase.size() <6) {
 				//VALIDACION SI NO SE LOGRA TENER LOS PUNTOS SUFICIENTES
 				//totalMatching = -1;

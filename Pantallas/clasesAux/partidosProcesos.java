@@ -60,79 +60,39 @@ public class partidosProcesos {
 
 	}
 
-	public static void sacarPrimeraFase(int idFase, int idPE) {
-		// TODO Auto-generated method stub
-		int numero = 0;
-		try {
-
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-			connect = DriverManager.getConnection(DBConnection.URL_JDBC_MySQL, DBConnection.user,
-					DBConnection.password);
-			statement = connect.createStatement();
-
-			//System.out.println("FECHAAA :" + p.getFechaInicioProc());
-			statement.executeUpdate("INSERT INTO ProcesoxFasexPartidoPolitico "
-					+ "(IdPartidosPoliticos , idFase, Resultado, Observacion, IdProceso, FechaInicioProceso)"
-					+ "VALUES ('" + p.getIdPartPol() + "', '" + p.getIdFase() + "' , '" + p.getResultado() + "' , '"
-					+ p.getObservacion() + "' , '" + p.getIdProceso() + "' , '" + p.getFechaInicioProc() + "'   )");
-
-			connect.close();
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public static List<PartidoPersona>  traerSinDuplicados (List<PartidoPersona>partidoPersona ){
+		 		List<PartidoPersona> nuevaLista = new ArrayList<PartidoPersona>();
+		 		//Verificamos los duplicados para cada partido politico
+		 		for (int i = 0; i<partidoPersona.size() -1 ; i++){
+		 				if (partidoPersona.get(i).getCondicionRepetido() == 0){
+		 					for (int j = i+1; j<partidoPersona.size();j++){
+		 						if (partidoPersona.get(i).getPersona().getDni().compareTo(partidoPersona.get(j).getPersona().getDni()) == 0){
+		 							if(partidoPersona.get(i).getPartido().getId()==partidoPersona.get(j).getPartido().getId()){
+		 								partidoPersona.get(j).setCondicionRepetido(1);		 								
+		 							}else{
+		 								partidoPersona.get(i).setCondicionRepetido(1);
+		 								partidoPersona.get(j).setCondicionRepetido(1);
+		 							}
+		 						}
+		 						/*
+		 						if (partidoPersona.get(i).getPersona().getDni().compareTo(  
+		 								partidoPersona.get(j).getPersona().getDni()
+		 								) != 0){
+		 								nuevaLista.add(partidoPersona.get(j));
+		 								break;
+		 						}*/		 						
+		 					}
+		 				}
+		 		}
+		 		for(int i = 0; i<partidoPersona.size() ; i++)
+		 			if(partidoPersona.get(i).getCondicionRepetido()==0) nuevaLista.add(partidoPersona.get(i));
+		 				 		
+		 		return nuevaLista;		 		
 	}
 
-	public static List<PartidoPersona> verificarDuplicados(List<PartidoPersona> partDup, int idFase, int idPE) {
-		sacarPrimeraFase(idFase,idPE);
-
-		List<PartidoPersona> sinDup = new ArrayList<PartidoPersona>();
-
-		return sinDup;
-	}
-
-	public static List<PartidoPersona> traerSinDuplicados(List<PartidoPersona> partidoPersona) {
-		List<PartidoPersona> nuevaLista = new ArrayList<PartidoPersona>();
-		// Verificamos los duplicados para cada partido politico
-		for (int i = 0; i < partidoPersona.size() - 1; i++) {
-			if (partidoPersona.get(i).getCondicionRepetido() == 0) {
-				for (int j = i + 1; j < partidoPersona.size(); j++) {
-					if (partidoPersona.get(i).getPersona().getDni()
-							.compareTo(partidoPersona.get(j).getPersona().getDni()) == 0) {
-						if (partidoPersona.get(i).getPartido().getId() == partidoPersona.get(i).getPartido().getId()) {
-							partidoPersona.get(j).setCondicionRepetido(1);
-						} else {
-							partidoPersona.get(i).setCondicionRepetido(1);
-							partidoPersona.get(j).setCondicionRepetido(1);
-						}
-					}
-					/*
-					 * if
-					 * (partidoPersona.get(i).getPersona().getDni().compareTo(
-					 * partidoPersona.get(j).getPersona().getDni() ) != 0){
-					 * nuevaLista.add(partidoPersona.get(j)); break; }
-					 */
-				}
-			}
-		}
-		for (int i = 0; i < partidoPersona.size(); i++)
-			if (partidoPersona.get(i).getCondicionRepetido() == 0)
-				nuevaLista.add(partidoPersona.get(i));
-
-		return nuevaLista;
-	}
-
-	public static List<PartidoPersona> verificarDuplicados(List<PartidoPersona> partidoPersona) {
+	
+	
+	public static List<PartidoPersona> verificarDuplicados(List<PartidoPersona>partidoPersona ){
 		List<PartidoPersona> nuevaLista = new ArrayList<PartidoPersona>();
 		// Verificamos los duplicados para cada partido politico
 		for (int i = 0; i < partidoPersona.size() - 1; i++) {
@@ -161,6 +121,9 @@ public class partidosProcesos {
 
 	}
 
+	
+	
+	
 	public static void llenarParticipante(Participante p, int idPP, int idFase, int idPE) {
 		try {
 
@@ -217,6 +180,40 @@ public class partidosProcesos {
 			e.printStackTrace();
 		}
 	}
+	
+	public static void sacarPrimeraFase(int idFase, int idPE) {
+		// TODO Auto-generated method stub
+		/*int numero = 0;
+		try {
+
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			connect = DriverManager.getConnection(DBConnection.URL_JDBC_MySQL, DBConnection.user,
+					DBConnection.password);
+			statement = connect.createStatement();
+
+			//System.out.println("FECHAAA :" + p.getFechaInicioProc());
+			statement.executeUpdate("INSERT INTO ProcesoxFasexPartidoPolitico "
+					+ "(IdPartidosPoliticos , idFase, Resultado, Observacion, IdProceso, FechaInicioProceso)"
+					+ "VALUES ('" + p.getIdPartPol() + "', '" + p.getIdFase() + "' , '" + p.getResultado() + "' , '"
+					+ p.getObservacion() + "' , '" + p.getIdProceso() + "' , '" + p.getFechaInicioProc() + "'   )");
+
+			connect.close();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+	}
+	
 
 	public static ProcesoElectoral queryById(int id) {
 
@@ -301,7 +298,7 @@ public class partidosProcesos {
 		}
 		return arr;
 	}
-
+	
 	public static PartidoPolitico queryByIdPP(int id) {
 
 		PartidoPolitico pp = new PartidoPolitico();
@@ -321,12 +318,13 @@ public class partidosProcesos {
 				String rep = resultSet.getString("Representante");
 				String telRep = resultSet.getString("TelefonoRepre");
 				String correo = resultSet.getString("Correo");
-
+				
+				
 				pp.setId(id);
 				pp.setNombre(nombre);
 				pp.setNombreRep(rep);
 				pp.setTelefono(telRep);
-				pp.setCorreo(correo);
+				pp.setCorreo(correo);				
 
 			}
 			connect.close();
@@ -382,9 +380,10 @@ public class partidosProcesos {
 		}
 		return arr;
 	}
-
-	public static void updatePFPP(ProcesoXFase pxf) {
-
+	
+	
+	public static void updatePFPP(ProcesoXFase pxf){
+		
 		try {
 
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -392,9 +391,8 @@ public class partidosProcesos {
 					DBConnection.password);
 			statement = connect.createStatement();
 			statement.executeUpdate("UPDATE ProcesoxFasexPartidoPolitico " + "SET Resultado= '" + pxf.getResultado()
-					+ "', TotalAdherentes= " + pxf.getTotalAd() + ", TotalDuplicados= " + pxf.getTotalDup()
-					+ " WHERE IdPartidosPoliticos= " + pxf.getIdPartPol() + " AND IdProceso= " + pxf.getIdProceso()
-					+ " AND idFase= " + pxf.getIdFase());
+					+ "', TotalAdherentes= " + pxf.getTotalAd() + ", TotalDuplicados= " + pxf.getTotalDup() + " WHERE IdPartidosPoliticos= " + pxf.getIdPartPol() + 
+					" AND IdProceso= "+ pxf.getIdProceso() + " AND idFase= "+ pxf.getIdFase());
 			connect.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -409,12 +407,12 @@ public class partidosProcesos {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		
 	}
-
-	public static int getCantPer(int idPE) {
+	
+	public static int getCantPer(int idPE){
 		ProcesoElectoral pe = new ProcesoElectoral();
-		int val = 0;
+		int val=0;
 		// TODO Auto-generated method stub
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -426,17 +424,18 @@ public class partidosProcesos {
 
 			while (resultSet.next()) {
 				// int id = resultSet.getInt("IdProceso");
-				// int idTP = resultSet.getInt("IdTipoProceso");
-				// String nombre = resultSet.getString("Nombre");
-				// int idCal = resultSet.getInt("idCalendario");
+				//int idTP = resultSet.getInt("IdTipoProceso");
+				//String nombre = resultSet.getString("Nombre");
+				//int idCal = resultSet.getInt("idCalendario");
 				val = resultSet.getInt("TotalPersonas");
-				// double porc = resultSet.getDouble("PorcentajeAceptado");
+				//double porc = resultSet.getDouble("PorcentajeAceptado");
 
-				/*
-				 * pe.setId(id); pe.setNombre(nombre); pe.setPorcentaje((int)
-				 * porc); pe.setIdTipoProceso(idTP); pe.setIdCalendario(idCal);
-				 * pe.setTotalPersonas(totalP);
-				 */
+				/*pe.setId(id);
+				pe.setNombre(nombre);
+				pe.setPorcentaje((int) porc);
+				pe.setIdTipoProceso(idTP);
+				pe.setIdCalendario(idCal);
+				pe.setTotalPersonas(totalP);*/
 
 			}
 			connect.close();

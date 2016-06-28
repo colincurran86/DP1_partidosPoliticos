@@ -25,18 +25,19 @@ import Reportes.PruebaReportes;
 import Reportes.Reportes;
 import models.Participante;
 import models.PartidoPersona;
+import models.PartidoPolitico;
 import models.PersonaReniec;
 import models.ProcesoXFase;
 import models.ReniecBD;
 
 public class Util {
-	
-	public static boolean mostrarReporte=false;
-	public static String mensajeFinal = new String();
-	public static List<PartidoPersona > partDup;
 
-	public static List<PartidoPersona > adherentes;
-	
+	public static boolean mostrarReporte = false;
+	public static String mensajeFinal = new String();
+	public static List<PartidoPersona> partDup;
+
+	public static List<PartidoPersona> adherentes;
+
 	public String formatearRuta(String ruta) {
 		String nuevaRuta = "";
 		for (int i = 0; i < ruta.length(); i++)
@@ -46,32 +47,33 @@ public class Util {
 				nuevaRuta += ruta.charAt(i);
 		return nuevaRuta;
 	}
-	
+
 	public void gerardoRecortesWarningSeg() throws IOException {
-		
+
 		long startTime = System.currentTimeMillis();
 
 		Util u = new Util();
 		Main m = new Main();
 		PrimeraFase primeraFase = new PrimeraFase();
-		//String formatearRutaPlan = "D:\\Users\\jemarroquin\\Desktop\\padronesOld";
+		// String formatearRutaPlan =
+		// "D:\\Users\\jemarroquin\\Desktop\\padronesOld";
 		String formatearRutaPlan = u.formatearRuta(primeraFase.rutaPadrones);
-		//String formatearRutaFima = "D:\\Users\\jemarroquin\\Desktop\\_firmas.jpg (1)\\firmas.jpg";
+		// String formatearRutaFima =
+		// "D:\\Users\\jemarroquin\\Desktop\\_firmas.jpg (1)\\firmas.jpg";
 		String formatearRutaFima = u.formatearRuta(primeraFase.rutaFirma);
 		String formatearRutaHuella = u.formatearRuta(primeraFase.rutaHuella);
-		//String formatearRutaHuella = "D:\\Users\\jemarroquin\\Desktop\\_huellas.jpg\\huellas.jpg";
+		// String formatearRutaHuella =
+		// "D:\\Users\\jemarroquin\\Desktop\\_huellas.jpg\\huellas.jpg";
 		// txtFieldBDRNV.setText("D:\\Users\\jemarroquin\\git\\DP1_partidosPoliticos\\src");
-	   //	String formatearRutaBD = u.formatearRuta(primeraFase.rutaExcel);
-    	//	System.out.println("FORMATEAR RUTA: " + formatearRutaBD );
+		// String formatearRutaBD = u.formatearRuta(primeraFase.rutaExcel);
+		// System.out.println("FORMATEAR RUTA: " + formatearRutaBD );
 
-     	//	m.llenarBDReniec(formatearRutaBD);
-
+		// m.llenarBDReniec(formatearRutaBD);
 
 		// List<PersonaReniec> pr1 = u.ocrMasReniec();
 
-		
-		//no va lista de lista
-		
+		// no va lista de lista
+
 		List<List<PersonaReniec>> pr1 = u.ocrMasReniec();
 		String cadenaFinal = new String();
 
@@ -84,11 +86,10 @@ public class Util {
 			}
 			cadenaFinal = cadenaFinal + "\n";
 		}
-	
-		
-		//no va lista de lista
-		
-	   List<ProcesoXFase> procesoListFase = new ArrayList <ProcesoXFase>();
+
+		// no va lista de lista
+
+		List<ProcesoXFase> procesoListFase = new ArrayList<ProcesoXFase>();
 
 		java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
 
@@ -100,129 +101,123 @@ public class Util {
 			d = new Date(formatter.parse(startDateString).getTime());
 			startDateString = formatter.format(date);
 			d = new Date(formatter.parse(startDateString).getTime());
-	
-		  for ( int i = 0 ; i < PrimeraFase.ppescogidos.size()  ; i++ ) {
 
-		   ProcesoXFase procesoFase = new ProcesoXFase();
-		   procesoFase.setFechaInicioProc(d);
-		   procesoFase.setIdPartPol(PrimeraFase.ppescogidos.get(i).getId());
-		   procesoFase.setIdFase(2);
-		   procesoFase.setIdProceso(PrimeraFase.idPE);
-		   procesoFase.setResultado("Resultado Prueba");
-		   procesoFase.setObservacion("Observacion Prueba");
-		   partidosProcesos.almacenarBD(procesoFase); 
-		   
-		   
-		   Procesando.escribirTextArea("*******************	*******************************");
-		   Procesando.escribirTextArea("Partido Político: " + PrimeraFase.ppescogidos.get(i).getNombre());
-		   m.main(formatearRutaPlan + "/"+ PrimeraFase.ppescogidos.get(i).getNombre() , PrimeraFase.ppescogidos.get(i), formatearRutaFima, formatearRutaHuella);
+			for (int i = 0; i < PrimeraFase.ppescogidos.size(); i++) {
+
+				ProcesoXFase procesoFase = new ProcesoXFase();
+				procesoFase.setFechaInicioProc(d);
+				procesoFase.setIdPartPol(PrimeraFase.ppescogidos.get(i).getId());
+				procesoFase.setIdFase(2);
+				procesoFase.setIdProceso(PrimeraFase.idPE);
+				procesoFase.setResultado("Resultado Prueba");
+				procesoFase.setObservacion("Observacion Prueba");
+				partidosProcesos.almacenarBD(procesoFase);
+
+				Procesando.escribirTextArea("*******************	*******************************");
+				Procesando.escribirTextArea("Partido Político: " + PrimeraFase.ppescogidos.get(i).getNombre());
+				m.main(formatearRutaPlan + "/" + PrimeraFase.ppescogidos.get(i).getNombre(),
+						PrimeraFase.ppescogidos.get(i), formatearRutaFima, formatearRutaHuella);
 			}
-	   
 
-		  Procesando.aumentarPorcentaje1(100);
-	    
-	    System.out.println(" cantidad de duplicidad"  +  Main.participantesPreDuplicidad.size() );
-	  
-	     List<PartidoPersona> listaSinDuplicados =  new ArrayList<PartidoPersona> ();
-		 //List<PartidoPersona > particantesDuplicados=  partidosProcesos.verificarDuplicados(  Main.participantesPreDuplicidad  );
-		 partDup=partidosProcesos.verificarDuplicados(  Main.participantesPreDuplicidad );
-		 adherentes =partidosProcesos.traerSinDuplicados   (  Main.participantesPreDuplicidad );
-		 
-		 //partidosProcesos.verificarDuplicados(partDup,2,PrimeraFase.idPE);
-		 
-		 //quitar de adherentes los duplicados de la base de datos .
-		 /////////////////////////////////////////////////////////////
-		 
-		 /////////////////////////////////////////////////////////////
-		 
-		 
-		 System.out.println(" === Adherente   == ==");
+			Procesando.aumentarPorcentaje1(100);
 
+			System.out.println(" cantidad de duplicidad" + Main.participantesPreDuplicidad.size());
 
-		 
-		 for ( int i = 0 ; i< adherentes.size() ; i ++) {
-			 
-			 System.out.println("Hola Jose " + adherentes.get(i).getPersona().getDni() + " Nombre: " +  adherentes.get(i).getPersona().getNombre());
-			 adherentes.get(i).getParticipando().setAceptado(1);
-			 partidosProcesos.llenarParticipante( adherentes.get(i).getParticipando()  , adherentes.get(i).getPartido().getId() , 2 , PrimeraFase.idPE ) ;
-			 
-		 } 
+			List<PartidoPersona> listaSinDuplicados = new ArrayList<PartidoPersona>();
+			// List<PartidoPersona > particantesDuplicados=
+			// partidosProcesos.verificarDuplicados(
+			// Main.participantesPreDuplicidad );
+			partDup = partidosProcesos.verificarDuplicados(Main.participantesPreDuplicidad);
+			adherentes = partidosProcesos.traerSinDuplicados(Main.participantesPreDuplicidad);
 
-		 
-		 
-		 
- System.out.println( "  ====  Comienzan duplicados ===");
-		 
- for ( int i = 0 ; i< partDup.size() ; i ++) {
-	 
-	 System.out.println("Hola Jose " + partDup.get(i).getPersona().getDni() + " Nombre: " +  partDup.get(i).getPersona().getNombre());
-	 
-	 partDup.get(i).getParticipando().setAceptado(2);
-	 partidosProcesos.llenarParticipante( partDup.get(i).getParticipando()  , partDup.get(i).getPartido().getId() , 2 , PrimeraFase.idPE ) ;
- } 
+			// partidosProcesos.verificarDuplicados(partDup,2,PrimeraFase.idPE);
 
- 
-  for ( int i = 0 ; i < PrimeraFase.ppescogidos.size(); i++  ) {
-	  
-	  
-	  int contadorAdherentes = 0;
-	  int contadorDuplicados = 0;
-	  
-	  for (int j = 0 ; j <   adherentes.size() ; j ++) { 
-		  
-		  if ( adherentes.get(j).getPartido().getId() == PrimeraFase.ppescogidos.get(i).getId()  ){
-			  //mismo partido politico 
-			  contadorAdherentes++ ;
-			  
-		  }
-		  
-		  
-	  }
-	  
-  for (int j = 0 ; j <   partDup.size() ; j ++) { 
-		  
-		  if ( partDup.get(j).getPartido().getId() == PrimeraFase.ppescogidos.get(i).getId()  ){
-			  //mismo partido politico 
-			  contadorDuplicados++ ;
-			  
-		  }
-		  
-		  
-	  }
-  
-	  
-	  ProcesoXFase pf = new ProcesoXFase() ;
-	  pf.setTotalAd(contadorAdherentes);
-	  pf.setTotalDup(  contadorDuplicados);
-	  pf.setIdFase(2);
-	  pf.setIdPartPol(PrimeraFase.ppescogidos.get(i).getId() );
-	  pf.setIdProceso( PrimeraFase.idPE);
-	  
-	  int totalPersonas =  partidosProcesos.getCantPer(PrimeraFase.idPE); 
-	  
-	  System.out.println( "TOTAL DE PERSONAS HABILES EN EL PROCESO: " + totalPersonas);
-	  System.out.println( "TOTAL ADHERENTES: " + pf.getTotalAd() +  " " +PrimeraFase.ppescogidos.get(i).getNombre() );
-	  System.out.println( "TOTAL DUPLICADOS: " + pf.getTotalDup() +  " " +PrimeraFase.ppescogidos.get(i).getNombre() );
-	  
-	  if (  contadorAdherentes > totalPersonas*PrimeraFase.porc*(1.0)/100   )   pf.setResultado("Aceptado"); else pf.setResultado("Rechazado");  
-	  
-	  
-	  System.out.println( "RESULTADO: " +  pf.getResultado());
-	  partidosProcesos.updatePFPP(pf);
-	  
-  }
- 
- 
-		 
-		 
+			// quitar de adherentes los duplicados de la base de datos .
+			/////////////////////////////////////////////////////////////
+
+			/////////////////////////////////////////////////////////////
+
+			System.out.println(" === Adherente   == ==");
+
+			for (int i = 0; i < adherentes.size(); i++) {
+
+				System.out.println("Hola Jose " + adherentes.get(i).getPersona().getDni() + " Nombre: "
+						+ adherentes.get(i).getPersona().getNombre());
+				adherentes.get(i).getParticipando().setAceptado(1);
+				partidosProcesos.llenarParticipante(adherentes.get(i).getParticipando(),
+						adherentes.get(i).getPartido().getId(), 2, PrimeraFase.idPE);
+
+			}
+
+			System.out.println("  ====  Comienzan duplicados ===");
+
+			for (int i = 0; i < partDup.size(); i++) {
+
+				System.out.println("Hola Jose " + partDup.get(i).getPersona().getDni() + " Nombre: "
+						+ partDup.get(i).getPersona().getNombre());
+
+				partDup.get(i).getParticipando().setAceptado(2);
+				partidosProcesos.llenarParticipante(partDup.get(i).getParticipando(),
+						partDup.get(i).getPartido().getId(), 2, PrimeraFase.idPE);
+			}
+
+			for (int i = 0; i < PrimeraFase.ppescogidos.size(); i++) {
+
+				int contadorAdherentes = 0;
+				int contadorDuplicados = 0;
+
+				for (int j = 0; j < adherentes.size(); j++) {
+
+					if (adherentes.get(j).getPartido().getId() == PrimeraFase.ppescogidos.get(i).getId()) {
+						// mismo partido politico
+						contadorAdherentes++;
+
+					}
+
+				}
+
+				for (int j = 0; j < partDup.size(); j++) {
+
+					if (partDup.get(j).getPartido().getId() == PrimeraFase.ppescogidos.get(i).getId()) {
+						// mismo partido politico
+						contadorDuplicados++;
+
+					}
+
+				}
+
+				ProcesoXFase pf = new ProcesoXFase();
+				pf.setTotalAd(contadorAdherentes);
+				pf.setTotalDup(contadorDuplicados);
+				pf.setIdFase(2);
+				pf.setIdPartPol(PrimeraFase.ppescogidos.get(i).getId());
+				pf.setIdProceso(PrimeraFase.idPE);
+
+				int totalPersonas = partidosProcesos.getCantPer(PrimeraFase.idPE);
+
+				System.out.println("TOTAL DE PERSONAS HABILES EN EL PROCESO: " + totalPersonas);
+				System.out.println(
+						"TOTAL ADHERENTES: " + pf.getTotalAd() + " " + PrimeraFase.ppescogidos.get(i).getNombre());
+				System.out.println(
+						"TOTAL DUPLICADOS: " + pf.getTotalDup() + " " + PrimeraFase.ppescogidos.get(i).getNombre());
+
+				if (contadorAdherentes > totalPersonas * PrimeraFase.porc * (1.0) / 100)
+					pf.setResultado("Aceptado");
+				else
+					pf.setResultado("Rechazado");
+
+				System.out.println("RESULTADO: " + pf.getResultado());
+				partidosProcesos.updatePFPP(pf);
+
+			}
+
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 
-	   
-	   //Almacenar Base de Datos
-	   
+		// Almacenar Base de Datos
+
 		long endTime = System.currentTimeMillis();
 		double totalTime = (endTime - startTime) / 1000.0;
 		String almacenarMensaje = new String();
@@ -230,42 +225,40 @@ public class Util {
 				+ " segundos \n";
 		this.mensajeFinal = this.mensajeFinal + almacenarMensaje;
 
-		
-	   	   
-	   Procesando.escribirTextArea("Total del tiempo consumido: " + totalTime);	   
-	   
-	   
-	 //  public static void llenarParticipante(Participante p, int idPP,int idFase, int idPE);
+		Procesando.escribirTextArea("Total del tiempo consumido: " + totalTime);
 
-	   Procesando.mostrarBoton();
+		// public static void llenarParticipante(Participante p, int idPP,int
+		// idFase, int idPE);
+
+		Procesando.mostrarBoton();
 	}
 
-	
 	public void gerardoRecortesWarning() throws IOException {
-		
+
 		long startTime = System.currentTimeMillis();
 
 		Util u = new Util();
 		Main m = new Main();
 		PrimeraFase primeraFase = new PrimeraFase();
-		//String formatearRutaPlan = "D:\\Users\\jemarroquin\\Desktop\\padronesOld";
+		// String formatearRutaPlan =
+		// "D:\\Users\\jemarroquin\\Desktop\\padronesOld";
 		String formatearRutaPlan = u.formatearRuta(primeraFase.rutaPadrones);
-		//String formatearRutaFima = "D:\\Users\\jemarroquin\\Desktop\\_firmas.jpg (1)\\firmas.jpg";
+		// String formatearRutaFima =
+		// "D:\\Users\\jemarroquin\\Desktop\\_firmas.jpg (1)\\firmas.jpg";
 		String formatearRutaFima = u.formatearRuta(primeraFase.rutaFirma);
 		String formatearRutaHuella = u.formatearRuta(primeraFase.rutaHuella);
-		//String formatearRutaHuella = "D:\\Users\\jemarroquin\\Desktop\\_huellas.jpg\\huellas.jpg";
+		// String formatearRutaHuella =
+		// "D:\\Users\\jemarroquin\\Desktop\\_huellas.jpg\\huellas.jpg";
 		// txtFieldBDRNV.setText("D:\\Users\\jemarroquin\\git\\DP1_partidosPoliticos\\src");
-	   //	String formatearRutaBD = u.formatearRuta(primeraFase.rutaExcel);
-    	//	System.out.println("FORMATEAR RUTA: " + formatearRutaBD );
+		// String formatearRutaBD = u.formatearRuta(primeraFase.rutaExcel);
+		// System.out.println("FORMATEAR RUTA: " + formatearRutaBD );
 
-     	//	m.llenarBDReniec(formatearRutaBD);
-
+		// m.llenarBDReniec(formatearRutaBD);
 
 		// List<PersonaReniec> pr1 = u.ocrMasReniec();
 
-		
-		//no va lista de lista
-		
+		// no va lista de lista
+
 		List<List<PersonaReniec>> pr1 = u.ocrMasReniec();
 		String cadenaFinal = new String();
 
@@ -278,11 +271,10 @@ public class Util {
 			}
 			cadenaFinal = cadenaFinal + "\n";
 		}
-	
-		
-		//no va lista de lista
-		
-	   List<ProcesoXFase> procesoListFase = new ArrayList <ProcesoXFase>();
+
+		// no va lista de lista
+
+		List<ProcesoXFase> procesoListFase = new ArrayList<ProcesoXFase>();
 
 		java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
 
@@ -294,126 +286,126 @@ public class Util {
 			d = new Date(formatter.parse(startDateString).getTime());
 			startDateString = formatter.format(date);
 			d = new Date(formatter.parse(startDateString).getTime());
-	
-		  for ( int i = 0 ; i < PrimeraFase.ppescogidos.size()  ; i++ ) {
 
-		   ProcesoXFase procesoFase = new ProcesoXFase();
-		   procesoFase.setFechaInicioProc(d);
-		   procesoFase.setIdPartPol(PrimeraFase.ppescogidos.get(i).getId());
-		   procesoFase.setIdFase(1);
-		   procesoFase.setIdProceso(PrimeraFase.idPE);
-		   procesoFase.setResultado("Resultado Prueba");
-		   procesoFase.setObservacion("Observacion Prueba");
-		   partidosProcesos.almacenarBD(procesoFase); 
-		   
-		   
-		   Procesando.escribirTextArea("*******************	*******************************");
-		   Procesando.escribirTextArea("Partido Político: " + PrimeraFase.ppescogidos.get(i).getNombre());
-		   m.main(formatearRutaPlan + "/"+ PrimeraFase.ppescogidos.get(i).getNombre() , PrimeraFase.ppescogidos.get(i), formatearRutaFima, formatearRutaHuella);
-		 	
+			for (int i = 0; i < PrimeraFase.ppescogidos.size(); i++) {
 
-		 
-		 
-		 
+				ProcesoXFase procesoFase = new ProcesoXFase();
+				procesoFase.setFechaInicioProc(d);
+				procesoFase.setIdPartPol(PrimeraFase.ppescogidos.get(i).getId());
+				procesoFase.setIdFase(1);
+				procesoFase.setIdProceso(PrimeraFase.idPE);
+				procesoFase.setResultado("Resultado Prueba");
+				procesoFase.setObservacion("Observacion Prueba");
+				partidosProcesos.almacenarBD(procesoFase);
+
+				Procesando.escribirTextArea("*******************	*******************************");
+				Procesando.escribirTextArea("Partido Político: " + PrimeraFase.ppescogidos.get(i).getNombre());
+				m.main(formatearRutaPlan + "/" + PrimeraFase.ppescogidos.get(i).getNombre(),
+						PrimeraFase.ppescogidos.get(i), formatearRutaFima, formatearRutaHuella);
+
 			}
-	   
 
-		  Procesando.aumentarPorcentaje1(100);
-	    
-	    System.out.println(" cantidad de duplicidad"  +  Main.participantesPreDuplicidad.size() );
-	  
-	     List<PartidoPersona> listaSinDuplicados =  new ArrayList<PartidoPersona> ();
-		 //List<PartidoPersona > particantesDuplicados=  partidosProcesos.verificarDuplicados(  Main.participantesPreDuplicidad  );
-		 partDup=partidosProcesos.verificarDuplicados(  Main.participantesPreDuplicidad );
-		 adherentes =partidosProcesos.traerSinDuplicados   (  Main.participantesPreDuplicidad );
-	
-		 System.out.println(" === Adherente   == ==");
+			Procesando.aumentarPorcentaje1(100);
 
+			System.out.println(" cantidad de duplicidad" + Main.participantesPreDuplicidad.size());
 
-		 
-		 for ( int i = 0 ; i< adherentes.size() ; i ++) {
-			 
-			 System.out.println("Hola Jose " + adherentes.get(i).getPersona().getDni() + " Nombre: " +  adherentes.get(i).getPersona().getNombre());
-			 adherentes.get(i).getParticipando().setAceptado(1);
-			 partidosProcesos.llenarParticipante( adherentes.get(i).getParticipando()  , adherentes.get(i).getPartido().getId() , 1 , PrimeraFase.idPE ) ;
-			 
-		 } 
+			List<PartidoPersona> listaSinDuplicados = new ArrayList<PartidoPersona>();
+			// List<PartidoPersona > particantesDuplicados=
+			// partidosProcesos.verificarDuplicados(
+			// Main.participantesPreDuplicidad );
+			partDup = partidosProcesos.verificarDuplicados(Main.participantesPreDuplicidad);
+			adherentes = partidosProcesos.traerSinDuplicados(Main.participantesPreDuplicidad);
 
-		 
-		 
-		 
- System.out.println( "  ====  Comienzan duplicados ===");
-		 
- for ( int i = 0 ; i< partDup.size() ; i ++) {
-	 
-	 System.out.println("Hola Jose " + partDup.get(i).getPersona().getDni() + " Nombre: " +  partDup.get(i).getPersona().getNombre());
-	 
-	 partDup.get(i).getParticipando().setAceptado(2);
-	 partidosProcesos.llenarParticipante( partDup.get(i).getParticipando()  , partDup.get(i).getPartido().getId() , 1 , PrimeraFase.idPE ) ;
- } 
+			System.out.println(" === Adherente   == ==");
 
- 
-  for ( int i = 0 ; i < PrimeraFase.ppescogidos.size(); i++  ) {
-	  
-	  
-	  int contadorAdherentes = 0;
-	  int contadorDuplicados = 0;
-	  
-	  for (int j = 0 ; j <   adherentes.size() ; j ++) { 
-		  
-		  if ( adherentes.get(j).getPartido().getId() == PrimeraFase.ppescogidos.get(i).getId()  ){
-			  //mismo partido politico 
-			  contadorAdherentes++ ;
-			  
-		  }
-		  
-		  
-	  }
-	  
-  for (int j = 0 ; j <   partDup.size() ; j ++) { 
-		  
-		  if ( partDup.get(j).getPartido().getId() == PrimeraFase.ppescogidos.get(i).getId()  ){
-			  //mismo partido politico 
-			  contadorDuplicados++ ;
-			  
-		  }
-		  
-		  
-	  }
-  
-	  
-	  ProcesoXFase pf = new ProcesoXFase() ;
-	  pf.setTotalAd(contadorAdherentes);
-	  pf.setTotalDup(  contadorDuplicados);
-	  pf.setIdFase(1);
-	  pf.setIdPartPol(PrimeraFase.ppescogidos.get(i).getId() );
-	  pf.setIdProceso( PrimeraFase.idPE);
-	  
-	  int totalPersonas =  partidosProcesos.getCantPer(PrimeraFase.idPE); 
-	  
-	  System.out.println( "TOTAL DE PERSONAS HABILES EN EL PROCESO: " + totalPersonas);
-	  System.out.println( "TOTAL ADHERENTES: " + pf.getTotalAd() +  " " +PrimeraFase.ppescogidos.get(i).getNombre() );
-	  System.out.println( "TOTAL DUPLICADOS: " + pf.getTotalDup() +  " " +PrimeraFase.ppescogidos.get(i).getNombre() );
-	  
-	  if (  contadorAdherentes > totalPersonas*PrimeraFase.porc*(1.0)/100   )   pf.setResultado("Aceptado"); else pf.setResultado("Rechazado");  
-	  
-	  
-	  System.out.println( "RESULTADO: " +  pf.getResultado());
-	  partidosProcesos.updatePFPP(pf);
-	  
-  }
- 
- 
-		 
-		 
+			// inscribir participantes correctamente aceptados
+
+			for (int i = 0; i < adherentes.size(); i++) {
+
+				System.out.println("Hola Jose " + adherentes.get(i).getPersona().getDni() + " Nombre: "
+						+ adherentes.get(i).getPersona().getNombre());
+				adherentes.get(i).getParticipando().setAceptado(1);
+				partidosProcesos.llenarParticipante(adherentes.get(i).getParticipando(),
+						adherentes.get(i).getPartido().getId(), 1, PrimeraFase.idPE);
+
+			}
+
+			// inscribir participantes duplicados
+
+			for (int i = 0; i < partDup.size(); i++) {
+
+				partDup.get(i).getParticipando().setAceptado(2);
+				partidosProcesos.llenarParticipante(partDup.get(i).getParticipando(),
+						partDup.get(i).getPartido().getId(), 1, PrimeraFase.idPE);
+			}
+
+			List<ProcesoXFase> listaProceFaseBd = new ArrayList<ProcesoXFase>();
+
+			for (int i = 0; i < PrimeraFase.ppescogidos.size(); i++) {
+
+				int contadorAdherentes = 0;
+				int contadorDuplicados = 0;
+
+				for (int j = 0; j < adherentes.size(); j++) {
+
+					if (adherentes.get(j).getPartido().getId() == PrimeraFase.ppescogidos.get(i).getId()) {
+						// mismo partido politico
+						contadorAdherentes++;
+
+					}
+
+				}
+
+				for (int j = 0; j < partDup.size(); j++) {
+
+					if (partDup.get(j).getPartido().getId() == PrimeraFase.ppescogidos.get(i).getId()) {
+						// mismo partido politico
+						contadorDuplicados++;
+
+					}
+
+				}
+
+				ProcesoXFase pf = new ProcesoXFase();
+				pf.setTotalAd(contadorAdherentes);
+				pf.setTotalDup(contadorDuplicados);
+				pf.setIdFase(1);
+				pf.setIdPartPol(PrimeraFase.ppescogidos.get(i).getId());
+				pf.setIdProceso(PrimeraFase.idPE);
+
+				int totalPersonas = partidosProcesos.getCantPer(PrimeraFase.idPE);
+
+				System.out.println("TOTAL DE PERSONAS HABILES EN EL PROCESO: " + totalPersonas);
+				System.out.println(
+						"TOTAL ADHERENTES: " + pf.getTotalAd() + " " + PrimeraFase.ppescogidos.get(i).getNombre());
+				System.out.println(
+						"TOTAL DUPLICADOS: " + pf.getTotalDup() + " " + PrimeraFase.ppescogidos.get(i).getNombre());
+
+				if (contadorAdherentes > totalPersonas * PrimeraFase.porc * (1.0) / 100)
+					pf.setResultado("Aceptado");
+				else
+					pf.setResultado("Rechazado");
+
+				System.out.println("RESULTADO: " + pf.getResultado());
+				partidosProcesos.updatePFPP(pf);
+
+				listaProceFaseBd.add(pf);
+
+			}
+
+			// Reportes.generarReporte( listaProceFaseBd ,
+			// PrimeraFase.ppescogidos , "C:/temp/LP2/Prueba2.xls" );
+			// Reportes.generarReporte(ArrayList<ProcesoXFase>proceFaseBd
+			// ,ArrayList<PartidoPolitico> listaPPoliticos,String
+			// rutaGuardaReporte) throws IOException
+
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 
-	   
-	   //Almacenar Base de Datos
-	   
+		// Almacenar Base de Datos
+
 		long endTime = System.currentTimeMillis();
 		double totalTime = (endTime - startTime) / 1000.0;
 		String almacenarMensaje = new String();
@@ -421,14 +413,12 @@ public class Util {
 				+ " segundos \n";
 		this.mensajeFinal = this.mensajeFinal + almacenarMensaje;
 
-		
-	   	   
-	   Procesando.escribirTextArea("Total del tiempo consumido: " + totalTime);	   
-	   
-	   
-	 //  public static void llenarParticipante(Participante p, int idPP,int idFase, int idPE);
+		Procesando.escribirTextArea("Total del tiempo consumido: " + totalTime);
 
-	   Procesando.mostrarBoton();
+		// public static void llenarParticipante(Participante p, int idPP,int
+		// idFase, int idPE);
+
+		Procesando.mostrarBoton();
 	}
 
 	public String formatearRuta2(String ruta) {
@@ -478,7 +468,7 @@ public class Util {
 				idFirma = row.getCell(5);
 
 				PersonaReniec pr = new PersonaReniec();
-				pr.setApellidos(apellido.getStringCellValue());				
+				pr.setApellidos(apellido.getStringCellValue());
 				int valor = (int) dni.getNumericCellValue();
 				String val = "" + valor;
 				if (val.length() != 8)
@@ -486,7 +476,7 @@ public class Util {
 						val = "0" + val;
 				pr.setDni(val);
 				pr.setIdFirma(idFirma.getStringCellValue());
-				pr.setIdHuella( idHuella.getStringCellValue());
+				pr.setIdHuella(idHuella.getStringCellValue());
 				pr.setNombre(nombre.getStringCellValue());
 				pr.setUbigeo((int) ubigeo.getNumericCellValue());
 
@@ -502,8 +492,7 @@ public class Util {
 	}
 
 	public static List<PersonaReniec> ocrMasReniec2(String dni) {
-		
-		
+
 		List<PersonaReniec> candidatos = new ArrayList<PersonaReniec>();
 
 		boolean entro = false;
@@ -568,19 +557,18 @@ public class Util {
 		return candidatos;
 	}
 
-	
 	public static List<PersonaReniec> sacaListaCandidatos(String dni) {
 		List<PersonaReniec> candidatos = new ArrayList<PersonaReniec>();
 		// String dniCad="" + dni;
 
-		int posCad1 = 0, posCad2 = 0, posCad3 = 0, posCad4=0;
-		String cad1 = "", cad2 = "", cad3 = "", cad4="";
+		int posCad1 = 0, posCad2 = 0, posCad3 = 0, posCad4 = 0;
+		String cad1 = "", cad2 = "", cad3 = "", cad4 = "";
 
 		for (int i = 0; i < 6; i++) {
 
 			for (int j = i + 1; j < 7; j++) {
-				
-				for(int k=j+1;k<8;k++){
+
+				for (int k = j + 1; k < 8; k++) {
 
 					cad1 = "";
 					cad2 = "";
@@ -597,40 +585,40 @@ public class Util {
 					else
 						for (int m = posCad1; m < i; m++)
 							cad1 += dni.charAt(m);
-					
+
 					if (i == 5 || (j - i == 1))
 						cad2 = "";
 					else
 						for (int m = posCad2; m < j; m++)
 							cad2 += dni.charAt(m);
 
-					if (j == 6 || (k-j==1))
+					if (j == 6 || (k - j == 1))
 						cad3 = "";
 					else
 						for (int m = posCad3; m < k; m++)
 							cad3 += dni.charAt(m);
-					
-					if (k == 7 )
+
+					if (k == 7)
 						cad4 = "";
 					else
 						for (int m = posCad4; m < 8; m++)
 							cad4 += dni.charAt(m);
-					
+
 					boolean salir;
 					for (int p = 0; p < ReniecBD.lista.size(); p++) {
 						salir = false;
 						String reniecDni = ReniecBD.lista.get(p).getDni();
 						if (cad1.compareTo("") != 0) {
-							//System.out.println("cad1: "+cad1);
+							// System.out.println("cad1: "+cad1);
 							for (int m = posCad1; m < cad1.length() + posCad1; m++)
 								if (dni.charAt(m) != reniecDni.charAt(m)) {
 									salir = true;
 									break;
 								}
 						}
-						if (!salir){
+						if (!salir) {
 							if (cad2.compareTo("") != 0) {
-								//System.out.println("cad2: "+cad2);
+								// System.out.println("cad2: "+cad2);
 								for (int m = posCad2; m < cad2.length() + posCad2; m++)
 									if (dni.charAt(m) != reniecDni.charAt(m)) {
 										salir = true;
@@ -639,7 +627,7 @@ public class Util {
 							}
 							if (!salir) {
 								if (cad3.compareTo("") != 0) {
-									//System.out.println("cad3: "+cad3);
+									// System.out.println("cad3: "+cad3);
 									for (int m = posCad3; m < cad3.length() + posCad3; m++)
 										if (dni.charAt(m) != reniecDni.charAt(m)) {
 											salir = true;
@@ -648,7 +636,7 @@ public class Util {
 								}
 								if (!salir) {
 									if (cad4.compareTo("") != 0) {
-										//System.out.println("cad3: "+cad3);
+										// System.out.println("cad3: "+cad3);
 										for (int m = posCad4; m < cad4.length() + posCad4; m++)
 											if (dni.charAt(m) != reniecDni.charAt(m)) {
 												salir = true;
@@ -656,37 +644,36 @@ public class Util {
 											}
 									}
 									if (!salir) {
-										//System.out.println("tamanho: "+candidatos.size());
+										// System.out.println("tamanho:
+										// "+candidatos.size());
 										// si no llego a ningun break, anhade
-										if(candidatos.size()==0){																						
-											candidatos.add(ReniecBD.lista.get(p));													
-										}									
-										else{
-											boolean entre=false;
-											for(int m=0;m<candidatos.size();m++){
-												String dniCan=candidatos.get(m).getDni();												
-												if(dniCan.compareTo(ReniecBD.lista.get(p).getDni())==0){										
-													//System.out.println("ENTRE");
-													entre=true;
-													break;													
-												}														
+										if (candidatos.size() == 0) {
+											candidatos.add(ReniecBD.lista.get(p));
+										} else {
+											boolean entre = false;
+											for (int m = 0; m < candidatos.size(); m++) {
+												String dniCan = candidatos.get(m).getDni();
+												if (dniCan.compareTo(ReniecBD.lista.get(p).getDni()) == 0) {
+													// System.out.println("ENTRE");
+													entre = true;
+													break;
+												}
 											}
-											if(!entre)candidatos.add(ReniecBD.lista.get(p));
-										}		
-									}									
-								}							
+											if (!entre)
+												candidatos.add(ReniecBD.lista.get(p));
+										}
+									}
+								}
 							}
 						}
 					}
 
-					
-					
-					
 				}
 
 			}
 		}
-		//for(int i=0;i<candidatos.size();i++) System.out.println("dni: "+candidatos.get(i).getDni());
+		// for(int i=0;i<candidatos.size();i++) System.out.println("dni:
+		// "+candidatos.get(i).getDni());
 		return candidatos;
 		/*
 		 * String dniRecortado=""; int size;
@@ -705,8 +692,7 @@ public class Util {
 		 * if(candidatos.get(m).getDni()!=ReniecBD.lista.get(k).getDni())
 		 * candidatos.add(ReniecBD.lista.get(k)); } } } }
 		 */
-		
-		
+
 	}
 
 }

@@ -12,7 +12,7 @@ public class Minutiae {
 
 	static int closerPoints = 5;
 	static double angleRange = 3.5;
-	static double relativeDistance = 0.15;
+	static double relativeDistance = 0.02;
 	
 	public static void crossingNumber(final int[][] givenImage,
 			List<Point> minutiaeFound) throws FileNotFoundException,
@@ -390,7 +390,7 @@ public class Minutiae {
 
 					int val = analizePairListTuple(tIM, tBM);
 
-					if (val > 1) {
+					if (val > 2) {
 
 						totalRelations = totalRelations + 1;
 						// mTuplesBMAux.remove(j);

@@ -43,7 +43,9 @@ static public JLabel labelHuella = new JLabel();
 
 
 	static int porcentaje = 0;
-	private static JButton btnGenerarReporte;
+	private static JButton btnGenerarReporteDuplicados;
+	private static JButton btnGenerarReporteProceso;
+
 	static final JLabel labelPartidoPolitico = new JLabel("Iniciando . . .");
 	static final JLabel labelPadron = new JLabel("Espere por favor . . . ");
 
@@ -105,9 +107,9 @@ static public JLabel labelHuella = new JLabel();
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}*/
-		btnGenerarReporte = new JButton("Generar Reporte");
-		btnGenerarReporte.setBounds(270, 552, 129, 23);
-		add(btnGenerarReporte);
+		btnGenerarReporteDuplicados = new JButton("Generar Reporte Duplicados");
+		btnGenerarReporteDuplicados.setBounds(324, 572, 193, 23);
+		add(btnGenerarReporteDuplicados);
 		labelPartidoPolitico.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		labelPartidoPolitico.setBounds(10, 24, 234, 14);
 		
@@ -124,7 +126,27 @@ static public JLabel labelHuella = new JLabel();
 		JLabel lblHuellaProcesada = new JLabel("Huella procesada:");
 		lblHuellaProcesada.setBounds(331, 284, 122, 14);
 		add(lblHuellaProcesada);
-		btnGenerarReporte.addActionListener(new ActionListener() {
+		
+		 btnGenerarReporteProceso = new JButton("Generar Reporte Proceso");
+		btnGenerarReporteProceso.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				
+				Reportes pruebaReport = new Reportes();
+				 
+				 //HACEMOS REPORTE AUTOMATICAMENTE FINALIZADO LA PANTALLA PARA LAS PERSONAS DUPLICADAS EN PARTDOS PLITICOS	
+				 try {
+					pruebaReport.generarReporte(Util.adherentes , Util.partDup , PrimeraFase.ppescogidos);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+		});
+		btnGenerarReporteProceso.setBounds(51, 572, 193, 23);
+		add(btnGenerarReporteProceso);
+		btnGenerarReporteDuplicados.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Reportes pruebaReport = new Reportes();
 				 
@@ -138,7 +160,8 @@ static public JLabel labelHuella = new JLabel();
 			}
 		});
 		
-		btnGenerarReporte.hide();
+		btnGenerarReporteDuplicados.hide();
+		btnGenerarReporteProceso.hide();
 		//btnGenerarReporte.disable();
 		//if(Util.mostrarReporte){
 			
@@ -146,7 +169,8 @@ static public JLabel labelHuella = new JLabel();
 	}
 
 	static public void mostrarBoton(){
-		btnGenerarReporte.show();
+		btnGenerarReporteDuplicados.show();
+		btnGenerarReporteProceso.show();
 		//btnGenerarReporte.enable();
 	}
 
