@@ -157,8 +157,7 @@ public class Main {
                         }	
                         
                         
-                        
-                        //new FileSaver(Copia1).saveAsPng("C:\\Users\\lenovo\\Desktop\\PUCP\\IMAGENEXXX\\" + contador + ".jpg");
+                        new FileSaver(Copia1).saveAsPng("C:\\Users\\inf250\\Documents\\DP1 MATER\\Kappa\\" + contador + ".jpg");
                         contador++;
                         //Prefs.blackBackground = false;
   
@@ -228,22 +227,13 @@ public class Main {
                      	Procesando.escribirTextArea( "De todos los candidatos el mejor según firmas es: " + listaPersonasReniec.get(indiceCandidatoFirmas).getDni());
                      	//if(  listaPorcentajeFirma.get(  indiceCandidatoFirmas )    >   listaPorcentajeFirma.get(  listaPorcentajeFirma.size()-1  )    )   {
                      	 if(  elElegidoFinal ==null     )   elElegidoFinal = listaPersonasReniec.get(indiceCandidatoFirmas) ;
-						  
-							
-						
-                    	//huellas
-                     	/*
-                    	distanceBetweenSquares = 86; widthSquare = 150;  heightSquare = 75;        
-                    	ImagePlus Copia2 = IJ.openImage(ruta3);
-                        Copia2.setRoi(yHuellas+2, alturaFirma2+2 , 150 , 77);
-                        if (n != 7 ) alturaFirma2 = rf.obtenerSiguienteEspacioFirmas(yFirmas+5, alturaFirma2+2);
-                        IJ.run(Copia2, "Crop", ""); 
-                        */
+						 						
+                
                      	rf.recortesHuellasOficial(ruta0);
                         List<Integer>coordX = rf.coordX;
                         List<Integer>coordY = rf.coordY;
                      	ImagePlus Copia2 = IJ.openImage(ruta0);
-
+                     		
 
                         Copia2.setRoi(coordX.get(n), coordY.get(n) , rf.ancho , rf.alto);
                         IJ.run(Copia2, "Crop", ""); 
@@ -254,6 +244,22 @@ public class Main {
                       		Procesando.escribirTextArea("Para el candiato: " + listaPersonasReniec.get(i).getDni() + " Porcentaje de huellas es: "+ listaPorcentajeHuella.get(i) );     
                       	Procesando.escribirTextArea( "De todos los candidatos el mejor según Huellas es: " + listaPersonasReniec.get(indiceCandidatoHuellas).getDni());
 
+                      	
+                      	
+                      	
+                    	List<Double> sumaPorcentajes = new ArrayList<Double>();
+						double valor = 0.0;
+						for (int i = 0 ;  i< listaPersonasReniec.size() ; i++){
+							valor = listaPorcentajeFirma.get(i) + listaPorcentajeHuella.get(i) ;
+							sumaPorcentajes.add(valor);
+						}
+						
+						
+						 int indice = candidatoHuellas(sumaPorcentajes);
+						 
+						 elElegidoFinal= listaPersonasReniec.get(indice);
+                      	
+                      	
                       	if (elElegidoFinal != null ) {
 	  
                       		//voy a llenar partido persona   
@@ -271,6 +277,8 @@ public class Main {
 							par.setPorcentajeFirma(listaPorcentajeFirma.get(  indiceCandidatoFirmas )          );
 							par.setPorcentajeHuella(  listaPorcentajeHuella.get(indiceCandidatoHuellas) );
 							auxElegidoPartidoPersona.setParticipando(  par );
+							
+						
 							participantesPreDuplicidad.add( auxElegidoPartidoPersona) ; 
                       	}
                     	} catch (IOException e) {

@@ -3799,7 +3799,7 @@ public static FirmaRecortada cortarFirma(String urlPlanillonesOriginales, int in
 							+ i + "rr.jpg");
 			*/
 			cortadorImagenes.ApplyInPlace(i3);
-			JOptionPane.showMessageDialog(null, i3.toIcon(), "Result , indice", JOptionPane.PLAIN_MESSAGE); 
+			//JOptionPane.showMessageDialog(null, i3.toIcon(), "Result , indice", JOptionPane.PLAIN_MESSAGE); 
 
 			FirmaRecortada fr = new FirmaRecortada();
 			fr.img = i3.toBufferedImage();
