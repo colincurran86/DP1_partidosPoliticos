@@ -42,142 +42,200 @@ public class recorteFunctions {
     public void recortesHuellasOficial(String rutaPlanillon){
     	
     	// TODO Auto-generated method stub
-    			//Mat padron=Imgcodecs.imread("C:/Users/Administrador/Desktop/Christian/9no/DP1/Entrega de Padrones/padron.blanco.firmado.2.jpg");
-    			
-    			int widthPar=2073;
-    			int heightPar=972;
-    			
-    			
-    				ImagePlus padronJ = new ImagePlus();
-    				/*IJ.run(padronJ, "Undo", "");
-    				padronJ.close();*/
-    				//padronJ = IJ.openImage("C:\\Users\\Administrador\\Desktop\\Christian\\9no\\DP1\\Nuestros planillones\\Planillones\\part.d.original8.png");
-    				padronJ = IJ.openImage(rutaPlanillon);
-    				Prefs.blackBackground = false;
-    				IJ.run(padronJ, "Make Binary", "");
-    				//padronJ.show();
-    				//new FileSaver(padronJ).saveAsPng("C:\\Users\\Administrador\\Desktop\\Christian\\9no\\DP1\\Entrega de padrones\\aaa.png"); 
-    				//FileInfo fi= padronJ.getFileInfo();
-    				//imp.setRoi(10,158,1246,748);
-    				//IJ.run(imp, "Crop", "");
-    				
-    				//////////////
-    				//ELIMINA LA PARTE DE LA IZQUIERDA
-    				//////////////
-    				
-    				int width=padronJ.getWidth();
-    				int height=padronJ.getHeight();
-    				
-    				int x;
-    				for(x=0;x<width;x++){
-    					int r = padronJ.getPixel(x, height/2)[0];
-    					int g = padronJ.getPixel(x, height/2)[1];
-    					int b = padronJ.getPixel(x, height/2)[2];
-    					//System.out.println(r + " "+ g + " " + b);
-    					if(r!=0)//r=255 , g=0 , b=0 
-    						//System.out.println(r + " "+ g + " " + b);
-    						break;											
-    				}
-    				//System.out.println("XXXX" + x);
-    				
-    				int y;
-    				for(y=0;y<height;y++){
-    					int r = padronJ.getPixel(x, y)[0];
-    					int g = padronJ.getPixel(x, y)[1];
-    					int b = padronJ.getPixel(x, y)[2];
-    					if(r!=0)
-    						break;	
-    				}
-    				y+=5;
-    				
-    				//hallar el x por la izquierda		
-    				int xIzq;
-    				for(xIzq=width-1;xIzq>0;xIzq--){
-    					int r = padronJ.getPixel(xIzq, y)[0];
-    					int g = padronJ.getPixel(xIzq, y)[1];
-    					int b = padronJ.getPixel(xIzq, y)[2];
-    					if(r!=0)
-    						break;
-    				}
-    				x--;
-    				//System.out.println("XXXX" + y);
-    				//System.out.println("XXXX" + xIzq);
-    				
-    				//sumar borde de la grilla
-    				int k,cantNegros=0;
-    				for(k=y;k<height;k++){
-    					int r = padronJ.getPixel(xIzq, k)[0];
-    					int g = padronJ.getPixel(xIzq, k)[1];
-    					int b = padronJ.getPixel(xIzq, k)[2];
-    					if(r==0)
-    						break;
-    					cantNegros++;			
-    				}
-    				
-    				//volar la cabecera!
-    				int volarCabecera=xIzq-25,f;
-    				for(f=y;f<height;f++){
-    					int r = padronJ.getPixel(volarCabecera, f)[0];
-    					int g = padronJ.getPixel(volarCabecera, f)[1];
-    					int b = padronJ.getPixel(volarCabecera, f)[2];
-    					if(r==0)
-    						break;
-    				}
-    				//dentro de la cabecera
-    				for(f=f;f<height;f++){
-    					int r = padronJ.getPixel(volarCabecera, f)[0];
-    					int g = padronJ.getPixel(volarCabecera, f)[1];
-    					int b = padronJ.getPixel(volarCabecera, f)[2];
-    					if(r!=0)
-    						break;
-    				}
-    				//el Y al terminar la cabecera
-    				for(f=f;f<height;f++){
-    					int r = padronJ.getPixel(volarCabecera, f)[0];
-    					int g = padronJ.getPixel(volarCabecera, f)[1];
-    					int b = padronJ.getPixel(volarCabecera, f)[2];
-    					if(r==0)
-    						break;
-    				}
-    				System.out.println("Y Y : " + f);
-    				cantNegros=cantNegros-(f-y);
-    				
-    				
-    				
-    				
-    				int p;
-    				for(p=xIzq-50;p>0;p--){
-    					int sumNegros=0;
-    					for(int q=0;q<cantNegros;q++){
-    						int r = padronJ.getPixel(p, f+q)[0];
-    						int g = padronJ.getPixel(p, f+q)[1];
-    						int b = padronJ.getPixel(p, f+q)[2];
-    						if(r!=0) sumNegros++;
-    					}
-    					if(sumNegros==cantNegros) break;
-    				}
-    				System.out.println("Cant negros: " + cantNegros);
-    				System.out.println("Extremo derecho : X " + xIzq + " " + f  + "Extremo izquierdo: X "+ p + " " + f);
-    				
-    				alto=cantNegros/8;
-    				ancho=xIzq-p;
-    				
-    				//System.out.println("Alto: " + alto + " Ancho: " + ancho);
-    				
-    				int vecesEntro=0;
-    				for(int i=f;i<f+cantNegros;i+=alto){
-    					
-    					vecesEntro++;
-    					if(vecesEntro>8) break;
-    					coordX.add(p);
-    					coordY.add(i);
-    					//System.out.println("Posicion X: "+ p + " Y " + i);
-    					//padronJ = IJ.openImage("C:\\Users\\Administrador\\Desktop\\Christian\\9no\\DP1\\Nuestros planillones\\Planillones\\part.d.original8.png");
-    					///padronJ.setRoi(p,i,ancho,alto);
-    					//IJ.run(padronJ,"Crop","");
-    					//padronJ.show();
-    					
-    				}
+        //Mat padron=Imgcodecs.imread("C:/Users/Administrador/Desktop/Christian/9no/DP1/Entrega de Padrones/padron.blanco.firmado.2.jpg");
+            ImagePlus padronJ = new ImagePlus();
+            padronJ = IJ.openImage(rutaPlanillon);
+            //padronJ.show();
+            Prefs.blackBackground = false;
+            IJ.run(padronJ, "Make Binary", "");
+           
+            int width=padronJ.getWidth();
+            int height=padronJ.getHeight();
+
+           
+            //Verificamos el lado izquierdo
+            for (int i = 0; i< width; i++ ){
+                int R = padronJ.getPixel(i, height/2)[0];
+                if ( R == 0 ){
+                    if (i != 0){
+                       padronJ.setRoi(i+3,0,width-i-1,height-1);
+                       IJ.run(padronJ, "Crop", "");    
+                      // padronJ.show();
+                    }
+                    break;
+                }
+            }
+           
+           
+          //  System.out.println("*****MOSTRANDO IMAGEEEEEEEEEEN******");
+            new FileSaver(padronJ).saveAsPng("C:\\Users\\inf250\\Desktop\\DP1 MATER\\Kappa\\"+ "blinbineo.jpg");
+
+            //////////////
+            //ELIMINA LA PARTE DE LA IZQUIERDA
+            //////////////
+           
+   
+            int x;
+            for(x=0;x<width;x++){
+                int r = padronJ.getPixel(x, height/2)[0];
+                int g = padronJ.getPixel(x, height/2)[1];
+                int b = padronJ.getPixel(x, height/2)[2];
+                //System.out.println(r + " "+ g + " " + b);
+                if(r!=0)//r=255 , g=0 , b=0
+                    //System.out.println(r + " "+ g + " " + b);
+                    break;                                         
+            }
+            //System.out.println("XXXX" + x);
+           
+            int y;
+            for(y=0;y<height;y++){
+                int r = padronJ.getPixel(x, y)[0];
+                if(r!=0)
+                    break; 
+            }
+			y+=2;
+            //y+=13;
+           
+           /*
+            //hallar el x por la izquierda     
+            int xIzq;
+            for(xIzq=width;xIzq>0;xIzq--){
+                int r = padronJ.getPixel(xIzq, y)[0];  
+                if(r!=0)
+                    break;
+            }
+            xIzq--;*/
+       
+           
+            int xIzq;
+            int yBlanco=y+13;
+            //hallar el x por la izquierda    
+            for(xIzq=width-1;xIzq>0;xIzq--){
+                int r = padronJ.getPixel(xIzq, yBlanco)[0];
+             
+                if(r!=0)
+                    break;
+            }
+            //xIzq-=3;
+            int extremX;
+            for(extremX=xIzq;extremX>0;extremX--){
+                int r = padronJ.getPixel(extremX, yBlanco)[0];
+                if(r==0)
+                    break;
+            }
+            int distMedia=(xIzq-extremX)/2;
+            System.out.println("DISTANCIA MED" + distMedia);
+            xIzq-=distMedia;
+            
+            //sumar borde de la grilla
+           
+            int k,cantNegros=0;
+            System.out.println("XIZQ :" + xIzq);
+            System.out.println("Y: " + y);
+            for(k=y;k<height;k++){
+                int r = padronJ.getPixel(xIzq , k)[0];
+                if(r==0)
+                    break;
+                cantNegros++;          
+            }
+           
+            //volar la cabecera!
+           
+           
+            int volarCabecera=xIzq-distMedia-10,f;
+           
+            for(f=0;f<height;f++){//blancos!
+                int r = padronJ.getPixel(volarCabecera, f)[0];
+                if(r!=0)break;
+            }
+            for(f=f;f<height;f++){//negros!
+                int r = padronJ.getPixel(volarCabecera, f)[0];
+                if(r==0)break;
+            }
+            for(f=f;f<height;f++){//blancos!
+                int r = padronJ.getPixel(volarCabecera, f)[0];
+                if(r!=0)break;
+            }
+            for(f=f;f<height;f++){//negros!
+                int r = padronJ.getPixel(volarCabecera, f)[0];
+                if(r==0)break;
+            }
+            /*for(f=f;f<height;f++){//blancos!
+                int r = padronJ.getPixel(volarCabecera, f)[0];
+                if(r!=0)break;
+            }*/
+           
+           
+
+            /*
+            //volar la cabecera!
+            int volarCabecera=xIzq-25,f;
+            for(f=y;f<height;f++){
+                int r = padronJ.getPixel(volarCabecera, f)[0];
+                int g = padronJ.getPixel(volarCabecera, f)[1];
+                int b = padronJ.getPixel(volarCabecera, f)[2];
+                if(r==0)
+                    break;
+            }
+            //dentro de la cabecera
+            for(f=f;f<height;f++){
+                int r = padronJ.getPixel(volarCabecera, f)[0];
+                int g = padronJ.getPixel(volarCabecera, f)[1];
+                int b = padronJ.getPixel(volarCabecera, f)[2];
+                if(r!=0)
+                    break;
+            }
+            //el Y al terminar la cabecera
+            for(f=f;f<height;f++){
+                int r = padronJ.getPixel(volarCabecera, f)[0];
+                int g = padronJ.getPixel(volarCabecera, f)[1];
+                int b = padronJ.getPixel(volarCabecera, f)[2];
+                if(r==0)
+                    break;
+            }
+            */
+           
+            System.out.println("VALOR DE F : " + f);
+            System.out.println("VALOR DE Y : " + y);
+            System.out.println("NEGROS ANTER : " + cantNegros);
+
+            cantNegros=cantNegros-(f-y);
+           
+           
+           
+           
+            int p;
+            for(p=xIzq-50;p>0;p--){
+                int sumNegros=0;
+                for(int q=0;q<cantNegros;q++){
+                    int r = padronJ.getPixel(p, f+q)[0];
+                    int g = padronJ.getPixel(p, f+q)[1];
+                    int b = padronJ.getPixel(p, f+q)[2];
+                    if(r!=0) sumNegros++;
+                }
+                if(sumNegros>=(0.99)*cantNegros) break;
+            }
+            System.out.println("Cant negros: " + cantNegros);
+            System.out.println("Extremo derecho : X " + xIzq + " " + f  + " Extremo izquierdo: X "+ p + " " + f);
+           
+            alto=cantNegros/8;
+            ancho=xIzq-p;
+           
+            //System.out.println("Alto: " + alto + " Ancho: " + ancho);
+           
+            int vecesEntro=0;
+            for(int i=f;i<f+cantNegros;i+=alto){
+               
+                vecesEntro++;
+                if(vecesEntro>8) break;
+                coordX.add(p);
+                coordY.add(i);
+                //System.out.println("Posicion X: "+ p + " Y " + i);
+                //padronJ = IJ.openImage("C:\\Users\\Administrador\\Desktop\\Christian\\9no\\DP1\\Nuestros planillones\\Planillones\\part.d.original8.png");
+                ///padronJ.setRoi(p,i,ancho,alto);
+                //IJ.run(padronJ,"Crop","");
+			//padronJ.show();
+			}
     			
     }
     
@@ -201,7 +259,9 @@ public class recorteFunctions {
     
     public void guardarImagenes(String directorioPadrones){
     	BufferedImage image = null;
+    	//System.out.println(directorioPadrones);
     	File folder = new File(directorioPadrones);
+    	
         String workingDir = System.getProperty("user.dir"); // nos evitamos el problema de las rutas :'
         String rutaAlmacenar = workingDir+ "/Copia";
         File file = new File(rutaAlmacenar);  

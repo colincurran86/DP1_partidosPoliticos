@@ -165,12 +165,17 @@ public class Carga extends JPanel implements ActionListener{
 			if(porcSeg==-1)
 				JOptionPane.showMessageDialog(null, "No se puede realizar la 2da fase");
 			else{
-				SegundaFase pf =new SegundaFase();
-				
-				//valores estaticos!
-				
+				SegundaFase sf =new SegundaFase();
+				sf.idPESeg=idPE;
+				sf.idPPSeg=idPP;
+				sf.porcSeg=porc;
+				sf.choiceCISeg=choiceCI;
+				sf.choiceCMSeg=choiceCM;
+				sf.ppescogidosSeg = ppEscogidos;
+				sf.setVisible(true);
+												
 				Principal.getFrame().getContentPane().setVisible(false);
-				Principal.getFrame().setContentPane(pf);
+				Principal.getFrame().setContentPane(sf);
 			}
 				
 		}

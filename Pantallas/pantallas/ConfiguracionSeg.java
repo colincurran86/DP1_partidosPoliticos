@@ -86,10 +86,10 @@ public class ConfiguracionSeg extends JDialog implements ActionListener{
 			cmbBoxPE.addItem(listaPE.get(i).getNombre());
 		
 
-		if(Carga.idPE!=0){
+		if(Carga.idPESeg!=0){
 			int i;
 			for(i=0;i<listaPE.size();i++)
-				if(listaPE.get(i).getId()==Carga.idPE) break;
+				if(listaPE.get(i).getId()==Carga.idPESeg) break;
 			cmbBoxPE.setSelectedIndex(i);
 		}
 		
@@ -196,8 +196,8 @@ public class ConfiguracionSeg extends JDialog implements ActionListener{
 			int porcentaje=(int)spinner.getValue();
 			
 			if (pe!=null) {
-				Carga.idPE=pe.getId();
-				Carga.porc=porcentaje;
+				Carga.idPESeg=pe.getId();
+				Carga.porcSeg=porcentaje;
 			}
 			if (pp!=null) Carga.idPP=pp.getId();
 			/*if(rdbtnCMasiva.isSelected()){ 
