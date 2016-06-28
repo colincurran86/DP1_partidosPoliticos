@@ -3916,7 +3916,7 @@ public static List<Double> procesarFirmasNuevo(FirmaRecortada listaFirmas, List<
 		*/	
 			else {
 				freak1.scale = 18.0f;
-				porcentajeMinimo = 34; //26
+				porcentajeMinimo = 35; //26
 			}
 			}
 			else
