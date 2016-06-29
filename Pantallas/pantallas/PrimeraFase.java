@@ -170,12 +170,12 @@ public class PrimeraFase extends JPanel implements ActionListener {
 
 			Util.mostrarReporte=false;
 			Procesando p1;
-			p1 = new Procesando();
-			p1.setVisible(true);
 			rutaPadrones = txtFieldPlan.getText();
 			rutaExcel = txtFieldBDRNV.getText();
 			rutaFirma = txtFieldBDFirmas.getText();
 			rutaHuella = txtFieldBDHuellas.getText();
+			p1 = new Procesando();
+			p1.setVisible(true);
 			Principal.getFrame().getContentPane().setVisible(false);
 			Principal.getFrame().setContentPane(p1);
 

@@ -13,7 +13,9 @@ import javax.imageio.ImageIO;
 	
 
 
+
 import pantallas.Procesando;
+import pantallas.ProcesandoSeg;
 import models.PersonaReniec;
 
 public class AlgoritmoHuellas {
@@ -31,6 +33,7 @@ public class AlgoritmoHuellas {
 				
 				BufferedImage imageBase = buscarImageBase(idHuella, rutaHuella);
 				Procesando.setearImagenHuella(imageInput.getBufferedImage());
+				ProcesandoSeg.setearImagenHuella(imageInput.getBufferedImage());
 				double Porcentaje = mhuellas.principal(imageInput.getBufferedImage(), imageBase);
 				if (Porcentaje == -1) Porcentaje = 0;
 				resultado.add(Porcentaje);

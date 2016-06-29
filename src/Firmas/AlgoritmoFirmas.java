@@ -26,6 +26,7 @@ import org.imgscalr.Scalr;
 import org.imgscalr.Scalr.Method;
 
 import pantallas.Procesando;
+import pantallas.ProcesandoSeg;
 import Catalano.Imaging.Filters.Crop;
 import Catalano.Imaging.Filters.OtsuThreshold;
 import Catalano.Imaging.Filters.Rotate;
@@ -3829,6 +3830,8 @@ public static List<Double> procesarFirmasNuevo(FirmaRecortada listaFirmas, List<
 		throws IOException {
 
 	Procesando.setearImagenFirma( listaFirmas.img );
+	ProcesandoSeg.setearImagenFirma(listaFirmas.img);
+	
 	double umbral = 5;
 	int d1 = 0, d2 = 0;
 	int porcentajeMinimo = 26; // 35 16

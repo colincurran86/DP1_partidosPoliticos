@@ -157,7 +157,7 @@ public class Main {
                         }	
                         
                         
-                        new FileSaver(Copia1).saveAsPng("C:\\Users\\lenovo\\Desktop\\ENTRENAMIENTO\\RESULTADO\\" + contador + ".jpg");
+                        //new FileSaver(Copia1).saveAsPng("C:\\Users\\lenovo\\Desktop\\ENTRENAMIENTO\\RESULTADO\\" + contador + ".jpg");
                         contador++;
                         //Prefs.blackBackground = false;
   

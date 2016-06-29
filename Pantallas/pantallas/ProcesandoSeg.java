@@ -239,6 +239,7 @@ static public void setearImagenHuella ( BufferedImage imgA  ) {
 		public void run() {
 			Util u = new Util();
 			try {
+				System.out.println();
 				u.gerardoRecortesWarningSeg();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block

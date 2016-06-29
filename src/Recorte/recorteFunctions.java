@@ -70,13 +70,7 @@ public class recorteFunctions {
     		            }
     		        }
     		        
-    		      //  System.out.println("*****MOSTRANDO IMAGEEEEEEEEEEN******");
-                  //  new FileSaver(padronJ).saveAsPng("C:\\Users\\inf250\\Documents\\DP1 MATER\\Kappa\\"+ "blinbineo.jpg");
 
-    				//////////////
-    				//ELIMINA LA PARTE DE LA IZQUIERDA
-    				//////////////
-    				
     		
     				int x;
     				for(x=0;x<width;x++){
@@ -109,27 +103,6 @@ public class recorteFunctions {
     				}
     				x--;
 				
-    				/*
-    				int xIzq;
-                    int yBlanco=y+13;
-                    //hallar el x por la izquierda     
-                    for(xIzq=width-1;xIzq>0;xIzq--){
-                        int r = padronJ.getPixel(xIzq, yBlanco)[0];
-                     
-                        if(r!=0)
-                            break;
-                    }
-                    //xIzq-=3;
-                    int extremX;
-                    for(extremX=xIzq;extremX>0;extremX--){
-                        int r = padronJ.getPixel(extremX, yBlanco)[0];
-                        if(r==0)
-                            break;
-                    }
-                    int distMedia=(xIzq-extremX)/2;
-                    System.out.println("DISTANCIA MED" + distMedia);
-                    xIzq-=distMedia;
-                    */
     				//sumar borde de la grilla
     				
     				int k,cantNegros=0;
@@ -172,70 +145,11 @@ public class recorteFunctions {
                     }
                     
                     System.out.println("F Negros22 " + f);
-
-                    
-    				/*
-                    int volarCabecera=xIzq-25,f;
-                   
-                    for(f=0;f<height;f++){//blancos!
-                        int r = padronJ.getPixel(volarCabecera, f)[0];
-                        if(r!=0)break;
-                    }
-                    for(f=f;f<height;f++){//negros!
-                        int r = padronJ.getPixel(volarCabecera, f)[0];
-                        if(r==0)break;
-                    }
-                    for(f=f;f<height;f++){//blancos!
-                        int r = padronJ.getPixel(volarCabecera, f)[0];
-                        if(r!=0)break;
-                    }
-                    for(f=f;f<height;f++){//negros!
-                        int r = padronJ.getPixel(volarCabecera, f)[0];
-                        if(r==0)break;
-                    }
-                    for(f=f;f<height;f++){//blancos!
-                        int r = padronJ.getPixel(volarCabecera, f)[0];	
-                        if(r!=0)break;
-                    }
-                    */
-    				
-
-    				/*
-    				//volar la cabecera!
-    				int volarCabecera=xIzq-25,f;
-    				for(f=y;f<height;f++){
-    					int r = padronJ.getPixel(volarCabecera, f)[0];
-    					int g = padronJ.getPixel(volarCabecera, f)[1];
-    					int b = padronJ.getPixel(volarCabecera, f)[2];
-    					if(r==0)
-    						break;
-    				}
-    				//dentro de la cabecera
-    				for(f=f;f<height;f++){
-    					int r = padronJ.getPixel(volarCabecera, f)[0];
-    					int g = padronJ.getPixel(volarCabecera, f)[1];
-    					int b = padronJ.getPixel(volarCabecera, f)[2];
-    					if(r!=0)
-    						break;
-    				}
-    				//el Y al terminar la cabecera
-    				for(f=f;f<height;f++){
-    					int r = padronJ.getPixel(volarCabecera, f)[0];
-    					int g = padronJ.getPixel(volarCabecera, f)[1];
-    					int b = padronJ.getPixel(volarCabecera, f)[2];
-    					if(r==0)
-    						break;
-    				}
-                    */
-    				
     				System.out.println("VALOR DE F : " + f);
     				System.out.println("VALOR DE Y : " + y);
     				System.out.println("NEGROS ANTER : " + cantNegros);
 
     				cantNegros=cantNegros-(f-y);
-    				
-    				
-    				
     				
     				int p;
     				for(p=xIzq-50;p>0;p--){
@@ -263,12 +177,6 @@ public class recorteFunctions {
     					if(vecesEntro>8) break;
     					coordX.add(p);
     					coordY.add(i);
-    					//System.out.println("Posicion X: "+ p + " Y " + i);
-    					//padronJ = IJ.openImage("C:\\Users\\Administrador\\Desktop\\Christian\\9no\\DP1\\Nuestros planillones\\Planillones\\part.d.original8.png");
-    					///padronJ.setRoi(p,i,ancho,alto);
-    					//IJ.run(padronJ,"Crop","");
-    					//padronJ.show();
-    					
     				}
     			
     }

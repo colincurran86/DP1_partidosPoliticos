@@ -41,7 +41,7 @@ public class partidosProcesos {
 					+ "(IdPartidosPoliticos , idFase, Resultado, Observacion, IdProceso, FechaInicioProceso)"
 					+ "VALUES ('" + p.getIdPartPol() + "', '" + p.getIdFase() + "' , '" + p.getResultado() + "' , '"
 					+ p.getObservacion() + "' , '" + p.getIdProceso() + "' , '" + p.getFechaInicioProc() + "'   )");
-
+			resultSet.close();
 			connect.close();
 
 		} catch (SQLException e) {
@@ -132,22 +132,26 @@ public class partidosProcesos {
 					DBConnection.password);
 			statement = connect.createStatement();
 			
-			resultSet = statement.executeQuery("select * from ProcesoxFasexPartidoPolitico where idFase = " + 1 + " AND IdProceso= " + idPESeg);			
+			ResultSet resultSet3 = statement.executeQuery("select * from ProcesoxFasexPartidoPolitico where idFase = " + 1 + " AND IdProceso= " + idPESeg);			
 
-			while (resultSet.next()) {
-				int id = resultSet.getInt("IdProceso");
+			while (resultSet3.next()) {
 				
-				ResultSet resultSet2=statement.executeQuery("select * from Participantes where idFase = " + 1 + " AND IdProceso= " + idPESeg + "AND IdProceso= " + id);
+				int id = resultSet3.getInt("IdPartidosPoliticos");
+				Statement statement2 = connect.createStatement();
+				ResultSet resultSet2=statement2.executeQuery("select * from Participantes where idFase = " + 1 + " and IdProceso= " + idPESeg + " and IdPartidosPoliticos= " + id);
+				
 				while(resultSet2.next()){
-					int idPar = resultSet.getInt("IdParticipante");
-					String dni= resultSet.getString("DNI");
+					int idPar = resultSet2.getInt("IdParticipante");
+					String dni= resultSet2.getString("DNI");
 					PartidoPersona pp=new PartidoPersona();
 					Participante p=new Participante();
 					p.setDni(dni);
 					pp.setParticipando(p);	
 					listaAceptadosPrim.add(pp);
 				}
+				resultSet2.close();
 			}
+			resultSet3.close();
 			connect.close();
 			
 			for(int i=0;i<adherentes.size();i++){
@@ -200,7 +204,7 @@ public class partidosProcesos {
 					+ p.getAceptado() + " , '" + p.getDni() + "' , '" + p.getIdFirma() + "' , '" + p.getIdHuella()
 					+ "' , '" + p.getObservacion() + "' , " + p.getPorcentajeFirma() + " , " + p.getPorcentajeHuella()
 					+ " )");
-
+			resultSet.close();
 			connect.close();
 
 		} catch (SQLException e) {
@@ -280,6 +284,7 @@ public class partidosProcesos {
 				pe.setTotalPersonas(totalP);
 
 			}
+			resultSet2.close();
 			connect.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -319,6 +324,7 @@ public class partidosProcesos {
 				if (pe != null)
 					arr.add(pe);
 			}
+			resultSet.close();
 			connect.close();
 
 		} catch (SQLException e) {
@@ -365,6 +371,7 @@ public class partidosProcesos {
 				pp.setCorreo(correo);				
 
 			}
+			resultSet2.close();
 			connect.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -400,6 +407,7 @@ public class partidosProcesos {
 				if (pp != null)
 					arr.add(pp);
 			}
+			resultSet.close();
 			connect.close();
 
 		} catch (SQLException e) {
@@ -430,6 +438,7 @@ public class partidosProcesos {
 			statement.executeUpdate("UPDATE ProcesoxFasexPartidoPolitico " + "SET Resultado= '" + pxf.getResultado()
 					+ "', TotalAdherentes= " + pxf.getTotalAd() + ", TotalDuplicados= " + pxf.getTotalDup() + " WHERE IdPartidosPoliticos= " + pxf.getIdPartPol() + 
 					" AND IdProceso= "+ pxf.getIdProceso() + " AND idFase= "+ pxf.getIdFase());
+			resultSet.close();
 			connect.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -475,6 +484,7 @@ public class partidosProcesos {
 				pe.setTotalPersonas(totalP);*/
 
 			}
+			resultSet.close();
 			connect.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

@@ -154,15 +154,16 @@ public class SegundaFase extends JPanel implements ActionListener {
 		if (e.getSource() == btnProcesar) {
 			
 			//MODIFICAR!!!!!
-			
-			Util.mostrarReporte = false;
-			ProcesandoSeg p1;
-			p1 = new ProcesandoSeg();
-			p1.setVisible(true);
 			rutaPadronesSeg = txtFieldPlan.getText();
 			rutaExcelSeg = txtFieldBDRNV.getText();
 			rutaFirmaSeg = txtFieldBDFirmas.getText();
 			rutaHuellaSeg = txtFieldBDHuellas.getText();
+			System.out.println("PANTALLA FASE RUTA ORIGINAL "  + rutaPadronesSeg);
+
+			Util.mostrarReporte = false;
+			ProcesandoSeg p1;
+			p1 = new ProcesandoSeg();
+			p1.setVisible(true);
 			Principal.getFrame().getContentPane().setVisible(false);
 			Principal.getFrame().setContentPane(p1);
 
