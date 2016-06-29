@@ -118,7 +118,67 @@ public class partidosProcesos {
 		return nuevaLista;
 
 	}
+	
+	
+	public static List<PartidoPersona> validarPrimFase(List<PartidoPersona> adherentes,int idFase,int idPESeg){
+		List<PartidoPersona> nuevaLista = new ArrayList<PartidoPersona>();
+		List<PartidoPersona> listaAceptadosPrim = new ArrayList<PartidoPersona>();
+		
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			connect = DriverManager.getConnection(DBConnection.URL_JDBC_MySQL, DBConnection.user,
+					DBConnection.password);
+			statement = connect.createStatement();
+			
+			resultSet = statement.executeQuery("select * from ProcesoxFasexPartidoPolitico where idFase = " + 1 + " AND IdProceso= " + idPESeg);			
 
+			while (resultSet.next()) {
+				int id = resultSet.getInt("IdProceso");
+				
+				ResultSet resultSet2=statement.executeQuery("select * from Participantes where idFase = " + 1 + " AND IdProceso= " + idPESeg + "AND IdProceso= " + id);
+				while(resultSet2.next()){
+					int idPar = resultSet.getInt("IdParticipante");
+					String dni= resultSet.getString("DNI");
+					PartidoPersona pp=new PartidoPersona();
+					Participante p=new Participante();
+					p.setDni(dni);
+					pp.setParticipando(p);	
+					listaAceptadosPrim.add(pp);
+				}
+			}
+			connect.close();
+			
+			for(int i=0;i<adherentes.size();i++){
+				boolean encontrado=false;
+				String segDNI= adherentes.get(i).getParticipando().getDni();
+				for(int j=0;j<listaAceptadosPrim.size();j++){
+					String primDNI=listaAceptadosPrim.get(j).getParticipando().getDni();
+					
+					if(segDNI.compareTo(primDNI)==0){
+						encontrado= true;
+						break;
+					} 
+				}				
+				if(!encontrado) nuevaLista.add(adherentes.get(i));
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return nuevaLista;
+	}
 	
 	
 	
@@ -130,30 +190,7 @@ public class partidosProcesos {
 					DBConnection.password);
 			statement = connect.createStatement();
 
-			// System.out.println("FECHAAA :" + p.getFechaInicioProc());
-			
-			/*resultSet = statement.executeQuery("select * from ProcesoxFasexPartidoPolitico where idFase = " + idFase + " AND IdProceso= " + idPE);			
-
-			while (resultSet.next()) {
-				
-				ResultSet resultSet2=statement.executeQuery("select * from Participantes where idFase = " + idFase + " AND IdProceso= " + idPE);
-				// int id = resultSet.getInt("IdProceso");
-				//int idTP = resultSet.getInt("IdTipoProceso");
-				String nombre = resultSet.getString("Nombre");
-				int idCal = resultSet.getInt("idCalendario");
-				int totalP = resultSet.getInt("TotalPersonas");
-				double porc = resultSet.getDouble("PorcentajeAceptado");
-
-				pe.setId(id);
-				pe.setNombre(nombre);
-				pe.setPorcentaje((int) porc);
-				pe.setIdTipoProceso(idTP);
-				pe.setIdCalendario(idCal);
-				pe.setTotalPersonas(totalP);
-
-			}*/
-
-			
+			// System.out.println("FECHAAA :" + p.getFechaInicioProc());									
 			
 			statement.executeUpdate("INSERT INTO Participantes "
 					+ "(IdPartidosPoliticos , idFase, IdProceso, IdUbigeo, Nombres, Apellidos, Aceptado, DNI, Firma,"

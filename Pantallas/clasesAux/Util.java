@@ -130,8 +130,9 @@ public class Util {
 			// Main.participantesPreDuplicidad );
 			partDup = partidosProcesos.verificarDuplicados(Main.participantesPreDuplicidad);
 			adherentes = partidosProcesos.traerSinDuplicados(Main.participantesPreDuplicidad);
-
-			//partidosProcesos.validarPrimFase(adherentes,2,SegundaFase.idPESeg);
+			
+			List<PartidoPersona> adSinPrimFase=partidosProcesos.validarPrimFase(adherentes,2,SegundaFase.idPESeg);
+			
 
 			// quitar de adherentes los duplicados de la base de datos .
 			/////////////////////////////////////////////////////////////
@@ -577,7 +578,7 @@ public class Util {
 					cad3 = "";
 					cad4 = "";
 
-					posCad1 = 1;
+					posCad1 = indiceInicio;
 					posCad2 = i + 1;
 					posCad3 = j + 1;
 					posCad4 = k + 1;
@@ -669,9 +670,7 @@ public class Util {
 							}
 						}
 					}
-
 				}
-
 			}
 		}
 		// for(int i=0;i<candidatos.size();i++) System.out.println("dni:
