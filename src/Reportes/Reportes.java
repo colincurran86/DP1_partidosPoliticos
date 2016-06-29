@@ -4,6 +4,8 @@ import java.awt.Font;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,6 +32,46 @@ import models.ProcesoXFase;
 
 public class Reportes {
 
+	
+	static public void imprimirTexto(List<PartidoPersona>personas) throws FileNotFoundException, UnsupportedEncodingException{
+		
+		PrintWriter writer = new PrintWriter("ListaPersonas.txt", "UTF-8");
+		
+		writer.println("**************************************");
+
+		for (int i = 0; i<personas.size(); i++)	
+			writer.println(personas.get(i).getPersona().getDni() + " " + personas.get(i).getPersona().getNombre()
+					+ " " + personas.get(i).getPartido().getNombre());
+			
+		
+		writer.println("**************************************");
+		writer.close();
+	
+		
+		
+	}
+	
+	
+	static public void imprimirDuplicados(List<PartidoPersona>personas) throws FileNotFoundException, UnsupportedEncodingException{
+		
+		PrintWriter writer = new PrintWriter("listaDuplicados.txt", "UTF-8");
+		
+		writer.println("**************************************");
+
+		for (int i = 0; i<personas.size(); i++)	
+			writer.println(personas.get(i).getPersona().getDni() + " " + personas.get(i).getPersona().getNombre()
+					+ " " + personas.get(i).getPartido().getNombre());
+			
+		
+		writer.println("**************************************");
+		writer.close();
+	
+		
+		
+	}
+	
+	
+	
 
 	static public void generarReporte(List<ProcesoXFase> listaProceFaseBd ,List<PartidoPolitico> ppescogidos,String rutaGuardaReporte) throws IOException
 	{

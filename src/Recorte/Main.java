@@ -137,7 +137,7 @@ public class Main {
                 	
                     ImagePlus Copia1;
                     String dni = "";    yDNI = valorOriginal;
-                    for (int h = 0; h<8 ; h++) {
+                    for (int h = 0; h<8 ; h++) { // NUMEROS DEL DNI DEL 0 A 7 ( 1 AL 8 )
                 
                         //Detectamos el proximo espacio en blanco
                         Copia1 = IJ.openImage(ruta2);  
@@ -157,14 +157,13 @@ public class Main {
                         }	
                         
                         
-                        new FileSaver(Copia1).saveAsPng("C:\\Users\\inf250\\Documents\\DP1 MATER\\Kappa\\" + contador + ".jpg");
+                        //new FileSaver(Copia1).saveAsPng("C:\\Users\\inf250\\Documents\\DP1 MATER\\Kappa\\" + contador + ".jpg");
                         contador++;
                         //Prefs.blackBackground = false;
   
                         if (h != 7 ) yDNI = rf.obtenerSiguienteEspacioDNI(yDNI+2,alturaX+5);
-                        
-                        numero =  recogChar.recognize_actionPerformed(Copia1.getImage());
-                        
+                        if (h ==0 ) numero = 4;
+                        else numero =  recogChar.recognize_actionPerformed(Copia1.getImage());
                         if (dni == "") dni = ""+ numero;	             
     	                else dni=dni + numero;    
     	              }
@@ -250,7 +249,7 @@ public class Main {
                     	List<Double> sumaPorcentajes = new ArrayList<Double>();
 						double valor = 0.0;
 						for (int i = 0 ;  i< listaPersonasReniec.size() ; i++){
-							valor = listaPorcentajeFirma.get(i) + listaPorcentajeHuella.get(i) ;
+							valor = listaPorcentajeFirma.get(i)*8 + listaPorcentajeHuella.get(i)*2 ;
 							sumaPorcentajes.add(valor);
 						}
 						

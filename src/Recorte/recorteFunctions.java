@@ -71,7 +71,7 @@ public class recorteFunctions {
     		        }
     		        
     		      //  System.out.println("*****MOSTRANDO IMAGEEEEEEEEEEN******");
-                    new FileSaver(padronJ).saveAsPng("C:\\Users\\inf250\\Documents\\DP1 MATER\\Kappa\\"+ "blinbineo.jpg");
+                  //  new FileSaver(padronJ).saveAsPng("C:\\Users\\inf250\\Documents\\DP1 MATER\\Kappa\\"+ "blinbineo.jpg");
 
     				//////////////
     				//ELIMINA LA PARTE DE LA IZQUIERDA
