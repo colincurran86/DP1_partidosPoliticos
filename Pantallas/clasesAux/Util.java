@@ -564,8 +564,9 @@ public class Util {
 
 		int posCad1 = 0, posCad2 = 0, posCad3 = 0, posCad4 = 0;
 		String cad1 = "", cad2 = "", cad3 = "", cad4 = "";
-
-		for (int i = 0; i < 6; i++) {
+		int indiceInicio=1; //el primer digito será 4
+		
+		for (int i = indiceInicio; i < 6; i++) {
 
 			for (int j = i + 1; j < 7; j++) {
 
@@ -576,12 +577,12 @@ public class Util {
 					cad3 = "";
 					cad4 = "";
 
-					posCad1 = 0;
+					posCad1 = 1;
 					posCad2 = i + 1;
 					posCad3 = j + 1;
 					posCad4 = k + 1;
 
-					if (i == 0)
+					if (i == 1)
 						cad1 = "";
 					else
 						for (int m = posCad1; m < i; m++)
