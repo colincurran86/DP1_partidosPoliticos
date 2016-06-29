@@ -133,8 +133,8 @@ public class Util {
 			// List<PartidoPersona > particantesDuplicados=
 			// partidosProcesos.verificarDuplicados(
 			// Main.participantesPreDuplicidad );
-			partDup = partidosProcesos.verificarDuplicados(Main.participantesPreDuplicidad);
-			adherentes = partidosProcesos.traerSinDuplicados(Main.participantesPreDuplicidad);
+			partDup = partidosProcesos.verificarDuplicados(m.participantesPreDuplicidad);
+			adherentes = partidosProcesos.traerSinDuplicados(m.participantesPreDuplicidad);
 			
 			adSinPrimFase=partidosProcesos.validarPrimFase(adherentes,2,SegundaFase.idPESeg);
 			//hacer algo con esta lista
