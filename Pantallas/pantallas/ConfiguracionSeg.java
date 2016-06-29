@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ButtonGroup;
@@ -32,7 +33,7 @@ public class ConfiguracionSeg extends JDialog implements ActionListener{
 	private JSpinner spinner;
 	private ButtonGroup group;
 	private List<ProcesoElectoral> listaPE=partidosProcesos.procElecRechazados();//ProcessManager.queryAllProc();
-	public static List<PartidoPolitico> listaPP;//= ProcessManager.queryAllPartPol();
+	public static List<PartidoPolitico> listaPP= new ArrayList<PartidoPolitico>();//= ProcessManager.queryAllPartPol();
 	public static String [] listaStrPP;
 	
 	
