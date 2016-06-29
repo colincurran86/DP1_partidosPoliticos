@@ -98,17 +98,15 @@ public class partidosProcesos {
 		for (int i = 0; i < partidoPersona.size() - 1; i++) {
 			if (partidoPersona.get(i).getCondicionRepetido() == 0) {
 				for (int j = i + 1; j < partidoPersona.size(); j++) {
-					if (partidoPersona.get(i).getPersona().getDni()
-							.compareTo(partidoPersona.get(j).getPersona().getDni()) == 0) {
+					if (partidoPersona.get(i).getPersona().getDni().compareTo(partidoPersona.get(j).getPersona().getDni()) == 0) {
 						nuevaLista.add(partidoPersona.get(j));
 						partidoPersona.get(i).setCondicionRepetido(1);
-						partidoPersona.get(i)
-								.setObservacion("Repetido entre los partidos politicos "
+						partidoPersona.get(i).setObservacion("Repetido entre los partidos politicos "
 										+ partidoPersona.get(i).getPartido().getNombre() + " - "
 										+ partidoPersona.get(j).getPartido().getNombre());
+						
 						partidoPersona.get(j).setCondicionRepetido(1);
-						partidoPersona.get(j)
-								.setObservacion("Repetido entre los partidos politicos "
+						partidoPersona.get(j).setObservacion("Repetido entre los partidos politicos "
 										+ partidoPersona.get(i).getPartido().getNombre() + " - "
 										+ partidoPersona.get(j).getPartido().getNombre());
 						break;
@@ -133,13 +131,14 @@ public class partidosProcesos {
 			statement = connect.createStatement();
 
 			// System.out.println("FECHAAA :" + p.getFechaInicioProc());
-			resultSet = statement.executeQuery("select * from ProcesoxFasexPartidoPolitico where idFase = " + idFase + " AND IdProceso= " + idPE);			
+			
+			/*resultSet = statement.executeQuery("select * from ProcesoxFasexPartidoPolitico where idFase = " + idFase + " AND IdProceso= " + idPE);			
 
 			while (resultSet.next()) {
 				
 				ResultSet resultSet2=statement.executeQuery("select * from Participantes where idFase = " + idFase + " AND IdProceso= " + idPE);
 				// int id = resultSet.getInt("IdProceso");
-				/*int idTP = resultSet.getInt("IdTipoProceso");
+				//int idTP = resultSet.getInt("IdTipoProceso");
 				String nombre = resultSet.getString("Nombre");
 				int idCal = resultSet.getInt("idCalendario");
 				int totalP = resultSet.getInt("TotalPersonas");
@@ -150,19 +149,19 @@ public class partidosProcesos {
 				pe.setPorcentaje((int) porc);
 				pe.setIdTipoProceso(idTP);
 				pe.setIdCalendario(idCal);
-				pe.setTotalPersonas(totalP);*/
+				pe.setTotalPersonas(totalP);
 
-			}
+			}*/
 
 			
 			
-			/*statement.executeUpdate("INSERT INTO Participantes "
+			statement.executeUpdate("INSERT INTO Participantes "
 					+ "(IdPartidosPoliticos , idFase, IdProceso, IdUbigeo, Nombres, Apellidos, Aceptado, DNI, Firma,"
 					+ " Huella, Observacion, PorcentajeFirma, PorcentajeHuella)" + "VALUES (" + idPP + ", " + idFase
 					+ " , " + idPE + " , " + 1 + " , '" + p.getNombres() + "' , '" + p.getApellidos() + "' , "
 					+ p.getAceptado() + " , '" + p.getDni() + "' , '" + p.getIdFirma() + "' , '" + p.getIdHuella()
 					+ "' , '" + p.getObservacion() + "' , " + p.getPorcentajeFirma() + " , " + p.getPorcentajeHuella()
-					+ " )");*/
+					+ " )");
 
 			connect.close();
 
@@ -225,15 +224,15 @@ public class partidosProcesos {
 					DBConnection.password);
 
 			statement = connect.createStatement();
-			resultSet = statement.executeQuery("select * from Proceso where IdProceso = " + id);
+			ResultSet resultSet2 = statement.executeQuery("select * from Proceso where IdProceso = " + id);
 
-			while (resultSet.next()) {
+			while (resultSet2.next()) {
 				// int id = resultSet.getInt("IdProceso");
-				int idTP = resultSet.getInt("IdTipoProceso");
-				String nombre = resultSet.getString("Nombre");
-				int idCal = resultSet.getInt("idCalendario");
-				int totalP = resultSet.getInt("TotalPersonas");
-				double porc = resultSet.getDouble("PorcentajeAceptado");
+				int idTP = resultSet2.getInt("IdTipoProceso");
+				String nombre = resultSet2.getString("Nombre");
+				int idCal = resultSet2.getInt("idCalendario");
+				int totalP = resultSet2.getInt("TotalPersonas");
+				double porc = resultSet2.getDouble("PorcentajeAceptado");
 
 				pe.setId(id);
 				pe.setNombre(nombre);
@@ -272,10 +271,11 @@ public class partidosProcesos {
 
 			statement = connect.createStatement();
 			resultSet = statement
-					.executeQuery("select * from ProcesoxFasexPartidosPolitico where Resultado= '" + "Rechazado" + "'");
+					.executeQuery("select * from ProcesoxFasexPartidoPolitico where Resultado= '" + "Rechazado" + "'");
 
 			List<Integer> listPE = new ArrayList<Integer>();
 			while (resultSet.next()) {
+				
 				int idProc = resultSet.getInt("IdProceso");
 				ProcesoElectoral pe = queryById(idProc);
 				if (pe != null)
@@ -309,15 +309,15 @@ public class partidosProcesos {
 					DBConnection.password);
 
 			statement = connect.createStatement();
-			resultSet = statement.executeQuery("select * from PartidosPoliticos where IdPartidosPoliticos = " + id);
+			ResultSet resultSet2 = statement.executeQuery("select * from PartidosPoliticos where IdPartidosPoliticos = " + id);
 
-			while (resultSet.next()) {
+			while (resultSet2.next()) {
 				// int id = resultSet.getInt("IdProceso");
-				int idPP = resultSet.getInt("IdPartidosPoliticos");
-				String nombre = resultSet.getString("Nombre");
-				String rep = resultSet.getString("Representante");
-				String telRep = resultSet.getString("TelefonoRepre");
-				String correo = resultSet.getString("Correo");
+				int idPP = resultSet2.getInt("IdPartidosPoliticos");
+				String nombre = resultSet2.getString("Nombre");
+				String rep = resultSet2.getString("Representante");
+				String telRep = resultSet2.getString("TelefonoRepre");
+				String correo = resultSet2.getString("Correo");
 				
 				
 				pp.setId(id);
@@ -342,7 +342,6 @@ public class partidosProcesos {
 			e.printStackTrace();
 		}
 		return pp;
-
 	}
 
 	public static List<PartidoPolitico> queryPPRechazado(int idPE) {
@@ -354,7 +353,7 @@ public class partidosProcesos {
 					DBConnection.password);
 
 			statement = connect.createStatement();
-			resultSet = statement.executeQuery("select * from ProcesoxFasexPartidosPolitico where IdProceso= " + idPE);
+			resultSet = statement.executeQuery("select * from ProcesoxFasexPartidoPolitico where IdProceso= " + idPE + " AND Resultado = '" + "Rechazado" + "'");
 
 			List<Integer> listPE = new ArrayList<Integer>();
 			while (resultSet.next()) {
