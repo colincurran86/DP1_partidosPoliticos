@@ -317,6 +317,7 @@ public class Util {
 			// partidosProcesos.verificarDuplicados(
 			// Main.participantesPreDuplicidad );
 			partDup = partidosProcesos.verificarDuplicados(Main.participantesPreDuplicidad);
+			Reportes.imprimirDuplicados(partDup);
 			adherentes = partidosProcesos.traerSinDuplicados(Main.participantesPreDuplicidad);
 
 			System.out.println(" === Adherente   == ==");

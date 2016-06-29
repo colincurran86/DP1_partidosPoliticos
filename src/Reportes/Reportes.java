@@ -323,6 +323,8 @@ public class Reportes {
 		System.out.println(rutaReporte);
 		FileOutputStream fileOut = new FileOutputStream(rutaReporte);
 		
+		//
+		
 		
 		try {
 			
@@ -494,7 +496,7 @@ public class Reportes {
 		int totalAceptados=0;
 		int totalRechazados=0; 
 		String workingDir = System.getProperty("user.dir");
-		String rutaReporte = workingDir + "/Reporte.xls";
+		String rutaReporte = workingDir + "/ReporteProcesoGeneral.xls";
 		System.out.println(rutaReporte);
 		FileOutputStream fileOut = new FileOutputStream(rutaReporte);
 		

@@ -99,6 +99,7 @@ public class partidosProcesos {
 			if (partidoPersona.get(i).getCondicionRepetido() == 0) {
 				for (int j = i + 1; j < partidoPersona.size(); j++) {
 					if (partidoPersona.get(i).getPersona().getDni().compareTo(partidoPersona.get(j).getPersona().getDni()) == 0) {
+						nuevaLista.add(partidoPersona.get(i));
 						nuevaLista.add(partidoPersona.get(j));
 						partidoPersona.get(i).setCondicionRepetido(1);
 						partidoPersona.get(i).setObservacion("Repetido entre los partidos politicos "

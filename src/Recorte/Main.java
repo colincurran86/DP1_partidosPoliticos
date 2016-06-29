@@ -157,11 +157,11 @@ public class Main {
                         }	
                         
                         
-                        //new FileSaver(Copia1).saveAsPng("C:\\Users\\inf250\\Documents\\DP1 MATER\\Kappa\\" + contador + ".jpg");
+                        new FileSaver(Copia1).saveAsPng("C:\\Users\\lenovo\\Desktop\\ENTRENAMIENTO\\RESULTADO\\" + contador + ".jpg");
                         contador++;
                         //Prefs.blackBackground = false;
   
-                        if (h != 7 ) yDNI = rf.obtenerSiguienteEspacioDNI(yDNI+2,alturaX+5);
+                        if (h != 7 ) yDNI = rf.obtenerSiguienteEspacioDNI(yDNI+2,alturaX+7);
                         if (h ==0 ) numero = 4;
                         else numero =  recogChar.recognize_actionPerformed(Copia1.getImage());
                         if (dni == "") dni = ""+ numero;	             

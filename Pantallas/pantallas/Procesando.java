@@ -132,7 +132,7 @@ static public JLabel labelHuella = new JLabel();
 			public void actionPerformed(ActionEvent arg0) {
 				
 				
-				Reportes pruebaReport = new Reportes();
+				Reportes pruebaReport = new Reportes(); 
 				 
 				 //HACEMOS REPORTE AUTOMATICAMENTE FINALIZADO LA PANTALLA PARA LAS PERSONAS DUPLICADAS EN PARTDOS PLITICOS	
 				 try {
@@ -152,6 +152,7 @@ static public JLabel labelHuella = new JLabel();
 				 
 				 //HACEMOS REPORTE AUTOMATICAMENTE FINALIZADO LA PANTALLA PARA LAS PERSONAS DUPLICADAS EN PARTDOS PLITICOS	
 				 try {
+					 
 					pruebaReport.generarReporteRepetido(Util.partDup);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
