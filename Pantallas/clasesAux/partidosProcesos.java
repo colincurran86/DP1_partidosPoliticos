@@ -98,17 +98,15 @@ public class partidosProcesos {
 		for (int i = 0; i < partidoPersona.size() - 1; i++) {
 			if (partidoPersona.get(i).getCondicionRepetido() == 0) {
 				for (int j = i + 1; j < partidoPersona.size(); j++) {
-					if (partidoPersona.get(i).getPersona().getDni()
-							.compareTo(partidoPersona.get(j).getPersona().getDni()) == 0) {
+					if (partidoPersona.get(i).getPersona().getDni().compareTo(partidoPersona.get(j).getPersona().getDni()) == 0) {
 						nuevaLista.add(partidoPersona.get(j));
 						partidoPersona.get(i).setCondicionRepetido(1);
-						partidoPersona.get(i)
-								.setObservacion("Repetido entre los partidos politicos "
+						partidoPersona.get(i).setObservacion("Repetido entre los partidos politicos "
 										+ partidoPersona.get(i).getPartido().getNombre() + " - "
 										+ partidoPersona.get(j).getPartido().getNombre());
+						
 						partidoPersona.get(j).setCondicionRepetido(1);
-						partidoPersona.get(j)
-								.setObservacion("Repetido entre los partidos politicos "
+						partidoPersona.get(j).setObservacion("Repetido entre los partidos politicos "
 										+ partidoPersona.get(i).getPartido().getNombre() + " - "
 										+ partidoPersona.get(j).getPartido().getNombre());
 						break;

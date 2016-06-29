@@ -20,6 +20,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import pantallas.PrimeraFase;
 import pantallas.Procesando;
+import pantallas.SegundaFase;
 import Recorte.Main;
 import Reportes.PruebaReportes;
 import Reportes.Reportes;
@@ -130,7 +131,7 @@ public class Util {
 			partDup = partidosProcesos.verificarDuplicados(Main.participantesPreDuplicidad);
 			adherentes = partidosProcesos.traerSinDuplicados(Main.participantesPreDuplicidad);
 
-			// partidosProcesos.verificarDuplicados(partDup,2,PrimeraFase.idPE);
+			//partidosProcesos.validarPrimFase(adherentes,2,SegundaFase.idPESeg);
 
 			// quitar de adherentes los duplicados de la base de datos .
 			/////////////////////////////////////////////////////////////

@@ -199,7 +199,7 @@ public class ConfiguracionSeg extends JDialog implements ActionListener{
 				Carga.idPESeg=pe.getId();
 				Carga.porcSeg=porcentaje;
 			}
-			if (pp!=null) Carga.idPP=pp.getId();
+			if (pp!=null) Carga.idPPSeg=pp.getId();
 			/*if(rdbtnCMasiva.isSelected()){ 
 				Carga.choiceCM=1;
 				Carga.choiceCI=0;
