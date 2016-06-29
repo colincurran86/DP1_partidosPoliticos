@@ -15,6 +15,7 @@ import models.PartidoPolitico;
 import models.ProcesoElectoral;
 import models.ProcesoXFase;
 import models.TipoProceso;
+import pantallas.SegundaFase;
 import bModel.ProcessManager;
 import businessModel.Dao.DBConnection;
 
@@ -182,6 +183,26 @@ public class partidosProcesos {
 			e.printStackTrace();
 		}
 
+		return nuevaLista;
+	}
+	
+	public static List<PartidoPersona> repetidosPrimFase(List<PartidoPersona> adherentes,List<PartidoPersona> adSinPrimFase,List<PartidoPersona> partDup){
+		List<PartidoPersona> nuevaLista = new ArrayList<PartidoPersona>();
+				
+		for(int i=0;i<adherentes.size();i++){
+			boolean encontrado=false;
+			String segDNI= partDup.get(i).getParticipando().getDni();
+			for(int j=0;j<adSinPrimFase.size();j++){
+				String primDNI=adSinPrimFase.get(j).getParticipando().getDni();
+				if(segDNI.compareTo(primDNI)==0){
+					encontrado= true;
+					break;
+				} 
+			}
+			if(!encontrado) partDup.add(adherentes.get(i));
+		}		
+		nuevaLista=partDup;
+		
 		return nuevaLista;
 	}
 	
