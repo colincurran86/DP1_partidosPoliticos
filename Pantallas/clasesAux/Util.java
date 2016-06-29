@@ -122,7 +122,7 @@ public class Util {
 
 			Procesando.aumentarPorcentaje1(100);
 
-			System.out.println(" cantidad de duplicidad" + Main.participantesPreDuplicidad.size());
+			//System.out.println(" cantidad de duplicidad" + Main.participantesPreDuplicidad.size());
 
 			List<PartidoPersona> listaSinDuplicados = new ArrayList<PartidoPersona>();
 			// List<PartidoPersona > particantesDuplicados=
@@ -139,24 +139,22 @@ public class Util {
 
 			/////////////////////////////////////////////////////////////
 
-			System.out.println(" === Adherente   == ==");
+			//System.out.println(" === Adherente   == ==");
 
 			for (int i = 0; i < adherentes.size(); i++) {
 
-				System.out.println("Hola Jose " + adherentes.get(i).getPersona().getDni() + " Nombre: "
-						+ adherentes.get(i).getPersona().getNombre());
+				//System.out.println("Hola Jose " + adherentes.get(i).getPersona().getDni() + " Nombre: "	+ adherentes.get(i).getPersona().getNombre());
 				adherentes.get(i).getParticipando().setAceptado(1);
 				partidosProcesos.llenarParticipante(adherentes.get(i).getParticipando(),
 						adherentes.get(i).getPartido().getId(), 2, PrimeraFase.idPE);
 
 			}
 
-			System.out.println("  ====  Comienzan duplicados ===");
+			//System.out.println("  ====  Comienzan duplicados ===");
 
 			for (int i = 0; i < partDup.size(); i++) {
 
-				System.out.println("Hola Jose " + partDup.get(i).getPersona().getDni() + " Nombre: "
-						+ partDup.get(i).getPersona().getNombre());
+				//System.out.println("Hola Jose " + partDup.get(i).getPersona().getDni() + " Nombre: " + partDup.get(i).getPersona().getNombre());
 
 				partDup.get(i).getParticipando().setAceptado(2);
 				partidosProcesos.llenarParticipante(partDup.get(i).getParticipando(),
@@ -197,18 +195,16 @@ public class Util {
 
 				int totalPersonas = partidosProcesos.getCantPer(PrimeraFase.idPE);
 
-				System.out.println("TOTAL DE PERSONAS HABILES EN EL PROCESO: " + totalPersonas);
-				System.out.println(
-						"TOTAL ADHERENTES: " + pf.getTotalAd() + " " + PrimeraFase.ppescogidos.get(i).getNombre());
-				System.out.println(
-						"TOTAL DUPLICADOS: " + pf.getTotalDup() + " " + PrimeraFase.ppescogidos.get(i).getNombre());
+				//System.out.println("TOTAL DE PERSONAS HABILES EN EL PROCESO: " + totalPersonas);
+				//System.out.println("TOTAL ADHERENTES: " + pf.getTotalAd() + " " + PrimeraFase.ppescogidos.get(i).getNombre());
+				//System.out.println("TOTAL DUPLICADOS: " + pf.getTotalDup() + " " + PrimeraFase.ppescogidos.get(i).getNombre());
 
 				if (contadorAdherentes > totalPersonas * PrimeraFase.porc * (1.0) / 100)
 					pf.setResultado("Aceptado");
 				else
 					pf.setResultado("Rechazado");
 
-				System.out.println("RESULTADO: " + pf.getResultado());
+				//System.out.println("RESULTADO: " + pf.getResultado());
 				partidosProcesos.updatePFPP(pf);
 
 			}
@@ -309,7 +305,7 @@ public class Util {
 
 			Procesando.aumentarPorcentaje1(100);
 
-			System.out.println(" cantidad de duplicidad" + Main.participantesPreDuplicidad.size());
+			//System.out.println(" cantidad de duplicidad" + Main.participantesPreDuplicidad.size());
 
 			List<PartidoPersona> listaSinDuplicados = new ArrayList<PartidoPersona>();
 			Reportes.imprimirTexto(Main.participantesPreDuplicidad);
@@ -320,14 +316,13 @@ public class Util {
 			partDup = partidosProcesos.verificarDuplicados(Main.participantesPreDuplicidad);
 			adherentes = partidosProcesos.traerSinDuplicados(Main.participantesPreDuplicidad);
 
-			System.out.println(" === Adherente   == ==");
+			//System.out.println(" === Adherente   == ==");
 
 			// inscribir participantes correctamente aceptados
 
 			for (int i = 0; i < adherentes.size(); i++) {
 
-				System.out.println("Hola Jose " + adherentes.get(i).getPersona().getDni() + " Nombre: "
-						+ adherentes.get(i).getPersona().getNombre());
+				//System.out.println("Hola Jose " + adherentes.get(i).getPersona().getDni() + " Nombre: "	+ adherentes.get(i).getPersona().getNombre());
 				adherentes.get(i).getParticipando().setAceptado(1);
 				partidosProcesos.llenarParticipante(adherentes.get(i).getParticipando(),
 						adherentes.get(i).getPartido().getId(), 1, PrimeraFase.idPE);
@@ -379,18 +374,16 @@ public class Util {
 
 				int totalPersonas = partidosProcesos.getCantPer(PrimeraFase.idPE);
 
-				System.out.println("TOTAL DE PERSONAS HABILES EN EL PROCESO: " + totalPersonas);
-				System.out.println(
-						"TOTAL ADHERENTES: " + pf.getTotalAd() + " " + PrimeraFase.ppescogidos.get(i).getNombre());
-				System.out.println(
-						"TOTAL DUPLICADOS: " + pf.getTotalDup() + " " + PrimeraFase.ppescogidos.get(i).getNombre());
+				//System.out.println("TOTAL DE PERSONAS HABILES EN EL PROCESO: " + totalPersonas);
+				//System.out.println(	"TOTAL ADHERENTES: " + pf.getTotalAd() + " " + PrimeraFase.ppescogidos.get(i).getNombre());
+				//System.out.println("TOTAL DUPLICADOS: " + pf.getTotalDup() + " " + PrimeraFase.ppescogidos.get(i).getNombre());
 
 				if (contadorAdherentes > totalPersonas * PrimeraFase.porc * (1.0) / 100)
 					pf.setResultado("Aceptado");
 				else
 					pf.setResultado("Rechazado");
 
-				System.out.println("RESULTADO: " + pf.getResultado());
+				//System.out.println("RESULTADO: " + pf.getResultado());
 				partidosProcesos.updatePFPP(pf);
 
 				listaProceFaseBd.add(pf);
@@ -530,8 +523,8 @@ public class Util {
 		boolean entro = false;
 
 		List<PersonaReniec> a = new ArrayList<PersonaReniec>();
-		for (int i = 0; i < Main.lista.size(); i++)
-			System.out.println(Main.lista.get(i));
+		//for (int i = 0; i < Main.lista.size(); i++)
+			//System.out.println(Main.lista.get(i));
 
 		// System.out.println(Main.lista.size());
 		for (int i = 0; i < Main.lista.size(); i++) {
@@ -544,7 +537,7 @@ public class Util {
 			for (int j = 0; j < ReniecBD.lista.size(); j++)
 				if (dni != null || dni.length() != 0) {
 					if (ReniecBD.lista.get(j).getDni().compareTo(dni) == 0) {
-						System.out.println(ReniecBD.lista.size());
+						//System.out.println(ReniecBD.lista.size());
 						entro = true;
 						a = sacaListaCandidatos(dni);
 						// System.out.println(a.size());
