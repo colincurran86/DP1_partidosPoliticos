@@ -3873,7 +3873,22 @@ public static List<Double> procesarFirmasNuevo(FirmaRecortada listaFirmas, List<
 		int entroNuevoSize=0;
 
 		String url2 = urlBaseDeDatos;
-		url2 = url2 + "/" +listaDeListaPersonas.get(indicePersonaLista1).getIdFirma() +  ".png" ;
+		//url2 = url2 + "/" +listaDeListaPersonas.get(indicePersonaLista1).getIdFirma() +  ".png" ;
+		String url2Png = url2 + "/" +listaDeListaPersonas.get(indicePersonaLista1).getIdFirma() +  ".png" ;
+		String url2Jpg = url2 + "/" +listaDeListaPersonas.get(indicePersonaLista1).getIdFirma() +  ".jpg" ;
+	    File ficheroUrl2Png = new File(url2Png);
+	    File ficheroUrl2Jpg = new File(url2Jpg);
+
+	    if (ficheroUrl2Png.exists())
+	    {  url2 = url2Png;
+	    }
+	    else if (ficheroUrl2Jpg.exists())  
+	    { url2 = url2Jpg;
+	    }
+		
+	
+			
+		
 		//url2 = url2 +".jpg" ;;
 		System.out.println(url2);
 		//System.out.println("firma q abrira" + url2);
