@@ -56,7 +56,6 @@ public class Main {
     	Procesando.aumentarPorcentaje1(0);
     	Util u = new Util(); 
     	PrimeraFase primeraFase = new PrimeraFase();
-    	//	String formatearRutaBD = "D:\\Users\\jemarroquin\\git\\DP1_partidosPoliticos\\src\\registro.nacional.v.1.xlsx" ;
  
     	
     	
@@ -91,7 +90,7 @@ public class Main {
             	String ruta2 =  workingDir + "/Auxiliar/recorteCostado.jpg";
             	String ruta3 = workingDir + "/Auxiliar/recorteBN.jpg";
             	
-            	System.out.println( ruta1);
+            	//System.out.println( ruta1);
           	    rutaPlanillonEjecutandose = ruta0 ;
              
                 rf.recortarCostadosProcesarPadron(ruta1,ruta2,ruta3,workingDir);
@@ -232,11 +231,8 @@ public class Main {
                         List<Integer>coordX = rf.coordX;
                         List<Integer>coordY = rf.coordY;
                      	ImagePlus Copia2 = IJ.openImage(ruta0);
-                     		
-
                         Copia2.setRoi(coordX.get(n), coordY.get(n) , rf.ancho , rf.alto);
                         IJ.run(Copia2, "Crop", ""); 
-
                         listaPorcentajeHuella = 	 AlgoritmoHuellas.procesarNuevo(listaPersonasReniec,Copia2,rutaHuella); 
                        	int indiceCandidatoHuellas = candidatoHuellas(listaPorcentajeHuella);
                       	for ( int i = 0 ; i < listaPersonasReniec.size() ; i++) 
@@ -287,9 +283,11 @@ public class Main {
                     }  
                 }    
 
-                System.out.println("Padron numero " + (contPadrones+1) + " Procesado");
+                //System.out.println("Padron numero " + (contPadrones+1) + " Procesado");
                 contPadrones++;
-                
+                rf.coordX = new ArrayList<Integer> ();
+                rf.coordY = new ArrayList<Integer> ();
+
             }   
     }
     

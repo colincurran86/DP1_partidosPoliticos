@@ -106,13 +106,13 @@ public class recorteFunctions {
     				//sumar borde de la grilla
     				
     				int k,cantNegros=0;
-    				System.out.println("XIZQ :" + xIzq);
-    				System.out.println("Y: " + y);
+    				//System.out.println("XIZQ :" + xIzq);
+    				//System.out.println("Y: " + y);
     				for(k=y;k<height;k++){
     					int r = padronJ.getPixel(xIzq  - 1 , k)[0];
     					if(r==0){
-    						System.out.println("PRIMER VALOR: " + (xIzq- 2 ));
-    						System.out.println("SEGUNDO VALOR: " + (k));
+    						//System.out.println("PRIMER VALOR: " + (xIzq- 2 ));
+    						//System.out.println("SEGUNDO VALOR: " + (k));
     						break;
     					}
     						
@@ -130,25 +130,25 @@ public class recorteFunctions {
                         if(r==0)break;
                     }
                     
-                    System.out.println("F NEGROS " + f);
+                    //System.out.println("F NEGROS " + f);
     				
                     for(f=f;f<height;f++){//blancos!
                         int r = padronJ.getPixel(volarCabecera, f)[0];
                         if(r!=0)break;
                     }
                     
-                    System.out.println("F blancos " + f);
+                   // System.out.println("F blancos " + f);
                     
                     for(f=f;f<height;f++){//negros!
                         int r = padronJ.getPixel(volarCabecera, f)[0];
                         if(r==0)break;
                     }
-                    
+                    /*
                     System.out.println("F Negros22 " + f);
     				System.out.println("VALOR DE F : " + f);
     				System.out.println("VALOR DE Y : " + y);
     				System.out.println("NEGROS ANTER : " + cantNegros);
-
+*/
     				cantNegros=cantNegros-(f-y);
     				
     				int p;
@@ -162,8 +162,8 @@ public class recorteFunctions {
     					}
     					if(sumNegros==cantNegros) break;
     				}
-    				System.out.println("Cant negros: " + cantNegros);
-    				System.out.println("Extremo derecho : X " + xIzq + " " + f  + " Extremo izquierdo: X "+ p + " " + f);
+    				//System.out.println("Cant negros: " + cantNegros);
+    			//System.out.println("Extremo derecho : X " + xIzq + " " + f  + " Extremo izquierdo: X "+ p + " " + f);
     				
     				alto=cantNegros/8;
     				ancho=xIzq-p;
@@ -201,7 +201,7 @@ public class recorteFunctions {
     
     public void guardarImagenes(String directorioPadrones){
     	BufferedImage image = null;
-    	System.out.println(directorioPadrones);
+    	//System.out.println(directorioPadrones);
     	File folder = new File(directorioPadrones);
     	
         String workingDir = System.getProperty("user.dir"); // nos evitamos el problema de las rutas :'
@@ -212,7 +212,7 @@ public class recorteFunctions {
 
     	for (final File fileEntry : folder.listFiles()){
     		String ruta1 = directorioPadrones + "/" + fileEntry.getName();
-    		System.out.println(ruta1);
+    		//System.out.println(ruta1);
             ImagePlus padronJ = new ImagePlus();
             padronJ = IJ.openImage(ruta1); 
             new FileSaver(padronJ).saveAsPng(rutaAlmacenar + "/" + fileEntry.getName() );

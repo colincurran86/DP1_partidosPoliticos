@@ -41,7 +41,7 @@ public class partidosProcesos {
 					+ "(IdPartidosPoliticos , idFase, Resultado, Observacion, IdProceso, FechaInicioProceso)"
 					+ "VALUES ('" + p.getIdPartPol() + "', '" + p.getIdFase() + "' , '" + p.getResultado() + "' , '"
 					+ p.getObservacion() + "' , '" + p.getIdProceso() + "' , '" + p.getFechaInicioProc() + "'   )");
-			resultSet.close();
+			//resultSet.close();
 			connect.close();
 
 		} catch (SQLException e) {
@@ -204,7 +204,7 @@ public class partidosProcesos {
 					+ p.getAceptado() + " , '" + p.getDni() + "' , '" + p.getIdFirma() + "' , '" + p.getIdHuella()
 					+ "' , '" + p.getObservacion() + "' , " + p.getPorcentajeFirma() + " , " + p.getPorcentajeHuella()
 					+ " )");
-			resultSet.close();
+			//resultSet.close();
 			connect.close();
 
 		} catch (SQLException e) {

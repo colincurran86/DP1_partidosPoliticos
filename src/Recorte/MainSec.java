@@ -72,7 +72,7 @@ public class MainSec {
             RecogChar recogChar = new RecogChar();
             recogChar.init();
 
-            System.out.println("RUTA PADRONEES " + rutaPadrones);
+            //System.out.println("RUTA PADRONEES " + rutaPadrones);
             rf.guardarImagenes(rutaPadrones);
             rf.tamanhoEstandar(rutaPadrones);
     		File folder = new File(rutaPadrones);
@@ -94,7 +94,7 @@ public class MainSec {
             	String ruta2 =  workingDir + "/Auxiliar/recorteCostado.jpg";
             	String ruta3 = workingDir + "/Auxiliar/recorteBN.jpg";
             	
-            	System.out.println( ruta1);
+            	//System.out.println( ruta1);
           	    rutaPlanillonEjecutandose = ruta0 ;
              
                 rf.recortarCostadosProcesarPadron(ruta1,ruta2,ruta3,workingDir);
@@ -290,7 +290,7 @@ public class MainSec {
                     }  
                 }    
 
-                System.out.println("Padron numero " + (contPadrones+1) + " Procesado");
+              //  System.out.println("Padron numero " + (contPadrones+1) + " Procesado");
                 contPadrones++;
                 
             }   

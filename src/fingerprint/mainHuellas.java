@@ -127,8 +127,8 @@ public class mainHuellas {
 
 			// ELIMINANDO LAS FALSAS MINUCIAS USANDO
 
-			System.out.println("Minucias en la base ANTS" + minutiaeFoundBase.size());
-			System.out.println("Minucias en el Input  ANTS " + minutiaeFoundInput.size());
+		//	System.out.println("Minucias en la base ANTS" + minutiaeFoundBase.size());
+		//	System.out.println("Minucias en el Input  ANTS " + minutiaeFoundInput.size());
 			
 			Minutiae.removeFalseMinutiae(minutiaeFoundBase);
 			Minutiae.removeFalseMinutiae(minutiaeFoundInput);
@@ -140,8 +140,8 @@ public class mainHuellas {
 			}
 			else {
 
-			System.out.println("Minucias en la base DSPS " + minutiaeFoundBase.size());
-			System.out.println("Minucias en el Input DSPS " + minutiaeFoundInput.size());
+		//	System.out.println("Minucias en la base DSPS " + minutiaeFoundBase.size());
+		//	System.out.println("Minucias en el Input DSPS " + minutiaeFoundInput.size());
 
 			// ELIMINANDO LOS BORRDES
 			// Minutiae.removeBorder(imageData,minutiaeFound);
@@ -167,12 +167,12 @@ public class mainHuellas {
 
 
 			totalMatching = Minutiae.matchingMinutiae(mTuplesIM, mTuplesBM);
-			System.out.println("colooooooooooo" + totalMatching);
+		//	System.out.println("colooooooooooo" + totalMatching);
 			int menor = 0;
 			if (minutiaeFoundInput.size()< minutiaeFoundBase.size()) menor = minutiaeFoundInput.size();
 			else menor = minutiaeFoundBase.size();
 			double porcentaje = (totalMatching * (1.0)) /  menor;
-			System.out.println("PORCENTAJE ENVIADO :" + porcentaje);
+//			System.out.println("PORCENTAJE ENVIADO :" + porcentaje);
 			return porcentaje * 100;
 
 			

@@ -104,13 +104,13 @@ public class Minutiae {
 								+ (p1.getY() - p2.getY())
 								* (p1.getY() - p2.getY()));
 				cont++;
-				System.out.println(a);
+				//System.out.println(a);
 
 			}
 		}
 
-		System.out.println("DISTANCE" + distance);
-		System.out.println("CONT" + cont);
+		//System.out.println("DISTANCE" + distance);
+		//System.out.println("CONT" + cont);
 		return distance / cont;
 
 	}

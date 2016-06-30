@@ -3874,7 +3874,7 @@ public static List<Double> procesarFirmasNuevo(FirmaRecortada listaFirmas, List<
 
 		String url2 = urlBaseDeDatos;
 		url2 = url2 + "/" +listaDeListaPersonas.get(indicePersonaLista1).getIdFirma() +  ".png" ;
-		//url2 = url2 +".jpg" ;
+		//url2 = url2 +".jpg" ;;
 		System.out.println(url2);
 		//System.out.println("firma q abrira" + url2);
 		imagen2 = new FastBitmap(url2);
