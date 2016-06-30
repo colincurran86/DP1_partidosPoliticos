@@ -3519,8 +3519,8 @@ public static FirmaRecortada cortarFirma(String urlPlanillonesOriginales, int in
 			cortadorImagenes = new Crop(0, imagenPlanillon.getWidth() / 2,
 			imagenPlanillon.getWidth() / 2 + imagenPlanillon.getWidth() / 3, despejarLineasNegras - 10);
 
-		} else {
-			cortadorImagenes = new Crop(0, imagenPlanillon.getWidth() / 2, imagenPlanillon.getWidth() / 3,
+		} else {//47
+			cortadorImagenes = new Crop(0, imagenPlanillon.getWidth() / 2, (imagenPlanillon.getWidth() / 3)+36,
 				imagenPlanillon.getHeight());
 				imagenPlanillon.toRGB();
 				imagenPlanillon.toGrayscale();
@@ -3539,6 +3539,9 @@ public static FirmaRecortada cortarFirma(String urlPlanillonesOriginales, int in
 		//	imagenPlanillon.saveAsJPG("C:\\Users\\LUIS S\\Desktop\\p1Cortado.jpg");
 
 		//imagenPlanillon.saveAsJPG("C:\\Users\\LUIS S\\Desktop\\333.jpg");
+		
+		
+		
 		//Factor Pixel
 		if (altos >= 0 && altos <= 900)
 			factorPixel = 5;
@@ -3552,9 +3555,22 @@ public static FirmaRecortada cortarFirma(String urlPlanillonesOriginales, int in
 		int mitadPlanillon = (imagenPlanillon.getWidth() / 2) + (factorPixel/2)+2;
 		int indiceNegro = 0;
 		int indiceBlanco = 0;
+		int nuevoInicioNegro = 0;
+
+		
+		for (int i = 0; i < imagenPlanillon.getHeight()-1; i++) {
+			if (imagenPlanillon.getGray(i, mitadPlanillon) == 255) {
+				nuevoInicioNegro = i;
+				break;
+			}
+			
+		}
+		
+		//System.out.println("nuevo: "+nuevoInicioNegro);
+		
 		
 		//Negro
-		for (int j = 0; j < imagenPlanillon.getHeight() - 1; j++) {
+		for (int j = nuevoInicioNegro; j < imagenPlanillon.getHeight() - 1; j++) {
 			if (imagenPlanillon.getGray(j, mitadPlanillon) == 0) {
 				indiceNegro = j;
 				break;
@@ -3570,6 +3586,7 @@ public static FirmaRecortada cortarFirma(String urlPlanillonesOriginales, int in
 			veces2++;
 		}
 		
+
 	//	System.out.println("Veces: "+veces2);
 		//System.out.println("factor pixel: "+factorPixel/2 );
 		indiceNegro = indiceNegro+(veces2/2);
@@ -3581,6 +3598,69 @@ public static FirmaRecortada cortarFirma(String urlPlanillonesOriginales, int in
 			}
 		}
 
+		//System.out.println("factor p: "+factorPixel);
+	
+		
+		while(true){
+			
+		if(indiceBlanco==0) break;
+		int cantidadBlancosDespues=0;
+		int paso=0;
+		int primerNegroEncontrado=indiceBlanco;
+		int primeroEntrar = 0;
+		//System.out.println("111");;
+		for (int i = indiceBlanco; i < (indiceBlanco+factorPixel); i++) {
+			//System.out.println("deberia ser 1 :"+imagenPlanillon.getGray(indiceNegro, i));
+			if(imagenPlanillon.getGray(indiceNegro, i)==255)
+			{	cantidadBlancosDespues++;
+				
+			}
+			else
+			{
+				//System.out.println("prn :"+i);
+				paso=1;
+			}
+			
+			if(paso==1 && primeroEntrar==0){
+				primeroEntrar=1;
+				primerNegroEncontrado=i;
+				
+			}
+			
+			//else{
+			//	paso=1;
+			//	break;
+			//	}
+		}
+		
+		//System.out.println("222");
+		//System.out.println("Cantidad blancos despues: "+cantidadBlancosDespues);
+		//System.out.println("Indice blanco previo: "+indiceBlanco);
+		//System.out.println("Primer negro: "+primerNegroEncontrado);
+		//if(paso==0){
+		//JOptionPane.showMessageDialog(null, imagenPlanillon.toIcon(), "Result , indice", JOptionPane.PLAIN_MESSAGE); 
+
+		if (cantidadBlancosDespues<factorPixel){
+			//Blanco
+			for (int r = primerNegroEncontrado; r < imagenPlanillon.getWidth() - 1; r++) {
+				if (imagenPlanillon.getGray(indiceNegro, r) == 255) {
+					indiceBlanco = r;
+					break;
+				}
+			}
+
+		}
+		//}
+		else{
+			indiceBlanco=primerNegroEncontrado;
+			break;
+		}
+		
+		
+		
+		}
+		
+		
 		
 		/*
 		int veces3=0;
@@ -3611,7 +3691,7 @@ public static FirmaRecortada cortarFirma(String urlPlanillonesOriginales, int in
 		
 		int ind = imagenPlanillon.getWidth() - 1;
 		ind = indiceBlanco+veces2;
-		System.out.println("Veces 2:"+veces2);
+	//	System.out.println("Veces 2:"+veces2);
 		List<List<Resultado>> a3 = new ArrayList<List<Resultado>>();
 		Resultado d;
 		int cont = 0;
@@ -3624,8 +3704,14 @@ public static FirmaRecortada cortarFirma(String urlPlanillonesOriginales, int in
 		int tmp2 = 0;
 		int nollego = 0;
 		int pasoPrimerNegro = 0;
+		
+		if(ind==imagenPlanillon.getWidth())
+			ind--;
 
 		//Busca la primera linea negra
+		//System.out.println("ind "+ind);
+		
+
 		while (true) {
 			c = 0;
 			llego = 0;
@@ -3638,7 +3724,7 @@ public static FirmaRecortada cortarFirma(String urlPlanillonesOriginales, int in
 					pasoPrimerNegro = j;
 
 				}
-				if (c > imagenPlanillon.getHeight() / 2) {
+				if (c > (imagenPlanillon.getHeight() / 2)) {
 					llego = 1;
 					tmp1 = ind;
 					break;
@@ -3698,8 +3784,7 @@ public static FirmaRecortada cortarFirma(String urlPlanillonesOriginales, int in
 			}
 		
 		
-		
-		
+
 	
 			
 		for (int k = imagenPlanillon.getHeight() - (veces2+factorPixel); k > 0; k--) {
@@ -3712,7 +3797,8 @@ public static FirmaRecortada cortarFirma(String urlPlanillonesOriginales, int in
 		
 		
 
-
+		//System.out.println("tmp1:"+tmp1);
+		//System.out.println("tmp2:"+tmp2);
 		int veces = 0;
 		int ancho = tmp1 - tmp2;
 		int contador = 0;
@@ -3724,28 +3810,40 @@ public static FirmaRecortada cortarFirma(String urlPlanillonesOriginales, int in
 		
 		//System.out.println("ultimo y1 : "+ultimoYLineaNegra1);
 		//System.out.println("ultimo y2 : "+ultimoYLineaNegra2);
-		//System.out.println("Ancho: "+ancho);
+		//System.out.println("Ancho lineas: "+ancho);
 		
-		
+		//ultimoYLineaNegra2=1339;
+		int contadorBlancos=0;
 		for (int k = ultimoYLineaNegra2 - (factorPixel); k > 0; k--) {
 			contador = 0;
 			hizobreak = 0;
 			malbreak = 0;
-
+			
 			if (veces == 8)
 				break;
+			contadorBlancos=0;
 			for (int h = tmp2; h < tmp1; h++) {
+				
 				if (imagenPlanillon.getGray(k, h) == 0)
 					contador++;
 				else {
+				  	contadorBlancos++;
+				  //	System.out.println("contador blancos: "+contadorBlancos+" factor p: "+factorPixel);
+				  //	System.out.println("h :"+h+" k:"+k);
+				  	//JOptionPane.showMessageDialog(null, imagenPlanillon.toIcon(), "Result , indice", JOptionPane.PLAIN_MESSAGE); 
+				  	if(contadorBlancos>factorPixel){
+				  	//	System.out.println("entraste ??");
 					malbreak = 1;
 					break;
+				  	}
 				}
 				if (contador >= ancho / 2) {
 					hizobreak = 1;
+					//JOptionPane.showMessageDialog(null, imagenPlanillon.toIcon(), "Result , indice", JOptionPane.PLAIN_MESSAGE); 
 					break;
+					
 				}
-
+				//JOptionPane.showMessageDialog(null, imagenPlanillon.toIcon(), "Result , indice", JOptionPane.PLAIN_MESSAGE); 
 			}
 
 			if (malbreak != 1) {
@@ -3775,6 +3873,11 @@ public static FirmaRecortada cortarFirma(String urlPlanillonesOriginales, int in
 			k=1;
 		else if(indice==7)
 			k=0;
+		
+		//System.out.println("ultima negra: "+ultimoYLineaNegra2);
+		//System.out.println("linsta lenas k: "+listaLineas.get(k));
+	  	//JOptionPane.showMessageDialog(null, imagenPlanillon.toIcon(), "Result , indice", JOptionPane.PLAIN_MESSAGE); 
+	  	
 		
 		//int k=indice;
 			System.out.println("Linea actual ..........." + k);

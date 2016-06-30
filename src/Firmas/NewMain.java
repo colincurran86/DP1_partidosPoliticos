@@ -164,22 +164,101 @@ public class NewMain {
      // for (int i = 0; i < 8; i++) {
 		
 	
+  
+      
+      //5f, ya no
+      //8h
+      //2,3,4,5,6 a 
+      //b 7; linea de indice 3 salen 2 firmas
+      //6 jpeg
+      
+      
+      
+      //2h exception
+      //3h
+      //caso especial; 1b
+      //c 1,4,5,7,8 
+      //g, 6 
+      
+      
       urlBaseDeDatos = new String("C:\\Users\\LUIS S\\Desktop\\Firmas.jpg\\dfi065.png");
-      urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\part.d.original9.png");
+   //urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\Otras_Resoluciones\\objs\\planillon\\13.png"); 
+   urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\datos Globales\\part.d.original1.png");
+   //   urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\datos Globales\\partForiginal005.jpg");   
+      //urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\Otras_Resoluciones\\objs\\planillon\\13.png");
+      
+      
       System.out.println("ULR turno: ---------------------------------------------------"+urlBaseDeDatos);
       // urlBaseDeDatos = new String("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\1.jpg");
        //urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\1.jpg");
        FirmaRecortada ne = new FirmaRecortada(); 
-       ne = af.cortarFirma(urlPlanillonesOriginales,0);
+       ne = af.cortarFirma(urlPlanillonesOriginales,7);
        List<Double> dl = af.procesarFirmasNuevoNuevo(ne,urlBaseDeDatos);
        System.out.println("Umbral: "+dl.get(1)+" i: ");
       
+      
+      
    //   }  
+       
+       
+       
+       
+       
+       
+       /*
+       
+       String nombre ="dfi001";
+       
+       String sFichero1 = "C:\\Users\\LUIS S\\Desktop\\Firmas.jpg\\dfi001.gif";
+       String sFichero2 = "C:\\Users\\LUIS S\\Desktop\\Firmas.jpg\\dfi001.bmp";
+
+       File fichero1 = new File(sFichero1);
+       File fichero2 = new File(sFichero2);
+
+       String ruta = null;
+       
+       if (fichero1.exists())
+       { ruta = sFichero1;
+     	  System.out.println("El fichero " + sFichero1 + " existe");
+       }else if (fichero2.exists())  
+       { ruta = sFichero2;
+     	  System.out.println("Si 2");
+       }
+       else
+       {
+     	  
+     	  File dir = new File("C:\\Users\\LUIS S\\Desktop\\Firmas.jpg");
+     	  String[] ficheros = dir.list();
+     	    if (ficheros == null)
+     	        System.out.println("No hay ficheros en el directorio especificado");
+     	      else {
+     	    	  System.out.println("1");
+     
+     	    	    for (int i = 0; i < ficheros.length; i++) {
+     					
+     	        	    
+     	    	    	String[] parts =ficheros[i].split("\\.");
+     	    	    	String part1 = parts[0];
+     	    	    	String part2 = parts[1];
+     	    	    	if(part1.equals(nombre))
+     	    	    	{
+     	    	    		System.out.println("El archivo es :"+nombre+part2);
+     	    	    		ruta = "C:\\Users\\LUIS S\\Desktop\\Firmas.jpg\\"+nombre+"."+part2;
+     	    	    		break;
+     	    	    	}
+     	    	    	
+     				}
+     	    	    
+     	     
+     	      }
+     	    
+       }
+       */
+       
       
      
     }
     
 }
-
 
 
