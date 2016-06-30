@@ -137,6 +137,7 @@ public class Util {
 			adherentes = partidosProcesos.traerSinDuplicados(m.participantesPreDuplicidad);
 			
 			adSinPrimFase=partidosProcesos.validarPrimFase(adherentes,2,SegundaFase.idPESeg);
+			partDup=partidosProcesos.repetidosPrimFase(adherentes,adSinPrimFase,partDup);
 			//hacer algo con esta lista
 
 			// quitar de adherentes los duplicados de la base de datos .

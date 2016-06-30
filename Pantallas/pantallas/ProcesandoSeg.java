@@ -124,7 +124,8 @@ public class ProcesandoSeg extends JPanel {
 				 
 				 //HACEMOS REPORTE AUTOMATICAMENTE FINALIZADO LA PANTALLA PARA LAS PERSONAS DUPLICADAS EN PARTDOS PLITICOS	
 				 try {
-					pruebaReport.generarReporteRepetido(Util.partDup);
+					pruebaReport.generarReporte(Util.adSinPrimFase , Util.partDup , SegundaFase.ppescogidosSeg);
+					//pruebaReport.generarReporteRepetido(Util.partDup);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
