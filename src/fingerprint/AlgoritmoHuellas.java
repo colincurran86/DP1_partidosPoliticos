@@ -52,9 +52,14 @@ public class AlgoritmoHuellas {
 	
 	
 	public static BufferedImage buscarImageBase (String idHuella, String rutaHuella) throws IOException{
-
+		String urlQueda;
 		String rutaFinal = rutaHuella  + "/" + idHuella + ".png";
-		System.out.println(rutaFinal);
+		File a=new File(rutaFinal);
+		if(!a.exists()){
+			rutaFinal=rutaHuella  + "/" + idHuella + ".jpg";
+		}
+		
+		//System.out.println(rutaFinal);
 		BufferedImage imageBase = ImageIO.read(new File(rutaFinal));
 		return imageBase;
 	

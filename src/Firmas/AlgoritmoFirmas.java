@@ -3477,7 +3477,7 @@ List<PersonaReniec> procesar(List<List<PersonaReniec>> listaDeListasPersonasReni
 
 
 public static FirmaRecortada cortarFirma(String urlPlanillonesOriginales, int indice) {
-
+try{
 	int anchos = 0;
 	int altos = 0;
 	int indiceFinal = 0;
@@ -3485,7 +3485,7 @@ public static FirmaRecortada cortarFirma(String urlPlanillonesOriginales, int in
 
 
 		ArrayList<FirmaRecortada> listaTemporal = new ArrayList<FirmaRecortada>();
-		System.out.println("Planillon: " + urlPlanillonesOriginales);
+		//System.out.println("Planillon: " + urlPlanillonesOriginales);
 		FastBitmap imagenPlanillon = new FastBitmap(urlPlanillonesOriginales );
 		Crop cortadorImagenes;
 		int factorPixel = 0;
@@ -3880,7 +3880,7 @@ public static FirmaRecortada cortarFirma(String urlPlanillonesOriginales, int in
 	  	
 		
 		//int k=indice;
-			System.out.println("Linea actual ..........." + k);
+			//System.out.println("Linea actual ..........." + k);
 			if (k == 0) {
 				alto = ultimoYLineaNegra2 - listaLineas.get(k);
 				cortadorImagenes = new Crop(listaLineas.get(k), tmp2, ancho, alto);
@@ -3922,6 +3922,68 @@ public static FirmaRecortada cortarFirma(String urlPlanillonesOriginales, int in
 	
 
 	return listaFirmasCortadas;
+	}catch(Exception e){
+		
+		ArrayList<FirmaRecortada> listaTemporal = new ArrayList<FirmaRecortada>();
+		//System.out.println("Planillon: " + urlPlanillonesOriginales);
+		FastBitmap imagenPlanillon = new FastBitmap(urlPlanillonesOriginales );
+		Crop cortadorImagenes;
+	
+		
+		if (imagenPlanillon.getWidth() < imagenPlanillon.getHeight()) {
+			Rotate rotarImage = new Rotate(90.0,Rotate.Algorithm.BICUBIC);
+		
+			int despejarLineasNegras = 0;
+			
+			rotarImage.applyInPlace(imagenPlanillon);
+			rotarImage.applyInPlace(imagenPlanillon);
+			rotarImage.applyInPlace(imagenPlanillon);
+		//	rotarImage.applyInPlace(imagenPlanillon);
+	//		rotarImage.applyInPlace(imagenPlanillon);
+		//	rotarImage.applyInPlace(imagenPlanillon);
+			imagenPlanillon.toRGB();
+			imagenPlanillon.toGrayscale();
+			OtsuThreshold o = new OtsuThreshold();
+			o.applyInPlace(imagenPlanillon);
+
+			
+			for (int j = imagenPlanillon.getHeight() - 1; j > 0; j--) {
+				if (imagenPlanillon.getGray(j, imagenPlanillon.getWidth() / 2) == 255) {
+					despejarLineasNegras = j;
+					break;
+				}
+			}
+			cortadorImagenes = new Crop(0,0,250,150);
+
+		} else {//47
+			cortadorImagenes = new Crop(0,0,250,150);
+				imagenPlanillon.toRGB();
+				imagenPlanillon.toGrayscale();
+				OtsuThreshold o = new OtsuThreshold();
+				o.applyInPlace(imagenPlanillon);
+				
+		
+		}
+		 
+		
+		//imagenPlanillon.saveAsJPG("C:\\Users\\LUIS S\\Desktop\\333.jpg");
+				
+		cortadorImagenes.ApplyInPlace(imagenPlanillon);
+		//anchos = imagenPlanillon.getWidth() - 1;
+		//altos = imagenPlanillon.getHeight() - 1;
+		
+		
+
+		FirmaRecortada fr = new FirmaRecortada();
+		fr.img = imagenPlanillon.toBufferedImage();
+		listaTemporal.add(fr);
+		return listaTemporal.get(0);
+		
+
+
+
+	}
+
 }
 
 
@@ -3993,7 +4055,7 @@ public static List<Double> procesarFirmasNuevo(FirmaRecortada listaFirmas, List<
 			
 		
 		//url2 = url2 +".jpg" ;;
-		System.out.println(url2);
+		//System.out.println(url2);
 		//System.out.println("firma q abrira" + url2);
 		imagen2 = new FastBitmap(url2);
 		//System.out.println("Alto i1 "+imagen1.getHeight()+" Ancho: "+imagen1.getWidth());
@@ -4011,7 +4073,7 @@ public static List<Double> procesarFirmasNuevo(FirmaRecortada listaFirmas, List<
 		if(imagen1.getHeight()>(imagen2.getHeight()+200) && imagen1.getWidth()>(imagen2.getWidth()+550))		
 		{		
 				entroNuevoSize=1;
-				System.out.println("Nuevo size");
+				//System.out.println("Nuevo size");
 		}
 		
 		
@@ -4211,9 +4273,9 @@ public static List<Double> procesarFirmasNuevo(FirmaRecortada listaFirmas, List<
 				personaReniecPorcentajeTemporal.porcentaje = porcentaje;
 				personaReniecPorcentajeTemporal.match=true;
 				listaPorcentajesCandidato.add(personaReniecPorcentajeTemporal);
-				System.out.println("id: "+indicePersonaLista1);
-				System.out.println("url: "+url2);
-				System.out.println("Porcentaje: "+porcentaje);
+				//System.out.println("id: "+indicePersonaLista1);
+				//System.out.println("url: "+url2);
+				//System.out.println("Porcentaje: "+porcentaje);
 			
 			} else {
 				
@@ -4263,9 +4325,9 @@ public static List<Double> procesarFirmasNuevo(FirmaRecortada listaFirmas, List<
 		
 		lrestorno.add(listaPorcentajesCandidato.get(i).pe);
 		//porcentajeFinales.add(listaPorcentajesCandidato.get(i).porcentaje);
-		System.out.println("Similar; indice: "+i+" Porcentaje:"+listaPorcentajesCandidato.get(i).porcentaje+" porcetaje lista:");
-		}else
-			System.out.println(" indice: "+i+" Porcentaje:"+listaPorcentajesCandidato.get(i).porcentaje);	
+		//System.out.println("Similar; indice: "+i+" Porcentaje:"+listaPorcentajesCandidato.get(i).porcentaje+" porcetaje lista:");
+		}//else
+			//System.out.println(" indice: "+i+" Porcentaje:"+listaPorcentajesCandidato.get(i).porcentaje);	
 	
 		porcentajeFinales.add(listaPorcentajesCandidato.get(i).porcentaje);
 	}

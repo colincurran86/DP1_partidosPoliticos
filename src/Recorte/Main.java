@@ -170,15 +170,19 @@ public class Main {
                     
      
                     int cuenta = 0;
-                    if (dni.length() == 9){
-                    	for (int i = 0; i<9 ; i++){
-                    		if (dni.charAt(i) == '-'){
-                    			cuenta = i;
-                    			break;
+                    String dniAux="";
+                    //if (dni.length() == 9){
+                    	for (int i = 0; i<dni.length() ; i++){
+                    		if (dni.charAt(i) != '-'){
+                    			dniAux+=dni.charAt(i);
+                    			//cuenta = i;
+                    			//dniAux+=
+                    			//break;
                     		}
                     	}
-                    	dni = dni.replaceFirst(String.valueOf(dni.charAt(cuenta)), "");
-                    }
+                    	//dni = dni.replaceFirst(String.valueOf(dni.charAt(cuenta)), "");
+                    //}
+                    dni=dniAux;
                     
                     Procesando.escribirTextArea("============================================");
                     Procesando.escribirTextArea("Se esta procesando el dni :"  + dni );
