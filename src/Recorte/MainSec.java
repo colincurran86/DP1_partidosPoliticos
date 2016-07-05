@@ -165,8 +165,9 @@ public class MainSec {
                         //Prefs.blackBackground = false;
   
                         if (h != 7 ) yDNI = rf.obtenerSiguienteEspacioDNI(yDNI+2,alturaX+7);
-                        if (h ==0 ) numero = 4;
-                        else numero =  recogChar.recognize_actionPerformed(Copia1.getImage());
+                       
+                        
+                        numero =  recogChar.recognize_actionPerformed(Copia1.getImage());
                         if (dni == "") dni = ""+ numero;	             
     	                else dni=dni + numero;    
     	              }
