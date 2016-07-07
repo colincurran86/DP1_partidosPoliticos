@@ -32,9 +32,6 @@ public class ProcesandoSeg extends JPanel {
 	static public JProgressBar progressBar = new JProgressBar();
 	static public TextArea textArea = new TextArea();
 	static public JLabel labelImage = new JLabel();
-//static Label ProcesandoLabel = new Label("Iniciando recursos . . . ");
-
-	static public JLabel labelHuella = new JLabel();
 	
 	static int porcentaje = 0;
 	private static JButton btnGenerarReporte;
@@ -110,14 +107,6 @@ public class ProcesandoSeg extends JPanel {
 		labelPadron.setBounds(20, 48, 146, 14);
 		
 		add(labelPadron);
-		
-		//JLabel labelHuella = new JLabel();
-		labelHuella.setBounds(341, 309, 203, 202);
-		add(labelHuella);
-		
-		JLabel lblHuellaProcesada = new JLabel("Huella procesada:");
-		lblHuellaProcesada.setBounds(331, 284, 122, 14);
-		add(lblHuellaProcesada);
 		btnGenerarReporte.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Reportes pruebaReport = new Reportes();
@@ -197,7 +186,7 @@ static public void setearImagenHuella ( BufferedImage imgA  ) {
 		FastBitmap imagenPlanillon = new FastBitmap(scaledImg); 
 		ImageIcon ii = new ImageIcon ();
 		ii = imagenPlanillon.toIcon(); 
-		labelHuella.setIcon( ii);
+		//labelHuella.setIcon( ii);
 		
 
 		

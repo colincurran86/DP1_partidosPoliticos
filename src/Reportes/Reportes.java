@@ -615,6 +615,7 @@ public class Reportes {
 				cellStyle.setAlignment(cellStyle.ALIGN_CENTER);
 				cellA1.setCellStyle(cellStyle);
 				
+				/*
 				
 				cellA1 = row1.createCell((short) 5); // COLUMNA 2 (C)
 				cellA1.setCellValue("% de Firma");  // agregar a la iteración
@@ -641,7 +642,7 @@ public class Reportes {
 				cellStyle.setBorderTop((short)2);
 				cellStyle.setAlignment(cellStyle.ALIGN_CENTER);
 				cellA1.setCellStyle(cellStyle);
-				
+				*/
 				
 			//	filaInicial = filaInicial + 1 ;
 				
@@ -678,6 +679,7 @@ public class Reportes {
 					cellStyle.setAlignment(cellStyle.ALIGN_CENTER);
 					cellA1.setCellStyle(cellStyle);
 					
+					/*
 					cellA1 = row1.createCell((short) 5); // COLUMNA 2 (C)
 					cellA1.setCellValue(adherentes.get(i).getParticipando().getPorcentajeFirma() +" %");
 					cellStyle = workbook.createCellStyle();
@@ -696,6 +698,7 @@ public class Reportes {
 					cellStyle.setAlignment(cellStyle.ALIGN_CENTER);
 					cellA1.setCellStyle(cellStyle);
 					
+					*/
 					}
 					
 				}
@@ -706,7 +709,7 @@ public class Reportes {
 				 
 				
 					cellA1 = row1.createCell((short) 1); // COLUMNA 2 (C)
-					cellA1.setCellValue("DUPLICADOS");  // agregar a la iteración
+					cellA1.setCellValue("OBSERVADOS");  // agregar a la iteración
 					cellStyle = workbook.createCellStyle();
 					cellStyle.setFillForegroundColor(HSSFColor.LIGHT_ORANGE.index);
 					cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
