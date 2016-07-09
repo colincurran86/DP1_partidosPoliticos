@@ -4452,7 +4452,7 @@ try{
 			cortadorImagenes.ApplyInPlace(i3);
 			cortadorImagenesHuellas.ApplyInPlace(i4);
 
-			JOptionPane.showMessageDialog(null, i4.toIcon(), "Result , indice", JOptionPane.PLAIN_MESSAGE); 
+			//JOptionPane.showMessageDialog(null, i4.toIcon(), "Result , indice", JOptionPane.PLAIN_MESSAGE); 
 
 		
 			huella = i4.toBufferedImage();
