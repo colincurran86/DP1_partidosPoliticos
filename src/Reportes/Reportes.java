@@ -709,7 +709,7 @@ public class Reportes {
 				 
 				
 					cellA1 = row1.createCell((short) 1); // COLUMNA 2 (C)
-					cellA1.setCellValue("OBSERVADOS");  // agregar a la iteración
+					cellA1.setCellValue("RECHAZADOS");  // agregar a la iteración
 					cellStyle = workbook.createCellStyle();
 					cellStyle.setFillForegroundColor(HSSFColor.LIGHT_ORANGE.index);
 					cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
@@ -779,7 +779,7 @@ public class Reportes {
 						cellA1.setCellStyle(cellStyle);
 					 
 					
-					for (int i = 0 ; i < partDup.size() ; i++){
+					for (int i = 0 ; i < partDup.size() ; i++){	
 						
 						if(ppoliticos.get(cantPartPoliticos).getId() == partDup.get(i).getPartido().getId()  )   {  
 						filaInicial = filaInicial + 1 ; 
@@ -820,9 +820,106 @@ public class Reportes {
 						cellStyle.setAlignment(cellStyle.ALIGN_CENTER);
 						cellA1.setCellStyle(cellStyle);
 						
-					}
+						}
 					}
 					
+					
+					
+					//OBSERVADOS!
+					filaInicial = filaInicial +2  ;
+					row1 = worksheet.createRow((short) filaInicial   ); // FILA 5 
+				 
+				
+					cellA1 = row1.createCell((short) 1); // COLUMNA 2 (C)
+					cellA1.setCellValue("OBSERVADOS");  // agregar a la iteración
+					cellStyle = workbook.createCellStyle();
+					cellStyle.setFillForegroundColor(HSSFColor.LIGHT_ORANGE.index);
+					cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+					cellStyle.setBorderLeft((short)2);
+					cellStyle.setBorderBottom((short) 2);
+					cellStyle.setBorderRight((short)2);
+					cellStyle.setBorderTop((short)2);
+					cellStyle.setAlignment(cellStyle.ALIGN_CENTER);
+					cellA1.setCellStyle(cellStyle);
+					
+				
+	        
+					 filaInicial = filaInicial +1  ;
+						row1 = worksheet.createRow((short) filaInicial   ); 
+					 cellA1 = row1.createCell((short) 2); // COLUMNA 2 (C)
+						cellA1.setCellValue("DNI");  // agregar a la iteración
+						cellStyle = workbook.createCellStyle();
+						cellStyle.setFillForegroundColor(HSSFColor.LIGHT_ORANGE.index);
+						cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+						cellStyle.setBorderLeft((short)2);
+						cellStyle.setBorderBottom((short) 2);
+						cellStyle.setBorderRight((short)2);
+						cellStyle.setBorderTop((short)2);
+						cellStyle.setAlignment(cellStyle.ALIGN_CENTER);
+						cellA1.setCellStyle(cellStyle);
+						
+						
+						
+						cellA1 = row1.createCell((short) 3); // COLUMNA 2 (C)
+						cellA1.setCellValue("Nombre");  // agregar a la iteración
+						cellStyle = workbook.createCellStyle();
+						cellStyle.setFillForegroundColor(HSSFColor.LIGHT_ORANGE.index);
+						cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+						cellStyle.setBorderLeft((short)2);
+						cellStyle.setBorderBottom((short) 2);
+						cellStyle.setBorderRight((short)2);
+						cellStyle.setBorderTop((short)2);
+						cellStyle.setAlignment(cellStyle.ALIGN_CENTER);
+						cellA1.setCellStyle(cellStyle);
+						
+						
+						
+						cellA1 = row1.createCell((short) 4); // COLUMNA 2 (C)
+						cellA1.setCellValue("Apellidos");  // agregar a la iteración
+						cellStyle = workbook.createCellStyle();
+						cellStyle.setFillForegroundColor(HSSFColor.LIGHT_ORANGE.index);
+						cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+						cellStyle.setBorderLeft((short)2);
+						cellStyle.setBorderBottom((short) 2);
+						cellStyle.setBorderRight((short)2);
+						cellStyle.setBorderTop((short)2);
+						cellStyle.setAlignment(cellStyle.ALIGN_CENTER);
+						cellA1.setCellStyle(cellStyle);
+						
+						for (int i = 0 ; i < Recorte.Main.observados.size() ; i++){	
+							
+							if(ppoliticos.get(cantPartPoliticos).getId() == Recorte.Main.observados.get(i).getPartido().getId()  )   {  
+							filaInicial = filaInicial + 1 ; 
+							row1 = worksheet.createRow((short) filaInicial   ); // FILA 5 
+							cellA1 = row1.createCell((short) 2); // COLUMNA 2 (C)
+							cellA1.setCellValue(Recorte.Main.observados.get(i).getParticipando().getDni());
+							cellStyle = workbook.createCellStyle();
+							cellStyle.setFillForegroundColor(HSSFColor.WHITE.index);
+							cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+							cellStyle.setAlignment(cellStyle.ALIGN_CENTER);
+							cellA1.setCellStyle(cellStyle);
+							
+							
+							cellA1 = row1.createCell((short) 3); // COLUMNA 2 (C)
+							cellA1.setCellValue(Recorte.Main.observados.get(i).getParticipando().getNombres());
+							cellStyle = workbook.createCellStyle();
+							cellStyle.setFillForegroundColor(HSSFColor.WHITE.index);
+							//		cellStyle.setFillForegroundColor(HSSFColor.GOLD.index);
+							cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+							cellStyle.setAlignment(cellStyle.ALIGN_CENTER);
+							cellA1.setCellStyle(cellStyle);
+							
+							cellA1 = row1.createCell((short) 4); // COLUMNA 2 (C)
+							cellA1.setCellValue(Recorte.Main.observados.get(i).getParticipando().getApellidos());
+							cellStyle = workbook.createCellStyle();
+							cellStyle.setFillForegroundColor(HSSFColor.WHITE.index);
+							//		cellStyle.setFillForegroundColor(HSSFColor.GOLD.index);
+							cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+							cellStyle.setAlignment(cellStyle.ALIGN_CENTER);
+							cellA1.setCellStyle(cellStyle);							
+							
+							}
+						}
 					
 					
 					 filaInicial = filaInicial +2   ; // PARA EL SIGUIENTE PARTIDO POLITICO

@@ -101,7 +101,7 @@ public class partidosProcesos {
 		for (int i = 0; i < partidoPersona.size() - 1; i++) {
 			repMismoPart=false;
 			repDifPart=false;
-			//if (partidoPersona.get(i).getCondicionRepetido() == 0) {
+			if (partidoPersona.get(i).getCondicionRepetido() == 0) {
 				for (int j = i + 1; j < partidoPersona.size(); j++) {
 					if (partidoPersona.get(i).getPersona().getDni().compareTo(partidoPersona.get(j).getPersona().getDni()) == 0) {
 						if(partidoPersona.get(i).getPartido().getId()==partidoPersona.get(j).getPartido().getId())
@@ -135,7 +135,7 @@ public class partidosProcesos {
 					nuevaLista.add(partidoPersona.get(i));
 				}else
 					partidoPersona.get(i).setCondicionRepetido(0);				
-			//}
+			}
 		}
 
 		return nuevaLista;
