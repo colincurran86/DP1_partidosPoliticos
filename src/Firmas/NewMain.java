@@ -181,9 +181,20 @@ public class NewMain {
       //g, 6 
       
       
-      urlBaseDeDatos = new String("C:\\Users\\LUIS S\\Desktop\\Firmas.jpg\\dfi065.png");
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+      
+      urlBaseDeDatos = new String("C:\\Users\\LUIS S\\Desktop\\Firmas.jpg\\dfi005.png");
    //urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\Otras_Resoluciones\\objs\\planillon\\13.png"); 
-   urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\datos Globales\\part.d.original1.png");
+   urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\part.d.original1.png");
    //   urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\datos Globales\\partForiginal005.jpg");   
       //urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\Otras_Resoluciones\\objs\\planillon\\13.png");
       
@@ -194,14 +205,15 @@ public class NewMain {
        FirmaRecortada ne = new FirmaRecortada(); 
        ne = af.cortarFirma(urlPlanillonesOriginales,7);
        List<Double> dl = af.procesarFirmasNuevoNuevo(ne,urlBaseDeDatos);
-       System.out.println("Umbral: "+dl.get(1)+" i: ");
+       
+       System.out.println("Umbral: "+dl.get(1)+" i: "+"nueva similitud: "+dl.get(0));
       
       
       
    //   }  
        
        
-       
+       //porceM - (34 - porcentaje anterior)
        
        
        

@@ -4009,6 +4009,7 @@ public static List<Double> procesarFirmasNuevo(FirmaRecortada listaFirmas, List<
 	
 	int distanciaMinima = 45; 
 	int distanciaFiltro = 14;
+	int valorEntrada=0;
 
 	List<PersonaReniecPorcentaje> listaDeListasPersonasReniecPorcentaje = new ArrayList<PersonaReniecPorcentaje>();
 	ArrayList<PersonaReniecPorcentaje> listaPorcentajesCandidato = null;
@@ -4081,12 +4082,14 @@ public static List<Double> procesarFirmasNuevo(FirmaRecortada listaFirmas, List<
 		if(entroNuevoSize==0){
 			if (alto <= 1300 && ancho <= 1300) {
 				freak1.scale = escalaActual;
+				valorEntrada=1;
 				// freak1.scale=16;
 				porcentajeMinimo = 17; //16
 				distanciaMinima = 60;
 				distanciaFiltro = 4;
 				//System.out.println("1");
 			} else if(alto >= 5000 && ancho >= 2000) {
+				valorEntrada=2;
 				freak1.scale = 23.0f;
 				porcentajeMinimo = 42; //45
 				distanciaMinima = 42;
@@ -4106,6 +4109,7 @@ public static List<Double> procesarFirmasNuevo(FirmaRecortada listaFirmas, List<
 		}
 		*/	
 			else {
+				valorEntrada=3;
 				freak1.scale = 18.0f;
 				porcentajeMinimo = 35; //26
 			}
@@ -4119,6 +4123,7 @@ public static List<Double> procesarFirmasNuevo(FirmaRecortada listaFirmas, List<
 					//	distanciaFiltro = 3;
 					//	System.out.println("2 nuevo");
 						freak1.scale = (float) 17.4;
+						valorEntrada=4;
 						sc=(float) 17.4;
 						porcentajeMinimo = 22; //26, 21
 						distanciaFiltro = 17;
@@ -4137,17 +4142,7 @@ public static List<Double> procesarFirmasNuevo(FirmaRecortada listaFirmas, List<
 		int indiceCandidatos;
 		//System.out.println("Registro persona: " + indicePersonaLista1);
 
-		
-		
-			arr = new ArrayList<Resultado>();
-			
-			//Direccion base de datos
-			//String url2 = new String(urlBaseDeDatos+"\\"
-	//		+ listaDeListaPersonas.get(indicePersonaLista1).getIdFirma());
-			
-			
-			
-			
+			arr = new ArrayList<Resultado>();	
 			//url2 = url2 +".jpg" ;
 			//DESCOMENTAR LUEGO
 			
@@ -4155,42 +4150,11 @@ public static List<Double> procesarFirmasNuevo(FirmaRecortada listaFirmas, List<
 			//System.out.println("firma q abrira" + url2);
 			imagen2 = new FastBitmap(url2);
 
-			/*
-			String cadena = new String(listaDeListaPersonas.get(indicePersonaLista1).getIdFirma());
-			if (cadena.equals("f036.jpg") || cadena.equals("f037.jpg") || cadena.equals("f038.jpg")
-					|| cadena.equals("f039.jpg") || cadena.equals("f040.jpg") || cadena.equals("f041.jpg")
-					|| cadena.equals("f042.jpg") || cadena.equals("f043.jpg")) {
-				BufferedImage bufferImageTemporal = null;
-				if (ancho <= 1300 && alto <= 1300) {
-					bufferImageTemporal = Thumbnails
-							.of(new File(url2))
-							.size(imagen1.getWidth() - 22, imagen1.getHeight() - 22).outputFormat("JPG")
-							.outputQuality(1).resizer(Resizers.PROGRESSIVE).asBufferedImage();
-				} else {
-					bufferImageTemporal = Thumbnails
-							.of(new File(url2))
-							.size(imagen1.getWidth(), imagen1.getHeight()).outputFormat("JPG").outputQuality(1)
-							.resizer(Resizers.PROGRESSIVE).asBufferedImage();
-				}
-				imagen2 = new FastBitmap(bufferImageTemporal);
-				// JOptionPane.showMessageDialog(null, imagen2.toIcon(),
-				// "Result "+isuperior+" ", JOptionPane.PLAIN_MESSAGE);
-			} else {
-				BufferedImage img = imagen2.toBufferedImage(); 
-				BufferedImage scaledImg = Scalr.resize(img, Method.AUTOMATIC, imagen1.getWidth(),
-						imagen1.getHeight(), Scalr.OP_BRIGHTER);
-				imagen2 = new FastBitmap(scaledImg);
-			}
-			 */
-
-
-		//	if(entroNuevoSize==0){
-			//System.out.println("Antiguo size");
 			BufferedImage img = imagen2.toBufferedImage(); 
 			BufferedImage scaledImg = Scalr.resize(img, Method.AUTOMATIC, imagen1.getWidth(),
 			imagen1.getHeight(), Scalr.OP_BRIGHTER);
 			imagen2 = new FastBitmap(scaledImg);
-		//	}
+
 				
 			
 			imagen2.toRGB();
@@ -4271,6 +4235,7 @@ public static List<Double> procesarFirmasNuevo(FirmaRecortada listaFirmas, List<
 				PersonaReniecPorcentaje personaReniecPorcentajeTemporal;
 				personaReniecPorcentajeTemporal = new PersonaReniecPorcentaje();
 				personaReniecPorcentajeTemporal.pe = listaDeListaPersonas.get(indicePersonaLista1);
+				porcentaje = normalizarPorentajes(valorEntrada,porcentaje,porcentajeMinimo);
 				personaReniecPorcentajeTemporal.porcentaje = porcentaje;
 				personaReniecPorcentajeTemporal.match=true;
 				listaPorcentajesCandidato.add(personaReniecPorcentajeTemporal);
@@ -4284,6 +4249,7 @@ public static List<Double> procesarFirmasNuevo(FirmaRecortada listaFirmas, List<
 				PersonaReniecPorcentaje personaReniecPorcentajeTemporal;
 				personaReniecPorcentajeTemporal = new PersonaReniecPorcentaje();
 				personaReniecPorcentajeTemporal.pe = listaDeListaPersonas.get(indicePersonaLista1);
+				porcentaje = normalizarPorentajes(valorEntrada,porcentaje,porcentajeMinimo);
 				personaReniecPorcentajeTemporal.porcentaje = porcentaje;
 				personaReniecPorcentajeTemporal.match=false;
 				listaPorcentajesCandidato.add(personaReniecPorcentajeTemporal);
@@ -4333,45 +4299,8 @@ public static List<Double> procesarFirmasNuevo(FirmaRecortada listaFirmas, List<
 		porcentajeFinales.add(listaPorcentajesCandidato.get(i).porcentaje);
 	}
 	
-	/*
-	for (int i = 0; i < listaPorcentajesCandidato.size(); i++) {
-		//System.out.println("Registro:  " + (i + 1));
-		System.out.println("solo importo toyoyo  smeot eos "+i+" pORCENTAJE: "+listaPorcentajesCandidato.get(i).porcentaje);
-	
-		mayor = -9999;		
-		
-		if (listaPorcentajesCandidato.get(i).porcentaje > 0) {
-				nunca = 1;
-				if (mayor < listaDeListasPersonasReniecPorcentaje.get(i).porcentaje) {
-					mayor = listaDeListasPersonasReniecPorcentaje.get(i).porcentaje;
-					indice1 = i;
-				
-				}
-			}
-		else{
-			PersonaReniec persona;
-			persona = new PersonaReniec();
-			persona.setDni("00000000");
-			lrestorno.add(persona);
-		}
 
-		System.out.println("Fin: "+i);
-	}
-	
-	
-	if(nunca==0){
-		PersonaReniec persona;
-		persona = new PersonaReniec();
-		persona.setDni("00000000");
-		lrestorno.add(persona);
-	}else
-		lrestorno.add(listaDeListasPersonasReniecPorcentaje.get(indice1).pe);		
-	System.out.println("kkkkkkkkkkkkkkkkkkkk");
-*/
-	
-	
-//	return lrestorno;
-	double p = porcentajeMinimo;
+	double p = 42;
 	porcentajeFinales.add(p);
 	return porcentajeFinales;
 	
@@ -4452,9 +4381,12 @@ public static List<Double> procesarFirmasNuevoNuevo(FirmaRecortada listaFirmas, 
 		}
 		
 		JOptionPane.showMessageDialog(null, imagen1.toIcon(), "Result " + indiceFirmas + " ",JOptionPane.PLAIN_MESSAGE);
-	
+		int valorEntrada=0;
+		
+		
 		if(entroNuevoSize==0){
 		if (alto <= 1300 && ancho <= 1300) {
+			valorEntrada=1;
 			freak1.scale = escalaActual;
 			// freak1.scale=16;
 			porcentajeMinimo = 16;
@@ -4462,6 +4394,7 @@ public static List<Double> procesarFirmasNuevoNuevo(FirmaRecortada listaFirmas, 
 			distanciaFiltro = 4;
 			System.out.println("1");
 		} else if(alto >= 5000 && ancho >= 2000) {
+			valorEntrada=2;
 			freak1.scale = 23.0f;
 			porcentajeMinimo = 42; //45
 			distanciaMinima = 42;
@@ -4482,6 +4415,7 @@ public static List<Double> procesarFirmasNuevoNuevo(FirmaRecortada listaFirmas, 
 	}
 	*/	
 		else {
+			valorEntrada=3;
 			freak1.scale = 18.0f;
 			porcentajeMinimo = 34; //26
 		}
@@ -4495,6 +4429,7 @@ public static List<Double> procesarFirmasNuevoNuevo(FirmaRecortada listaFirmas, 
 			//	distanciaFiltro = 3;
 			//	System.out.println("2 nuevo");
 				freak1.scale = (float) 17.4;
+				valorEntrada=4;
 				sc=(float) 17.4;
 				porcentajeMinimo = 22; //26, 21
 				distanciaFiltro = 17;
@@ -4643,6 +4578,7 @@ public static List<Double> procesarFirmasNuevoNuevo(FirmaRecortada listaFirmas, 
 				personaReniecPorcentajeTemporal = new PersonaReniecPorcentaje();
 				
 				//personaReniecPorcentajeTemporal.pe = listaDeListaPersonas.get(indicePersonaLista1);
+				porcentaje = normalizarPorentajes(valorEntrada,porcentaje,porcentajeMinimo);
 				personaReniecPorcentajeTemporal.porcentaje = porcentaje;
 				personaReniecPorcentajeTemporal.match=true;
 				listaPorcentajesCandidato.add(personaReniecPorcentajeTemporal);
@@ -4656,11 +4592,19 @@ public static List<Double> procesarFirmasNuevoNuevo(FirmaRecortada listaFirmas, 
 				PersonaReniecPorcentaje personaReniecPorcentajeTemporal;
 				personaReniecPorcentajeTemporal = new PersonaReniecPorcentaje();
 				//personaReniecPorcentajeTemporal.pe = listaDeListaPersonas.get(indicePersonaLista1);
+				porcentaje = normalizarPorentajes(valorEntrada,porcentaje,porcentajeMinimo);
 				personaReniecPorcentajeTemporal.porcentaje = porcentaje;
 				personaReniecPorcentajeTemporal.match=false;
 				listaPorcentajesCandidato.add(personaReniecPorcentajeTemporal);
 			}
+			
+			
+			//aca va
+	
 
+			
+			 
+			
 			Procesando.escribirTextArea( "porcentaje de similitud en la firma : "+porcentaje + "%" ); 
 			//Limpian sus descriptores de 1
 			for (int i = 0; i < descriptores1.size(); i++) {
@@ -4743,12 +4687,46 @@ public static List<Double> procesarFirmasNuevoNuevo(FirmaRecortada listaFirmas, 
 	
 	
 //	return lrestorno;
-	double p = porcentajeMinimo;
+	//double p = porcentajeMinimo;
+	double p = 42;
 	porcentajeFinales.add(p);
 	return porcentajeFinales;
 	
 }
 
+
+static double normalizarPorentajes(int valorEntrada,double porcentaje,double porM)
+{
+   
+		if(valorEntrada==1 || valorEntrada==4 || valorEntrada==3){
+			
+			if(porM!=42){
+			
+			if(porcentaje>0 && porcentaje<(100-42))
+			{
+			if(porcentaje>porM)
+			porcentaje =42+(porcentaje-porM); 
+			else if(porcentaje<porM)
+				porcentaje =42-(porM-porcentaje); 			
+			else if(porcentaje==porM)
+			porcentaje=42;
+			}
+			else if(porcentaje>=(100-42))
+			{
+				porcentaje=99;
+	 
+			}
+			else if(porcentaje<=0)
+			{
+				porcentaje=0;
+			}
+			
+		}
+  }
+    
+    //System.out.println("por: "+porcentaje);
+    return porcentaje;
+}
 
 
 
