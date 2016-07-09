@@ -36,6 +36,7 @@ public class Configuracion extends JDialog implements ActionListener{
 	private JButton okButton;
 	private JButton cancelButton;
 	private JSpinner spinner;
+	private JSpinner spinnerUmbral;
 	private ButtonGroup group;
 	private List<ProcesoElectoral> listaPE=ProcessManager.queryAllProc();
 	public static List<PartidoPolitico> listaPP= ProcessManager.queryAllPartPol();
@@ -130,6 +131,18 @@ public class Configuracion extends JDialog implements ActionListener{
 		
 		contentPanel.add(spinner);
 		
+		
+		
+		
+		SpinnerModel sm2 = new SpinnerNumberModel(0, 0, 100, 1); //default value,lower bound,upper bound,increment by 
+		spinnerUmbral = new JSpinner(sm2);
+		spinnerUmbral.setBounds(247, 184, 55, 20);
+		JSpinner.NumberEditor jsEditor2 = (JSpinner.NumberEditor)spinnerUmbral.getEditor();
+		DefaultFormatter formatter2 = (DefaultFormatter) jsEditor2.getTextField().getFormatter();
+		formatter2.setAllowsInvalid(false);
+		spinnerUmbral.setValue(0);		
+		contentPanel.add(spinnerUmbral);
+		
 		/*if(Carga.choiceCI==0 && Carga.choiceCI==0){
 			rdbtnCMasiva.setSelected(true);
 			cmbBoxPP.disable();
@@ -168,6 +181,13 @@ public class Configuracion extends JDialog implements ActionListener{
 		});
 		btnCheckListPartidos.setBounds(247, 231, 167, 23);
 		contentPanel.add(btnCheckListPartidos);
+		
+		JLabel lblUmbral = new JLabel("Umbral");
+		lblUmbral.setBounds(51, 187, 167, 14);
+		contentPanel.add(lblUmbral);
+				
+		
+		
 				
 		{
 			JPanel buttonPane = new JPanel();
