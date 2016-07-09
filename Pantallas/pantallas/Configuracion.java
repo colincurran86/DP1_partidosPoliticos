@@ -40,6 +40,7 @@ public class Configuracion extends JDialog implements ActionListener{
 	private ButtonGroup group;
 	private List<ProcesoElectoral> listaPE=ProcessManager.queryAllProc();
 	public static List<PartidoPolitico> listaPP= ProcessManager.queryAllPartPol();
+	public static int umbral;
 	public static String [] listaStrPP;
 	
 	
@@ -238,6 +239,7 @@ public class Configuracion extends JDialog implements ActionListener{
 				Carga.choiceCI=1;
 				Carga.choiceCM=0;
 			}*/
+			umbral=(int)spinnerUmbral.getValue();
 			this.dispose();
 		}
 		

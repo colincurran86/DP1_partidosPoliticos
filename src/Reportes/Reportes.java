@@ -641,8 +641,8 @@ public class Reportes {
 				cellStyle.setBorderRight((short)2);
 				cellStyle.setBorderTop((short)2);
 				cellStyle.setAlignment(cellStyle.ALIGN_CENTER);
-				cellA1.setCellStyle(cellStyle);
-				*/
+				cellA1.setCellStyle(cellStyle);*/
+				
 				
 			//	filaInicial = filaInicial + 1 ;
 				
@@ -697,8 +697,8 @@ public class Reportes {
 					cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
 					cellStyle.setAlignment(cellStyle.ALIGN_CENTER);
 					cellA1.setCellStyle(cellStyle);
-					
 					*/
+					
 					}
 					
 				}
