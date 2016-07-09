@@ -10,10 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
-	
+import javax.swing.JOptionPane;
 
-
-
+import Catalano.Imaging.FastBitmap;
 import pantallas.Procesando;
 import pantallas.ProcesandoSeg;
 import models.PersonaReniec;
@@ -30,7 +29,7 @@ public class AlgoritmoHuellas {
 			//int idHuella = listaPersonasReniec.get(i).getIdHuella();
 			String idHuella = listaPersonasReniec.get(i).getIdHuella();
 			try {		
-				
+				System.out.println(rutaHuella + " " + idHuella);
 				BufferedImage imageBase = buscarImageBase(idHuella, rutaHuella);
 				//Procesando.setearImagenHuella(imageInput.getBufferedImage());
 				//ProcesandoSeg.setearImagenHuella(imageInput.getBufferedImage());
@@ -56,10 +55,14 @@ public class AlgoritmoHuellas {
 		String rutaFinal = rutaHuella  + "/" + idHuella + ".png";
 		File a=new File(rutaFinal);
 		if(!a.exists()){
-			rutaFinal=rutaHuella  + "/" + idHuella + ".jpg";
+			rutaFinal=rutaHuella  + "/" + idHuella + ".jpg";			
 		}
 		
 		//System.out.println(rutaFinal);
+		
+		//FastBitmap aa= new FastBitmap(rutaFinal);
+		//JOptionPane.showMessageDialog(null, aa.toIcon(),"",JOptionPane.PLAIN_MESSAGE);
+		
 		BufferedImage imageBase = ImageIO.read(new File(rutaFinal));
 		return imageBase;
 	

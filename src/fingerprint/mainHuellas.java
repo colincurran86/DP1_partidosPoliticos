@@ -32,7 +32,7 @@ public class mainHuellas {
 		// BufferedImage imageInput = ImageIO.read(new
 		// File("C:/Users/Administrador/Desktop/Christian/9no/DP1/GIT GIT GIT
 		// GIT/adb-installer.log/src/fingerprint/input.png"));
-
+		System.out.println(imageBase.getHeight() + " " + imageBase.getWidth());
 		int[][] imageDataBase = new int[imageBase.getHeight()][imageBase.getWidth()];
 		int[][] imageDataInput = new int[imageInput.getHeight()][imageInput.getWidth()];
 
