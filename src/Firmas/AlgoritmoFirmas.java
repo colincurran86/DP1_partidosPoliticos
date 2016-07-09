@@ -37,7 +37,8 @@ import Catalano.Imaging.Filters.ZhangSuenThinning;
  * @author LUIS S
  */
 public class AlgoritmoFirmas {
-
+	
+	static BufferedImage huella=null;
 	private String rutaCarpetaImagenes;
 	private String rutaImagen1;
 	private String rutaImagen2;
@@ -3991,9 +3992,552 @@ try{
 
 
 
+
+
+
+
+
+
+public static FirmaRecortada cortarFirmaHuellas(String urlPlanillonesOriginales, int indice) {
+try{
+	int anchos = 0;
+	int altos = 0;
+	int indiceFinal = 0;
+	FirmaRecortada listaFirmasCortadas = new FirmaRecortada();
+	Crop cortadorImagenesHuellas;
+
+		ArrayList<FirmaRecortada> listaTemporal = new ArrayList<FirmaRecortada>();
+		//System.out.println("Planillon: " + urlPlanillonesOriginales);
+		FastBitmap imagenPlanillon = new FastBitmap(urlPlanillonesOriginales );
+		Crop cortadorImagenes;
+		int factorPixel = 0;
+		int multiplicarFactor = 0;
+		
+	
+		
+		if (imagenPlanillon.getWidth() < imagenPlanillon.getHeight()) {
+			Rotate rotarImage = new Rotate(90.0,Rotate.Algorithm.BICUBIC);
+		
+			int despejarLineasNegras = 0;
+			
+			rotarImage.applyInPlace(imagenPlanillon);
+			rotarImage.applyInPlace(imagenPlanillon);
+			rotarImage.applyInPlace(imagenPlanillon);
+		//	rotarImage.applyInPlace(imagenPlanillon);
+	//		rotarImage.applyInPlace(imagenPlanillon);
+		//	rotarImage.applyInPlace(imagenPlanillon);
+			imagenPlanillon.toRGB();
+			imagenPlanillon.toGrayscale();
+			OtsuThreshold o = new OtsuThreshold();
+			o.applyInPlace(imagenPlanillon);
+
+			
+			for (int j = imagenPlanillon.getHeight() - 1; j > 0; j--) {
+				if (imagenPlanillon.getGray(j, imagenPlanillon.getWidth() / 2) == 255) {
+					despejarLineasNegras = j;
+					break;
+				}
+			}
+			cortadorImagenes = new Crop(0, imagenPlanillon.getWidth() / 2,
+			imagenPlanillon.getWidth() / 2 , despejarLineasNegras - 10);
+
+		} else {//47
+			
+			cortadorImagenes = new Crop(0, imagenPlanillon.getWidth() / 2, (imagenPlanillon.getWidth() / 2),
+				imagenPlanillon.getHeight());
+				imagenPlanillon.toRGB();
+				imagenPlanillon.toGrayscale();
+				OtsuThreshold o = new OtsuThreshold();
+				o.applyInPlace(imagenPlanillon);
+//				cortadorImagenes = new Crop(0, imagenPlanillon.getWidth() / 2, (imagenPlanillon.getWidth() / 3)+36,
+	//					imagenPlanillon.getHeight());
+
+		
+		}
+		 
+		
+		
+				
+		cortadorImagenes.ApplyInPlace(imagenPlanillon);
+		anchos = imagenPlanillon.getWidth() - 1;
+		altos = imagenPlanillon.getHeight() - 1;
+		//	imagenPlanillon.saveAsJPG("C:\\Users\\LUIS S\\Desktop\\p1Cortado.jpg");
+
+		//imagenPlanillon.saveAsJPG("C:\\Users\\LUIS S\\Desktop\\333.jpg");
+		
+		imagenPlanillon.saveAsJPG("C:\\Users\\LUIS S\\Desktop\\333.jpg");
+		
+		//Factor Pixel
+		if (altos >= 0 && altos <= 900)
+			factorPixel = 5;
+		else {
+			multiplicarFactor = altos / 900;
+			factorPixel = 5 * multiplicarFactor;
+		}
+
+
+
+		int mitadPlanillon = (imagenPlanillon.getWidth() / 2) + (factorPixel/2)+2;
+		int indiceNegro = 0;
+		int indiceBlanco = 0;
+		int nuevoInicioNegro = 0;
+
+		
+		for (int i = 0; i < imagenPlanillon.getHeight()-1; i++) {
+			if (imagenPlanillon.getGray(i, mitadPlanillon) == 255) {
+				nuevoInicioNegro = i;
+				break;
+			}
+			
+		}
+		
+		//System.out.println("nuevo: "+nuevoInicioNegro);
+		
+		
+		//Negro
+		for (int j = nuevoInicioNegro; j < imagenPlanillon.getHeight() - 1; j++) {
+			if (imagenPlanillon.getGray(j, mitadPlanillon) == 0) {
+				indiceNegro = j;
+				break;
+			}
+		}
+		
+		int veces2=0;
+		for (int i = indiceNegro; i < imagenPlanillon.getHeight()-1; i++) {
+			if (imagenPlanillon.getGray(i, mitadPlanillon) == 255) {
+				//indiceNegro = i;
+				break;
+			}	
+			veces2++;
+		}
+		
+
+	//	System.out.println("Veces: "+veces2);
+		//System.out.println("factor pixel: "+factorPixel/2 );
+		indiceNegro = indiceNegro+(veces2/2);
+		//Blanco
+		for (int r = imagenPlanillon.getWidth() / 2; r < imagenPlanillon.getWidth() - 1; r++) {
+			if (imagenPlanillon.getGray(indiceNegro, r) == 255) {
+				indiceBlanco = r;
+				break;
+			}
+		}
+
+		//System.out.println("factor p: "+factorPixel);
+	
+		
+		while(true){
+			
+		if(indiceBlanco==0) break;
+		int cantidadBlancosDespues=0;
+		int paso=0;
+		int primerNegroEncontrado=indiceBlanco;
+		int primeroEntrar = 0;
+		//System.out.println("111");;
+		for (int i = indiceBlanco; i < (indiceBlanco+factorPixel); i++) {
+			//System.out.println("deberia ser 1 :"+imagenPlanillon.getGray(indiceNegro, i));
+			if(imagenPlanillon.getGray(indiceNegro, i)==255)
+			{	cantidadBlancosDespues++;
+				
+			}
+			else
+			{
+				//System.out.println("prn :"+i);
+				paso=1;
+			}
+			
+			if(paso==1 && primeroEntrar==0){
+				primeroEntrar=1;
+				primerNegroEncontrado=i;
+				
+			}
+			
+			//else{
+			//	paso=1;
+			//	break;
+			//	}
+		}
+		
+		//System.out.println("222");
+		//System.out.println("Cantidad blancos despues: "+cantidadBlancosDespues);
+		//System.out.println("Indice blanco previo: "+indiceBlanco);
+		//System.out.println("Primer negro: "+primerNegroEncontrado);
+		//if(paso==0){
+		//JOptionPane.showMessageDialog(null, imagenPlanillon.toIcon(), "Result , indice", JOptionPane.PLAIN_MESSAGE); 
+
+		if (cantidadBlancosDespues<factorPixel){
+			//Blanco
+			for (int r = primerNegroEncontrado; r < imagenPlanillon.getWidth() - 1; r++) {
+				if (imagenPlanillon.getGray(indiceNegro, r) == 255) {
+					indiceBlanco = r;
+					break;
+				}
+			}
+
+		}
+		//}
+		else{
+			indiceBlanco=primerNegroEncontrado;
+			break;
+		}
+		
+		
+		
+		}
+		
+		
+		
+		/*
+		int veces3=0;
+		for (int i = indiceBlanco; i < imagenPlanillon.getHeight()-1; i++) {
+			if (imagenPlanillon.getGray(indiceBlanco,i) == 0) {
+			//	indiceNegro = i;
+				break;
+			}	
+			veces3++;
+		}
+		
+		System.out.println("Veces 3: "+veces3);
+		*/
+		
+		//System.out.println("Negro: "+indiceNegro);
+		//System.out.println("Blanco: "+indiceBlanco);
+
+		/*
+		Firmas.FastBitmap dibujar = new Firmas.FastBitmap(urlPlanillonesOriginales);
+		FastGraphics graficarPuntos2Base = new FastGraphics(dibujar);
+		// graficarPuntos2Base.setColor(Color.Blue);
+		graficarPuntos2Base.setColor(Color.Black);
+		graficarPuntos2Base.DrawCircle(indiceNegro, indiceBlanco, 40);
+		imagenPlanillon.saveAsJPG("C:\\Users\\LUIS S\\Desktop\\p1Dibujados.jpg");
+		//JOptionPane.showMessageDialog(null, dibujar.toIcon(), "Result con Puntos",JOptionPane.PLAIN_MESSAGE);
+		*/
+		
+		
+		int ind = imagenPlanillon.getWidth() - 1;
+		ind = indiceBlanco+veces2;
+	//	System.out.println("Veces 2:"+veces2);
+		List<List<Resultado>> a3 = new ArrayList<List<Resultado>>();
+		Resultado d;
+		int cont = 0;
+		int c = 0;
+		int llego = 0;
+		int dos = 0;
+
+		int j;
+		int tmp1 = 0;
+		int tmp2 = 0;
+		int nollego = 0;
+		int pasoPrimerNegro = 0;
+		
+		if(ind==imagenPlanillon.getWidth())
+			ind--;
+
+		//Busca la primera linea negra
+		//System.out.println("ind "+ind);
+		
+
+		while (true) {
+			c = 0;
+			llego = 0;
+			nollego = 0;
+			pasoPrimerNegro = 0;
+			
+			for (j = imagenPlanillon.getHeight() - 1; j > 0; j--) {
+				if (imagenPlanillon.getGray(j, ind) == 0) {
+					c++;
+					pasoPrimerNegro = j;
+
+				}
+				if (c > (imagenPlanillon.getHeight() / 2)) {
+					llego = 1;
+					tmp1 = ind;
+					break;
+				}
+			}
+			if (llego == 1)
+				break;
+			ind--;
+		}
+
+		
+
+		
+		j = 0;
+		llego = 0;
+		//ind = ind - (veces2+factorPixel);
+		ind = ind - 50;
+		//System.out.println("factor "+(veces2+factorPixel));
+		
+		//Segunda line negra
+		while (true) {
+			c = 0;
+			llego = 0;
+			pasoPrimerNegro = 0;
+			// for (j = inn+10; j > 0 ; j--) {
+			for (j = imagenPlanillon.getHeight() - 1; j > 0; j--) {
+	
+				if (imagenPlanillon.getGray(j, ind) == 0) { 
+					c++;
+				}
+
+
+				if (c > imagenPlanillon.getHeight() / 2) {
+					llego = 1;
+					tmp2 = ind;
+					break;
+				}
+			}
+	
+			if (llego == 1)
+				break;
+			ind--;
+
+		}
+
+		
+		int ultimoYLineaNegra1 = 0;
+		int ultimoYLineaNegra2 = 0;
+
+		
+			for (int k = imagenPlanillon.getHeight() -(veces2+factorPixel); k > 0; k--) {
+				if (imagenPlanillon.getGray(k, tmp1) == 0) {
+					ultimoYLineaNegra1 = k;
+					break;
+				}
+
+			}
+		
+		
+
+	
+			
+		for (int k = imagenPlanillon.getHeight() - (veces2+factorPixel); k > 0; k--) {
+			if (imagenPlanillon.getGray(k, tmp2) == 0) {
+				ultimoYLineaNegra2 = k;
+				break;
+			}
+
+		}
+		
+		
+
+		//System.out.println("tmp1:"+tmp1);
+		//System.out.println("tmp2:"+tmp2);
+		int veces = 0;
+		int ancho = tmp1 - tmp2;
+		int contador = 0;
+		int hizobreak = 0;
+		int malbreak = 0;
+		ArrayList<Integer> listaLineas = new ArrayList<Integer>();
+		int band1 = 0;
+	
+		
+		//System.out.println("ultimo y1 : "+ultimoYLineaNegra1);
+		//System.out.println("ultimo y2 : "+ultimoYLineaNegra2);
+		//System.out.println("Ancho lineas: "+ancho);
+		
+		//ultimoYLineaNegra2=1339;
+		int contadorBlancos=0;
+		for (int k = ultimoYLineaNegra2 - (factorPixel); k > 0; k--) {
+			contador = 0;
+			hizobreak = 0;
+			malbreak = 0;
+			
+			if (veces == 8)
+				break;
+			contadorBlancos=0;
+			for (int h = tmp2; h < tmp1; h++) {
+				
+				if (imagenPlanillon.getGray(k, h) == 0)
+					contador++;
+				else {
+				  	contadorBlancos++;
+				  //	System.out.println("contador blancos: "+contadorBlancos+" factor p: "+factorPixel);
+				  //	System.out.println("h :"+h+" k:"+k);
+				  	//JOptionPane.showMessageDialog(null, imagenPlanillon.toIcon(), "Result , indice", JOptionPane.PLAIN_MESSAGE); 
+				  	if(contadorBlancos>factorPixel){
+				  	//	System.out.println("entraste ??");
+					malbreak = 1;
+					break;
+				  	}
+				}
+				if (contador >= ancho / 2) {
+					hizobreak = 1;
+					//JOptionPane.showMessageDialog(null, imagenPlanillon.toIcon(), "Result , indice", JOptionPane.PLAIN_MESSAGE); 
+					break;
+					
+				}
+				//JOptionPane.showMessageDialog(null, imagenPlanillon.toIcon(), "Result , indice", JOptionPane.PLAIN_MESSAGE); 
+			}
+
+			if (malbreak != 1) {
+				k = k - (factorPixel);
+				veces++;
+				//System.out.println("Lineas: "+k+" factor: " +factorPixel);
+				listaLineas.add(k);
+			}
+		}
+
+		
+		int alto;
+		int k=0;
+		//for (int k = 0; k < 8; k++) {
+		if(indice==0)
+			k=7;
+		else if(indice==1)
+			k=6;
+		else if(indice==2)
+			k=5;
+		else if(indice==3)
+			k=4;
+		else if(indice==4)
+			k=3;
+		else if(indice==5)
+			k=2;
+		else if(indice==6)
+			k=1;
+		else if(indice==7)
+			k=0;
+		
+		//System.out.println("ultima negra: "+ultimoYLineaNegra2);
+		//System.out.println("linsta lenas k: "+listaLineas.get(k));
+	  	//JOptionPane.showMessageDialog(null, imagenPlanillon.toIcon(), "Result , indice", JOptionPane.PLAIN_MESSAGE); 
+	  	
+		
+		//int k=indice;
+			//System.out.println("Linea actual ..........." + k);
+			if (k == 0) {
+				alto = ultimoYLineaNegra2 - listaLineas.get(k);
+				cortadorImagenes = new Crop(listaLineas.get(k), tmp2, ancho, alto);
+				cortadorImagenesHuellas =new Crop(listaLineas.get(k), tmp2+(ancho*2), ancho, alto);
+			} else if (k == 7) {
+				alto = listaLineas.get(k - 1) - listaLineas.get(k);
+				cortadorImagenes = new Crop(listaLineas.get(k), tmp2, ancho, alto);
+				cortadorImagenesHuellas = new Crop(listaLineas.get(k), tmp2+(ancho), ancho, alto);
+
+			} else {
+				alto = listaLineas.get(k) - listaLineas.get(k + 1);
+				cortadorImagenes = new Crop(listaLineas.get(k), tmp2, ancho, alto);
+				cortadorImagenesHuellas = new Crop(listaLineas.get(k), tmp2+(ancho), ancho, alto);
+			
+			}
+			FastBitmap i3 = new FastBitmap(imagenPlanillon.toBufferedImage());
+			FastBitmap i4 = new FastBitmap(imagenPlanillon.toBufferedImage());
+			/*
+			imagenPlanillon.saveAsJPG(
+			"C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\Otras_Resoluciones\\objs\\planillon\\"
+							+ i + "rr.jpg");
+			FastBitmap i3 = new FastBitmap(
+			"C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\Otras_Resoluciones\\objs\\planillon\\"
+							+ i + "rr.jpg");
+			*/
+			cortadorImagenes.ApplyInPlace(i3);
+			cortadorImagenesHuellas.ApplyInPlace(i4);
+
+			//JOptionPane.showMessageDialog(null, i4.toIcon(), "Result , indice", JOptionPane.PLAIN_MESSAGE); 
+
+		
+			huella = i4.toBufferedImage();
+			FirmaRecortada fr = new FirmaRecortada();
+			fr.img = i3.toBufferedImage();
+			
+			fr.ancho = anchos;
+			fr.alto = altos;
+			
+			listaTemporal.add(fr);
+
+	//	}
+
+
+			listaFirmasCortadas = listaTemporal.get(0);
+
+
+	
+
+	return listaFirmasCortadas;
+	}catch(Exception e){
+		
+		ArrayList<FirmaRecortada> listaTemporal = new ArrayList<FirmaRecortada>();
+		//System.out.println("Planillon: " + urlPlanillonesOriginales);
+		FastBitmap imagenPlanillon = new FastBitmap(urlPlanillonesOriginales );
+		Crop cortadorImagenes;
+	
+		
+		if (imagenPlanillon.getWidth() < imagenPlanillon.getHeight()) {
+			Rotate rotarImage = new Rotate(90.0,Rotate.Algorithm.BICUBIC);
+		
+			int despejarLineasNegras = 0;
+			
+			rotarImage.applyInPlace(imagenPlanillon);
+			rotarImage.applyInPlace(imagenPlanillon);
+			rotarImage.applyInPlace(imagenPlanillon);
+		//	rotarImage.applyInPlace(imagenPlanillon);
+	//		rotarImage.applyInPlace(imagenPlanillon);
+		//	rotarImage.applyInPlace(imagenPlanillon);
+			imagenPlanillon.toRGB();
+			imagenPlanillon.toGrayscale();
+			OtsuThreshold o = new OtsuThreshold();
+			o.applyInPlace(imagenPlanillon);
+
+			
+			for (int j = imagenPlanillon.getHeight() - 1; j > 0; j--) {
+				if (imagenPlanillon.getGray(j, imagenPlanillon.getWidth() / 2) == 255) {
+					despejarLineasNegras = j;
+					break;
+				}
+			}
+			cortadorImagenes = new Crop(0,0,250,150);
+
+		} else {//47
+			cortadorImagenes = new Crop(0,0,250,150);
+				imagenPlanillon.toRGB();
+				imagenPlanillon.toGrayscale();
+				OtsuThreshold o = new OtsuThreshold();
+				o.applyInPlace(imagenPlanillon);
+				
+		
+		}
+		 
+		
+		//imagenPlanillon.saveAsJPG("C:\\Users\\LUIS S\\Desktop\\333.jpg");
+				
+		cortadorImagenes.ApplyInPlace(imagenPlanillon);
+		//anchos = imagenPlanillon.getWidth() - 1;
+		//altos = imagenPlanillon.getHeight() - 1;
+		
+		
+
+		FirmaRecortada fr = new FirmaRecortada();
+		fr.img = imagenPlanillon.toBufferedImage();
+		huella = imagenPlanillon.toBufferedImage();
+		listaTemporal.add(fr);
+		return listaTemporal.get(0);
+		
+
+
+
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 public static List<Double> procesarFirmasNuevo(FirmaRecortada listaFirmas, List<PersonaReniec> listaDeListaPersonas, String urlBaseDeDatos)
 		throws IOException {
-
+	
 	Procesando.setearImagenFirma( listaFirmas.img );
 	ProcesandoSeg.setearImagenFirma(listaFirmas.img);
 	
@@ -4148,7 +4692,6 @@ public static List<Double> procesarFirmasNuevo(FirmaRecortada listaFirmas, List<
 			
 			
 			//System.out.println("firma q abrira" + url2);
-			imagen2 = new FastBitmap(url2);
 
 			BufferedImage img = imagen2.toBufferedImage(); 
 			BufferedImage scaledImg = Scalr.resize(img, Method.AUTOMATIC, imagen1.getWidth(),
@@ -4578,7 +5121,7 @@ public static List<Double> procesarFirmasNuevoNuevo(FirmaRecortada listaFirmas, 
 				personaReniecPorcentajeTemporal = new PersonaReniecPorcentaje();
 				
 				//personaReniecPorcentajeTemporal.pe = listaDeListaPersonas.get(indicePersonaLista1);
-				porcentaje = normalizarPorentajes(valorEntrada,porcentaje,porcentajeMinimo);
+			//	porcentaje = normalizarPorentajes(valorEntrada,porcentaje,porcentajeMinimo);
 				personaReniecPorcentajeTemporal.porcentaje = porcentaje;
 				personaReniecPorcentajeTemporal.match=true;
 				listaPorcentajesCandidato.add(personaReniecPorcentajeTemporal);
@@ -4592,7 +5135,7 @@ public static List<Double> procesarFirmasNuevoNuevo(FirmaRecortada listaFirmas, 
 				PersonaReniecPorcentaje personaReniecPorcentajeTemporal;
 				personaReniecPorcentajeTemporal = new PersonaReniecPorcentaje();
 				//personaReniecPorcentajeTemporal.pe = listaDeListaPersonas.get(indicePersonaLista1);
-				porcentaje = normalizarPorentajes(valorEntrada,porcentaje,porcentajeMinimo);
+			//	porcentaje = normalizarPorentajes(valorEntrada,porcentaje,porcentajeMinimo);
 				personaReniecPorcentajeTemporal.porcentaje = porcentaje;
 				personaReniecPorcentajeTemporal.match=false;
 				listaPorcentajesCandidato.add(personaReniecPorcentajeTemporal);
@@ -4687,8 +5230,8 @@ public static List<Double> procesarFirmasNuevoNuevo(FirmaRecortada listaFirmas, 
 	
 	
 //	return lrestorno;
-	//double p = porcentajeMinimo;
-	double p = 42;
+double p = porcentajeMinimo;
+//	double p = 42;
 	porcentajeFinales.add(p);
 	return porcentajeFinales;
 	
@@ -4734,8 +5277,9 @@ static double normalizarPorentajes(int valorEntrada,double porcentaje,double por
 {	List<PersonaReniec> listaFinal = null;
     FirmaRecortada liistaFirmas;    
     List<Double> resultados;
-    liistaFirmas = cortarFirma(urlPlanillonesOriginales,indice); 
-	//JOptionPane.showMessageDialog(null, liistaFirmas.toIcon(), "Result ", JOptionPane.PLAIN_MESSAGE);
+    //liistaFirmas = cortarFirma(urlPlanillonesOriginales,indice); 
+    liistaFirmas = cortarFirmaHuellas(urlPlanillonesOriginales,indice); 
+    //JOptionPane.showMessageDialog(null, liistaFirmas.toIcon(), "Result ", JOptionPane.PLAIN_MESSAGE);
     //listaFinal = procesarFirmasNuevo(liistaFirmas,listaDeListasPersonasReniec,urlBaseDeDatos);       
     resultados = procesarFirmasNuevo(liistaFirmas,listaDeListasPersonasReniec,urlBaseDeDatos);          
     //return listaFinal;

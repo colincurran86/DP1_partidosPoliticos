@@ -10,6 +10,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import Catalano.Imaging.FastBitmap;
+import Catalano.Imaging.Filters.OtsuThreshold;
 import models.PersonaReniec;
 
 
@@ -192,23 +193,34 @@ public class NewMain {
       
 
       
-      urlBaseDeDatos = new String("C:\\Users\\LUIS S\\Desktop\\Firmas.jpg\\dfi005.png");
+      urlBaseDeDatos = new String("C:\\Users\\LUIS S\\Desktop\\PROBAR PROBAR\\Firmas.jpg\\gfi033.jpg");
    //urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\Otras_Resoluciones\\objs\\planillon\\13.png"); 
-   urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\part.d.original1.png");
+  // urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\PROBAR PROBAR\\Planillones\\part.d.original8.png");
+      
+      urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\PROBAR PROBAR\\Planillones\\part.d.original9.png");
+    //  urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\PROBAR PROBAR\\Planillones\\part.d.original8.jpg");
+      
    //   urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\datos Globales\\partForiginal005.jpg");   
       //urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\Otras_Resoluciones\\objs\\planillon\\13.png");
       
       
-      System.out.println("ULR turno: ---------------------------------------------------"+urlBaseDeDatos);
-      // urlBaseDeDatos = new String("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\1.jpg");
-       //urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\1.jpg");
-       FirmaRecortada ne = new FirmaRecortada(); 
-       ne = af.cortarFirma(urlPlanillonesOriginales,7);
+      	System.out.println("ULR turno: ---------------------------------------------------"+urlBaseDeDatos);
+      	// urlBaseDeDatos = new String("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\1.jpg");
+      	//urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\1.jpg");
+      	FirmaRecortada ne = new FirmaRecortada(); 
+       
+
+		
+       
+       //ne = af.cortarFirma(urlPlanillonesOriginales,0);
+       ne = af.cortarFirmaHuellas(urlPlanillonesOriginales,0);
+       
        List<Double> dl = af.procesarFirmasNuevoNuevo(ne,urlBaseDeDatos);
        
        System.out.println("Umbral: "+dl.get(1)+" i: "+"nueva similitud: "+dl.get(0));
       
       
+       
       
    //   }  
        
@@ -266,7 +278,187 @@ public class NewMain {
      	    
        }
        */
+      
+      
+      
+      //Leer todas las firmas
+
+      
+    	String url2 = new String("C:\\Users\\LUIS S\\Desktop\\PROBAR PROBAR\\Firmas.jpg");
+    	//url2 = url2 + "/" +listaDeListaPersonas.get(indicePersonaLista1).getIdFirma() +  ".png" ;
+
+    	/*
+    	
+      	
+      for (int i = 1; i < 65; i++) {
+		System.out.println("D i:"+i);
+		String imagen1;
+		String imagen2;
+		
+		if(i<10){
+			imagen2 = new String("\\dfi00"+i+".png");
+			imagen1 = new String("\\dfi00"+i+".jpg");
+		}else
+		{
+			imagen2 = new String("\\dfi0"+i+".png");
+			imagen1 = new String("\\dfi0"+i+".jpg");
+		}
+		
+	    File ficheroUrl2Png = new File(url2+imagen2);
+	    File ficheroUrl2Jpg = new File(url2+imagen1);
+	    String uf=null;
+	    if (ficheroUrl2Png.exists())
+	    { 
+	    	uf = url2+imagen2;
+	    }
+	    else if (ficheroUrl2Jpg.exists())  
+	    { 
+	    	uf = url2+imagen1;
+	    }
+		
+	    
+	    FastBitmap nuevo = new FastBitmap(uf);
+	        OtsuThreshold o = new OtsuThreshold();
+			nuevo.toRGB();
+			nuevo.toGrayscale();
+			o.applyInPlace(nuevo);
+		JOptionPane.showMessageDialog(null, nuevo.toIcon(), "Result " +i+ " ",JOptionPane.PLAIN_MESSAGE);
+	    
+		
+	}
+	
+      
+      
+      
+
+    
+      
+      for (int i = 1; i < 73; i++) {
+		System.out.println("E i:"+i);
+		String imagen1;
+		String imagen2;
+		
+		if(i<10){
+			imagen2 = new String("\\efi00"+i+".png");
+			imagen1 = new String("\\efi00"+i+".jpg");
+		}else
+		{
+			imagen2 = new String("\\efi0"+i+".png");
+			imagen1 = new String("\\efi0"+i+".jpg");
+		}
+		
+	    File ficheroUrl2Png = new File(url2+imagen2);
+	    File ficheroUrl2Jpg = new File(url2+imagen1);
+	    String uf=null;
+	    if (ficheroUrl2Png.exists())
+	    { 
+	    	uf = url2+imagen2;
+	    }
+	    else if (ficheroUrl2Jpg.exists())  
+	    { 
+	    	uf = url2+imagen1;
+	    }
+		
+	    
+	    	
+	    FastBitmap nuevo = new FastBitmap(uf);
+	        OtsuThreshold o = new OtsuThreshold();
+			nuevo.toRGB();
+			nuevo.toGrayscale();
+			o.applyInPlace(nuevo);
+		JOptionPane.showMessageDialog(null, nuevo.toIcon(), "Result " +i+ " ",JOptionPane.PLAIN_MESSAGE);
+	    
+		
+	}
+     
+      
+      
+    	
+    	
+        for (int i = 1; i < 71
+        		; i++) {
+    		System.out.println("G i:"+i);
+    		String imagen1;
+    		String imagen2;
+    		
+    		if(i<10){
+    			imagen2 = new String("\\gfi00"+i+".png");
+    			imagen1 = new String("\\gfi00"+i+".jpg");
+    		}else
+    		{
+    			imagen2 = new String("\\gfi0"+i+".png");
+    			imagen1 = new String("\\gfi0"+i+".jpg");
+    		}
+    		
+    	    File ficheroUrl2Png = new File(url2+imagen2);
+    	    File ficheroUrl2Jpg = new File(url2+imagen1);
+    	    String uf=null;
+    	    if (ficheroUrl2Png.exists())
+    	    { 
+    	    	uf = url2+imagen2;
+    	    }
+    	    else if (ficheroUrl2Jpg.exists())  
+    	    { 
+    	    	uf = url2+imagen1;
+    	    }
+    		
+    	   
+    	    FastBitmap nuevo = new FastBitmap(uf);
+        
+    	    OtsuThreshold o = new OtsuThreshold();
+			nuevo.toRGB();
+			nuevo.toGrayscale();
+			o.applyInPlace(nuevo);
+			
+    		JOptionPane.showMessageDialog(null, nuevo.toIcon(), "Result " +i+ " ",JOptionPane.PLAIN_MESSAGE);
+    	    
+    		
+    	}
+          
+    
+        
+        
+        */
        
+    	/*
+      for (int i = 1; i < 73; i++) {
+  		System.out.println("H i:"+i);
+  		String imagen1;
+  		String imagen2;
+  		
+  		if(i<10){
+  			imagen2 = new String("\\hfi00"+i+".png");
+  			imagen1 = new String("\\hfi00"+i+".jpg");
+  		}else
+  		{
+  			imagen2 = new String("\\hfi0"+i+".png");
+  			imagen1 = new String("\\hfi0"+i+".jpg");
+  		}
+  		
+  	    File ficheroUrl2Png = new File(url2+imagen2);
+  	    File ficheroUrl2Jpg = new File(url2+imagen1);
+  	    String uf=null;
+  	    if (ficheroUrl2Png.exists())
+  	    { 
+  	    	uf = url2+imagen2;
+  	    }
+  	    else if (ficheroUrl2Jpg.exists())  
+  	    { 
+  	    	uf = url2+imagen1;
+  	    }
+  		
+  	    
+  	    FastBitmap nuevo = new FastBitmap(uf);
+  	        OtsuThreshold o = new OtsuThreshold();
+			nuevo.toRGB();
+			nuevo.toGrayscale();
+			o.applyInPlace(nuevo);
+  		JOptionPane.showMessageDialog(null, nuevo.toIcon(), "Result " +i+ " ",JOptionPane.PLAIN_MESSAGE);
+  	    
+  		
+  	}
+        */
+      
       
      
     }
