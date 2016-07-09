@@ -4380,6 +4380,23 @@ try{
 		}
 
 		
+		
+		
+
+		FastBitmap imagenOriginal = new FastBitmap(urlPlanillonesOriginales );
+		
+		Crop cortadorImagenes2 = new Crop(0, imagenOriginal.getWidth() / 2, (imagenOriginal.getWidth() / 2),
+		imagenOriginal.getHeight());
+		cortadorImagenes2.ApplyInPlace(imagenOriginal);
+		//imagenOriginal.saveAsJPG("C:\\Users\\LUIS S\\Desktop\\333.jpg");
+	
+		
+		
+		
+		
+		
+		
+		
 		int alto;
 		int k=0;
 		//for (int k = 0; k < 8; k++) {
@@ -4423,7 +4440,7 @@ try{
 			
 			}
 			FastBitmap i3 = new FastBitmap(imagenPlanillon.toBufferedImage());
-			FastBitmap i4 = new FastBitmap(imagenPlanillon.toBufferedImage());
+			FastBitmap i4 = new FastBitmap(imagenOriginal.toBufferedImage());
 			/*
 			imagenPlanillon.saveAsJPG(
 			"C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\Otras_Resoluciones\\objs\\planillon\\"
@@ -4435,7 +4452,7 @@ try{
 			cortadorImagenes.ApplyInPlace(i3);
 			cortadorImagenesHuellas.ApplyInPlace(i4);
 
-			//JOptionPane.showMessageDialog(null, i4.toIcon(), "Result , indice", JOptionPane.PLAIN_MESSAGE); 
+			JOptionPane.showMessageDialog(null, i4.toIcon(), "Result , indice", JOptionPane.PLAIN_MESSAGE); 
 
 		
 			huella = i4.toBufferedImage();
