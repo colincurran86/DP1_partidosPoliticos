@@ -4557,6 +4557,9 @@ public static List<Double> procesarFirmasNuevo(FirmaRecortada listaFirmas, List<
 	
 	Procesando.setearImagenFirma( listaFirmas.img );
 	ProcesandoSeg.setearImagenFirma(listaFirmas.img);
+	Procesando.setearImagenHuella(huella);
+	ProcesandoSeg.setearImagenHuella(huella);
+	
 	
 	double umbral = 5;
 	int d1 = 0, d2 = 0;
