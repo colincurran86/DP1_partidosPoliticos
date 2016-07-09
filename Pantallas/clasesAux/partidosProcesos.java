@@ -95,26 +95,47 @@ public class partidosProcesos {
 	
 	public static List<PartidoPersona> verificarDuplicados(List<PartidoPersona>partidoPersona ){
 		List<PartidoPersona> nuevaLista = new ArrayList<PartidoPersona>();
+		boolean repMismoPart=false;
+		boolean repDifPart=false;
 		// Verificamos los duplicados para cada partido politico
 		for (int i = 0; i < partidoPersona.size() - 1; i++) {
-			if (partidoPersona.get(i).getCondicionRepetido() == 0) {
+			repMismoPart=false;
+			repDifPart=false;
+			//if (partidoPersona.get(i).getCondicionRepetido() == 0) {
 				for (int j = i + 1; j < partidoPersona.size(); j++) {
 					if (partidoPersona.get(i).getPersona().getDni().compareTo(partidoPersona.get(j).getPersona().getDni()) == 0) {
-						nuevaLista.add(partidoPersona.get(i));
+						if(partidoPersona.get(i).getPartido().getId()==partidoPersona.get(j).getPartido().getId())
+							repMismoPart=true;													
+						else 
+							repDifPart=true;
+												
+						partidoPersona.get(j).setCondicionRepetido(1);
+						partidoPersona.get(i).setObservacion("Repetido entre los partidos politicos "
+								+ partidoPersona.get(i).getPartido().getNombre() + " - "
+								+ partidoPersona.get(j).getPartido().getNombre());
+						partidoPersona.get(j).setObservacion("Repetido entre los partidos politicos "
+								+ partidoPersona.get(i).getPartido().getNombre() + " - "
+								+ partidoPersona.get(j).getPartido().getNombre());
+						nuevaLista.add(partidoPersona.get(j));
+						
+						/*nuevaLista.add(partidoPersona.get(i));
 						nuevaLista.add(partidoPersona.get(j));
 						partidoPersona.get(i).setCondicionRepetido(1);
-						partidoPersona.get(i).setObservacion("Repetido entre los partidos politicos "
-										+ partidoPersona.get(i).getPartido().getNombre() + " - "
-										+ partidoPersona.get(j).getPartido().getNombre());
+						
 						
 						partidoPersona.get(j).setCondicionRepetido(1);
 						partidoPersona.get(j).setObservacion("Repetido entre los partidos politicos "
 										+ partidoPersona.get(i).getPartido().getNombre() + " - "
 										+ partidoPersona.get(j).getPartido().getNombre());
-						break;
+						break;*/
 					}
 				}
-			}
+				if(repDifPart){
+					partidoPersona.get(i).setCondicionRepetido(1);
+					nuevaLista.add(partidoPersona.get(i));
+				}else
+					partidoPersona.get(i).setCondicionRepetido(0);				
+			//}
 		}
 
 		return nuevaLista;
