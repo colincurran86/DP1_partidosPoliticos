@@ -24,6 +24,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 
+import pantallas.Configuracion;
 import pantallas.PrimeraFase;
 import clasesAux.Util;
 import models.PartidoPersona;
@@ -615,6 +616,18 @@ public class Reportes {
 				cellStyle.setAlignment(cellStyle.ALIGN_CENTER);
 				cellA1.setCellStyle(cellStyle);
 				
+				cellA1 = row1.createCell((short) 5); // COLUMNA 2 (C)
+				cellA1.setCellValue("Observación");  // agregar a la iteración
+				cellStyle = workbook.createCellStyle();
+				cellStyle.setFillForegroundColor(HSSFColor.GREY_25_PERCENT.index);
+				cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+				cellStyle.setBorderLeft((short)2);
+				cellStyle.setBorderBottom((short) 2);
+				cellStyle.setBorderRight((short)2);
+				cellStyle.setBorderTop((short)2);
+				cellStyle.setAlignment(cellStyle.ALIGN_CENTER);
+				cellA1.setCellStyle(cellStyle);
+				
 				/*
 				
 				cellA1 = row1.createCell((short) 5); // COLUMNA 2 (C)
@@ -672,6 +685,16 @@ public class Reportes {
 					
 					cellA1 = row1.createCell((short) 4); // COLUMNA 2 (C)
 					cellA1.setCellValue(adherentes.get(i).getParticipando().getApellidos());
+					cellStyle = workbook.createCellStyle();
+					cellStyle.setFillForegroundColor(HSSFColor.WHITE.index);
+					//		cellStyle.setFillForegroundColor(HSSFColor.GOLD.index);
+					cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+					cellStyle.setAlignment(cellStyle.ALIGN_CENTER);
+					cellA1.setCellStyle(cellStyle);
+					
+					cellA1 = row1.createCell((short) 5); // COLUMNA 2 (C)
+					if(adherentes.get(i).getParticipando().getPorcentajeFirma()<Configuracion.umbral)
+						cellA1.setCellValue("Observado");
 					cellStyle = workbook.createCellStyle();
 					cellStyle.setFillForegroundColor(HSSFColor.WHITE.index);
 					//		cellStyle.setFillForegroundColor(HSSFColor.GOLD.index);
@@ -826,6 +849,8 @@ public class Reportes {
 					
 					
 					//OBSERVADOS!
+					
+					/*
 					filaInicial = filaInicial +2  ;
 					row1 = worksheet.createRow((short) filaInicial   ); // FILA 5 
 				 
@@ -919,7 +944,7 @@ public class Reportes {
 							cellA1.setCellStyle(cellStyle);							
 							
 							}
-						}
+						}*/
 					
 					
 					 filaInicial = filaInicial +2   ; // PARA EL SIGUIENTE PARTIDO POLITICO

@@ -229,7 +229,7 @@ public class Main {
                      		Procesando.escribirTextArea("Para el candiato: " + listaPersonasReniec.get(i).getDni() + " Porcentaje de firmas es: "+ listaPorcentajeFirma.get(i) );     
                      	Procesando.escribirTextArea( "De todos los candidatos el mejor según firmas es: " + listaPersonasReniec.get(indiceCandidatoFirmas).getDni());
                      	//if(  listaPorcentajeFirma.get(  indiceCandidatoFirmas )    >   listaPorcentajeFirma.get(  listaPorcentajeFirma.size()-1  )    )   {
-                     	 if(  elElegidoFinal ==null    &&  listaPorcentajeFirma.get(indiceCandidatoFirmas) >=Configuracion.umbral) 
+                     	 if(  elElegidoFinal ==null )//   &&  listaPorcentajeFirma.get(indiceCandidatoFirmas) >=Configuracion.umbral) 
                      		 elElegidoFinal = listaPersonasReniec.get(indiceCandidatoFirmas) ;
                      	 else
                      	 {
