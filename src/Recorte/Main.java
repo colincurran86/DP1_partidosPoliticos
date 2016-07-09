@@ -28,6 +28,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import clasesAux.Util;
 import fingerprint.AlgoritmoHuellas;
+import pantallas.Configuracion;
 import pantallas.PrimeraFase;
 import pantallas.Procesando;
 import pantallas.ProgressMonitorExample;
@@ -48,7 +49,7 @@ public class Main {
 	public static int totalPadrones;
 	public static String rutaPlanillonEjecutandose ; 
 	public static List <PartidoPersona> participantesPreDuplicidad = new ArrayList<PartidoPersona> ();
-		
+	public static List<PersonaReniec> observados = new ArrayList<PersonaReniec>();	
 	
     public  void  main(String rutaPadrones  , PartidoPolitico pp, String rutaFirma, String rutaHuella) {
     	Procesando.escribirLabelPartidoPolitico( "Iniciando recursos   :)   ");
@@ -191,7 +192,8 @@ public class Main {
                      //int indice = encontrarDNI(dni);
                      List<Double> listaPorcentajeFirma = new ArrayList<Double>();
                      List<Double> listaPorcentajeHuella = new ArrayList<Double>();
-                   
+                     
+                     
                      PersonaReniec elElegidoSegunOCR = new PersonaReniec();
                      PersonaReniec elElegidoSegunFirma = new PersonaReniec();
                      PersonaReniec elElegidoFinal = null;
@@ -227,8 +229,11 @@ public class Main {
                      		Procesando.escribirTextArea("Para el candiato: " + listaPersonasReniec.get(i).getDni() + " Porcentaje de firmas es: "+ listaPorcentajeFirma.get(i) );     
                      	Procesando.escribirTextArea( "De todos los candidatos el mejor según firmas es: " + listaPersonasReniec.get(indiceCandidatoFirmas).getDni());
                      	//if(  listaPorcentajeFirma.get(  indiceCandidatoFirmas )    >   listaPorcentajeFirma.get(  listaPorcentajeFirma.size()-1  )    )   {
-                     	 if(  elElegidoFinal ==null     )   elElegidoFinal = listaPersonasReniec.get(indiceCandidatoFirmas) ;
-						 						
+                     	 if(  elElegidoFinal ==null    &&  listaPorcentajeFirma.get(indiceCandidatoFirmas) >=Configuracion.umbral)   elElegidoFinal = listaPersonasReniec.get(indiceCandidatoFirmas) ;
+                     	 else
+                     	 {
+                     		 observados.add(listaPersonasReniec.get(indiceCandidatoFirmas)); 
+                     	 }
                 
                      	rf.recortesHuellasOficial(ruta0);
                         List<Integer>coordX = rf.coordX;
@@ -242,10 +247,7 @@ public class Main {
                        	int indiceCandidatoHuellas = candidatoHuellas(listaPorcentajeHuella);
                       	for ( int i = 0 ; i < listaPersonasReniec.size() ; i++) 
                       		Procesando.escribirTextArea("Para el candiato: " + listaPersonasReniec.get(i).getDni() + " Porcentaje de huellas es: "+ listaPorcentajeHuella.get(i) );     
-                      	Procesando.escribirTextArea( "De todos los candidatos el mejor según Huellas es: " + listaPersonasReniec.get(indiceCandidatoHuellas).getDni());
-
-                      	
-                      	
+                      	Procesando.escribirTextArea( "De todos los candidatos el mejor según Huellas es: " + listaPersonasReniec.get(indiceCandidatoHuellas).getDni());                      	
                       	
                     	List<Double> sumaPorcentajes = new ArrayList<Double>();
 						double valor = 0.0;
@@ -253,7 +255,6 @@ public class Main {
 							valor = listaPorcentajeFirma.get(i)*8 + listaPorcentajeHuella.get(i)*2 ;
 							sumaPorcentajes.add(valor);
 						}
-						
 						
 						 int indice = candidatoHuellas(sumaPorcentajes);
 						 
@@ -279,7 +280,8 @@ public class Main {
 							auxElegidoPartidoPersona.setParticipando(  par );
 							
 						
-							participantesPreDuplicidad.add( auxElegidoPartidoPersona) ; 
+							participantesPreDuplicidad.add( auxElegidoPartidoPersona) ;
+							
                       	}
                     	} catch (IOException e) {
                     		// TODO Auto-generated catch block
