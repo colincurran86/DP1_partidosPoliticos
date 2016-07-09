@@ -241,7 +241,8 @@ public class MainSec {
                         Copia2.setRoi(coordX.get(n), coordY.get(n) , rf.ancho , rf.alto);
                         IJ.run(Copia2, "Crop", ""); 
 
-                        listaPorcentajeHuella = 	 AlgoritmoHuellas.procesarNuevo(listaPersonasReniec,Copia2,rutaHuella); 
+                        //listaPorcentajeHuella = 	 AlgoritmoHuellas.procesarNuevo(listaPersonasReniec,Copia2,rutaHuella); 
+                        listaPorcentajeHuella = 	 AlgoritmoHuellas.procesarNuevo(listaPersonasReniec,AlgoritmoFirmas.huella,rutaHuella);
                        	int indiceCandidatoHuellas = candidatoHuellas(listaPorcentajeHuella);
                       	for ( int i = 0 ; i < listaPersonasReniec.size() ; i++) 
                       		ProcesandoSeg.escribirTextArea("Para el candiato: " + listaPersonasReniec.get(i).getDni() + " Porcentaje de huellas es: "+ listaPorcentajeHuella.get(i) );     

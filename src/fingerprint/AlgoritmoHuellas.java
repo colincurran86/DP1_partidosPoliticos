@@ -13,14 +13,15 @@ import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 
 import Catalano.Imaging.FastBitmap;
+import Firmas.AlgoritmoFirmas;
 import pantallas.Procesando;
 import pantallas.ProcesandoSeg;
 import models.PersonaReniec;
 
 public class AlgoritmoHuellas {
 	
-	public static List<Double> procesarNuevo(List<PersonaReniec> listaPersonasReniec, ImagePlus imageInput, String rutaHuella){
-		
+	//public static List<Double> procesarNuevo(List<PersonaReniec> listaPersonasReniec, ImagePlus imageInput, String rutaHuella){
+	public static List<Double> procesarNuevo(List<PersonaReniec> listaPersonasReniec, BufferedImage imageInput, String rutaHuella){	
 		List<Double> resultado= new ArrayList<Double>();
 		
 		mainHuellas mhuellas = new mainHuellas();
@@ -33,7 +34,10 @@ public class AlgoritmoHuellas {
 				BufferedImage imageBase = buscarImageBase(idHuella, rutaHuella);
 				//Procesando.setearImagenHuella(imageInput.getBufferedImage());
 				//ProcesandoSeg.setearImagenHuella(imageInput.getBufferedImage());
-				double Porcentaje = mhuellas.principal(imageInput.getBufferedImage(), imageBase);
+				Procesando.setearImagenHuella(AlgoritmoFirmas.huella);
+				ProcesandoSeg.setearImagenHuella(AlgoritmoFirmas.huella);
+				//double Porcentaje = mhuellas.principal(imageInput.getBufferedImage(), imageBase);
+				double Porcentaje = mhuellas.principal(imageInput, imageBase);
 				if (Porcentaje == -1) Porcentaje = 0;
 				resultado.add(Porcentaje);
 				

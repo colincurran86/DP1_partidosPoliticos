@@ -38,7 +38,7 @@ import Catalano.Imaging.Filters.ZhangSuenThinning;
  */
 public class AlgoritmoFirmas {
 	
-	static BufferedImage huella=null;
+	public static BufferedImage huella=null;
 	private String rutaCarpetaImagenes;
 	private String rutaImagen1;
 	private String rutaImagen2;
@@ -4065,7 +4065,7 @@ try{
 
 		//imagenPlanillon.saveAsJPG("C:\\Users\\LUIS S\\Desktop\\333.jpg");
 		
-		imagenPlanillon.saveAsJPG("C:\\Users\\LUIS S\\Desktop\\333.jpg");
+		//imagenPlanillon.saveAsJPG("C:\\Users\\LUIS S\\Desktop\\333.jpg");
 		
 		//Factor Pixel
 		if (altos >= 0 && altos <= 900)
@@ -4410,7 +4410,7 @@ try{
 			if (k == 0) {
 				alto = ultimoYLineaNegra2 - listaLineas.get(k);
 				cortadorImagenes = new Crop(listaLineas.get(k), tmp2, ancho, alto);
-				cortadorImagenesHuellas =new Crop(listaLineas.get(k), tmp2+(ancho*2), ancho, alto);
+				cortadorImagenesHuellas =new Crop(listaLineas.get(k), tmp2+(ancho), ancho, alto);
 			} else if (k == 7) {
 				alto = listaLineas.get(k - 1) - listaLineas.get(k);
 				cortadorImagenes = new Crop(listaLineas.get(k), tmp2, ancho, alto);

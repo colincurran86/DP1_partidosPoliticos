@@ -236,7 +236,9 @@ public class Main {
                      	ImagePlus Copia2 = IJ.openImage(ruta0);
                         Copia2.setRoi(coordX.get(n), coordY.get(n) , rf.ancho , rf.alto);
                         IJ.run(Copia2, "Crop", ""); 
-                        listaPorcentajeHuella = AlgoritmoHuellas.procesarNuevo(listaPersonasReniec,Copia2,rutaHuella); 
+                        
+                        //listaPorcentajeHuella = AlgoritmoHuellas.procesarNuevo(listaPersonasReniec,Copia2,rutaHuella);
+                        listaPorcentajeHuella = AlgoritmoHuellas.procesarNuevo(listaPersonasReniec,AlgoritmoFirmas.huella,rutaHuella);
                        	int indiceCandidatoHuellas = candidatoHuellas(listaPorcentajeHuella);
                       	for ( int i = 0 ; i < listaPersonasReniec.size() ; i++) 
                       		Procesando.escribirTextArea("Para el candiato: " + listaPersonasReniec.get(i).getDni() + " Porcentaje de huellas es: "+ listaPorcentajeHuella.get(i) );     
