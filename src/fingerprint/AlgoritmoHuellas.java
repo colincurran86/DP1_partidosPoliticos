@@ -30,7 +30,7 @@ public class AlgoritmoHuellas {
 			//int idHuella = listaPersonasReniec.get(i).getIdHuella();
 			String idHuella = listaPersonasReniec.get(i).getIdHuella();
 			try {		
-				System.out.println(rutaHuella + " " + idHuella);
+				//System.out.println(rutaHuella + " " + idHuella);
 				BufferedImage imageBase = buscarImageBase(idHuella, rutaHuella);
 				//Procesando.setearImagenHuella(imageInput.getBufferedImage());
 				//ProcesandoSeg.setearImagenHuella(imageInput.getBufferedImage());

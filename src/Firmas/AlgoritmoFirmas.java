@@ -4180,7 +4180,7 @@ try{
 		else{
 			for (int i = (indiceNegro-1); i > indiceNegro-(veces2); i--) {
 				if (imagenPlanillon.getGray(i, primerNegroEncontrado) == 0)
-				{	System.out.println("i "+i+" veces:"+(veces2/2));
+				{	//System.out.println("i "+i+" veces:"+(veces2/2));
 					ultimoNegroArriba=1;
 					break;
 				}
