@@ -4178,7 +4178,6 @@ try{
 		}
 		//}
 		else{
-			System.out.println("negro "+indiceNegro+" veces2/2 - negro :"+((veces2)));
 			for (int i = (indiceNegro-1); i > indiceNegro-(veces2); i--) {
 				if (imagenPlanillon.getGray(i, primerNegroEncontrado) == 0)
 				{	System.out.println("i "+i+" veces:"+(veces2/2));

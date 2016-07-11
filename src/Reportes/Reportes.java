@@ -510,7 +510,8 @@ public class Reportes {
 			worksheet.setColumnWidth(1, 5100);
 			worksheet.setColumnWidth(2, 5100);
 			worksheet.setColumnWidth(3, 5100);
-		
+			worksheet.setColumnWidth(4, 5100);
+			worksheet.setColumnWidth(5, 5100);
 			
 		    HSSFFont hSSFFont = workbook.createFont();
 	        
