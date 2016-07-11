@@ -252,12 +252,12 @@ public class Main {
                      		 observados.add(obs); 
                      	 }
                 
-                     	rf.recortesHuellasOficial(ruta0);
-                        List<Integer>coordX = rf.coordX;
-                        List<Integer>coordY = rf.coordY;
-                     	ImagePlus Copia2 = IJ.openImage(ruta0);
-                        Copia2.setRoi(coordX.get(n), coordY.get(n) , rf.ancho , rf.alto);
-                        IJ.run(Copia2, "Crop", ""); 
+                     	//rf.recortesHuellasOficial(ruta0);
+                        //List<Integer>coordX = rf.coordX;
+                        //List<Integer>coordY = rf.coordY;
+                     	//ImagePlus Copia2 = IJ.openImage(ruta0);
+                        //Copia2.setRoi(coordX.get(n), coordY.get(n) , rf.ancho , rf.alto);
+                        //IJ.run(Copia2, "Crop", ""); 
                         
                         //listaPorcentajeHuella = AlgoritmoHuellas.procesarNuevo(listaPersonasReniec,Copia2,rutaHuella);
                         listaPorcentajeHuella = AlgoritmoHuellas.procesarNuevo(listaPersonasReniec,AlgoritmoFirmas.huella,rutaHuella);
