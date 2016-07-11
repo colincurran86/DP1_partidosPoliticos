@@ -4133,8 +4133,9 @@ try{
 		int paso=0;
 		int primerNegroEncontrado=indiceBlanco;
 		int primeroEntrar = 0;
+		int ultimoNegroArriba=0;
 		//System.out.println("111");;
-		for (int i = indiceBlanco; i < (indiceBlanco+factorPixel); i++) {
+		for (int i = indiceBlanco; i < (indiceBlanco+factorPixel+6); i++) {
 			//System.out.println("deberia ser 1 :"+imagenPlanillon.getGray(indiceNegro, i));
 			if(imagenPlanillon.getGray(indiceNegro, i)==255)
 			{	cantidadBlancosDespues++;
@@ -4165,7 +4166,7 @@ try{
 		//if(paso==0){
 		//JOptionPane.showMessageDialog(null, imagenPlanillon.toIcon(), "Result , indice", JOptionPane.PLAIN_MESSAGE); 
 
-		if (cantidadBlancosDespues<factorPixel){
+		if (cantidadBlancosDespues<factorPixel+6){
 			//Blanco
 			for (int r = primerNegroEncontrado; r < imagenPlanillon.getWidth() - 1; r++) {
 				if (imagenPlanillon.getGray(indiceNegro, r) == 255) {
@@ -4177,8 +4178,23 @@ try{
 		}
 		//}
 		else{
+			System.out.println("negro "+indiceNegro+" veces2/2 - negro :"+((veces2)));
+			for (int i = (indiceNegro-1); i > indiceNegro-(veces2); i--) {
+				if (imagenPlanillon.getGray(i, primerNegroEncontrado) == 0)
+				{	System.out.println("i "+i+" veces:"+(veces2/2));
+					ultimoNegroArriba=1;
+					break;
+				}
+			}
+			
+			if(ultimoNegroArriba==0){
 			indiceBlanco=primerNegroEncontrado;
 			break;
+			}
+			else
+			{
+				indiceBlanco+=1;
+			}
 		}
 		
 		
@@ -4339,7 +4355,7 @@ try{
 		
 		//ultimoYLineaNegra2=1339;
 		int contadorBlancos=0;
-		for (int k = ultimoYLineaNegra2 - (factorPixel); k > 0; k--) {
+		for (int k = ultimoYLineaNegra2 - (factorPixel+(veces2/2+1)); k > 0; k--) {
 			contador = 0;
 			hizobreak = 0;
 			malbreak = 0;

@@ -193,32 +193,48 @@ public class NewMain {
       
 
       
-      urlBaseDeDatos = new String("C:\\Users\\LUIS S\\Desktop\\PROBAR PROBAR\\Firmas.jpg\\gfi033.jpg");
-   //urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\Otras_Resoluciones\\objs\\planillon\\13.png"); 
-  // urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\PROBAR PROBAR\\Planillones\\part.d.original8.png");
-      
-      urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\PROBAR PROBAR\\Planillones\\part.d.original9.png");
-    //  urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\PROBAR PROBAR\\Planillones\\part.d.original8.jpg");
-      
-   //   urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\datos Globales\\partForiginal005.jpg");   
-      //urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\Otras_Resoluciones\\objs\\planillon\\13.png");
-      
-      
-      	System.out.println("ULR turno: ---------------------------------------------------"+urlBaseDeDatos);
-      	// urlBaseDeDatos = new String("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\1.jpg");
-      	//urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\1.jpg");
-      	FirmaRecortada ne = new FirmaRecortada(); 
-       
-
+    //  for (int i = 1; i < 72; i++) {
 		
-       
-       //ne = af.cortarFirma(urlPlanillonesOriginales,0);
-       ne = af.cortarFirmaHuellas(urlPlanillonesOriginales,0);
-       
+	
+      
+  	String url22 = null;
+  	FirmaRecortada ne = new FirmaRecortada();
+  	
+  	/*
+  	if(i<10)
+  	urlBaseDeDatos = new String("C:\\Users\\LUIS S\\Desktop\\GRUPO06.ok\\Firmas\\ffi00"+i);
+  	else
+  		urlBaseDeDatos = new String("C:\\Users\\LUIS S\\Desktop\\GRUPO06.ok\\Firmas\\ffi0"+i);
+  	*/
+  	//urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\Nueva carpeta\\Firmas Java\\Otras_Resoluciones\\objs\\planillon\\13.png"); 
+  // urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\PROBAR PROBAR\\Planillones\\part.d.original8.png");
+     
+  
+  	/*for (int i = 0; i < 102; i++) {
+  	Double p = AlgoritmoFirmas.normalizarPorentajes(4,i,22);
+  	System.out.println("Porenta nuevo: "+p+" i:"+i);
+  	}
+  	*/
+  	
+  	
+  	
+	urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\PROBAR PROBAR\\Planillones\\f\\partForiginal006");
+  //urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\GRUPO06.ok\\Planillones\\partForiginal006");
+  	urlPlanillonesOriginales=probarRuta(urlPlanillonesOriginales);
+  	
+  	//  urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\PROBAR PROBAR\\Planillones\\part.d.original8.jpg");
+   //   urlPlanillonesOriginales = new String("C:\\Users\\LUIS S\\Desktop\\datos Globales\\partForiginal005.jpg");   
+    	urlBaseDeDatos = new String("C:\\Users\\LUIS S\\Desktop\\GRUPO06.ok\\Firmas\\ffi047");	
+      System.out.println("ULR turno: ---------------------------------------------------"+urlBaseDeDatos);
+      	ne = af.cortarFirmaHuellas(urlPlanillonesOriginales,0);
+      	FastBitmap tm = new FastBitmap(ne.img);
+		JOptionPane.showMessageDialog(null, tm.toIcon(), "Result ",JOptionPane.PLAIN_MESSAGE);
+		ne = af.cortarFirmaHuellas(urlPlanillonesOriginales,7);
+		urlBaseDeDatos=probarRuta(urlBaseDeDatos);
        List<Double> dl = af.procesarFirmasNuevoNuevo(ne,urlBaseDeDatos);
        
        System.out.println("Umbral: "+dl.get(1)+" i: "+"nueva similitud: "+dl.get(0));
-      
+    //  }
       
        
       
@@ -463,6 +479,18 @@ public class NewMain {
      
     }
     
+    public static String probarRuta(String r)
+    {String url22 = null;
+		String url2Png = r +".png" ;
+		String url2Jpg = r +".jpg" ;
+	    File ficheroUrl2Png = new File(url2Png);
+	    File ficheroUrl2Jpg = new File(url2Jpg);
+	    if (ficheroUrl2Png.exists())
+	    {  url22 = url2Png;
+	    }
+	    else if (ficheroUrl2Jpg.exists())  
+	    { url22 = url2Jpg;
+	    }
+	    return url22;
+    }
 }
-
-
