@@ -5258,6 +5258,7 @@ double p = porcentajeMinimo;
 }
 
 
+
 static double normalizarPorentajes(int valorEntrada,double porcentaje,double porM)
 {
    
@@ -5276,8 +5277,32 @@ static double normalizarPorentajes(int valorEntrada,double porcentaje,double por
 			}
 			else if(porcentaje>=(100-42))
 			{
-				porcentaje=99;
+				//cualq
+				if(valorEntrada==1){
+				if(porcentaje>=58 && porcentaje<74)
+					porcentaje=porcentaje+25;
+				else if(porcentaje>=74)
+					porcentaje=99;
+				}
+				else if(valorEntrada==3)
+				{
+					if(porcentaje>=58 && porcentaje<93)
+						porcentaje=porcentaje+7;
+					else if(porcentaje>=93)
+						porcentaje=99;
+					
+				}
+				else if(valorEntrada==4)
+				{
+					if(porcentaje>=58 && porcentaje<79)
+						porcentaje=porcentaje+20;
+					else if(porcentaje>=79)
+						porcentaje=99;
+					
+				}
+				
 	 
+				
 			}
 			else if(porcentaje<=0)
 			{
@@ -5290,6 +5315,8 @@ static double normalizarPorentajes(int valorEntrada,double porcentaje,double por
     //System.out.println("por: "+porcentaje);
     return porcentaje;
 }
+
+
 
 
 
