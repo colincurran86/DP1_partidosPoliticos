@@ -694,8 +694,12 @@ public class Reportes {
 					cellA1.setCellStyle(cellStyle);
 					
 					cellA1 = row1.createCell((short) 5); // COLUMNA 2 (C)
-					if(adherentes.get(i).getParticipando().getPorcentajeFirma()<Configuracion.umbral)
-						cellA1.setCellValue("Observado");
+					if(Configuracion.umbral<90)
+						if(adherentes.get(i).getParticipando().getPorcentajeFirma()<(Configuracion.umbral/2))
+							cellA1.setCellValue("Observado");
+					else
+						if(adherentes.get(i).getParticipando().getPorcentajeFirma()<Configuracion.umbral)
+							cellA1.setCellValue("Observado");
 					cellStyle = workbook.createCellStyle();
 					cellStyle.setFillForegroundColor(HSSFColor.WHITE.index);
 					//		cellStyle.setFillForegroundColor(HSSFColor.GOLD.index);
