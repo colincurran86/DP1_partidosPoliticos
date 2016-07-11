@@ -141,7 +141,7 @@ public class Configuracion extends JDialog implements ActionListener{
 		JSpinner.NumberEditor jsEditor2 = (JSpinner.NumberEditor)spinnerUmbral.getEditor();
 		DefaultFormatter formatter2 = (DefaultFormatter) jsEditor2.getTextField().getFormatter();
 		formatter2.setAllowsInvalid(false);
-		spinnerUmbral.setValue(42);		
+		spinnerUmbral.setValue(30);		
 		contentPanel.add(spinnerUmbral);
 		
 		/*if(Carga.choiceCI==0 && Carga.choiceCI==0){

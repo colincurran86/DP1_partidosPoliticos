@@ -38,10 +38,14 @@ public class partidosProcesos {
 			statement = connect.createStatement();
 
 			System.out.println("FECHAAA :" + p.getFechaInicioProc());
+			try{
 			statement.executeUpdate("INSERT INTO ProcesoxFasexPartidoPolitico "
 					+ "(IdPartidosPoliticos , idFase, Resultado, Observacion, IdProceso, FechaInicioProceso)"
 					+ "VALUES ('" + p.getIdPartPol() + "', '" + p.getIdFase() + "' , '" + p.getResultado() + "' , '"
 					+ p.getObservacion() + "' , '" + p.getIdProceso() + "' , '" + p.getFechaInicioProc() + "'   )");
+			}catch(Exception e){
+				
+			}
 			//resultSet.close();
 			connect.close();
 
