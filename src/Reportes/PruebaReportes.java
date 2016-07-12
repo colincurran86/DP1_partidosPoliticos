@@ -57,7 +57,7 @@ public class PruebaReportes {
 	
 		Reportes reporte = new Reportes();
 		String rutaGuardaReporte = new String("C:\\Users\\LUIS S\\Desktop\\bdd\\reporte.xls");
-		reporte.generarReporte(proceFaseBd, listaPPoliticos,rutaGuardaReporte);
+		reporte.generarReporte2(proceFaseBd, listaPPoliticos,rutaGuardaReporte);
 	
 	
 	}

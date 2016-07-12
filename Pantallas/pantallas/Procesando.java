@@ -131,7 +131,7 @@ static public JLabel labelHuella = new JLabel();
 				 
 				 //HACEMOS REPORTE AUTOMATICAMENTE FINALIZADO LA PANTALLA PARA LAS PERSONAS DUPLICADAS EN PARTDOS PLITICOS	
 				 try {
-					pruebaReport.generarReporte(Util.adherentes , Util.partDup , PrimeraFase.ppescogidos);
+					pruebaReport.generarReporte(Util.adherentes , Util.partDup , PrimeraFase.ppescogidos,Util.noDetectados);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

@@ -74,7 +74,7 @@ public class Reportes {
 	
 	
 
-	static public void generarReporte(List<ProcesoXFase> listaProceFaseBd ,List<PartidoPolitico> ppescogidos,String rutaGuardaReporte) throws IOException
+	static public void generarReporte2(List<ProcesoXFase> listaProceFaseBd ,List<PartidoPolitico> ppescogidos,String rutaGuardaReporte) throws IOException
 	{
 		int totalAceptados=0;
 		int totalRechazados=0;
@@ -492,7 +492,7 @@ public class Reportes {
 	
 	
 	
-	public void generarReporte(   List<PartidoPersona>   adherentes ,     List<PartidoPersona>  partDup ,    List<PartidoPolitico>  ppoliticos) throws IOException
+	public void generarReporte(   List<PartidoPersona>   adherentes ,     List<PartidoPersona>  partDup ,    List<PartidoPolitico>  ppoliticos, List<PartidoPersona>  noDetectados) throws IOException
 	{
 		int totalAceptados=0;
 		int totalRechazados=0; 
@@ -512,6 +512,11 @@ public class Reportes {
 			worksheet.setColumnWidth(3, 5100);
 			worksheet.setColumnWidth(4, 5100);
 			worksheet.setColumnWidth(5, 5100);
+			worksheet.setColumnWidth(6, 5100);
+			worksheet.setColumnWidth(7, 5100);
+			worksheet.setColumnWidth(8, 5100);
+			worksheet.setColumnWidth(9, 5100);
+			worksheet.setColumnWidth(10, 5100);
 			
 		    HSSFFont hSSFFont = workbook.createFont();
 	        
@@ -534,6 +539,11 @@ public class Reportes {
 	        int filaInicial = 0 ; // FILA 3  fila inicial  
 	    	//row1 = worksheet.createRow((short) filaInicial ); // FILA 3  fila inicial 
 	    	filaInicial = filaInicial +2  ;
+	    	int aceptados=0;
+	    	int rechazados=0;
+	    	int observados=0;
+	    	int nodetectadosC=0;
+	    	
 	        for ( int cantPartPoliticos = 0 ;  cantPartPoliticos < ppoliticos.size() ; cantPartPoliticos++ )
 	        	
 	        {
@@ -629,41 +639,15 @@ public class Reportes {
 				cellStyle.setAlignment(cellStyle.ALIGN_CENTER);
 				cellA1.setCellStyle(cellStyle);
 				
-				/*
-				
-				cellA1 = row1.createCell((short) 5); // COLUMNA 2 (C)
-				cellA1.setCellValue("% de Firma");  // agregar a la iteración
-				cellStyle = workbook.createCellStyle();
-				cellStyle.setFillForegroundColor(HSSFColor.GREY_25_PERCENT.index);
-				cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-				cellStyle.setBorderLeft((short)2);
-				cellStyle.setBorderBottom((short) 2);
-				cellStyle.setBorderRight((short)2);
-				cellStyle.setBorderTop((short)2);
-				cellStyle.setAlignment(cellStyle.ALIGN_CENTER);
-				cellA1.setCellStyle(cellStyle);
-				
-				
-				
-				cellA1 = row1.createCell((short) 6); // COLUMNA 2 (C)
-				cellA1.setCellValue("% de Huella");  // agregar a la iteración
-				cellStyle = workbook.createCellStyle();
-				cellStyle.setFillForegroundColor(HSSFColor.GREY_25_PERCENT.index);
-				cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-				cellStyle.setBorderLeft((short)2);
-				cellStyle.setBorderBottom((short) 2);
-				cellStyle.setBorderRight((short)2);
-				cellStyle.setBorderTop((short)2);
-				cellStyle.setAlignment(cellStyle.ALIGN_CENTER);
-				cellA1.setCellStyle(cellStyle);*/
-				
-				
-			//	filaInicial = filaInicial + 1 ;
-				
+				aceptados=0;
+				observados=0;
+				rechazados=0;
+				nodetectadosC=0;
 				for (  int i = 0 ; i < adherentes.size() ; i++  ) {
 					
 					if(ppoliticos.get(cantPartPoliticos).getId() == adherentes.get(i).getPartido().getId()  )   {  
 					filaInicial = filaInicial + 1 ; 
+					aceptados++;
 					row1 = worksheet.createRow((short) filaInicial   ); // FILA 5 
 					cellA1 = row1.createCell((short) 2); // COLUMNA 2 (C)
 					cellA1.setCellValue(adherentes.get(i).getParticipando().getDni());
@@ -696,10 +680,12 @@ public class Reportes {
 					cellA1 = row1.createCell((short) 5); // COLUMNA 2 (C)
 					if(Configuracion.umbral<90)
 						if(adherentes.get(i).getParticipando().getPorcentajeFirma()<(Configuracion.umbral/2))
-							cellA1.setCellValue("Observado");
+						{	cellA1.setCellValue("Observado");
+						observados++;}
 					else
 						if(adherentes.get(i).getParticipando().getPorcentajeFirma()<Configuracion.umbral)
-							cellA1.setCellValue("Observado");
+							{cellA1.setCellValue("Observado");
+							observados++;}
 					cellStyle = workbook.createCellStyle();
 					cellStyle.setFillForegroundColor(HSSFColor.WHITE.index);
 					//		cellStyle.setFillForegroundColor(HSSFColor.GOLD.index);
@@ -730,7 +716,7 @@ public class Reportes {
 					}
 					
 				}
-			
+	
 				//DUPLICADOS !! 
 				 filaInicial = filaInicial +2  ;
 					row1 = worksheet.createRow((short) filaInicial   ); // FILA 5 
@@ -810,6 +796,7 @@ public class Reportes {
 					for (int i = 0 ; i < partDup.size() ; i++){	
 						
 						if(ppoliticos.get(cantPartPoliticos).getId() == partDup.get(i).getPartido().getId()  )   {  
+						rechazados++;
 						filaInicial = filaInicial + 1 ; 
 						row1 = worksheet.createRow((short) filaInicial   ); // FILA 5 
 						cellA1 = row1.createCell((short) 2); // COLUMNA 2 (C)
@@ -853,61 +840,63 @@ public class Reportes {
 					
 					
 					
-					//OBSERVADOS!
-					
-					/*
-					filaInicial = filaInicial +2  ;
-					row1 = worksheet.createRow((short) filaInicial   ); // FILA 5 
-				 
-				
-					cellA1 = row1.createCell((short) 1); // COLUMNA 2 (C)
-					cellA1.setCellValue("OBSERVADOS");  // agregar a la iteración
-					cellStyle = workbook.createCellStyle();
-					cellStyle.setFillForegroundColor(HSSFColor.LIGHT_ORANGE.index);
-					cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-					cellStyle.setBorderLeft((short)2);
-					cellStyle.setBorderBottom((short) 2);
-					cellStyle.setBorderRight((short)2);
-					cellStyle.setBorderTop((short)2);
-					cellStyle.setAlignment(cellStyle.ALIGN_CENTER);
-					cellA1.setCellStyle(cellStyle);
-					
-				
-	        
-					 filaInicial = filaInicial +1  ;
-						row1 = worksheet.createRow((short) filaInicial   ); 
-					 cellA1 = row1.createCell((short) 2); // COLUMNA 2 (C)
-						cellA1.setCellValue("DNI");  // agregar a la iteración
+					for (int i = 0 ; i < noDetectados.size() ; i++){	
+						
+						if(ppoliticos.get(cantPartPoliticos).getId() == noDetectados.get(i).getPartido().getId()  )   {  
+						filaInicial = filaInicial + 1 ; 
+						nodetectadosC++;
+						row1 = worksheet.createRow((short) filaInicial   ); // FILA 5 
+						cellA1 = row1.createCell((short) 2); // COLUMNA 2 (C)
+						cellA1.setCellValue(noDetectados.get(i).getParticipando().getDni());
 						cellStyle = workbook.createCellStyle();
-						cellStyle.setFillForegroundColor(HSSFColor.LIGHT_ORANGE.index);
+						cellStyle.setFillForegroundColor(HSSFColor.WHITE.index);
 						cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-						cellStyle.setBorderLeft((short)2);
-						cellStyle.setBorderBottom((short) 2);
-						cellStyle.setBorderRight((short)2);
-						cellStyle.setBorderTop((short)2);
 						cellStyle.setAlignment(cellStyle.ALIGN_CENTER);
 						cellA1.setCellStyle(cellStyle);
-						
 						
 						
 						cellA1 = row1.createCell((short) 3); // COLUMNA 2 (C)
-						cellA1.setCellValue("Nombre");  // agregar a la iteración
+						cellA1.setCellValue(noDetectados.get(i).getParticipando().getNombres());
 						cellStyle = workbook.createCellStyle();
-						cellStyle.setFillForegroundColor(HSSFColor.LIGHT_ORANGE.index);
+						cellStyle.setFillForegroundColor(HSSFColor.WHITE.index);
+						//		cellStyle.setFillForegroundColor(HSSFColor.GOLD.index);
 						cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-						cellStyle.setBorderLeft((short)2);
-						cellStyle.setBorderBottom((short) 2);
-						cellStyle.setBorderRight((short)2);
-						cellStyle.setBorderTop((short)2);
 						cellStyle.setAlignment(cellStyle.ALIGN_CENTER);
 						cellA1.setCellStyle(cellStyle);
-						
-						
 						
 						cellA1 = row1.createCell((short) 4); // COLUMNA 2 (C)
-						cellA1.setCellValue("Apellidos");  // agregar a la iteración
+						cellA1.setCellValue(noDetectados.get(i).getParticipando().getApellidos());
 						cellStyle = workbook.createCellStyle();
-						cellStyle.setFillForegroundColor(HSSFColor.LIGHT_ORANGE.index);
+						cellStyle.setFillForegroundColor(HSSFColor.WHITE.index);
+						//		cellStyle.setFillForegroundColor(HSSFColor.GOLD.index);
+						cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+						cellStyle.setAlignment(cellStyle.ALIGN_CENTER);
+						cellA1.setCellStyle(cellStyle);
+						
+						cellA1 = row1.createCell((short) 5); // COLUMNA 2 (C)
+						cellA1.setCellValue(noDetectados.get(i).getObservacion());
+						cellStyle = workbook.createCellStyle();
+						cellStyle.setFillForegroundColor(HSSFColor.WHITE.index);
+						//		cellStyle.setFillForegroundColor(HSSFColor.GOLD.index);
+						cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+						cellStyle.setAlignment(cellStyle.ALIGN_CENTER);
+						cellA1.setCellStyle(cellStyle);
+						
+						}
+					}
+				
+					
+					
+					
+					
+					 filaInicial = filaInicial +2  ;
+					 row1 = worksheet.createRow((short) filaInicial   ); // FILA 5 
+					 
+					
+						cellA1 = row1.createCell((short) 1); // COLUMNA 2 (C)
+						cellA1.setCellValue("T. Aceptados: ");  // agregar a la iteración
+						cellStyle = workbook.createCellStyle();
+						cellStyle.setFillForegroundColor(HSSFColor.LIGHT_CORNFLOWER_BLUE.index);
 						cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
 						cellStyle.setBorderLeft((short)2);
 						cellStyle.setBorderBottom((short) 2);
@@ -915,54 +904,158 @@ public class Reportes {
 						cellStyle.setBorderTop((short)2);
 						cellStyle.setAlignment(cellStyle.ALIGN_CENTER);
 						cellA1.setCellStyle(cellStyle);
-						
-						for (int i = 0 ; i < Recorte.Main.observados.size() ; i++){	
-							
-							if(ppoliticos.get(cantPartPoliticos).getId() == Recorte.Main.observados.get(i).getPartido().getId()  )   {  
-							filaInicial = filaInicial + 1 ; 
-							row1 = worksheet.createRow((short) filaInicial   ); // FILA 5 
+
+		
 							cellA1 = row1.createCell((short) 2); // COLUMNA 2 (C)
-							cellA1.setCellValue(Recorte.Main.observados.get(i).getParticipando().getDni());
+							cellA1.setCellValue(aceptados);  // agregar a la iteración
 							cellStyle = workbook.createCellStyle();
 							cellStyle.setFillForegroundColor(HSSFColor.WHITE.index);
 							cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+							cellStyle.setBorderLeft((short)2);
+							cellStyle.setBorderBottom((short) 2);
+							cellStyle.setBorderRight((short)2);
+							cellStyle.setBorderTop((short)2);
 							cellStyle.setAlignment(cellStyle.ALIGN_CENTER);
 							cellA1.setCellStyle(cellStyle);
+						
+							 filaInicial = filaInicial +1  ;
+							 row1 = worksheet.createRow((short) filaInicial   ); // FILA 5 
+							 
 							
-							
-							cellA1 = row1.createCell((short) 3); // COLUMNA 2 (C)
-							cellA1.setCellValue(Recorte.Main.observados.get(i).getParticipando().getNombres());
-							cellStyle = workbook.createCellStyle();
-							cellStyle.setFillForegroundColor(HSSFColor.WHITE.index);
-							//		cellStyle.setFillForegroundColor(HSSFColor.GOLD.index);
-							cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-							cellStyle.setAlignment(cellStyle.ALIGN_CENTER);
-							cellA1.setCellStyle(cellStyle);
-							
-							cellA1 = row1.createCell((short) 4); // COLUMNA 2 (C)
-							cellA1.setCellValue(Recorte.Main.observados.get(i).getParticipando().getApellidos());
-							cellStyle = workbook.createCellStyle();
-							cellStyle.setFillForegroundColor(HSSFColor.WHITE.index);
-							//		cellStyle.setFillForegroundColor(HSSFColor.GOLD.index);
-							cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-							cellStyle.setAlignment(cellStyle.ALIGN_CENTER);
-							cellA1.setCellStyle(cellStyle);							
-							
-							}
-						}*/
-					
-					
+								cellA1 = row1.createCell((short) 1); // COLUMNA 2 (C)
+								cellA1.setCellValue("T. Rechazados: ");  // agregar a la iteración
+								cellStyle = workbook.createCellStyle();
+								cellStyle.setFillForegroundColor(HSSFColor.LIGHT_CORNFLOWER_BLUE.index);
+								cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+								cellStyle.setBorderLeft((short)2);
+								cellStyle.setBorderBottom((short) 2);
+								cellStyle.setBorderRight((short)2);
+								cellStyle.setBorderTop((short)2);
+								cellStyle.setAlignment(cellStyle.ALIGN_CENTER);
+								cellA1.setCellStyle(cellStyle);
+
+		
+								
+									cellA1 = row1.createCell((short) 2); // COLUMNA 2 (C)
+									cellA1.setCellValue(rechazados+nodetectadosC);  // agregar a la iteración
+									cellStyle = workbook.createCellStyle();
+									cellStyle.setFillForegroundColor(HSSFColor.WHITE.index);
+									cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+									cellStyle.setBorderLeft((short)2);
+									cellStyle.setBorderBottom((short) 2);
+									cellStyle.setBorderRight((short)2);
+									cellStyle.setBorderTop((short)2);
+									cellStyle.setAlignment(cellStyle.ALIGN_CENTER);
+									cellA1.setCellStyle(cellStyle);
+									
+									
+									
+										
+											
+											
+											 filaInicial = filaInicial +1  ;
+											 row1 = worksheet.createRow((short) filaInicial   ); // FILA 5 
+											 
+											
+												cellA1 = row1.createCell((short) 1); // COLUMNA 2 (C)
+												cellA1.setCellValue("T. Participantes: ");  // agregar a la iteración
+												cellStyle = workbook.createCellStyle();
+												cellStyle.setFillForegroundColor(HSSFColor.LIGHT_CORNFLOWER_BLUE.index);
+												cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+												cellStyle.setBorderLeft((short)2);
+												cellStyle.setBorderBottom((short) 2);
+												cellStyle.setBorderRight((short)2);
+												cellStyle.setBorderTop((short)2);
+												cellStyle.setAlignment(cellStyle.ALIGN_CENTER);
+												cellA1.setCellStyle(cellStyle);
+
+										
+												
+													cellA1 = row1.createCell((short) 2); // COLUMNA 2 (C)
+													cellA1.setCellValue(nodetectadosC+aceptados+rechazados);  // agregar a la iteración
+													cellStyle = workbook.createCellStyle();
+													cellStyle.setFillForegroundColor(HSSFColor.WHITE.index);
+													cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+													cellStyle.setBorderLeft((short)2);
+													cellStyle.setBorderBottom((short) 2);
+													cellStyle.setBorderRight((short)2);
+													cellStyle.setBorderTop((short)2);
+													cellStyle.setAlignment(cellStyle.ALIGN_CENTER);
+													cellA1.setCellStyle(cellStyle);
+													
+											
+													
+													 filaInicial = filaInicial +3  ;
+													 row1 = worksheet.createRow((short) filaInicial   ); // FILA 5 
+													 
+													
+														cellA1 = row1.createCell((short) 1); // COLUMNA 2 (C)
+														cellA1.setCellValue("Observados: ");  // agregar a la iteración
+														cellStyle = workbook.createCellStyle();
+														cellStyle.setFillForegroundColor(HSSFColor.GREY_50_PERCENT.index);
+														cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+														cellStyle.setBorderLeft((short)2);
+														cellStyle.setBorderBottom((short) 2);
+														cellStyle.setBorderRight((short)2);
+														cellStyle.setBorderTop((short)2);
+														cellStyle.setAlignment(cellStyle.ALIGN_CENTER);
+														cellA1.setCellStyle(cellStyle);
+
+															cellA1 = row1.createCell((short) 2); // COLUMNA 2 (C)
+															cellA1.setCellValue(observados);  // agregar a la iteración
+															cellStyle = workbook.createCellStyle();
+															cellStyle.setFillForegroundColor(HSSFColor.WHITE.index);
+															cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+															cellStyle.setBorderLeft((short)2);
+															cellStyle.setBorderBottom((short) 2);
+															cellStyle.setBorderRight((short)2);
+															cellStyle.setBorderTop((short)2);
+															cellStyle.setAlignment(cellStyle.ALIGN_CENTER);
+															cellA1.setCellStyle(cellStyle);
+														
+															
+									
+													 filaInicial = filaInicial +1  ;
+													 row1 = worksheet.createRow((short) filaInicial   ); // FILA 5 
+													 
+													
+														cellA1 = row1.createCell((short) 1); // COLUMNA 2 (C)
+														cellA1.setCellValue("No detectados: ");  // agregar a la iteración
+														cellStyle = workbook.createCellStyle();
+														cellStyle.setFillForegroundColor(HSSFColor.GREY_50_PERCENT.index);
+														cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+														cellStyle.setBorderLeft((short)2);
+														cellStyle.setBorderBottom((short) 2);
+														cellStyle.setBorderRight((short)2);
+														cellStyle.setBorderTop((short)2);
+														cellStyle.setAlignment(cellStyle.ALIGN_CENTER);
+														cellA1.setCellStyle(cellStyle);
+
+												
+														
+															cellA1 = row1.createCell((short) 2); // COLUMNA 2 (C)
+															cellA1.setCellValue(nodetectadosC);  // agregar a la iteración
+															cellStyle = workbook.createCellStyle();
+															cellStyle.setFillForegroundColor(HSSFColor.WHITE.index);
+															cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+															cellStyle.setBorderLeft((short)2);
+															cellStyle.setBorderBottom((short) 2);
+															cellStyle.setBorderRight((short)2);
+															cellStyle.setBorderTop((short)2);
+															cellStyle.setAlignment(cellStyle.ALIGN_CENTER);
+															cellA1.setCellStyle(cellStyle);
+															
+															
+									
+											
+										
+									
+						
 					 filaInicial = filaInicial +2   ; // PARA EL SIGUIENTE PARTIDO POLITICO
+					 
+					 
 	        }
 	        
-	        
-		
-		
-			
-		
-				
-			
-			
 	
 			workbook.write(fileOut);
 	

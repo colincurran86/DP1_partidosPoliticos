@@ -50,6 +50,8 @@ public class Main {
 	public static String rutaPlanillonEjecutandose ; 
 	public static List <PartidoPersona> participantesPreDuplicidad = new ArrayList<PartidoPersona> ();
 	public static List<PartidoPersona> observados = new ArrayList<PartidoPersona>();	
+	public static List <PartidoPersona> noDetectados = new ArrayList<PartidoPersona> ();
+
 	
     public  void  main(String rutaPadrones  , PartidoPolitico pp, String rutaFirma, String rutaHuella) {
     	Procesando.escribirLabelPartidoPolitico( "Iniciando recursos   :)   ");
@@ -85,7 +87,7 @@ public class Main {
     			
     			int auxiliarBarraProgresoPlanillon  = 100 / (folder.listFiles().length + 1 ) ;
     			Procesando.aumentarPorcentaje1 (auxiliarBarraProgreso  * auxiliarBarraProgresoPlanillon);
-    			
+    			String pla = new String(fileEntry.getName());
     			String ruta0 = rutaPadrones + "/" + fileEntry.getName();
     			String ruta1 = workingDir + "/Copia/" + fileEntry.getName();
             	String ruta2 =  workingDir + "/Auxiliar/recorteCostado.jpg";
@@ -231,26 +233,7 @@ public class Main {
                      	//if(  listaPorcentajeFirma.get(  indiceCandidatoFirmas )    >   listaPorcentajeFirma.get(  listaPorcentajeFirma.size()-1  )    )   {
                      	 if(  elElegidoFinal ==null )//   &&  listaPorcentajeFirma.get(indiceCandidatoFirmas) >=Configuracion.umbral) 
                      		 elElegidoFinal = listaPersonasReniec.get(indiceCandidatoFirmas) ;
-                     	 else
-                     	 {
-                     		PartidoPersona   obs  = new PartidoPersona() ; 
-                      		obs.setPersona(listaPersonasReniec.get(indiceCandidatoFirmas));
-                      		obs.setPartido(pp);
-                      		
-                      		Participante par = new Participante () ;
-                      		par.setApellidos( listaPersonasReniec.get(indiceCandidatoFirmas).getApellidos() );
-                      		par.setDni(listaPersonasReniec.get(indiceCandidatoFirmas).getDni());
-                      		par.setIdFirma( listaPersonasReniec.get(indiceCandidatoFirmas).getIdFirma());
-							par.setIdHuella(   "" +  listaPersonasReniec.get(indiceCandidatoFirmas).getIdHuella()       );
-							par.setNombres(   listaPersonasReniec.get(indiceCandidatoFirmas).getNombre()    );
-							//  aca ira duplicidad par.setObservacion(                                                                          );
-							par.setObservacion(  "No hay observacion"     );
-							par.setPorcentajeFirma(listaPorcentajeFirma.get(  indiceCandidatoFirmas )          );
-							//par.setPorcentajeHuella(  listaPorcentajeHuella.get(indiceCandidatoHuellas) );
-							obs.setParticipando(  par );
-                     		 
-                     		 observados.add(obs); 
-                     	 }
+                  
                 
                      	//rf.recortesHuellasOficial(ruta0);
                         //List<Integer>coordX = rf.coordX;
@@ -290,10 +273,12 @@ public class Main {
                       		par.setIdFirma( elElegidoFinal.getIdFirma());
 							par.setIdHuella(   "" +  elElegidoFinal.getIdHuella()       );
 							par.setNombres(   elElegidoFinal.getNombre()    );
+							
 							//  aca ira duplicidad par.setObservacion(                                                                          );
 							par.setObservacion(  "No hay observacion"                                                                         );
 							par.setPorcentajeFirma(listaPorcentajeFirma.get(  indiceCandidatoFirmas )          );
 							par.setPorcentajeHuella(  listaPorcentajeHuella.get(indiceCandidatoHuellas) );
+							par.planillon= new String(pla);
 							auxElegidoPartidoPersona.setParticipando(  par );
 							
 						
@@ -305,6 +290,37 @@ public class Main {
                     		e.printStackTrace();
                     	} 
                     }  
+                    else{
+                		//voy a llenar partido persona   
+                  		PartidoPersona   auxElegidoPartidoPersona  = new PartidoPersona() ; 
+                  		PersonaReniec pr = new PersonaReniec();
+                  		pr.setDni("0000000");
+                  		//pr.setDni(dni);
+                  		pr.setNombre(dni);
+                  		pr.setApellidos(pla);
+                  		pr.setIdFirma("");
+                  		pr.setIdHuella("");
+                  	
+                  		auxElegidoPartidoPersona.setPersona(pr);
+                  		auxElegidoPartidoPersona.setPartido(pp);
+                  		Participante par = new Participante () ;
+                  		par.setApellidos( pr.getApellidos() );
+                  		par.setDni(pr.getDni());
+                  		par.setIdFirma(pr.getIdFirma());
+						par.setIdHuella(   "" + pr.getIdHuella()       );
+						par.setNombres(   pr.getNombre()    );
+						//  aca ira duplicidad par.setObservacion(                                                                          );
+						par.setObservacion(  "No detectado"                                                                         );
+						par.setPorcentajeFirma(0);
+						par.setPorcentajeHuella(0);
+						par.planillon= new String(rutaPlanillonEjecutandose+" indice " +n);
+						auxElegidoPartidoPersona.setParticipando(  par );
+						
+					
+						noDetectados.add( auxElegidoPartidoPersona) ;
+						
+                    }
+
                 }    
 
                 //System.out.println("Padron numero " + (contPadrones+1) + " Procesado");

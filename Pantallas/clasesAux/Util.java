@@ -38,6 +38,8 @@ public class Util {
 	public static boolean mostrarReporte = false;
 	public static String mensajeFinal = new String();
 	public static List<PartidoPersona> partDup;
+	public static List<PartidoPersona> noDetectados;
+
 
 	public static List<PartidoPersona> adherentes;
 	public static List<PartidoPersona> adSinPrimFase;
@@ -322,7 +324,8 @@ public class Util {
 			partDup = partidosProcesos.verificarDuplicados(Main.participantesPreDuplicidad);
 			Reportes.imprimirDuplicados(partDup);
 			adherentes = partidosProcesos.traerSinDuplicados(Main.participantesPreDuplicidad);
-
+			noDetectados=Main.noDetectados;
+			
 			//System.out.println(" === Adherente   == ==");
 
 			// inscribir participantes correctamente aceptados

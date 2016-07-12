@@ -10,6 +10,7 @@ public class Participante {
 	private double porcentajeFirma;
 	private double porcentajeHuella;
 	private String observacion;
+	public String planillon;
 	
 	public int getAceptado() {
 		return aceptado;
