@@ -874,7 +874,7 @@ public class Reportes {
 						cellA1.setCellStyle(cellStyle);
 						
 						cellA1 = row1.createCell((short) 5); // COLUMNA 2 (C)
-						cellA1.setCellValue(noDetectados.get(i).getObservacion());
+						cellA1.setCellValue("Escanear otra vez(sucio)");
 						cellStyle = workbook.createCellStyle();
 						cellStyle.setFillForegroundColor(HSSFColor.WHITE.index);
 						//		cellStyle.setFillForegroundColor(HSSFColor.GOLD.index);
